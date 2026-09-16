@@ -1,0 +1,77 @@
+name: Activity
+
+on:
+  schedule:
+    - cron: '0 2 * * 1' # 0200 UTC every Monday
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Fetch mode'
+        type: choice
+        options:
+          - last-week
+          - custom-range
+          - full-backfill
+        default: last-week
+      days:
+        description: 'Days to fetch (if custom-range selected)'
+        required: false
+        default: '7'
+      from:
+        description: 'Start date (YYYY-MM-DD, if custom-range selected)'
+        required: false
+        default: ''
+      to:
+        description: 'End date (YYYY-MM-DD, if custom-range selected)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Run GitHub activity & stats collector
+        env:
+          GH_TOKEN: ${{ secrets.GH_STATS_TOKEN || secrets.GITHUB_TOKEN }}
+        run: |
+          ARGS=()
+
+          if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ inputs.mode }}" = "last-week" ]; then
+            ARGS+=(--last-week)
+          elif [ "${{ inputs.mode }}" = "full-backfill" ]; then
+            ARGS+=(--full-backfill)
+          elif [ -n "${{ inputs.from }}" ] && [ -n "${{ inputs.to }}" ]; then
+            ARGS+=(--from "${{ inputs.from }}" --to "${{ inputs.to }}")
+          elif [ -n "${{ inputs.days }}" ]; then
+            ARGS+=(--days "${{ inputs.days }}")
+          else
+            ARGS+=(--last-week)
+          fi
+
+          echo "Running: node scripts/fetch-github-stats.ts ${ARGS[*]}"
+          node scripts/fetch-github-stats.ts "${ARGS[@]}"
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git add data/github-stats.json
+          if git diff --staged --quiet; then
+            echo "No changes detected in data/github-stats.json."
+          else
+            git commit -m "(gh-actions) data: update weekly GitHub stats [skip ci]"
+            git push
+          fi
