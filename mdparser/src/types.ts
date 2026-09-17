@@ -18,7 +18,7 @@ export interface ReferenceItem {
   contentHtml: string;
 }
 
-export type TableAlignment = 'left' | 'center' | 'right';
+export type TableAlignment = "left" | "center" | "right";
 
 export interface ParsedTable {
   headers: string[];
@@ -35,4 +35,11 @@ export interface ParsedBlogPost {
   readTimeMinutes: number;
   wordCount: number;
   rawMarkdown: string;
+}
+
+export interface ValidationError {
+  file?: string;
+  slug?: string;
+  field: string;
+  message: string;
 }

@@ -1,0 +1,28 @@
+{
+  "name": "mdparser",
+  "version": "1.0.0",
+  "description": "Custom Markdown blog parser with KaTeX math, Shiki syntax highlighting, GFM tables, and blog integrity validator",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/types.ts",
+  "exports": {
+    ".": {
+      "types": "./src/types.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "test": "node --test",
+    "format": "prettier --write \"**/*.{ts,js,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,js,json,md}\""
+  },
+  "dependencies": {
+    "katex": "^0.18.7",
+    "shiki": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/katex": "^0.16.8",
+    "prettier": "^3.9.7"
+  }
+}
