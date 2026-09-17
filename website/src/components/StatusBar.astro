@@ -1,0 +1,205 @@
+---
+---
+
+<div class="space-y-4 font-mono text-xs select-none" id="tui-telemetry-panel">
+  <fieldset class="border border-rp-highlight-med bg-rp-surface/40 backdrop-blur-xs rounded px-4 py-2.5 shadow-xs">
+    <legend class="px-1.5 text-[var(--color-accent)] font-semibold font-mono text-xs">[system]</legend>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 pt-0.5">
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="text-rp-muted shrink-0">os:</span>
+        <span id="sys-os" class="text-rp-text font-medium truncate">--</span>
+      </div>
+
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="text-rp-muted shrink-0">display:</span>
+        <span id="sys-display" class="text-rp-text font-medium truncate">--</span>
+      </div>
+
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="text-rp-muted shrink-0">cpu:</span>
+        <span id="sys-cpu" class="text-rp-text font-medium truncate">--</span>
+      </div>
+
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="text-rp-muted shrink-0">gpu:</span>
+        <span id="sys-gpu" class="text-rp-text font-medium truncate">--</span>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset class="border border-rp-highlight-med bg-rp-surface/40 backdrop-blur-xs rounded px-4 py-2.5 shadow-xs">
+    <legend class="px-1.5 text-[var(--color-accent)] font-semibold font-mono text-xs">[status]</legend>
+
+    <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 pt-0.5">
+      <div class="flex items-center gap-1.5">
+        <span id="tui-date" class="text-rp-subtle">---, -- --- ----</span>
+        <span class="text-rp-muted">·</span>
+        <span id="tui-tz" class="text-rp-subtle">+05:30</span>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <span class="text-rp-muted text-[11px] uppercase tracking-wider">day</span>
+        <div class="inline-flex items-center text-rp-subtle font-mono tracking-tight">
+          <span>[</span>
+          <span id="tui-bar-filled" class="text-[var(--color-accent)] font-bold font-mono">#######</span>
+          <span id="tui-bar-empty" class="text-rp-muted/50 font-mono">.........</span>
+          <span>]</span>
+        </div>
+        <span id="tui-pct" class="text-rp-text font-medium text-[11px] tabular-nums min-w-[42px] text-right">--.-%</span>
+      </div>
+    </div>
+  </fieldset>
+</div>
+
+<script>
+  const BAR_LENGTH = 16;
+  const FILLED_GLYPH = '#';
+  const EMPTY_GLYPH = '.';
+
+  async function getGpuInfo(): Promise<string> {
+    if ('gpu' in navigator && (navigator as any).gpu) {
+      try {
+        const adapter = await (navigator as any).gpu.requestAdapter();
+        if (adapter) {
+          const info = typeof adapter.requestAdapterInfo === 'function' ? await adapter.requestAdapterInfo() : adapter.info;
+          if (info) {
+            const desc = info.description || info.architecture || info.device || '';
+            const vendor = info.vendor || '';
+            const combined = [vendor, desc].filter(Boolean).join(' ');
+            if (combined && !combined.toLowerCase().includes('brave')) {
+              return combined;
+            }
+          }
+        }
+      } catch (_) {}
+    }
+
+    try {
+      const canvas = document.createElement('canvas');
+      const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+      if (gl) {
+        const debugInfo = (gl as any).getExtension('WEBGL_debug_renderer_info');
+        if (debugInfo) {
+          const renderer = (gl as any).getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+          if (renderer && renderer.trim().toLowerCase() !== 'brave') {
+            return renderer
+              .replace(/^ANGLE\s*\(/i, '')
+              .replace(/\)$/, '')
+              .replace(/Direct3D.*$/i, '')
+              .replace(/OpenGL Engine/i, '')
+              .trim();
+          }
+        }
+        const standardRenderer = (gl as any).getParameter((gl as any).RENDERER);
+        if (standardRenderer && standardRenderer.trim().toLowerCase() !== 'brave') {
+          return standardRenderer;
+        }
+      }
+    } catch (_) {}
+
+    return 'Intel UHD Graphics 630';
+  }
+
+  function getOsInfo(): string {
+    const userAgent = navigator.userAgent;
+    let os = 'Linux';
+    if (userAgent.includes('Macintosh') || userAgent.includes('Mac OS')) os = 'macOS';
+    else if (userAgent.includes('Windows')) os = 'Windows';
+    else if (userAgent.includes('Android')) os = 'Android';
+    else if (userAgent.includes('iPhone') || userAgent.includes('iPad')) os = 'iOS';
+
+    let arch = '';
+    if (userAgent.includes('x86_64') || userAgent.includes('x64') || userAgent.includes('Win64')) {
+      arch = 'x86_64';
+    } else if (userAgent.includes('arm64') || userAgent.includes('aarch64') || (os === 'macOS' && navigator.maxTouchPoints > 0)) {
+      arch = 'ARM64';
+    }
+
+    return arch ? `${os} (${arch})` : os;
+  }
+
+  function getCpuArch(): string {
+    const userAgent = navigator.userAgent;
+    if (userAgent.includes('x86_64') || userAgent.includes('x64') || userAgent.includes('Win64')) {
+      return 'x86_64 (64-bit)';
+    } else if (userAgent.includes('arm64') || userAgent.includes('aarch64') || navigator.maxTouchPoints > 0) {
+      return 'ARM64 (64-bit)';
+    }
+    return (navigator as any).platform || '64-bit CPU';
+  }
+
+  function getDisplayInfo(): string {
+    const w = window.screen.width;
+    const h = window.screen.height;
+    const dpr = window.devicePixelRatio || 1;
+    return dpr > 1 ? `${w}×${h} @${dpr}x` : `${w}×${h}`;
+  }
+
+  async function updateSystemMetrics() {
+    const osEl = document.getElementById('sys-os');
+    const cpuEl = document.getElementById('sys-cpu');
+    const gpuEl = document.getElementById('sys-gpu');
+    const displayEl = document.getElementById('sys-display');
+
+    if (osEl) osEl.textContent = getOsInfo();
+    if (cpuEl) cpuEl.textContent = getCpuArch();
+    if (gpuEl) gpuEl.textContent = await getGpuInfo();
+    if (displayEl) displayEl.textContent = getDisplayInfo();
+  }
+
+  function updateStatusMetrics() {
+    const dateEl = document.getElementById('tui-date');
+    const pctEl = document.getElementById('tui-pct');
+    const filledEl = document.getElementById('tui-bar-filled');
+    const emptyEl = document.getElementById('tui-bar-empty');
+
+    if (!dateEl || !pctEl || !filledEl || !emptyEl) return;
+
+    const now = new Date();
+    const formatterDate = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Asia/Kolkata',
+      weekday: 'short',
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
+    dateEl.textContent = formatterDate.format(now);
+
+    const formatterTime = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Asia/Kolkata',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+    });
+
+    const parts = formatterTime.formatToParts(now);
+    const hour = parseInt(parts.find((p) => p.type === 'hour')?.value || '0', 10);
+    const minute = parseInt(parts.find((p) => p.type === 'minute')?.value || '0', 10);
+    const second = parseInt(parts.find((p) => p.type === 'second')?.value || '0', 10);
+
+    const totalSecondsInDay = 86400;
+    const currentSeconds = hour * 3600 + minute * 60 + second;
+    const percentage = (currentSeconds / totalSecondsInDay) * 100;
+
+    pctEl.textContent = `${percentage.toFixed(1)}%`;
+    const filledCount = Math.min(BAR_LENGTH, Math.floor((percentage / 100) * BAR_LENGTH));
+    const emptyCount = BAR_LENGTH - filledCount;
+
+    filledEl.textContent = FILLED_GLYPH.repeat(filledCount);
+    emptyEl.textContent = EMPTY_GLYPH.repeat(emptyCount);
+  }
+
+  function initTelemetry() {
+    updateSystemMetrics();
+    updateStatusMetrics();
+  }
+
+  initTelemetry();
+  setInterval(updateStatusMetrics, 1000);
+  setInterval(updateSystemMetrics, 30000);
+
+  window.addEventListener('resize', updateSystemMetrics);
+  document.addEventListener('astro:after-swap', initTelemetry);
+</script>

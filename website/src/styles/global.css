@@ -26,7 +26,6 @@
   --color-rp-highlight-high: var(--rp-highlight-high);
 }
 
-/* Rosé Pine Default (Main) Theme */
 html.theme-default,
 html.theme-main,
 html.theme-rp,
@@ -49,7 +48,6 @@ html:not([class*="theme-"]) {
   --color-accent: var(--rp-rose);
 }
 
-/* Rosé Pine Moon Theme */
 html.theme-moon,
 html.theme-rp-moon {
   --rp-base: #232136;
@@ -70,7 +68,6 @@ html.theme-rp-moon {
   --color-accent: var(--rp-rose);
 }
 
-/* Rosé Pine Dawn Theme */
 html.theme-dawn,
 html.theme-rp-dawn {
   --rp-base: #faf4ed;
@@ -91,7 +88,6 @@ html.theme-rp-dawn {
   --color-accent: var(--rp-rose);
 }
 
-/* Accent color overrides */
 html[data-accent="rose"] { --color-accent: var(--rp-rose); }
 html[data-accent="gold"] { --color-accent: var(--rp-gold); }
 html[data-accent="love"] { --color-accent: var(--rp-love); }
@@ -99,7 +95,6 @@ html[data-accent="pine"] { --color-accent: var(--rp-pine); }
 html[data-accent="foam"] { --color-accent: var(--rp-foam); }
 html[data-accent="iris"] { --color-accent: var(--rp-iris); }
 
-/* Hide browser scrollbars just like reference website */
 html, body, * {
   scrollbar-width: none !important;
   -ms-overflow-style: none !important;
