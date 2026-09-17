@@ -1,50 +1,54 @@
 ---
 ---
 
-<div class="space-y-4 font-mono text-xs select-none" id="tui-telemetry-panel">
-  <fieldset class="border border-rp-highlight-med bg-rp-surface/40 backdrop-blur-xs rounded px-4 py-2.5 shadow-xs">
-    <legend class="px-1.5 text-[var(--color-accent)] font-semibold font-mono text-xs">[system]</legend>
-
-    <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 pt-0.5">
-      <div class="flex items-center gap-2 min-w-0">
-        <span class="text-rp-muted shrink-0">os:</span>
-        <span id="sys-os" class="text-rp-text font-medium truncate">--</span>
-      </div>
-
-      <div class="flex items-center gap-2 min-w-0">
-        <span class="text-rp-muted shrink-0">cpu:</span>
-        <span id="sys-cpu" class="text-rp-text font-medium truncate">--</span>
-      </div>
-
-      <div class="flex items-center gap-2 min-w-0">
-        <span class="text-rp-muted shrink-0">display:</span>
-        <span id="sys-display" class="text-rp-text font-medium truncate">--</span>
-      </div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 sm:gap-x-5 gap-y-2.5 font-mono text-xs select-none w-fit text-rp-subtle pt-1" id="tui-telemetry-panel">
+  <div class="space-y-2">
+    <div class="flex items-center gap-2 min-w-0">
+      <span class="text-rp-muted w-3 select-none">~</span>
+      <span class="text-rp-subtle w-14 shrink-0 select-none">os:</span>
+      <span id="sys-os" class="text-rp-text font-medium truncate">--</span>
     </div>
-  </fieldset>
 
-  <fieldset class="border border-rp-highlight-med bg-rp-surface/40 backdrop-blur-xs rounded px-4 py-2.5 shadow-xs">
-    <legend class="px-1.5 text-[var(--color-accent)] font-semibold font-mono text-xs">[status]</legend>
+    <div class="flex items-center gap-2 min-w-0">
+      <span class="text-rp-muted w-3 select-none">#</span>
+      <span class="text-rp-subtle w-14 shrink-0 select-none">cpu:</span>
+      <span id="sys-cpu" class="text-rp-text font-medium truncate">--</span>
+    </div>
 
-    <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 pt-0.5">
-      <div class="flex items-center gap-1.5">
-        <span id="tui-date" class="text-rp-subtle">---, -- --- ----</span>
-        <span class="text-rp-muted">·</span>
-        <span id="tui-tz" class="text-rp-subtle">+05:30</span>
-      </div>
+    <div class="flex items-center gap-2 min-w-0">
+      <span class="text-rp-muted w-3 select-none">*</span>
+      <span class="text-rp-subtle w-14 shrink-0 select-none">display:</span>
+      <span id="sys-display" class="text-rp-text font-medium truncate">--</span>
+    </div>
+  </div>
 
-      <div class="flex items-center gap-2">
-        <span class="text-rp-muted text-[11px] uppercase tracking-wider">day</span>
-        <div class="inline-flex items-center text-rp-subtle font-mono tracking-tight">
+  <div class="space-y-2">
+    <div class="flex items-center gap-2 min-w-0">
+      <span class="text-rp-muted w-3 select-none">@</span>
+      <span class="text-rp-subtle w-10 shrink-0 select-none">date:</span>
+      <span id="tui-date" class="text-rp-text font-medium truncate">---, -- --- ----</span>
+    </div>
+
+    <div class="flex items-center gap-2 min-w-0">
+      <span class="text-rp-muted w-3 select-none">+</span>
+      <span class="text-rp-subtle w-10 shrink-0 select-none">time:</span>
+      <span id="tui-time" class="text-rp-text font-medium truncate">--:--:-- IST +05:30</span>
+    </div>
+
+    <div class="flex items-center gap-2 min-w-0">
+      <span class="text-rp-muted w-3 select-none">%</span>
+      <span class="text-rp-subtle w-10 shrink-0 select-none">day:</span>
+      <div class="inline-flex items-center gap-2 text-rp-subtle font-mono">
+        <div class="inline-flex items-center font-mono tracking-tight text-xs">
           <span>[</span>
-          <span id="tui-bar-filled" class="text-[var(--color-accent)] font-bold font-mono">#######</span>
-          <span id="tui-bar-empty" class="text-rp-muted/50 font-mono">.........</span>
+          <span id="tui-bar-filled" class="text-[var(--color-accent)] font-bold">#######</span>
+          <span id="tui-bar-empty" class="text-rp-muted/40">.........</span>
           <span>]</span>
         </div>
-        <span id="tui-pct" class="text-rp-text font-medium text-[11px] tabular-nums min-w-[42px] text-right">--.-%</span>
+        <span id="tui-pct" class="text-rp-text font-medium text-[11px] tabular-nums min-w-[34px] text-right">--.-%</span>
       </div>
     </div>
-  </fieldset>
+  </div>
 </div>
 
 <script>
@@ -90,21 +94,24 @@
 
   function updateStatusMetrics() {
     const dateEl = document.getElementById('tui-date');
+    const timeEl = document.getElementById('tui-time');
     const pctEl = document.getElementById('tui-pct');
     const filledEl = document.getElementById('tui-bar-filled');
     const emptyEl = document.getElementById('tui-bar-empty');
 
-    if (!dateEl || !pctEl || !filledEl || !emptyEl) return;
+    if (!pctEl || !filledEl || !emptyEl) return;
 
     const now = new Date();
-    const formatterDate = new Intl.DateTimeFormat('en-GB', {
-      timeZone: 'Asia/Kolkata',
-      weekday: 'short',
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric'
-    });
-    dateEl.textContent = formatterDate.format(now);
+    if (dateEl) {
+      const formatterDate = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Asia/Kolkata',
+        weekday: 'short',
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+      });
+      dateEl.textContent = formatterDate.format(now);
+    }
 
     const formatterTime = new Intl.DateTimeFormat('en-GB', {
       timeZone: 'Asia/Kolkata',
@@ -113,6 +120,10 @@
       second: '2-digit',
       hour12: false
     });
+
+    if (timeEl) {
+      timeEl.textContent = `${formatterTime.format(now)} IST +05:30`;
+    }
 
     const parts = formatterTime.formatToParts(now);
     const hour = parseInt(parts.find((p) => p.type === 'hour')?.value || '0', 10);
