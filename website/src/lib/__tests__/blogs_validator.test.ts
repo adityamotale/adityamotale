@@ -2,7 +2,7 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { getAllBlogPosts } from '../blog.ts';
 import { validateBlogPost, validateAllBlogPosts } from '../validator.ts';
-import { parseMarkdownBlog } from '../md_parser/index.ts';
+import { parseMarkdownBlog } from 'mdparser';
 
 describe('blogs_validator: Catching Authoring Mistakes (Unit Checks)', () => {
   it('catches missing or invalid frontmatter fields', async () => {

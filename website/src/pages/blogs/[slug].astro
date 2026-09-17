@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import { formatBlogDate, getAllBlogPosts } from '../../lib/blog';
-import type { ParsedBlogPost } from '../../lib/md_parser/types';
+import type { ParsedBlogPost } from 'mdparser';
 
 export async function getStaticPaths() {
   const posts = await getAllBlogPosts();

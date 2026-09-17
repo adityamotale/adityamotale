@@ -4,7 +4,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import { formatBlogDate, parseDateToTimestamp } from '../blog.ts';
-import { parseMarkdownBlog } from '../md_parser/index.ts';
+import { parseMarkdownBlog } from 'mdparser';
 
 const DUMMY_BLOG_A = `---
 slug: test-blog-a

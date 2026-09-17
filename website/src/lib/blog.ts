@@ -1,8 +1,8 @@
 import fs from 'node:fs/promises';
 import fsSync from 'node:fs';
 import path from 'node:path';
-import { parseMarkdownBlog } from './md_parser/index.ts';
-import type { ParsedBlogPost } from './md_parser/types.ts';
+import { parseMarkdownBlog } from 'mdparser';
+import type { ParsedBlogPost } from 'mdparser';
 
 export function getBlogDir(): string {
   const candidate1 = path.resolve(process.cwd(), 'blogs');

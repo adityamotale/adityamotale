@@ -20,8 +20,6 @@
     "@rose-pine/palette": "^4.0.1",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.2",
-    "katex": "^0.18.7",
-    "shiki": "^4.4.3",
     "tailwindcss": "^4.3.3"
   },
   "allowScripts": {
@@ -29,6 +27,8 @@
   },
   "devDependencies": {
     "@types/katex": "^0.16.8",
+    "katex": "^0.18.7",
+    "mdparser": "file:../mdparser",
     "prettier": "^3.9.7",
     "prettier-plugin-astro": "^1.0.1"
   }
