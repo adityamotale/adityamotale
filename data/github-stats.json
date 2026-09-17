@@ -244,6 +244,7 @@
   "repositories_contributed_to": [
     {
       "repository": "pid7-org/turbofox",
+      "description": "A persistent and efficient embedded KV database",
       "is_private": false,
       "is_fork": false,
       "commits": 506,
@@ -271,6 +272,7 @@
     },
     {
       "repository": "pid7-org/frozen-core",
+      "description": "Core utilities for frozen codebases.",
       "is_private": false,
       "is_fork": false,
       "commits": 374,
@@ -373,6 +375,7 @@
     },
     {
       "repository": "pid7-org/ashwa",
+      "description": "Hardware accelerated routines for single substring search.",
       "is_private": false,
       "is_fork": false,
       "commits": 309,
@@ -523,6 +526,7 @@
     },
     {
       "repository": "pid7-org/kosa",
+      "description": "A reliable page-based storage engine with fire-and-forget durability semantics",
       "is_private": false,
       "is_fork": false,
       "commits": 130,
@@ -585,7 +589,8 @@
           "bytes": 222,
           "percentage": 0.09
         }
-      ]
+      ],
+      "description": "Fast and lightweight Sanskrit lexical and syntactic analyzer"
     },
     {
       "repository": "adityamotale/asm_tcp",
@@ -636,10 +641,12 @@
           "bytes": 127,
           "percentage": 0.08
         }
-      ]
+      ],
+      "description": "High-performance user-space TCP stack written in x86-64 assembly and C"
     },
     {
       "repository": "pid7-org/rta",
+      "description": "Ṛta (ऋत) is a minimal metadata store for durable system state",
       "is_private": false,
       "is_fork": false,
       "commits": 82,
@@ -702,10 +709,12 @@
           "bytes": 328,
           "percentage": 0.71
         }
-      ]
+      ],
+      "description": "Low-level lightweight micro-kernel and systems research experiment"
     },
     {
       "repository": "pid7-org/turbo_base64",
+      "description": "Hardware-accelerated base64 encoding/decoding routines",
       "is_private": false,
       "is_fork": false,
       "commits": 58,
@@ -813,7 +822,8 @@
           "bytes": 69666,
           "percentage": 100
         }
-      ]
+      ],
+      "description": "Cross-platform developer tooling and mobile client"
     },
     {
       "repository": "adityamotale/wallpix",
@@ -1060,6 +1070,7 @@
     },
     {
       "repository": "pid7-org/turbo_crc",
+      "description": "Hardware-accelerated CRC routines",
       "is_private": false,
       "is_fork": false,
       "commits": 34,
@@ -1294,6 +1305,7 @@
     },
     {
       "repository": "pid7-org/y3",
+      "description": "SIMD-accelerated data processing primitives",
       "is_private": false,
       "is_fork": false,
       "commits": 25,
@@ -1678,6 +1690,7 @@
     },
     {
       "repository": "pid7-org/vuoto",
+      "description": "Zero-copy async buffer abstractions",
       "is_private": false,
       "is_fork": false,
       "commits": 17,
@@ -1933,6 +1946,7 @@
     },
     {
       "repository": "pid7-org/stingray",
+      "description": "Fast and robust async runtime utilities",
       "is_private": false,
       "is_fork": false,
       "commits": 13,
