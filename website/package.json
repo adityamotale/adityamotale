@@ -12,6 +12,9 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource-variable/playwrite-id": "^5.3.0",
+    "@rose-pine/palette": "^4.0.1",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.2",
     "tailwindcss": "^4.3.3"

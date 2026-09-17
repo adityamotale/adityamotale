@@ -1,1 +1,121 @@
+@import "@fontsource-variable/playwrite-id";
+@import "@fontsource-variable/jetbrains-mono";
+
 @import "tailwindcss";
+
+@theme {
+  --font-playwrite: "Playwrite ID Variable", "Playwrite ID", cursive, sans-serif;
+  --font-mono: "SF Mono", "SFMono-Regular", ui-monospace, "JetBrains Mono Variable", "JetBrains Mono", Menlo, Monaco, Consolas, monospace;
+
+  --color-rp-base: var(--rp-base);
+  --color-rp-surface: var(--rp-surface);
+  --color-rp-overlay: var(--rp-overlay);
+  --color-rp-muted: var(--rp-muted);
+  --color-rp-subtle: var(--rp-subtle);
+  --color-rp-text: var(--rp-text);
+  --color-rp-love: var(--rp-love);
+  --color-rp-gold: var(--rp-gold);
+  --color-rp-rose: var(--rp-rose);
+  --color-rp-pine: var(--rp-pine);
+  --color-rp-foam: var(--rp-foam);
+  --color-rp-iris: var(--rp-iris);
+  --color-rp-highlight-low: var(--rp-highlight-low);
+  --color-rp-highlight-med: var(--rp-highlight-med);
+  --color-rp-highlight-high: var(--rp-highlight-high);
+}
+
+/* Rosé Pine Default (Main) Theme */
+html.theme-default,
+html.theme-main,
+html.theme-rp,
+html:not([class*="theme-"]) {
+  --rp-base: #191724;
+  --rp-surface: #1f1d2e;
+  --rp-overlay: #26233a;
+  --rp-muted: #6e6a86;
+  --rp-subtle: #908caa;
+  --rp-text: #e0def4;
+  --rp-love: #eb6f92;
+  --rp-gold: #f6c177;
+  --rp-rose: #ebbcba;
+  --rp-pine: #31748f;
+  --rp-foam: #9ccfd8;
+  --rp-iris: #c4a7e7;
+  --rp-highlight-low: #21202e;
+  --rp-highlight-med: #403d52;
+  --rp-highlight-high: #524f67;
+  --color-accent: var(--rp-rose);
+}
+
+/* Rosé Pine Moon Theme */
+html.theme-moon,
+html.theme-rp-moon {
+  --rp-base: #232136;
+  --rp-surface: #2a273f;
+  --rp-overlay: #393552;
+  --rp-muted: #6e6a86;
+  --rp-subtle: #908caa;
+  --rp-text: #e0def4;
+  --rp-love: #eb6f92;
+  --rp-gold: #f6c177;
+  --rp-rose: #ea9a97;
+  --rp-pine: #3e8fb0;
+  --rp-foam: #9ccfd8;
+  --rp-iris: #c4a7e7;
+  --rp-highlight-low: #2a283e;
+  --rp-highlight-med: #44415a;
+  --rp-highlight-high: #56526e;
+  --color-accent: var(--rp-rose);
+}
+
+/* Rosé Pine Dawn Theme */
+html.theme-dawn,
+html.theme-rp-dawn {
+  --rp-base: #faf4ed;
+  --rp-surface: #fffaf3;
+  --rp-overlay: #f2e9e1;
+  --rp-muted: #9893a5;
+  --rp-subtle: #797593;
+  --rp-text: #575279;
+  --rp-love: #b4637a;
+  --rp-gold: #ea9d34;
+  --rp-rose: #d7827e;
+  --rp-pine: #286983;
+  --rp-foam: #56949f;
+  --rp-iris: #907aa9;
+  --rp-highlight-low: #f4ede8;
+  --rp-highlight-med: #dfdad9;
+  --rp-highlight-high: #cecacd;
+  --color-accent: var(--rp-rose);
+}
+
+/* Accent color overrides */
+html[data-accent="rose"] { --color-accent: var(--rp-rose); }
+html[data-accent="gold"] { --color-accent: var(--rp-gold); }
+html[data-accent="love"] { --color-accent: var(--rp-love); }
+html[data-accent="pine"] { --color-accent: var(--rp-pine); }
+html[data-accent="foam"] { --color-accent: var(--rp-foam); }
+html[data-accent="iris"] { --color-accent: var(--rp-iris); }
+
+/* Hide browser scrollbars just like reference website */
+html, body, * {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+::-webkit-scrollbar {
+  display: none !important;
+  width: 0px !important;
+  height: 0px !important;
+  background: transparent !important;
+}
+
+@layer base {
+  body {
+    background-color: var(--rp-base) !important;
+    color: var(--rp-text);
+    font-family: var(--font-mono);
+    min-height: 100vh;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+}
