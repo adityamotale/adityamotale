@@ -7,6 +7,34 @@ import type {
 } from './types.ts';
 import type { RepoContribDelta, RepoLocStat, ViewerRepoNode } from './collector.ts';
 
+export function calculateWeightedLanguages(activities: RepoActivityStat[]): LanguageStat[] {
+  const languageMap = new Map<string, { name: string; color: string | null; loc: number }>();
+  let totalLoc = 0;
+
+  for (const repo of activities) {
+    const langs = repo.languages || [];
+    const repoLoc = repo.additions > 0 ? repo.additions : repo.commits * 50;
+
+    for (const l of langs) {
+      const share = (l.percentage / 100) * repoLoc;
+      totalLoc += share;
+      const entry = languageMap.get(l.name) ?? { name: l.name, color: l.color || null, loc: 0 };
+      entry.loc += share;
+      if (l.color && !entry.color) entry.color = l.color;
+      languageMap.set(l.name, entry);
+    }
+  }
+
+  return Array.from(languageMap.values())
+    .map((item) => ({
+      name: item.name,
+      color: item.color,
+      bytes: Math.round(item.loc),
+      percentage: totalLoc > 0 ? parseFloat(((item.loc / totalLoc) * 100).toFixed(2)) : 0,
+    }))
+    .sort((a, b) => b.percentage - a.percentage);
+}
+
 export function calculateLanguages(repos: ViewerRepoNode[], username: string): LanguageStat[] {
   const languageMap = new Map<string, { name: string; color: string | null; bytes: number }>();
 

@@ -10,6 +10,13 @@ export interface LanguageStat {
   percentage: number;
 }
 
+export interface LanguageItem {
+  name: string;
+  color?: string | null;
+  bytes?: number;
+  percentage: number;
+}
+
 export interface RepoActivityStat {
   repository: string;
   is_private: boolean;
@@ -22,6 +29,7 @@ export interface RepoActivityStat {
   deletions: number;
   net_lines: number;
   total_contributions: number;
+  languages?: LanguageItem[];
 }
 
 export interface StreaksAndConsistency {
@@ -79,13 +87,14 @@ export interface PeriodMetrics {
     private: number;
     org: number;
   };
+  languages?: LanguageItem[];
 }
 
 export interface MonthlyStatItem extends PeriodMetrics {
   label: string;
   year: number;
   month: number;
-  top_stack: string[];
+  top_stack?: string[];
 }
 
 export interface GitHubStatsOutput {
