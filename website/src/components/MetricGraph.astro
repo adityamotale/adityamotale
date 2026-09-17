@@ -1,0 +1,208 @@
+---
+import stats from '../../../data/github-stats.json';
+
+const monthlyHistory = stats.monthly_history || [];
+
+const monthsData = monthlyHistory.map((m) => {
+  const totalChurn = m.lines_of_code.total_additions + m.lines_of_code.total_deletions;
+  const churnRatio = totalChurn > 0
+    ? parseFloat(((m.lines_of_code.total_additions / totalChurn) * 100).toFixed(1))
+    : 0;
+
+  return {
+    month: m.label,
+    commits: m.commits,
+    additions: m.lines_of_code.total_additions,
+    deletions: m.lines_of_code.total_deletions,
+    netLoc: m.lines_of_code.net_lines,
+    churn: totalChurn,
+    churnRatio,
+    streak: m.streaks_and_consistency.longest_streak_days,
+    activeDays: m.streaks_and_consistency.active_days_count,
+  };
+});
+
+const fmt = new Intl.NumberFormat('en-US');
+
+const BAR_LENGTH = 18;
+const FILLED_GLYPH = '#';
+const EMPTY_GLYPH = '.';
+
+function getAsciiBar(value: number, max: number, len = BAR_LENGTH) {
+  const safeVal = Math.max(0, value);
+  const ratio = max > 0 ? Math.min(1, safeVal / max) : 0;
+  const filled = Math.round(ratio * len);
+  const empty = len - filled;
+  return {
+    filled: FILLED_GLYPH.repeat(filled),
+    empty: EMPTY_GLYPH.repeat(empty)
+  };
+}
+
+const maxCommits = Math.max(1, ...monthsData.map((m) => m.commits));
+---
+
+<div class="font-mono text-xs w-full max-w-xl text-rp-subtle pt-2 space-y-3" id="tui-metric-graph">
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-rp-muted">
+    <div class="flex items-center gap-2">
+      <span class="text-[var(--color-accent)] font-semibold">&gt;</span>
+      <span class="text-rp-text font-semibold uppercase tracking-wider text-[11px]">Compare (5-Month)</span>
+      <span class="hidden sm:inline-block w-6 border-b border-rp-muted/20"></span>
+    </div>
+
+    <div class="flex items-center gap-1 text-[11px] self-start sm:self-auto" id="graph-tabs">
+      <button
+        type="button"
+        data-metric="commits"
+        class="graph-tab px-2 py-0.5 rounded cursor-pointer transition-colors bg-rp-surface text-[var(--color-accent)] font-semibold border border-rp-muted/30"
+      >
+        [commits]
+      </button>
+      <button
+        type="button"
+        data-metric="loc"
+        class="graph-tab px-2 py-0.5 rounded cursor-pointer transition-colors text-rp-muted hover:text-rp-text border border-transparent"
+      >
+        [loc]
+      </button>
+      <button
+        type="button"
+        data-metric="churn"
+        class="graph-tab px-2 py-0.5 rounded cursor-pointer transition-colors text-rp-muted hover:text-rp-text border border-transparent"
+      >
+        [churn]
+      </button>
+      <button
+        type="button"
+        data-metric="streak"
+        class="graph-tab px-2 py-0.5 rounded cursor-pointer transition-colors text-rp-muted hover:text-rp-text border border-transparent"
+      >
+        [streak]
+      </button>
+    </div>
+  </div>
+
+  <div class="space-y-1.5 pt-1" id="graph-rows">
+    {monthsData.map((m) => {
+      const bar = getAsciiBar(m.commits, maxCommits, BAR_LENGTH);
+      return (
+        <div class="graph-row flex items-center justify-between gap-x-3 text-xs" data-month={m.month}>
+          <div class="flex items-center gap-2 min-w-0">
+            <span class="text-rp-subtle w-16 shrink-0 font-medium">{m.month}</span>
+            <span class="text-rp-muted/60">│</span>
+            <div class="inline-flex items-center font-mono tracking-tight text-xs">
+              <span>[</span>
+              <span class="graph-bar-filled text-[var(--color-accent)] font-bold">{bar.filled}</span>
+              <span class="graph-bar-empty text-rp-muted/40">{bar.empty}</span>
+              <span>]</span>
+            </div>
+          </div>
+          <div class="graph-value text-right font-medium tabular-nums min-w-[70px] text-rp-text">
+            {fmt.format(m.commits)}
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</div>
+
+<script define:vars={{ monthsData, BAR_LENGTH, FILLED_GLYPH, EMPTY_GLYPH }}>
+  function formatCompactVal(n) {
+    if (Math.abs(n) >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+    if (Math.abs(n) >= 1000) return (n / 1000).toFixed(1) + 'k';
+    return n.toString();
+  }
+
+  function getBar(value, max) {
+    const safeVal = Math.max(0, value);
+    const ratio = max > 0 ? Math.min(1, safeVal / max) : 0;
+    const filled = Math.round(ratio * BAR_LENGTH);
+    const empty = BAR_LENGTH - filled;
+    return {
+      filled: FILLED_GLYPH.repeat(filled),
+      empty: EMPTY_GLYPH.repeat(empty)
+    };
+  }
+
+  function updateGraph(metric) {
+    const rows = document.querySelectorAll('#graph-rows .graph-row');
+    const tabs = document.querySelectorAll('#graph-tabs .graph-tab');
+
+    tabs.forEach((tab) => {
+      const isCurrent = tab.getAttribute('data-metric') === metric;
+      if (isCurrent) {
+        tab.className = 'graph-tab px-2 py-0.5 rounded cursor-pointer transition-colors bg-rp-surface text-[var(--color-accent)] font-semibold border border-rp-muted/30';
+      } else {
+        tab.className = 'graph-tab px-2 py-0.5 rounded cursor-pointer transition-colors text-rp-muted hover:text-rp-text border border-transparent';
+      }
+    });
+
+    let maxVal = 1;
+    if (metric === 'commits') {
+      maxVal = Math.max(1, ...monthsData.map((m) => m.commits));
+    } else if (metric === 'loc') {
+      maxVal = Math.max(1, ...monthsData.map((m) => Math.max(0, m.netLoc)));
+    } else if (metric === 'churn') {
+      maxVal = Math.max(1, ...monthsData.map((m) => m.churn));
+    } else if (metric === 'streak') {
+      maxVal = Math.max(1, ...monthsData.map((m) => m.streak));
+    }
+
+    rows.forEach((row, i) => {
+      const data = monthsData[i];
+      if (!data) return;
+
+      const filledEl = row.querySelector('.graph-bar-filled');
+      const emptyEl = row.querySelector('.graph-bar-empty');
+      const valEl = row.querySelector('.graph-value');
+
+      let valText = '';
+      let valForBar = 0;
+      let barColorClass = 'text-[var(--color-accent)]';
+
+      if (metric === 'commits') {
+        valForBar = data.commits;
+        valText = data.commits.toLocaleString();
+        barColorClass = 'text-[var(--color-accent)]';
+      } else if (metric === 'loc') {
+        valForBar = Math.max(0, data.netLoc);
+        const sign = data.netLoc > 0 ? '+' : '';
+        valText = `${sign}${data.netLoc.toLocaleString()} (+${formatCompactVal(data.additions)} / -${formatCompactVal(data.deletions)})`;
+        barColorClass = data.netLoc >= 0 ? 'text-rp-pine' : 'text-rp-love';
+      } else if (metric === 'churn') {
+        valForBar = data.churn;
+        valText = `${formatCompactVal(data.churn)} (${data.churnRatio}% add)`;
+        barColorClass = 'text-rp-pine';
+      } else if (metric === 'streak') {
+        valForBar = data.streak;
+        valText = `${data.streak}d (${data.activeDays} active)`;
+        barColorClass = 'text-rp-gold';
+      }
+
+      const bar = getBar(valForBar, maxVal);
+      if (filledEl) {
+        filledEl.textContent = bar.filled;
+        filledEl.className = `graph-bar-filled font-bold ${barColorClass}`;
+      }
+      if (emptyEl) {
+        emptyEl.textContent = bar.empty;
+      }
+      if (valEl) {
+        valEl.textContent = valText;
+      }
+    });
+  }
+
+  function initGraph() {
+    const tabs = document.querySelectorAll('#graph-tabs .graph-tab');
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const metric = tab.getAttribute('data-metric');
+        if (metric) updateGraph(metric);
+      });
+    });
+  }
+
+  initGraph();
+  document.addEventListener('astro:after-swap', initGraph);
+</script>
