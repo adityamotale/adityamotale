@@ -10,6 +10,7 @@ import CodingStats from '../components/CodingStats.astro';
 import MonthlyStats from '../components/MonthlyStats.astro';
 import WeeklyStats from '../components/WeeklyStats.astro';
 import MetricGraph from '../components/MetricGraph.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 <Layout>
@@ -53,5 +54,9 @@ import MetricGraph from '../components/MetricGraph.astro';
     <section id="section-metric-graph">
       <MetricGraph />
     </section>
+
+    <div class="h-[40vh]"></div>
+
+    <Footer />
   </main>
 </Layout>

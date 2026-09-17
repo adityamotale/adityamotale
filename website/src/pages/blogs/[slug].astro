@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
 import { formatBlogDate, getAllBlogPosts } from '../../lib/blog';
 import type { ParsedBlogPost } from 'mdparser';
 
@@ -205,6 +206,8 @@ const pageDescription =
     )}
 
     <div class="h-[40vh]"></div>
+
+    <Footer />
   </main>
 </Layout>
 
