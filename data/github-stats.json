@@ -3507,5 +3507,260 @@
     "2025-12-30": 3,
     "2025-12-31": 0,
     "2026-09-16": 1
-  }
+  },
+  "weekly_summary": {
+    "period": {
+      "from": "2026-09-06T00:00:00Z",
+      "to": "2026-09-12T23:59:59Z"
+    },
+    "lines_of_code": {
+      "total_additions": 11325,
+      "total_deletions": 2404,
+      "net_lines": 8921
+    },
+    "commits": 87,
+    "pull_requests": {
+      "total": 1,
+      "merged": 1,
+      "open": 0,
+      "closed_unmerged": 0,
+      "merge_rate_percentage": 100
+    },
+    "streaks_and_consistency": {
+      "longest_streak_days": 5,
+      "current_streak_days": 0,
+      "active_days_count": 5,
+      "total_days_in_period": 7,
+      "activity_rate_percentage": 71.43,
+      "busiest_day": {
+        "date": "2026-09-09",
+        "count": 27
+      }
+    },
+    "repositories": {
+      "total": 2,
+      "public": 0,
+      "private": 0,
+      "org": 2
+    }
+  },
+  "monthly_history": [
+    {
+      "label": "Apr '26",
+      "year": 2026,
+      "month": 4,
+      "period": {
+        "from": "2026-04-01T00:00:00Z",
+        "to": "2026-04-30T23:59:59Z"
+      },
+      "lines_of_code": {
+        "total_additions": 7307,
+        "total_deletions": 559,
+        "net_lines": 6748
+      },
+      "commits": 52,
+      "pull_requests": {
+        "total": 10,
+        "merged": 10,
+        "open": 0,
+        "closed_unmerged": 0,
+        "merge_rate_percentage": 100
+      },
+      "streaks_and_consistency": {
+        "longest_streak_days": 6,
+        "current_streak_days": 5,
+        "active_days_count": 13,
+        "total_days_in_period": 30,
+        "activity_rate_percentage": 43.33,
+        "busiest_day": {
+          "date": "2026-04-01",
+          "count": 23
+        }
+      },
+      "repositories": {
+        "total": 3,
+        "public": 1,
+        "private": 0,
+        "org": 2
+      },
+      "top_stack": [
+        "frozen-core",
+        "dotfiles",
+        "rta"
+      ]
+    },
+    {
+      "label": "May '26",
+      "year": 2026,
+      "month": 5,
+      "period": {
+        "from": "2026-05-01T00:00:00Z",
+        "to": "2026-05-31T23:59:59Z"
+      },
+      "lines_of_code": {
+        "total_additions": 3823,
+        "total_deletions": 5496,
+        "net_lines": -1673
+      },
+      "commits": 61,
+      "pull_requests": {
+        "total": 3,
+        "merged": 2,
+        "open": 0,
+        "closed_unmerged": 1,
+        "merge_rate_percentage": 66.67
+      },
+      "streaks_and_consistency": {
+        "longest_streak_days": 12,
+        "current_streak_days": 3,
+        "active_days_count": 20,
+        "total_days_in_period": 31,
+        "activity_rate_percentage": 64.52,
+        "busiest_day": {
+          "date": "2026-05-13",
+          "count": 11
+        }
+      },
+      "repositories": {
+        "total": 3,
+        "public": 0,
+        "private": 0,
+        "org": 3
+      },
+      "top_stack": [
+        "rta",
+        "frozen-core",
+        "kosa"
+      ]
+    },
+    {
+      "label": "Jun '26",
+      "year": 2026,
+      "month": 6,
+      "period": {
+        "from": "2026-06-01T00:00:00Z",
+        "to": "2026-06-30T23:59:59Z"
+      },
+      "lines_of_code": {
+        "total_additions": 10347,
+        "total_deletions": 7323,
+        "net_lines": 3024
+      },
+      "commits": 80,
+      "pull_requests": {
+        "total": 25,
+        "merged": 25,
+        "open": 0,
+        "closed_unmerged": 0,
+        "merge_rate_percentage": 100
+      },
+      "streaks_and_consistency": {
+        "longest_streak_days": 8,
+        "current_streak_days": 3,
+        "active_days_count": 20,
+        "total_days_in_period": 30,
+        "activity_rate_percentage": 66.67,
+        "busiest_day": {
+          "date": "2026-06-03",
+          "count": 18
+        }
+      },
+      "repositories": {
+        "total": 2,
+        "public": 0,
+        "private": 0,
+        "org": 2
+      },
+      "top_stack": [
+        "frozen-core",
+        "rta"
+      ]
+    },
+    {
+      "label": "Jul '26",
+      "year": 2026,
+      "month": 7,
+      "period": {
+        "from": "2026-07-01T00:00:00Z",
+        "to": "2026-07-31T23:59:59Z"
+      },
+      "lines_of_code": {
+        "total_additions": 15093,
+        "total_deletions": 5642,
+        "net_lines": 9451
+      },
+      "commits": 217,
+      "pull_requests": {
+        "total": 11,
+        "merged": 11,
+        "open": 0,
+        "closed_unmerged": 0,
+        "merge_rate_percentage": 100
+      },
+      "streaks_and_consistency": {
+        "longest_streak_days": 31,
+        "current_streak_days": 31,
+        "active_days_count": 31,
+        "total_days_in_period": 31,
+        "activity_rate_percentage": 100,
+        "busiest_day": {
+          "date": "2026-07-07",
+          "count": 27
+        }
+      },
+      "repositories": {
+        "total": 8,
+        "public": 2,
+        "private": 0,
+        "org": 6
+      },
+      "top_stack": [
+        "turbo_base64",
+        "kosa",
+        "turbo_crc"
+      ]
+    },
+    {
+      "label": "Aug '26",
+      "year": 2026,
+      "month": 8,
+      "period": {
+        "from": "2026-08-01T00:00:00Z",
+        "to": "2026-08-31T23:59:59Z"
+      },
+      "lines_of_code": {
+        "total_additions": 28973,
+        "total_deletions": 8972,
+        "net_lines": 20001
+      },
+      "commits": 309,
+      "pull_requests": {
+        "total": 0,
+        "merged": 0,
+        "open": 0,
+        "closed_unmerged": 0,
+        "merge_rate_percentage": 0
+      },
+      "streaks_and_consistency": {
+        "longest_streak_days": 16,
+        "current_streak_days": 16,
+        "active_days_count": 26,
+        "total_days_in_period": 31,
+        "activity_rate_percentage": 83.87,
+        "busiest_day": {
+          "date": "2026-08-30",
+          "count": 37
+        }
+      },
+      "repositories": {
+        "total": 1,
+        "public": 0,
+        "private": 0,
+        "org": 1
+      },
+      "top_stack": [
+        "ashwa"
+      ]
+    }
+  ]
 }
