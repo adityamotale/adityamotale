@@ -24,8 +24,14 @@ jobs:
         with:
           node-version: 24
 
+      - name: Install dependencies (mdparser)
+        run: npm --prefix mdparser ci
+
       - name: Install dependencies (website)
         run: npm --prefix website ci
+
+      - name: Install dependencies (scripts)
+        run: npm --prefix scripts ci
 
       - name: Run format check
         run: ./format.sh --check

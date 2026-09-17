@@ -8,5 +8,8 @@
     "test": "node --test",
     "format": "prettier --write \"**/*.{ts,js,json,md}\"",
     "format:check": "prettier --check \"**/*.{ts,js,json,md}\""
+  },
+  "devDependencies": {
+    "prettier": "^3.9.7"
   }
 }
