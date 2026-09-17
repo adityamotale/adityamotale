@@ -14,177 +14,195 @@
   },
   "languages": [
     {
-      "name": "C",
-      "color": "#555555",
-      "bytes": 5903204,
-      "percentage": 50.41
+      "name": "Rust",
+      "color": "#dea584",
+      "loc": 1554872,
+      "percentage": 61.6
     },
     {
       "name": "JavaScript",
       "color": "#f1e05a",
-      "bytes": 1986642,
-      "percentage": 16.96
+      "loc": 199342,
+      "percentage": 7.9
     },
     {
       "name": "Dart",
       "color": "#00B4AB",
-      "bytes": 1524157,
-      "percentage": 13.01
+      "loc": 170906,
+      "percentage": 6.77
     },
     {
-      "name": "Rust",
-      "color": "#dea584",
-      "bytes": 565594,
-      "percentage": 4.83
-    },
-    {
-      "name": "Python",
-      "color": "#3572A5",
-      "bytes": 275453,
-      "percentage": 2.35
+      "name": "C",
+      "color": "#555555",
+      "loc": 129252,
+      "percentage": 5.12
     },
     {
       "name": "TypeScript",
       "color": "#3178c6",
-      "bytes": 269035,
-      "percentage": 2.3
+      "loc": 119016,
+      "percentage": 4.71
     },
     {
-      "name": "Assembly",
-      "color": "#6E4C13",
-      "bytes": 202228,
-      "percentage": 1.73
-    },
-    {
-      "name": "C++",
-      "color": "#f34b7d",
-      "bytes": 186102,
-      "percentage": 1.59
-    },
-    {
-      "name": "Zig",
-      "color": "#ec915c",
-      "bytes": 170845,
-      "percentage": 1.46
+      "name": "Python",
+      "color": "#3572A5",
+      "loc": 85626,
+      "percentage": 3.39
     },
     {
       "name": "Svelte",
       "color": "#ff3e00",
-      "bytes": 124010,
-      "percentage": 1.06
+      "loc": 68891,
+      "percentage": 2.73
     },
     {
-      "name": "CMake",
-      "color": "#DA3434",
-      "bytes": 110137,
-      "percentage": 0.94
+      "name": "Assembly",
+      "color": "#6E4C13",
+      "loc": 63969,
+      "percentage": 2.53
     },
     {
       "name": "HTML",
       "color": "#e34c26",
-      "bytes": 104202,
-      "percentage": 0.89
-    },
-    {
-      "name": "Jupyter Notebook",
-      "color": "#DA5B0B",
-      "bytes": 97832,
-      "percentage": 0.84
-    },
-    {
-      "name": "CSS",
-      "color": "#663399",
-      "bytes": 47080,
-      "percentage": 0.4
-    },
-    {
-      "name": "Julia",
-      "color": "#a270ba",
-      "bytes": 34184,
-      "percentage": 0.29
-    },
-    {
-      "name": "Makefile",
-      "color": "#427819",
-      "bytes": 25533,
-      "percentage": 0.22
+      "loc": 39405,
+      "percentage": 1.56
     },
     {
       "name": "Astro",
       "color": "#ff5a03",
-      "bytes": 18910,
-      "percentage": 0.16
+      "loc": 24974,
+      "percentage": 0.99
     },
     {
-      "name": "Shell",
-      "color": "#89e051",
-      "bytes": 16628,
-      "percentage": 0.14
+      "name": "C++",
+      "color": "#f34b7d",
+      "loc": 17412,
+      "percentage": 0.69
     },
     {
-      "name": "PowerShell",
-      "color": "#012456",
-      "bytes": 10367,
-      "percentage": 0.09
+      "name": "CMake",
+      "color": "#DA3434",
+      "loc": 11128,
+      "percentage": 0.44
     },
     {
-      "name": "Swift",
-      "color": "#F05138",
-      "bytes": 10119,
-      "percentage": 0.09
-    },
-    {
-      "name": "SCSS",
-      "color": "#c6538c",
-      "bytes": 9971,
-      "percentage": 0.09
+      "name": "CSS",
+      "color": "#663399",
+      "loc": 9947,
+      "percentage": 0.39
     },
     {
       "name": "Nix",
       "color": "#7e7eff",
-      "bytes": 5364,
-      "percentage": 0.05
+      "loc": 8589,
+      "percentage": 0.34
     },
     {
-      "name": "Cuda",
-      "color": "#3A4E3A",
-      "bytes": 5212,
-      "percentage": 0.04
+      "name": "Shell",
+      "color": "#89e051",
+      "loc": 7131,
+      "percentage": 0.28
     },
     {
-      "name": "Just",
-      "color": "#384d54",
-      "bytes": 2918,
-      "percentage": 0.02
+      "name": "PowerShell",
+      "color": "#012456",
+      "loc": 3322,
+      "percentage": 0.13
+    },
+    {
+      "name": "Zig",
+      "color": "#ec915c",
+      "loc": 3328,
+      "percentage": 0.13
+    },
+    {
+      "name": "Jupyter Notebook",
+      "color": "#DA5B0B",
+      "loc": 2627,
+      "percentage": 0.1
     },
     {
       "name": "Dockerfile",
       "color": "#384d54",
-      "bytes": 2387,
+      "loc": 1150,
+      "percentage": 0.05
+    },
+    {
+      "name": "Swift",
+      "color": "#F05138",
+      "loc": 890,
+      "percentage": 0.04
+    },
+    {
+      "name": "Makefile",
+      "color": "#427819",
+      "loc": 759,
+      "percentage": 0.03
+    },
+    {
+      "name": "Julia",
+      "color": "#a270ba",
+      "loc": 650,
+      "percentage": 0.03
+    },
+    {
+      "name": "Cuda",
+      "color": "#3A4E3A",
+      "loc": 412,
       "percentage": 0.02
     },
     {
-      "name": "Verilog",
-      "color": "#b2b7f8",
-      "bytes": 1336,
+      "name": "HCL",
+      "color": "#844FBA",
+      "loc": 342,
       "percentage": 0.01
-    },
-    {
-      "name": "Kotlin",
-      "color": "#A97BFF",
-      "bytes": 1010,
-      "percentage": 0.01
-    },
-    {
-      "name": "Objective-C",
-      "color": "#438eff",
-      "bytes": 266,
-      "percentage": 0
     },
     {
       "name": "Batchfile",
       "color": "#C1F12E",
-      "bytes": 163,
+      "loc": 13,
+      "percentage": 0
+    },
+    {
+      "name": "Kotlin",
+      "color": "#A97BFF",
+      "loc": 96,
+      "percentage": 0
+    },
+    {
+      "name": "Objective-C",
+      "color": "#438eff",
+      "loc": 24,
+      "percentage": 0
+    },
+    {
+      "name": "Verilog",
+      "color": "#b2b7f8",
+      "loc": 106,
+      "percentage": 0
+    },
+    {
+      "name": "SCSS",
+      "color": "#c6538c",
+      "loc": 0,
+      "percentage": 0
+    },
+    {
+      "name": "Just",
+      "color": "#384d54",
+      "loc": 0,
+      "percentage": 0
+    },
+    {
+      "name": "Ruby",
+      "color": "#701516",
+      "loc": 50,
+      "percentage": 0
+    },
+    {
+      "name": "Java",
+      "color": "#b07219",
+      "loc": 24,
       "percentage": 0
     }
   ],
@@ -235,7 +253,21 @@
       "additions": 62046,
       "deletions": 59802,
       "net_lines": 2244,
-      "total_contributions": 508
+      "total_contributions": 508,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 41066,
+          "percentage": 98.81
+        },
+        {
+          "name": "Nix",
+          "color": "#7e7eff",
+          "bytes": 493,
+          "percentage": 1.19
+        }
+      ]
     },
     {
       "repository": "pid7-org/frozen-core",
@@ -248,7 +280,21 @@
       "additions": 48547,
       "deletions": 28179,
       "net_lines": 20368,
-      "total_contributions": 470
+      "total_contributions": 470,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 355572,
+          "percentage": 99.86
+        },
+        {
+          "name": "Nix",
+          "color": "#7e7eff",
+          "bytes": 493,
+          "percentage": 0.14
+        }
+      ]
     },
     {
       "repository": "adityamotale/Nest-Frontend",
@@ -261,7 +307,69 @@
       "additions": 64126,
       "deletions": 38125,
       "net_lines": 26001,
-      "total_contributions": 311
+      "total_contributions": 311,
+      "languages": [
+        {
+          "name": "Dart",
+          "color": "#00B4AB",
+          "bytes": 724172,
+          "percentage": 95.71
+        },
+        {
+          "name": "C++",
+          "color": "#f34b7d",
+          "bytes": 17317,
+          "percentage": 2.29
+        },
+        {
+          "name": "CMake",
+          "color": "#DA3434",
+          "bytes": 8285,
+          "percentage": 1.09
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 4599,
+          "percentage": 0.61
+        },
+        {
+          "name": "C",
+          "color": "#555555",
+          "bytes": 734,
+          "percentage": 0.1
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 604,
+          "percentage": 0.08
+        },
+        {
+          "name": "Swift",
+          "color": "#F05138",
+          "bytes": 404,
+          "percentage": 0.05
+        },
+        {
+          "name": "Python",
+          "color": "#3572A5",
+          "bytes": 205,
+          "percentage": 0.03
+        },
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 172,
+          "percentage": 0.02
+        },
+        {
+          "name": "Batchfile",
+          "color": "#C1F12E",
+          "bytes": 163,
+          "percentage": 0.02
+        }
+      ]
     },
     {
       "repository": "pid7-org/ashwa",
@@ -274,7 +382,45 @@
       "additions": 28973,
       "deletions": 8972,
       "net_lines": 20001,
-      "total_contributions": 309
+      "total_contributions": 309,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 236385,
+          "percentage": 50.17
+        },
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 122055,
+          "percentage": 25.9
+        },
+        {
+          "name": "Python",
+          "color": "#3572A5",
+          "bytes": 56738,
+          "percentage": 12.04
+        },
+        {
+          "name": "Shell",
+          "color": "#89e051",
+          "bytes": 48825,
+          "percentage": 10.36
+        },
+        {
+          "name": "HCL",
+          "color": "#844FBA",
+          "bytes": 5580,
+          "percentage": 1.18
+        },
+        {
+          "name": "C",
+          "color": "#555555",
+          "bytes": 1621,
+          "percentage": 0.34
+        }
+      ]
     },
     {
       "repository": "pid7-org/website",
@@ -287,7 +433,33 @@
       "additions": 31972,
       "deletions": 6378,
       "net_lines": 25594,
-      "total_contributions": 248
+      "total_contributions": 248,
+      "languages": [
+        {
+          "name": "TypeScript",
+          "color": "#3178c6",
+          "bytes": 113340,
+          "percentage": 53.25
+        },
+        {
+          "name": "Astro",
+          "color": "#ff5a03",
+          "bytes": 94306,
+          "percentage": 44.3
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 5006,
+          "percentage": 2.35
+        },
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 208,
+          "percentage": 0.1
+        }
+      ]
     },
     {
       "repository": "adityamotale/ocelot",
@@ -300,7 +472,15 @@
       "additions": 15498,
       "deletions": 15245,
       "net_lines": 253,
-      "total_contributions": 215
+      "total_contributions": 215,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 19,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "adityamotale/thehraav",
@@ -313,7 +493,33 @@
       "additions": 48776,
       "deletions": 21556,
       "net_lines": 27220,
-      "total_contributions": 146
+      "total_contributions": 146,
+      "languages": [
+        {
+          "name": "TypeScript",
+          "color": "#3178c6",
+          "bytes": 102924,
+          "percentage": 88.25
+        },
+        {
+          "name": "Astro",
+          "color": "#ff5a03",
+          "bytes": 9336,
+          "percentage": 8.01
+        },
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 2404,
+          "percentage": 2.06
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 1961,
+          "percentage": 1.68
+        }
+      ]
     },
     {
       "repository": "pid7-org/kosa",
@@ -326,7 +532,21 @@
       "additions": 14236,
       "deletions": 10998,
       "net_lines": 3238,
-      "total_contributions": 134
+      "total_contributions": 134,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 59466,
+          "percentage": 99.18
+        },
+        {
+          "name": "Nix",
+          "color": "#7e7eff",
+          "bytes": 493,
+          "percentage": 0.82
+        }
+      ]
     },
     {
       "repository": "adityamotale/anvaya",
@@ -339,7 +559,33 @@
       "additions": 655445,
       "deletions": 630488,
       "net_lines": 24957,
-      "total_contributions": 131
+      "total_contributions": 131,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 239365,
+          "percentage": 96.24
+        },
+        {
+          "name": "Python",
+          "color": "#3572A5",
+          "bytes": 7982,
+          "percentage": 3.21
+        },
+        {
+          "name": "Nix",
+          "color": "#7e7eff",
+          "bytes": 1140,
+          "percentage": 0.46
+        },
+        {
+          "name": "Shell",
+          "color": "#89e051",
+          "bytes": 222,
+          "percentage": 0.09
+        }
+      ]
     },
     {
       "repository": "adityamotale/asm_tcp",
@@ -352,7 +598,45 @@
       "additions": 10500,
       "deletions": 3192,
       "net_lines": 7308,
-      "total_contributions": 87
+      "total_contributions": 87,
+      "languages": [
+        {
+          "name": "Assembly",
+          "color": "#6E4C13",
+          "bytes": 115400,
+          "percentage": 69.32
+        },
+        {
+          "name": "C++",
+          "color": "#f34b7d",
+          "bytes": 38797,
+          "percentage": 23.3
+        },
+        {
+          "name": "C",
+          "color": "#555555",
+          "bytes": 8161,
+          "percentage": 4.9
+        },
+        {
+          "name": "Makefile",
+          "color": "#427819",
+          "bytes": 3109,
+          "percentage": 1.87
+        },
+        {
+          "name": "Shell",
+          "color": "#89e051",
+          "bytes": 887,
+          "percentage": 0.53
+        },
+        {
+          "name": "Nix",
+          "color": "#7e7eff",
+          "bytes": 127,
+          "percentage": 0.08
+        }
+      ]
     },
     {
       "repository": "pid7-org/rta",
@@ -365,7 +649,21 @@
       "additions": 6848,
       "deletions": 3034,
       "net_lines": 3814,
-      "total_contributions": 85
+      "total_contributions": 85,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 49183,
+          "percentage": 99.01
+        },
+        {
+          "name": "Nix",
+          "color": "#7e7eff",
+          "bytes": 491,
+          "percentage": 0.99
+        }
+      ]
     },
     {
       "repository": "adityamotale/L3",
@@ -378,7 +676,33 @@
       "additions": 378094,
       "deletions": 1690,
       "net_lines": 376404,
-      "total_contributions": 71
+      "total_contributions": 71,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 37736,
+          "percentage": 81.48
+        },
+        {
+          "name": "Assembly",
+          "color": "#6E4C13",
+          "bytes": 6362,
+          "percentage": 13.74
+        },
+        {
+          "name": "C",
+          "color": "#555555",
+          "bytes": 1886,
+          "percentage": 4.07
+        },
+        {
+          "name": "Nix",
+          "color": "#7e7eff",
+          "bytes": 328,
+          "percentage": 0.71
+        }
+      ]
     },
     {
       "repository": "pid7-org/turbo_base64",
@@ -391,7 +715,21 @@
       "additions": 3706,
       "deletions": 589,
       "net_lines": 3117,
-      "total_contributions": 58
+      "total_contributions": 58,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 51583,
+          "percentage": 99.05
+        },
+        {
+          "name": "Nix",
+          "color": "#7e7eff",
+          "bytes": 493,
+          "percentage": 0.95
+        }
+      ]
     },
     {
       "repository": "adityamotale/Rojgary-Frontend",
@@ -404,7 +742,57 @@
       "additions": 19861,
       "deletions": 3652,
       "net_lines": 16209,
-      "total_contributions": 54
+      "total_contributions": 54,
+      "languages": [
+        {
+          "name": "Dart",
+          "color": "#00B4AB",
+          "bytes": 352164,
+          "percentage": 88.38
+        },
+        {
+          "name": "C++",
+          "color": "#f34b7d",
+          "bytes": 21927,
+          "percentage": 5.5
+        },
+        {
+          "name": "CMake",
+          "color": "#DA3434",
+          "bytes": 18228,
+          "percentage": 4.57
+        },
+        {
+          "name": "Swift",
+          "color": "#F05138",
+          "bytes": 2720,
+          "percentage": 0.68
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 1818,
+          "percentage": 0.46
+        },
+        {
+          "name": "C",
+          "color": "#555555",
+          "bytes": 1425,
+          "percentage": 0.36
+        },
+        {
+          "name": "Kotlin",
+          "color": "#A97BFF",
+          "bytes": 124,
+          "percentage": 0.03
+        },
+        {
+          "name": "Objective-C",
+          "color": "#438eff",
+          "bytes": 38,
+          "percentage": 0.01
+        }
+      ]
     },
     {
       "repository": "adityamotale/paw",
@@ -417,7 +805,15 @@
       "additions": 11483,
       "deletions": 4021,
       "net_lines": 7462,
-      "total_contributions": 53
+      "total_contributions": 53,
+      "languages": [
+        {
+          "name": "Dart",
+          "color": "#00B4AB",
+          "bytes": 69666,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "adityamotale/wallpix",
@@ -430,7 +826,69 @@
       "additions": 12596,
       "deletions": 8531,
       "net_lines": 4065,
-      "total_contributions": 51
+      "total_contributions": 51,
+      "languages": [
+        {
+          "name": "Dart",
+          "color": "#00B4AB",
+          "bytes": 63657,
+          "percentage": 66.86
+        },
+        {
+          "name": "C++",
+          "color": "#f34b7d",
+          "bytes": 16818,
+          "percentage": 17.66
+        },
+        {
+          "name": "CMake",
+          "color": "#DA3434",
+          "bytes": 7939,
+          "percentage": 8.34
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 4595,
+          "percentage": 4.83
+        },
+        {
+          "name": "C",
+          "color": "#555555",
+          "bytes": 734,
+          "percentage": 0.77
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 604,
+          "percentage": 0.63
+        },
+        {
+          "name": "Swift",
+          "color": "#F05138",
+          "bytes": 404,
+          "percentage": 0.42
+        },
+        {
+          "name": "Kotlin",
+          "color": "#A97BFF",
+          "bytes": 254,
+          "percentage": 0.27
+        },
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 172,
+          "percentage": 0.18
+        },
+        {
+          "name": "Objective-C",
+          "color": "#438eff",
+          "bytes": 38,
+          "percentage": 0.04
+        }
+      ]
     },
     {
       "repository": "adityamotale/pristine_proto",
@@ -443,7 +901,63 @@
       "additions": 9631,
       "deletions": 4053,
       "net_lines": 5578,
-      "total_contributions": 51
+      "total_contributions": 51,
+      "languages": [
+        {
+          "name": "Dart",
+          "color": "#00B4AB",
+          "bytes": 26888,
+          "percentage": 37.37
+        },
+        {
+          "name": "C++",
+          "color": "#f34b7d",
+          "bytes": 20932,
+          "percentage": 29.09
+        },
+        {
+          "name": "CMake",
+          "color": "#DA3434",
+          "bytes": 18705,
+          "percentage": 26
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 1832,
+          "percentage": 2.55
+        },
+        {
+          "name": "C",
+          "color": "#555555",
+          "bytes": 1425,
+          "percentage": 1.98
+        },
+        {
+          "name": "Swift",
+          "color": "#F05138",
+          "bytes": 1158,
+          "percentage": 1.61
+        },
+        {
+          "name": "Python",
+          "color": "#3572A5",
+          "bytes": 842,
+          "percentage": 1.17
+        },
+        {
+          "name": "Kotlin",
+          "color": "#A97BFF",
+          "bytes": 131,
+          "percentage": 0.18
+        },
+        {
+          "name": "Objective-C",
+          "color": "#438eff",
+          "bytes": 38,
+          "percentage": 0.05
+        }
+      ]
     },
     {
       "repository": "adityamotale/asm_db",
@@ -456,7 +970,39 @@
       "additions": 2011,
       "deletions": 402,
       "net_lines": 1609,
-      "total_contributions": 43
+      "total_contributions": 43,
+      "languages": [
+        {
+          "name": "Assembly",
+          "color": "#6E4C13",
+          "bytes": 21823,
+          "percentage": 65.16
+        },
+        {
+          "name": "C",
+          "color": "#555555",
+          "bytes": 8239,
+          "percentage": 24.6
+        },
+        {
+          "name": "Shell",
+          "color": "#89e051",
+          "bytes": 3031,
+          "percentage": 9.05
+        },
+        {
+          "name": "Makefile",
+          "color": "#427819",
+          "bytes": 269,
+          "percentage": 0.8
+        },
+        {
+          "name": "Nix",
+          "color": "#7e7eff",
+          "bytes": 128,
+          "percentage": 0.38
+        }
+      ]
     },
     {
       "repository": "adityamotale/turboz",
@@ -469,7 +1015,21 @@
       "additions": 2060,
       "deletions": 827,
       "net_lines": 1233,
-      "total_contributions": 40
+      "total_contributions": 40,
+      "languages": [
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 14653,
+          "percentage": 52.77
+        },
+        {
+          "name": "Python",
+          "color": "#3572A5",
+          "bytes": 13113,
+          "percentage": 47.23
+        }
+      ]
     },
     {
       "repository": "adityamotale/dotfiles",
@@ -482,7 +1042,21 @@
       "additions": 2641,
       "deletions": 1410,
       "net_lines": 1231,
-      "total_contributions": 39
+      "total_contributions": 39,
+      "languages": [
+        {
+          "name": "PowerShell",
+          "color": "#012456",
+          "bytes": 6354,
+          "percentage": 81.88
+        },
+        {
+          "name": "Nix",
+          "color": "#7e7eff",
+          "bytes": 1406,
+          "percentage": 18.12
+        }
+      ]
     },
     {
       "repository": "pid7-org/turbo_crc",
@@ -495,7 +1069,21 @@
       "additions": 1873,
       "deletions": 415,
       "net_lines": 1458,
-      "total_contributions": 36
+      "total_contributions": 36,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 14665,
+          "percentage": 96.75
+        },
+        {
+          "name": "Nix",
+          "color": "#7e7eff",
+          "bytes": 493,
+          "percentage": 3.25
+        }
+      ]
     },
     {
       "repository": "adityamotale/snc",
@@ -508,7 +1096,45 @@
       "additions": 65639,
       "deletions": 32,
       "net_lines": 65607,
-      "total_contributions": 33
+      "total_contributions": 33,
+      "languages": [
+        {
+          "name": "Python",
+          "color": "#3572A5",
+          "bytes": 40709,
+          "percentage": 64.34
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 10074,
+          "percentage": 15.92
+        },
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 5863,
+          "percentage": 9.27
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 3422,
+          "percentage": 5.41
+        },
+        {
+          "name": "Shell",
+          "color": "#89e051",
+          "bytes": 2164,
+          "percentage": 3.42
+        },
+        {
+          "name": "Dockerfile",
+          "color": "#384d54",
+          "bytes": 1038,
+          "percentage": 1.64
+        }
+      ]
     },
     {
       "repository": "adityamotale/raven",
@@ -521,7 +1147,39 @@
       "additions": 1567,
       "deletions": 362,
       "net_lines": 1205,
-      "total_contributions": 33
+      "total_contributions": 33,
+      "languages": [
+        {
+          "name": "Assembly",
+          "color": "#6E4C13",
+          "bytes": 16656,
+          "percentage": 70.1
+        },
+        {
+          "name": "C",
+          "color": "#555555",
+          "bytes": 3689,
+          "percentage": 15.52
+        },
+        {
+          "name": "Shell",
+          "color": "#89e051",
+          "bytes": 2445,
+          "percentage": 10.29
+        },
+        {
+          "name": "Makefile",
+          "color": "#427819",
+          "bytes": 822,
+          "percentage": 3.46
+        },
+        {
+          "name": "Nix",
+          "color": "#7e7eff",
+          "bytes": 150,
+          "percentage": 0.63
+        }
+      ]
     },
     {
       "repository": "adityamotale/byte_lab",
@@ -534,7 +1192,39 @@
       "additions": 951,
       "deletions": 232,
       "net_lines": 719,
-      "total_contributions": 30
+      "total_contributions": 30,
+      "languages": [
+        {
+          "name": "Cuda",
+          "color": "#3A4E3A",
+          "bytes": 5212,
+          "percentage": 43.3
+        },
+        {
+          "name": "Assembly",
+          "color": "#6E4C13",
+          "bytes": 2491,
+          "percentage": 20.69
+        },
+        {
+          "name": "Makefile",
+          "color": "#427819",
+          "bytes": 1533,
+          "percentage": 12.73
+        },
+        {
+          "name": "C",
+          "color": "#555555",
+          "bytes": 1466,
+          "percentage": 12.18
+        },
+        {
+          "name": "Verilog",
+          "color": "#b2b7f8",
+          "bytes": 1336,
+          "percentage": 11.1
+        }
+      ]
     },
     {
       "repository": "atharvaborlepwar/classicline",
@@ -547,7 +1237,27 @@
       "additions": 31622,
       "deletions": 603,
       "net_lines": 31019,
-      "total_contributions": 29
+      "total_contributions": 29,
+      "languages": [
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 18142,
+          "percentage": 89.49
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 1723,
+          "percentage": 8.5
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 407,
+          "percentage": 2.01
+        }
+      ]
     },
     {
       "repository": "adityamotale/asm_tuts",
@@ -560,7 +1270,27 @@
       "additions": 402,
       "deletions": 13,
       "net_lines": 389,
-      "total_contributions": 26
+      "total_contributions": 26,
+      "languages": [
+        {
+          "name": "Assembly",
+          "color": "#6E4C13",
+          "bytes": 5539,
+          "percentage": 95.14
+        },
+        {
+          "name": "C",
+          "color": "#555555",
+          "bytes": 142,
+          "percentage": 2.44
+        },
+        {
+          "name": "Nix",
+          "color": "#7e7eff",
+          "bytes": 141,
+          "percentage": 2.42
+        }
+      ]
     },
     {
       "repository": "pid7-org/y3",
@@ -573,7 +1303,15 @@
       "additions": 374789,
       "deletions": 371986,
       "net_lines": 2803,
-      "total_contributions": 25
+      "total_contributions": 25,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 31,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "histral/news_scrapers",
@@ -586,7 +1324,15 @@
       "additions": 5009,
       "deletions": 3263,
       "net_lines": 1746,
-      "total_contributions": 23
+      "total_contributions": 23,
+      "languages": [
+        {
+          "name": "Python",
+          "color": "#3572A5",
+          "bytes": 41427,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "histral/content",
@@ -599,7 +1345,15 @@
       "additions": 2029,
       "deletions": 57,
       "net_lines": 1972,
-      "total_contributions": 23
+      "total_contributions": 23,
+      "languages": [
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 3786,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "adityamotale/adii_sheri",
@@ -612,7 +1366,27 @@
       "additions": 8090,
       "deletions": 255,
       "net_lines": 7835,
-      "total_contributions": 21
+      "total_contributions": 21,
+      "languages": [
+        {
+          "name": "TypeScript",
+          "color": "#3178c6",
+          "bytes": 28072,
+          "percentage": 92.17
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 1742,
+          "percentage": 5.72
+        },
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 644,
+          "percentage": 2.11
+        }
+      ]
     },
     {
       "repository": "adityamotale/exercism",
@@ -625,7 +1399,39 @@
       "additions": 116121,
       "deletions": 3,
       "net_lines": 116118,
-      "total_contributions": 20
+      "total_contributions": 20,
+      "languages": [
+        {
+          "name": "C",
+          "color": "#555555",
+          "bytes": 5868685,
+          "percentage": 95.9
+        },
+        {
+          "name": "Zig",
+          "color": "#ec915c",
+          "bytes": 166968,
+          "percentage": 2.73
+        },
+        {
+          "name": "Julia",
+          "color": "#a270ba",
+          "bytes": 34184,
+          "percentage": 0.56
+        },
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 29640,
+          "percentage": 0.48
+        },
+        {
+          "name": "Makefile",
+          "color": "#427819",
+          "bytes": 19800,
+          "percentage": 0.32
+        }
+      ]
     },
     {
       "repository": "adityamotale/file_hash",
@@ -638,7 +1444,15 @@
       "additions": 2492,
       "deletions": 529,
       "net_lines": 1963,
-      "total_contributions": 19
+      "total_contributions": 19,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 52843,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "adityamotale/ssmm_erp",
@@ -651,7 +1465,39 @@
       "additions": 32409,
       "deletions": 5271,
       "net_lines": 27138,
-      "total_contributions": 18
+      "total_contributions": 18,
+      "languages": [
+        {
+          "name": "Svelte",
+          "color": "#ff3e00",
+          "bytes": 56992,
+          "percentage": 57.43
+        },
+        {
+          "name": "TypeScript",
+          "color": "#3178c6",
+          "bytes": 37394,
+          "percentage": 37.68
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 2903,
+          "percentage": 2.93
+        },
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 1611,
+          "percentage": 1.62
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 331,
+          "percentage": 0.33
+        }
+      ]
     },
     {
       "repository": "adityamotale/dohl",
@@ -664,7 +1510,21 @@
       "additions": 1089,
       "deletions": 799,
       "net_lines": 290,
-      "total_contributions": 18
+      "total_contributions": 18,
+      "languages": [
+        {
+          "name": "Nix",
+          "color": "#7e7eff",
+          "bytes": 493,
+          "percentage": 54.06
+        },
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 419,
+          "percentage": 45.94
+        }
+      ]
     },
     {
       "repository": "adityamotale/powershell_scripts",
@@ -677,7 +1537,15 @@
       "additions": 1060,
       "deletions": 726,
       "net_lines": 334,
-      "total_contributions": 18
+      "total_contributions": 18,
+      "languages": [
+        {
+          "name": "PowerShell",
+          "color": "#012456",
+          "bytes": 3891,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "adityamotale/csn-tickets",
@@ -690,7 +1558,39 @@
       "additions": 29840,
       "deletions": 5586,
       "net_lines": 24254,
-      "total_contributions": 17
+      "total_contributions": 17,
+      "languages": [
+        {
+          "name": "Svelte",
+          "color": "#ff3e00",
+          "bytes": 34868,
+          "percentage": 56.67
+        },
+        {
+          "name": "TypeScript",
+          "color": "#3178c6",
+          "bytes": 23327,
+          "percentage": 37.91
+        },
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 1611,
+          "percentage": 2.62
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 1172,
+          "percentage": 1.9
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 554,
+          "percentage": 0.9
+        }
+      ]
     },
     {
       "repository": "adityamotale/tic_tac_toe",
@@ -703,7 +1603,57 @@
       "additions": 10155,
       "deletions": 634,
       "net_lines": 9521,
-      "total_contributions": 17
+      "total_contributions": 17,
+      "languages": [
+        {
+          "name": "Dart",
+          "color": "#00B4AB",
+          "bytes": 183333,
+          "percentage": 79.07
+        },
+        {
+          "name": "C++",
+          "color": "#f34b7d",
+          "bytes": 24207,
+          "percentage": 10.44
+        },
+        {
+          "name": "CMake",
+          "color": "#DA3434",
+          "bytes": 19472,
+          "percentage": 8.4
+        },
+        {
+          "name": "Swift",
+          "color": "#F05138",
+          "bytes": 1977,
+          "percentage": 0.85
+        },
+        {
+          "name": "C",
+          "color": "#555555",
+          "bytes": 1425,
+          "percentage": 0.61
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 1292,
+          "percentage": 0.56
+        },
+        {
+          "name": "Kotlin",
+          "color": "#A97BFF",
+          "bytes": 124,
+          "percentage": 0.05
+        },
+        {
+          "name": "Objective-C",
+          "color": "#438eff",
+          "bytes": 38,
+          "percentage": 0.02
+        }
+      ]
     },
     {
       "repository": "adityamotale/turbo_fox_proto",
@@ -716,7 +1666,15 @@
       "additions": 4351,
       "deletions": 576,
       "net_lines": 3775,
-      "total_contributions": 17
+      "total_contributions": 17,
+      "languages": [
+        {
+          "name": "Python",
+          "color": "#3572A5",
+          "bytes": 115135,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "pid7-org/vuoto",
@@ -729,7 +1687,27 @@
       "additions": 3605,
       "deletions": 1915,
       "net_lines": 1690,
-      "total_contributions": 17
+      "total_contributions": 17,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 25688,
+          "percentage": 96.34
+        },
+        {
+          "name": "Nix",
+          "color": "#7e7eff",
+          "bytes": 791,
+          "percentage": 2.97
+        },
+        {
+          "name": "Shell",
+          "color": "#89e051",
+          "bytes": 184,
+          "percentage": 0.69
+        }
+      ]
     },
     {
       "repository": "adityamotale/http_rs",
@@ -742,7 +1720,15 @@
       "additions": 997,
       "deletions": 233,
       "net_lines": 764,
-      "total_contributions": 17
+      "total_contributions": 17,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 14439,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "adityamotale/orderline",
@@ -755,7 +1741,33 @@
       "additions": 9758,
       "deletions": 463,
       "net_lines": 9295,
-      "total_contributions": 16
+      "total_contributions": 16,
+      "languages": [
+        {
+          "name": "TypeScript",
+          "color": "#3178c6",
+          "bytes": 43485,
+          "percentage": 88.46
+        },
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 2831,
+          "percentage": 5.76
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 1656,
+          "percentage": 3.37
+        },
+        {
+          "name": "Shell",
+          "color": "#89e051",
+          "bytes": 1187,
+          "percentage": 2.41
+        }
+      ]
     },
     {
       "repository": "adityamotale/python_exercises",
@@ -768,7 +1780,15 @@
       "additions": 1026,
       "deletions": 33,
       "net_lines": 993,
-      "total_contributions": 16
+      "total_contributions": 16,
+      "languages": [
+        {
+          "name": "Python",
+          "color": "#3572A5",
+          "bytes": 28277,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "ranveer-rajput/python_exercises",
@@ -781,7 +1801,15 @@
       "additions": 1026,
       "deletions": 33,
       "net_lines": 993,
-      "total_contributions": 16
+      "total_contributions": 16,
+      "languages": [
+        {
+          "name": "Python",
+          "color": "#3572A5",
+          "bytes": 29572,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "adityamotale/zero2prod",
@@ -794,7 +1822,27 @@
       "additions": 4931,
       "deletions": 505,
       "net_lines": 4426,
-      "total_contributions": 15
+      "total_contributions": 15,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 10740,
+          "percentage": 87.84
+        },
+        {
+          "name": "Shell",
+          "color": "#89e051",
+          "bytes": 1303,
+          "percentage": 10.66
+        },
+        {
+          "name": "Dockerfile",
+          "color": "#384d54",
+          "bytes": 184,
+          "percentage": 1.5
+        }
+      ]
     },
     {
       "repository": "adityamotale/tasksai",
@@ -807,7 +1855,15 @@
       "additions": 3268,
       "deletions": 23,
       "net_lines": 3245,
-      "total_contributions": 15
+      "total_contributions": 15,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 37833,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "adityamotale/portfolio_site",
@@ -820,7 +1876,39 @@
       "additions": 23515,
       "deletions": 14377,
       "net_lines": 9138,
-      "total_contributions": 14
+      "total_contributions": 14,
+      "languages": [
+        {
+          "name": "Svelte",
+          "color": "#ff3e00",
+          "bytes": 14882,
+          "percentage": 80.48
+        },
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 1797,
+          "percentage": 9.72
+        },
+        {
+          "name": "TypeScript",
+          "color": "#3178c6",
+          "bytes": 1102,
+          "percentage": 5.96
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 365,
+          "percentage": 1.97
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 346,
+          "percentage": 1.87
+        }
+      ]
     },
     {
       "repository": "adityamotale/ml_compendium",
@@ -833,7 +1921,15 @@
       "additions": 2627,
       "deletions": 259,
       "net_lines": 2368,
-      "total_contributions": 14
+      "total_contributions": 14,
+      "languages": [
+        {
+          "name": "Jupyter Notebook",
+          "color": "#DA5B0B",
+          "bytes": 97832,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "pid7-org/stingray",
@@ -846,7 +1942,15 @@
       "additions": 52746,
       "deletions": 37,
       "net_lines": 52709,
-      "total_contributions": 13
+      "total_contributions": 13,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 7610,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "adityamotale/gui_asm",
@@ -859,7 +1963,15 @@
       "additions": 1094,
       "deletions": 60,
       "net_lines": 1034,
-      "total_contributions": 12
+      "total_contributions": 12,
+      "languages": [
+        {
+          "name": "Assembly",
+          "color": "#6E4C13",
+          "bytes": 24901,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "adityamotale/tasks_cli",
@@ -872,7 +1984,15 @@
       "additions": 2478,
       "deletions": 149,
       "net_lines": 2329,
-      "total_contributions": 11
+      "total_contributions": 11,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 15096,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "parag1902/onfootage",
@@ -885,7 +2005,27 @@
       "additions": 2293,
       "deletions": 274,
       "net_lines": 2019,
-      "total_contributions": 11
+      "total_contributions": 11,
+      "languages": [
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 13563,
+          "percentage": 83.82
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 2243,
+          "percentage": 13.86
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 375,
+          "percentage": 2.32
+        }
+      ]
     },
     {
       "repository": "adityamotale/atLeave",
@@ -898,7 +2038,45 @@
       "additions": 27722,
       "deletions": 238,
       "net_lines": 27484,
-      "total_contributions": 10
+      "total_contributions": 10,
+      "languages": [
+        {
+          "name": "Svelte",
+          "color": "#ff3e00",
+          "bytes": 17268,
+          "percentage": 51.13
+        },
+        {
+          "name": "TypeScript",
+          "color": "#3178c6",
+          "bytes": 11314,
+          "percentage": 33.5
+        },
+        {
+          "name": "Astro",
+          "color": "#ff5a03",
+          "bytes": 3828,
+          "percentage": 11.33
+        },
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 870,
+          "percentage": 2.58
+        },
+        {
+          "name": "Python",
+          "color": "#3572A5",
+          "bytes": 371,
+          "percentage": 1.1
+        },
+        {
+          "name": "PowerShell",
+          "color": "#012456",
+          "bytes": 122,
+          "percentage": 0.36
+        }
+      ]
     },
     {
       "repository": "adityamotale/rust_dev",
@@ -911,7 +2089,15 @@
       "additions": 3298,
       "deletions": 71,
       "net_lines": 3227,
-      "total_contributions": 10
+      "total_contributions": 10,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 49353,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "1code-dev/content_old",
@@ -924,7 +2110,15 @@
       "additions": 2763,
       "deletions": 317,
       "net_lines": 2446,
-      "total_contributions": 10
+      "total_contributions": 10,
+      "languages": [
+        {
+          "name": "Python",
+          "color": "#3572A5",
+          "bytes": 5525,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "histral/histral_core",
@@ -937,7 +2131,15 @@
       "additions": 1000,
       "deletions": 128,
       "net_lines": 872,
-      "total_contributions": 10
+      "total_contributions": 10,
+      "languages": [
+        {
+          "name": "Python",
+          "color": "#3572A5",
+          "bytes": 16976,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "adityamotale/paw_prototype",
@@ -950,7 +2152,57 @@
       "additions": 6226,
       "deletions": 100,
       "net_lines": 6126,
-      "total_contributions": 9
+      "total_contributions": 9,
+      "languages": [
+        {
+          "name": "Dart",
+          "color": "#00B4AB",
+          "bytes": 41776,
+          "percentage": 47.06
+        },
+        {
+          "name": "C++",
+          "color": "#f34b7d",
+          "bytes": 23061,
+          "percentage": 25.98
+        },
+        {
+          "name": "CMake",
+          "color": "#DA3434",
+          "bytes": 18766,
+          "percentage": 21.14
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 1853,
+          "percentage": 2.09
+        },
+        {
+          "name": "Swift",
+          "color": "#F05138",
+          "bytes": 1728,
+          "percentage": 1.95
+        },
+        {
+          "name": "C",
+          "color": "#555555",
+          "bytes": 1425,
+          "percentage": 1.61
+        },
+        {
+          "name": "Kotlin",
+          "color": "#A97BFF",
+          "bytes": 130,
+          "percentage": 0.15
+        },
+        {
+          "name": "Objective-C",
+          "color": "#438eff",
+          "bytes": 38,
+          "percentage": 0.04
+        }
+      ]
     },
     {
       "repository": "adityamotale/web_server_js",
@@ -963,7 +2215,21 @@
       "additions": 1931,
       "deletions": 55,
       "net_lines": 1876,
-      "total_contributions": 9
+      "total_contributions": 9,
+      "languages": [
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 36508,
+          "percentage": 63.03
+        },
+        {
+          "name": "TypeScript",
+          "color": "#3178c6",
+          "bytes": 21417,
+          "percentage": 36.97
+        }
+      ]
     },
     {
       "repository": "histral/news_summaries",
@@ -976,7 +2242,15 @@
       "additions": 1759,
       "deletions": 38,
       "net_lines": 1721,
-      "total_contributions": 9
+      "total_contributions": 9,
+      "languages": [
+        {
+          "name": "Python",
+          "color": "#3572A5",
+          "bytes": 7162,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "adityamotale/zero_tab",
@@ -989,7 +2263,27 @@
       "additions": 1076,
       "deletions": 134,
       "net_lines": 942,
-      "total_contributions": 9
+      "total_contributions": 9,
+      "languages": [
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 10038,
+          "percentage": 54.69
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 7010,
+          "percentage": 38.19
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 1307,
+          "percentage": 7.12
+        }
+      ]
     },
     {
       "repository": "adityamotale/blogs",
@@ -1002,7 +2296,8 @@
       "additions": 542,
       "deletions": 352,
       "net_lines": 190,
-      "total_contributions": 9
+      "total_contributions": 9,
+      "languages": []
     },
     {
       "repository": "adityamotale/zeroTab",
@@ -1015,7 +2310,27 @@
       "additions": 1650,
       "deletions": 572,
       "net_lines": 1078,
-      "total_contributions": 8
+      "total_contributions": 8,
+      "languages": [
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 9676,
+          "percentage": 42.73
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 6784,
+          "percentage": 29.96
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 6182,
+          "percentage": 27.3
+        }
+      ]
     },
     {
       "repository": "adityamotale/oscill8",
@@ -1028,7 +2343,27 @@
       "additions": 278,
       "deletions": 16,
       "net_lines": 262,
-      "total_contributions": 8
+      "total_contributions": 8,
+      "languages": [
+        {
+          "name": "Assembly",
+          "color": "#6E4C13",
+          "bytes": 1293,
+          "percentage": 48.07
+        },
+        {
+          "name": "Shell",
+          "color": "#89e051",
+          "bytes": 712,
+          "percentage": 26.47
+        },
+        {
+          "name": "Nix",
+          "color": "#7e7eff",
+          "bytes": 685,
+          "percentage": 25.46
+        }
+      ]
     },
     {
       "repository": "adityamotale/pi_ninja",
@@ -1041,7 +2376,27 @@
       "additions": 253,
       "deletions": 33,
       "net_lines": 220,
-      "total_contributions": 8
+      "total_contributions": 8,
+      "languages": [
+        {
+          "name": "Assembly",
+          "color": "#6E4C13",
+          "bytes": 3164,
+          "percentage": 87.38
+        },
+        {
+          "name": "Shell",
+          "color": "#89e051",
+          "bytes": 307,
+          "percentage": 8.48
+        },
+        {
+          "name": "Nix",
+          "color": "#7e7eff",
+          "bytes": 150,
+          "percentage": 4.14
+        }
+      ]
     },
     {
       "repository": "adityamotale/turbo_zip",
@@ -1054,7 +2409,15 @@
       "additions": 41083,
       "deletions": 66,
       "net_lines": 41017,
-      "total_contributions": 7
+      "total_contributions": 7,
+      "languages": [
+        {
+          "name": "Dart",
+          "color": "#00B4AB",
+          "bytes": 15791,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "adityamotale/adityamotale",
@@ -1067,7 +2430,39 @@
       "additions": 9655,
       "deletions": 0,
       "net_lines": 9655,
-      "total_contributions": 7
+      "total_contributions": 7,
+      "languages": [
+        {
+          "name": "TypeScript",
+          "color": "#3178c6",
+          "bytes": 46098,
+          "percentage": 56.86
+        },
+        {
+          "name": "Astro",
+          "color": "#ff5a03",
+          "bytes": 31590,
+          "percentage": 38.97
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 3092,
+          "percentage": 3.81
+        },
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 168,
+          "percentage": 0.21
+        },
+        {
+          "name": "Shell",
+          "color": "#89e051",
+          "bytes": 123,
+          "percentage": 0.15
+        }
+      ]
     },
     {
       "repository": "adityamotale/asm_dev",
@@ -1080,7 +2475,15 @@
       "additions": 298,
       "deletions": 11,
       "net_lines": 287,
-      "total_contributions": 7
+      "total_contributions": 7,
+      "languages": [
+        {
+          "name": "Assembly",
+          "color": "#6E4C13",
+          "bytes": 4524,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "adityamotale/wyrm",
@@ -1093,7 +2496,27 @@
       "additions": 173,
       "deletions": 39,
       "net_lines": 134,
-      "total_contributions": 7
+      "total_contributions": 7,
+      "languages": [
+        {
+          "name": "C",
+          "color": "#555555",
+          "bytes": 2343,
+          "percentage": 91.24
+        },
+        {
+          "name": "Nix",
+          "color": "#7e7eff",
+          "bytes": 150,
+          "percentage": 5.84
+        },
+        {
+          "name": "Assembly",
+          "color": "#6E4C13",
+          "bytes": 75,
+          "percentage": 2.92
+        }
+      ]
     },
     {
       "repository": "rust-lang/this-week-in-rust",
@@ -1106,7 +2529,63 @@
       "additions": 3,
       "deletions": 0,
       "net_lines": 3,
-      "total_contributions": 6
+      "total_contributions": 6,
+      "languages": [
+        {
+          "name": "Python",
+          "color": "#3572A5",
+          "bytes": 68819,
+          "percentage": 30.34
+        },
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 68419,
+          "percentage": 30.16
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 50320,
+          "percentage": 22.18
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 19459,
+          "percentage": 8.58
+        },
+        {
+          "name": "SCSS",
+          "color": "#c6538c",
+          "bytes": 9971,
+          "percentage": 4.4
+        },
+        {
+          "name": "Shell",
+          "color": "#89e051",
+          "bytes": 4370,
+          "percentage": 1.93
+        },
+        {
+          "name": "Just",
+          "color": "#384d54",
+          "bytes": 2918,
+          "percentage": 1.29
+        },
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 1380,
+          "percentage": 0.61
+        },
+        {
+          "name": "Dockerfile",
+          "color": "#384d54",
+          "bytes": 1165,
+          "percentage": 0.51
+        }
+      ]
     },
     {
       "repository": "adityamotale/kak",
@@ -1119,7 +2598,21 @@
       "additions": 727,
       "deletions": 2,
       "net_lines": 725,
-      "total_contributions": 5
+      "total_contributions": 5,
+      "languages": [
+        {
+          "name": "Nix",
+          "color": "#7e7eff",
+          "bytes": 466,
+          "percentage": 68.93
+        },
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 210,
+          "percentage": 31.07
+        }
+      ]
     },
     {
       "repository": "adityamotale/hash_table",
@@ -1132,7 +2625,15 @@
       "additions": 515,
       "deletions": 27,
       "net_lines": 488,
-      "total_contributions": 5
+      "total_contributions": 5,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 6936,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "adityamotale/tutorials",
@@ -1145,7 +2646,8 @@
       "additions": 283,
       "deletions": 6,
       "net_lines": 277,
-      "total_contributions": 5
+      "total_contributions": 5,
+      "languages": []
     },
     {
       "repository": "adityamotale/zig_dev",
@@ -1158,7 +2660,15 @@
       "additions": 158,
       "deletions": 12,
       "net_lines": 146,
-      "total_contributions": 5
+      "total_contributions": 5,
+      "languages": [
+        {
+          "name": "Zig",
+          "color": "#ec915c",
+          "bytes": 3877,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "aishwaryasuradkar/AtLeave",
@@ -1171,7 +2681,27 @@
       "additions": 57,
       "deletions": 72,
       "net_lines": -15,
-      "total_contributions": 4
+      "total_contributions": 4,
+      "languages": [
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 10826,
+          "percentage": 83.94
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 1112,
+          "percentage": 8.62
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 959,
+          "percentage": 7.44
+        }
+      ]
     },
     {
       "repository": "adityamotale/tic_tac_toe_release",
@@ -1184,7 +2714,21 @@
       "additions": 144211,
       "deletions": 2977,
       "net_lines": 141234,
-      "total_contributions": 3
+      "total_contributions": 3,
+      "languages": [
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 1910943,
+          "percentage": 99.93
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 1275,
+          "percentage": 0.07
+        }
+      ]
     },
     {
       "repository": "adityamotale/bharat_city_connect",
@@ -1197,7 +2741,15 @@
       "additions": 18717,
       "deletions": 11,
       "net_lines": 18706,
-      "total_contributions": 3
+      "total_contributions": 3,
+      "languages": [
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 728,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "adityamotale/ecko",
@@ -1210,7 +2762,57 @@
       "additions": 6765,
       "deletions": 19,
       "net_lines": 6746,
-      "total_contributions": 3
+      "total_contributions": 3,
+      "languages": [
+        {
+          "name": "Dart",
+          "color": "#00B4AB",
+          "bytes": 46710,
+          "percentage": 49.88
+        },
+        {
+          "name": "C++",
+          "color": "#f34b7d",
+          "bytes": 23043,
+          "percentage": 24.61
+        },
+        {
+          "name": "CMake",
+          "color": "#DA3434",
+          "bytes": 18742,
+          "percentage": 20.01
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 1841,
+          "percentage": 1.97
+        },
+        {
+          "name": "Swift",
+          "color": "#F05138",
+          "bytes": 1728,
+          "percentage": 1.85
+        },
+        {
+          "name": "C",
+          "color": "#555555",
+          "bytes": 1425,
+          "percentage": 1.52
+        },
+        {
+          "name": "Kotlin",
+          "color": "#A97BFF",
+          "bytes": 124,
+          "percentage": 0.13
+        },
+        {
+          "name": "Objective-C",
+          "color": "#438eff",
+          "bytes": 38,
+          "percentage": 0.04
+        }
+      ]
     },
     {
       "repository": "parag1902/atleave",
@@ -1223,7 +2825,21 @@
       "additions": 575,
       "deletions": 682,
       "net_lines": -107,
-      "total_contributions": 3
+      "total_contributions": 3,
+      "languages": [
+        {
+          "name": "TypeScript",
+          "color": "#3178c6",
+          "bytes": 8498,
+          "percentage": 92.74
+        },
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 665,
+          "percentage": 7.26
+        }
+      ]
     },
     {
       "repository": "ranveer-rajput/python_exercises_old",
@@ -1236,7 +2852,15 @@
       "additions": 469,
       "deletions": 28,
       "net_lines": 441,
-      "total_contributions": 3
+      "total_contributions": 3,
+      "languages": [
+        {
+          "name": "Python",
+          "color": "#3572A5",
+          "bytes": 11048,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "adityamotale/flutter_style_guide",
@@ -1249,7 +2873,8 @@
       "additions": 156,
       "deletions": 74,
       "net_lines": 82,
-      "total_contributions": 3
+      "total_contributions": 3,
+      "languages": []
     },
     {
       "repository": "infoxiao/museum-chart-crimes",
@@ -1262,7 +2887,27 @@
       "additions": 21,
       "deletions": 3,
       "net_lines": 18,
-      "total_contributions": 3
+      "total_contributions": 3,
+      "languages": [
+        {
+          "name": "TypeScript",
+          "color": "#3178c6",
+          "bytes": 22753,
+          "percentage": 95.11
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 1088,
+          "percentage": 4.55
+        },
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 83,
+          "percentage": 0.35
+        }
+      ]
     },
     {
       "repository": "adityamotale/turbo_fox",
@@ -1275,7 +2920,15 @@
       "additions": 100,
       "deletions": 1,
       "net_lines": 99,
-      "total_contributions": 2
+      "total_contributions": 2,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 2336,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "1code-dev/kickass-space-shooter",
@@ -1288,7 +2941,15 @@
       "additions": 52,
       "deletions": 0,
       "net_lines": 52,
-      "total_contributions": 2
+      "total_contributions": 2,
+      "languages": [
+        {
+          "name": "Python",
+          "color": "#3572A5",
+          "bytes": 1053,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "trustopay/trustopay_app_old_1",
@@ -1301,7 +2962,69 @@
       "additions": 14273,
       "deletions": 0,
       "net_lines": 14273,
-      "total_contributions": 1
+      "total_contributions": 1,
+      "languages": [
+        {
+          "name": "Dart",
+          "color": "#00B4AB",
+          "bytes": 350553,
+          "percentage": 87.63
+        },
+        {
+          "name": "C++",
+          "color": "#f34b7d",
+          "bytes": 24386,
+          "percentage": 6.1
+        },
+        {
+          "name": "CMake",
+          "color": "#DA3434",
+          "bytes": 18898,
+          "percentage": 4.72
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 1847,
+          "percentage": 0.46
+        },
+        {
+          "name": "C",
+          "color": "#555555",
+          "bytes": 1425,
+          "percentage": 0.36
+        },
+        {
+          "name": "Ruby",
+          "color": "#701516",
+          "bytes": 1414,
+          "percentage": 0.35
+        },
+        {
+          "name": "Swift",
+          "color": "#F05138",
+          "bytes": 689,
+          "percentage": 0.17
+        },
+        {
+          "name": "Java",
+          "color": "#b07219",
+          "bytes": 670,
+          "percentage": 0.17
+        },
+        {
+          "name": "Kotlin",
+          "color": "#A97BFF",
+          "bytes": 127,
+          "percentage": 0.03
+        },
+        {
+          "name": "Objective-C",
+          "color": "#438eff",
+          "bytes": 38,
+          "percentage": 0.01
+        }
+      ]
     },
     {
       "repository": "histral/core_wa",
@@ -1314,7 +3037,33 @@
       "additions": 5580,
       "deletions": 0,
       "net_lines": 5580,
-      "total_contributions": 1
+      "total_contributions": 1,
+      "languages": [
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 1208,
+          "percentage": 48.2
+        },
+        {
+          "name": "TypeScript",
+          "color": "#3178c6",
+          "bytes": 848,
+          "percentage": 33.84
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 329,
+          "percentage": 13.13
+        },
+        {
+          "name": "Svelte",
+          "color": "#ff3e00",
+          "bytes": 121,
+          "percentage": 4.83
+        }
+      ]
     },
     {
       "repository": "trustopay/trustopay_app",
@@ -1327,7 +3076,57 @@
       "additions": 4955,
       "deletions": 0,
       "net_lines": 4955,
-      "total_contributions": 1
+      "total_contributions": 1,
+      "languages": [
+        {
+          "name": "C++",
+          "color": "#f34b7d",
+          "bytes": 23771,
+          "percentage": 43.69
+        },
+        {
+          "name": "CMake",
+          "color": "#DA3434",
+          "bytes": 19436,
+          "percentage": 35.72
+        },
+        {
+          "name": "Dart",
+          "color": "#00B4AB",
+          "bytes": 6032,
+          "percentage": 11.09
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 1853,
+          "percentage": 3.41
+        },
+        {
+          "name": "Swift",
+          "color": "#F05138",
+          "bytes": 1728,
+          "percentage": 3.18
+        },
+        {
+          "name": "C",
+          "color": "#555555",
+          "bytes": 1425,
+          "percentage": 2.62
+        },
+        {
+          "name": "Kotlin",
+          "color": "#A97BFF",
+          "bytes": 126,
+          "percentage": 0.23
+        },
+        {
+          "name": "Objective-C",
+          "color": "#438eff",
+          "bytes": 38,
+          "percentage": 0.07
+        }
+      ]
     },
     {
       "repository": "adityamotale/shorelark",
@@ -1340,7 +3139,15 @@
       "additions": 26,
       "deletions": 0,
       "net_lines": 26,
-      "total_contributions": 1
+      "total_contributions": 1,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 210,
+          "percentage": 100
+        }
+      ]
     },
     {
       "repository": "adityamotale/cpu-notes",
@@ -1353,7 +3160,8 @@
       "additions": 3,
       "deletions": 0,
       "net_lines": 3,
-      "total_contributions": 1
+      "total_contributions": 1,
+      "languages": []
     },
     {
       "repository": "adityamotale/this-week-in-rust",
@@ -1366,7 +3174,63 @@
       "additions": 1,
       "deletions": 0,
       "net_lines": 1,
-      "total_contributions": 1
+      "total_contributions": 1,
+      "languages": [
+        {
+          "name": "Python",
+          "color": "#3572A5",
+          "bytes": 68819,
+          "percentage": 30.34
+        },
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 68419,
+          "percentage": 30.16
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 50320,
+          "percentage": 22.18
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 19459,
+          "percentage": 8.58
+        },
+        {
+          "name": "SCSS",
+          "color": "#c6538c",
+          "bytes": 9971,
+          "percentage": 4.4
+        },
+        {
+          "name": "Shell",
+          "color": "#89e051",
+          "bytes": 4370,
+          "percentage": 1.93
+        },
+        {
+          "name": "Just",
+          "color": "#384d54",
+          "bytes": 2918,
+          "percentage": 1.29
+        },
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 1380,
+          "percentage": 0.61
+        },
+        {
+          "name": "Dockerfile",
+          "color": "#384d54",
+          "bytes": 1165,
+          "percentage": 0.51
+        }
+      ]
     },
     {
       "repository": "bimsina/fluttertemplates.dev",
@@ -1379,7 +3243,45 @@
       "additions": 0,
       "deletions": 0,
       "net_lines": 0,
-      "total_contributions": 1
+      "total_contributions": 1,
+      "languages": [
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 3801168,
+          "percentage": 78.92
+        },
+        {
+          "name": "Dart",
+          "color": "#00B4AB",
+          "bytes": 863729,
+          "percentage": 17.93
+        },
+        {
+          "name": "Astro",
+          "color": "#ff5a03",
+          "bytes": 93950,
+          "percentage": 1.95
+        },
+        {
+          "name": "TypeScript",
+          "color": "#3178c6",
+          "bytes": 45262,
+          "percentage": 0.94
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 8392,
+          "percentage": 0.17
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 4229,
+          "percentage": 0.09
+        }
+      ]
     },
     {
       "repository": "ranveer-rajput/shoes-website",
@@ -1392,7 +3294,27 @@
       "additions": 0,
       "deletions": 0,
       "net_lines": 0,
-      "total_contributions": 1
+      "total_contributions": 1,
+      "languages": [
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 5624,
+          "percentage": 61.33
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 3270,
+          "percentage": 35.66
+        },
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 276,
+          "percentage": 3.01
+        }
+      ]
     },
     {
       "repository": "jonataslaw/getx",
@@ -1405,7 +3327,69 @@
       "additions": 0,
       "deletions": 0,
       "net_lines": 0,
-      "total_contributions": 1
+      "total_contributions": 1,
+      "languages": [
+        {
+          "name": "Dart",
+          "color": "#00B4AB",
+          "bytes": 806806,
+          "percentage": 93.74
+        },
+        {
+          "name": "C++",
+          "color": "#f34b7d",
+          "bytes": 29317,
+          "percentage": 3.41
+        },
+        {
+          "name": "CMake",
+          "color": "#DA3434",
+          "bytes": 17966,
+          "percentage": 2.09
+        },
+        {
+          "name": "C",
+          "color": "#555555",
+          "bytes": 1813,
+          "percentage": 0.21
+        },
+        {
+          "name": "Swift",
+          "color": "#F05138",
+          "bytes": 1720,
+          "percentage": 0.2
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 1228,
+          "percentage": 0.14
+        },
+        {
+          "name": "Objective-C",
+          "color": "#438eff",
+          "bytes": 641,
+          "percentage": 0.07
+        },
+        {
+          "name": "Shell",
+          "color": "#89e051",
+          "bytes": 548,
+          "percentage": 0.06
+        },
+        {
+          "name": "Java",
+          "color": "#b07219",
+          "bytes": 516,
+          "percentage": 0.06
+        },
+        {
+          "name": "Kotlin",
+          "color": "#A97BFF",
+          "bytes": 126,
+          "percentage": 0.01
+        }
+      ]
     },
     {
       "repository": "ranveer-rajput/word_counter",
@@ -1418,7 +3402,27 @@
       "additions": 0,
       "deletions": 0,
       "net_lines": 0,
-      "total_contributions": 1
+      "total_contributions": 1,
+      "languages": [
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 1912,
+          "percentage": 41.9
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 1721,
+          "percentage": 37.72
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 930,
+          "percentage": 20.38
+        }
+      ]
     }
   ],
   "daily_contributions": {
@@ -3542,7 +5546,53 @@
       "public": 0,
       "private": 0,
       "org": 2
-    }
+    },
+    "languages": [
+      {
+        "name": "TypeScript",
+        "percentage": 53.2
+      },
+      {
+        "name": "Astro",
+        "percentage": 44.3
+      },
+      {
+        "name": "CSS",
+        "percentage": 2.4
+      },
+      {
+        "name": "JavaScript",
+        "percentage": 0.1
+      },
+      {
+        "name": "Python",
+        "percentage": 0
+      },
+      {
+        "name": "Rust",
+        "percentage": 0
+      },
+      {
+        "name": "HTML",
+        "percentage": 0
+      },
+      {
+        "name": "SCSS",
+        "percentage": 0
+      },
+      {
+        "name": "Shell",
+        "percentage": 0
+      },
+      {
+        "name": "Just",
+        "percentage": 0
+      },
+      {
+        "name": "Dockerfile",
+        "percentage": 0
+      }
+    ]
   },
   "monthly_history": [
     {
@@ -3587,6 +5637,20 @@
         "frozen-core",
         "dotfiles",
         "rta"
+      ],
+      "languages": [
+        {
+          "name": "Rust",
+          "percentage": 66.3
+        },
+        {
+          "name": "PowerShell",
+          "percentage": 27.3
+        },
+        {
+          "name": "Nix",
+          "percentage": 6.4
+        }
       ]
     },
     {
@@ -3631,6 +5695,16 @@
         "rta",
         "frozen-core",
         "kosa"
+      ],
+      "languages": [
+        {
+          "name": "Rust",
+          "percentage": 99.3
+        },
+        {
+          "name": "Nix",
+          "percentage": 0.6
+        }
       ]
     },
     {
@@ -3674,6 +5748,16 @@
       "top_stack": [
         "frozen-core",
         "rta"
+      ],
+      "languages": [
+        {
+          "name": "Rust",
+          "percentage": 99.4
+        },
+        {
+          "name": "Nix",
+          "percentage": 0.6
+        }
       ]
     },
     {
@@ -3718,6 +5802,16 @@
         "turbo_base64",
         "kosa",
         "turbo_crc"
+      ],
+      "languages": [
+        {
+          "name": "Rust",
+          "percentage": 98.3
+        },
+        {
+          "name": "Nix",
+          "percentage": 1.7
+        }
       ]
     },
     {
@@ -3760,6 +5854,32 @@
       },
       "top_stack": [
         "ashwa"
+      ],
+      "languages": [
+        {
+          "name": "Rust",
+          "percentage": 50.2
+        },
+        {
+          "name": "JavaScript",
+          "percentage": 25.9
+        },
+        {
+          "name": "Python",
+          "percentage": 12
+        },
+        {
+          "name": "Shell",
+          "percentage": 10.4
+        },
+        {
+          "name": "HCL",
+          "percentage": 1.2
+        },
+        {
+          "name": "C",
+          "percentage": 0.3
+        }
       ]
     }
   ]
