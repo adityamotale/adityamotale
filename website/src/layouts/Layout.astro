@@ -3,9 +3,13 @@ import '../styles/global.css';
 
 interface Props {
 	title?: string;
+	description?: string;
 }
 
-const { title = 'Aditya Motale' } = Astro.props;
+const {
+	title = 'aditya motale × an engineer by choice',
+	description = 'an engineer by choice',
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -13,11 +17,28 @@ const { title = 'Aditya Motale' } = Astro.props;
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>{title}</title>
+		<meta name="title" content={title} />
+		<meta name="description" content={description} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+
+		<script is:inline>
+			(function() {
+				const themes = ['default', 'moon', 'dawn'];
+				const stored = typeof localStorage !== 'undefined' ? localStorage.getItem('theme') : null;
+				let theme = stored;
+				if (!theme || !themes.includes(theme)) {
+					const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+					theme = prefersDark ? 'moon' : 'dawn';
+				}
+				document.documentElement.classList.remove('theme-default', 'theme-moon', 'theme-dawn');
+				document.documentElement.classList.add(`theme-${theme}`);
+				document.documentElement.setAttribute('data-theme', theme);
+			})();
+		</script>
 	</head>
-	<body>
+	<body class="text-rp-text min-h-screen transition-colors duration-200 antialiased pb-12 sm:pb-14">
 		<slot />
 	</body>
 </html>

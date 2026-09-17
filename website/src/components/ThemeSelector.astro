@@ -1,0 +1,97 @@
+---
+---
+
+<div class="flex items-center gap-2 font-mono text-xs" id="theme-selector-container">
+  <div class="inline-flex items-center border border-rp-highlight-med bg-rp-surface/70 backdrop-blur-xs rounded px-2.5 py-1 gap-2 text-rp-subtle shadow-xs select-none">
+    <span class="text-[11px] text-rp-muted font-normal shrink-0">official themes:</span>
+    <div class="flex items-center gap-1.5" role="radiogroup" aria-label="Official Rosé Pine Themes">
+      <button
+        type="button"
+        data-theme-value="default"
+        class="theme-btn px-1 py-0.5 rounded text-[11px] font-mono transition-colors hover:text-rp-text cursor-pointer focus:outline-none"
+        title="Rosé Pine (Default / Main)"
+      >
+        default
+      </button>
+      <span class="text-rp-muted/40 select-none">•</span>
+      <button
+        type="button"
+        data-theme-value="moon"
+        class="theme-btn px-1 py-0.5 rounded text-[11px] font-mono transition-colors hover:text-rp-text cursor-pointer focus:outline-none"
+        title="Rosé Pine Moon"
+      >
+        moon
+      </button>
+      <span class="text-rp-muted/40 select-none">•</span>
+      <button
+        type="button"
+        data-theme-value="dawn"
+        class="theme-btn px-1 py-0.5 rounded text-[11px] font-mono transition-colors hover:text-rp-text cursor-pointer focus:outline-none"
+        title="Rosé Pine Dawn"
+      >
+        dawn
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const themes = ['default', 'moon', 'dawn'];
+
+  function getActiveTheme(): string {
+    const stored = localStorage.getItem('theme');
+    if (stored && themes.includes(stored)) {
+      return stored;
+    }
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return prefersDark ? 'moon' : 'dawn';
+  }
+
+  function applyTheme(themeName: string, persist = false) {
+    document.documentElement.classList.remove('theme-default', 'theme-moon', 'theme-dawn');
+    document.documentElement.classList.add(`theme-${themeName}`);
+    document.documentElement.setAttribute('data-theme', themeName);
+
+    if (persist) {
+      localStorage.setItem('theme', themeName);
+    }
+
+    const buttons = document.querySelectorAll<HTMLButtonElement>('.theme-btn');
+    buttons.forEach((btn) => {
+      const val = btn.getAttribute('data-theme-value');
+      if (val === themeName) {
+        btn.classList.add('text-[var(--color-accent)]', 'font-semibold', 'underline', 'underline-offset-2');
+        btn.classList.remove('text-rp-subtle');
+        btn.setAttribute('aria-checked', 'true');
+      } else {
+        btn.classList.remove('text-[var(--color-accent)]', 'font-semibold', 'underline', 'underline-offset-2');
+        btn.classList.add('text-rp-subtle');
+        btn.setAttribute('aria-checked', 'false');
+      }
+    });
+  }
+
+  function initThemeSelector() {
+    const current = getActiveTheme();
+    applyTheme(current, false);
+
+    const buttons = document.querySelectorAll<HTMLButtonElement>('.theme-btn');
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const selected = btn.getAttribute('data-theme-value');
+        if (selected && themes.includes(selected)) {
+          applyTheme(selected, true);
+        }
+      });
+    });
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (!localStorage.getItem('theme')) {
+        applyTheme(e.matches ? 'moon' : 'dawn', false);
+      }
+    });
+  }
+
+  initThemeSelector();
+  document.addEventListener('astro:after-swap', initThemeSelector);
+</script>
