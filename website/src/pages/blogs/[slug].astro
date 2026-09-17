@@ -104,21 +104,12 @@ const pageDescription =
       <Header />
     </div>
 
-    <header class="space-y-2.5 sm:space-y-3 pt-2">
-      <div class="flex items-center gap-2 text-rp-muted text-xs font-mono mb-2">
-        <a
-          href="/"
-          class="hover:text-[var(--color-accent)] transition-colors underline decoration-dotted decoration-rp-muted/50 underline-offset-3"
-        >
-          &larr; back to home
-        </a>
-      </div>
-
+    <header class="space-y-2.5 sm:space-y-3">
       <h1 class="font-serif italic text-2xl sm:text-4xl font-semibold tracking-tight text-rp-text leading-tight break-words">
         {post.frontmatter.title}
       </h1>
 
-      <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono italic text-xs text-rp-subtle">
+      <div class="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono italic text-xs text-rp-muted">
         <span>{formatBlogDate(post.frontmatter.created)}</span>
         <span class="text-rp-muted">•</span>
         <span>{post.readTimeMinutes} min read</span>
@@ -134,10 +125,10 @@ const pageDescription =
       <div set:html={post.html} />
     </article>
 
-    <div class="mt-6 sm:mt-8 flex flex-wrap items-center justify-between gap-3 sm:gap-4 font-mono italic text-xs text-rp-subtle border-t border-rp-muted/20 pt-4">
+    <div class="mt-6 sm:mt-8 flex flex-wrap items-center justify-between gap-3 sm:gap-4 font-mono italic text-xs text-rp-muted border-t border-rp-highlight-med/30 pt-4">
       <div class="flex flex-wrap items-center gap-2">
         {post.frontmatter.tags.map((tag) => (
-          <span class="text-rp-muted">#{tag}</span>
+          <span class="text-rp-subtle">#{tag}</span>
         ))}
       </div>
       {post.frontmatter.lastUpdated &&
@@ -153,13 +144,12 @@ const pageDescription =
         id="section-glossary"
         class="mt-8 sm:mt-12 space-y-4 sm:space-y-6"
       >
-        <div class="flex items-center gap-2 text-rp-muted font-mono text-xs">
-          <span class="text-[var(--color-accent)] font-semibold">&gt;</span>
-          <span class="text-rp-text font-semibold uppercase tracking-wider text-[11px]">
-            Glossary
-          </span>
-          <span class="flex-1 border-b border-rp-muted/20" />
-        </div>
+        <h2
+          id="glossary"
+          class="font-serif italic text-lg sm:text-xl font-semibold text-[var(--color-accent)]"
+        >
+          #glossary
+        </h2>
 
         <div class="space-y-3.5 sm:space-y-4">
           {post.glossary.map((item) => (
@@ -179,13 +169,12 @@ const pageDescription =
 
     {post.references.length > 0 && (
       <section class="mt-8 sm:mt-12 space-y-4 sm:space-y-6">
-        <div class="flex items-center gap-2 text-rp-muted font-mono text-xs">
-          <span class="text-[var(--color-accent)] font-semibold">&gt;</span>
-          <span class="text-rp-text font-semibold uppercase tracking-wider text-[11px]">
-            References
-          </span>
-          <span class="flex-1 border-b border-rp-muted/20" />
-        </div>
+        <h2
+          id="references"
+          class="font-serif italic text-lg sm:text-xl font-semibold text-[var(--color-accent)]"
+        >
+          #references
+        </h2>
 
         <ol class="space-y-3.5 sm:space-y-4">
           {post.references.map((ref) => (
@@ -214,6 +203,8 @@ const pageDescription =
         </ol>
       </section>
     )}
+
+    <div class="h-[40vh]"></div>
   </main>
 </Layout>
 

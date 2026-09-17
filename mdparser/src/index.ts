@@ -34,7 +34,7 @@ const CODE_FENCE_REGEX = /^```([a-zA-Z0-9_-]*)\r?\n([\s\S]*?)\r?\n```$/m;
 const ANIM_TAG_REGEX =
   /(?:\{@anim\s+\(([^)]+)\)\s*([^}]*)\}|\{ANIM([A-Za-z0-9_-]+):\s*([^}]+)\})/g;
 const CALLOUT_BLOCK_REGEX =
-  /^>\s*\[!(INFO|TIP|NOTE|TASK|WARNING|CAUTION)\]\r?\n((?:^>.*(?:\r?\n|$))+)/gm;
+  /^>\s*\[!(INFO|TIP|NOTE|TASK|WARNING|CAUTION|IMPORTANT|SUCCESS|DANGER|BUG|QUESTION|EXAMPLE|QUOTE)\]\r?\n((?:^>.*(?:\r?\n|$))+)/gim;
 const BLOCK_MATH_REGEX = /\$\$([\s\S]*?)\$\$/g;
 const INLINE_MATH_REGEX = /(?<!\\)\$([^\$\n]+?)\$/g;
 const FOOTNOTE_REF_REGEX = /\[\^([a-zA-Z0-9_-]+)\]/g;
@@ -151,27 +151,121 @@ export function parseSimpleMarkdownInline(text: string): string {
   return html;
 }
 
+export function formatLanguageName(lang: string): string {
+  const normalized = (lang || "").trim().toLowerCase();
+  const map: Record<string, string> = {
+    rs: "Rust",
+    rust: "Rust",
+    js: "JavaScript",
+    javascript: "JavaScript",
+    ts: "TypeScript",
+    typescript: "TypeScript",
+    jsx: "JSX",
+    tsx: "TSX",
+    py: "Python",
+    python: "Python",
+    c: "C",
+    cpp: "C++",
+    "c++": "C++",
+    cc: "C++",
+    cxx: "C++",
+    cs: "C#",
+    csharp: "C#",
+    "c#": "C#",
+    go: "Go",
+    golang: "Go",
+    sh: "Bash",
+    bash: "Bash",
+    zsh: "Zsh",
+    shell: "Shell",
+    shellscript: "Shell",
+    asm: "ASM",
+    nasm: "NASM",
+    x86asm: "x86 ASM",
+    assembly: "Assembly",
+    html: "HTML",
+    css: "CSS",
+    scss: "SCSS",
+    sass: "SASS",
+    json: "JSON",
+    yaml: "YAML",
+    yml: "YAML",
+    toml: "TOML",
+    xml: "XML",
+    sql: "SQL",
+    md: "Markdown",
+    markdown: "Markdown",
+    zig: "Zig",
+    lua: "Lua",
+    java: "Java",
+    kt: "Kotlin",
+    kotlin: "Kotlin",
+    swift: "Swift",
+    rb: "Ruby",
+    ruby: "Ruby",
+    php: "PHP",
+    r: "R",
+    dart: "Dart",
+    graphql: "GraphQL",
+    gql: "GraphQL",
+    docker: "Docker",
+    dockerfile: "Dockerfile",
+    astro: "Astro",
+    wasm: "WASM",
+    diff: "Diff",
+    txt: "Text",
+    text: "Text",
+    plain: "Text",
+  };
+
+  if (map[normalized]) {
+    return map[normalized];
+  }
+
+  if (!normalized) {
+    return "Code";
+  }
+
+  if (normalized.length <= 3) {
+    return normalized.toUpperCase();
+  }
+
+  return normalized.charAt(0).toUpperCase() + normalized.slice(1);
+}
+
+export function normalizeShikiLang(lang: string): string {
+  const clean = (lang || "").trim().toLowerCase();
+  const map: Record<string, string> = {
+    "c++": "cpp",
+    "c#": "csharp",
+    yml: "yaml",
+  };
+  return map[clean] || clean || "text";
+}
+
 export async function highlightCode(
   code: string,
   lang: string,
 ): Promise<string> {
-  const normalizedLang = lang.trim().toLowerCase() || "text";
+  const normalizedLang = normalizeShikiLang(lang);
   try {
     return await codeToHtml(code.trim(), {
       lang: normalizedLang,
       themes: {
-        dark: "catppuccin-macchiato",
-        light: "catppuccin-latte",
+        light: "rose-pine-dawn",
+        dark: "rose-pine-moon",
       },
+      defaultColor: false,
     });
   } catch {
     try {
       return await codeToHtml(code.trim(), {
         lang: "txt",
         themes: {
-          dark: "catppuccin-macchiato",
-          light: "catppuccin-latte",
+          light: "rose-pine-dawn",
+          dark: "rose-pine-moon",
         },
+        defaultColor: false,
       });
     } catch {
       return `<pre><code>${code}</code></pre>`;
@@ -246,38 +340,38 @@ export function renderTableHtml(
   };
 
   const theadHtml =
-    `  <thead>\n    <tr class="bg-ctp-surface0/40 border-b border-ctp-surface0 text-ctp-subtext1 font-bold">\n` +
+    `  <thead>\n    <tr class="bg-rp-surface/80 border-b border-rp-highlight-med text-[var(--color-accent)] font-semibold">\n` +
     headers
       .map(
         (h, i) =>
-          `      <th scope="col" class="py-2.5 px-3.5 sm:py-3 sm:px-4 ${alignClass(aligns[i] || "left")}">${parseSimpleMarkdownInline(h)}</th>`,
+          `      <th scope="col" class="py-2 px-3 sm:py-2.5 sm:px-3.5 text-[var(--color-accent)] font-semibold border-r border-rp-highlight-med/30 last:border-r-0 ${alignClass(aligns[i] || "left")}">${parseSimpleMarkdownInline(h)}</th>`,
       )
       .join("\n") +
     `\n    </tr>\n  </thead>`;
 
   const tbodyHtml =
-    `  <tbody class="divide-y divide-ctp-surface0/40">\n` +
+    `  <tbody class="divide-y divide-rp-highlight-med/30">\n` +
     rows
       .map((row) => {
         const cellsHtml = row
           .map(
             (cell, i) =>
-              `      <td class="py-2.5 px-3.5 sm:py-3 sm:px-4 text-ctp-text ${alignClass(aligns[i] || "left")}">${parseSimpleMarkdownInline(cell)}</td>`,
+              `      <td class="py-2 px-3 sm:py-2.5 sm:px-3.5 text-rp-text border-r border-rp-highlight-med/30 last:border-r-0 ${alignClass(aligns[i] || "left")}">${parseSimpleMarkdownInline(cell)}</td>`,
           )
           .join("\n");
-        return `    <tr class="hover:bg-ctp-surface0/20 transition-colors">\n${cellsHtml}\n    </tr>`;
+        return `    <tr class="hover:bg-rp-surface/40 transition-colors">\n${cellsHtml}\n    </tr>`;
       })
       .join("\n") +
     `\n  </tbody>`;
 
   const descHtml = desc
-    ? `\n  <div class="table-desc font-mono italic text-[10px] leading-normal text-ctp-subtext0 border-t border-ctp-surface0/60 pt-2 px-3.5 pb-2 bg-ctp-surface0/20">${parseSimpleMarkdownInline(desc)}</div>`
+    ? `\n  <div class="table-desc font-mono italic text-[10px] leading-normal text-rp-muted border-t border-rp-highlight-med/40 pt-2 px-3.5 pb-2 bg-rp-surface/20">${parseSimpleMarkdownInline(desc)}</div>`
     : "";
 
   return (
-    `<div class="custom-table-container my-4 sm:my-6 rounded-lg border border-ctp-surface0 bg-ctp-mantle/60 overflow-hidden shadow-xs">\n` +
+    `<div class="custom-table-container not-prose my-4 sm:my-6 rounded-lg border border-rp-highlight-med bg-rp-surface/60 overflow-hidden shadow-xs">\n` +
     `  <div class="overflow-x-auto">\n` +
-    `    <table class="w-full text-left font-mono text-xs sm:text-sm border-collapse">\n` +
+    `    <table class="w-full m-0 text-left font-mono text-xs sm:text-sm border-collapse">\n` +
     `${theadHtml}\n` +
     `${tbodyHtml}\n` +
     `    </table>\n` +
@@ -361,18 +455,20 @@ export async function processCustomBlocks(content: string): Promise<string> {
 
     const highlighted = await highlightCode(codeStr, lang);
     const descHtml = desc
-      ? `<div class="code-desc font-mono italic text-[10px] leading-normal text-ctp-subtext0 border-t border-ctp-surface0/60 pt-2 px-3.5 pb-2 bg-ctp-surface0/20">${parseSimpleMarkdownInline(desc)}</div>`
+      ? `<div class="code-desc font-mono italic text-[10px] leading-normal text-rp-muted border-t border-rp-highlight-med/40 pt-2 px-3.5 pb-2 bg-rp-surface/20">${parseSimpleMarkdownInline(desc)}</div>`
       : "";
 
     const cleanRawCode = codeStr.trim();
     const encodedRawCode = encodeURIComponent(cleanRawCode);
 
-    return `<div class="custom-code-block custom-code-block-${style} my-4 sm:my-6 rounded-lg border border-ctp-surface0 bg-ctp-mantle/60 overflow-hidden shadow-xs" data-block-style="${style}">
-      <div class="code-header flex items-center justify-between px-3 sm:px-3.5 py-1.5 bg-ctp-surface0/30 border-b border-ctp-surface0/40 text-xs font-mono text-ctp-subtext0 select-none">
-        <span class="code-lang uppercase tracking-wider text-[10px] sm:text-[11px] text-ctp-subtext1 font-bold">${lang || "code"}</span>
+    const displayLang = formatLanguageName(lang);
+
+    return `<div class="custom-code-block custom-code-block-${style} my-4 sm:my-6 rounded-lg border border-rp-highlight-med bg-rp-surface/60 overflow-hidden shadow-xs" data-block-style="${style}">
+      <div class="code-header flex items-center justify-between px-3 sm:px-3.5 py-1.5 bg-rp-surface/30 border-b border-rp-highlight-med/40 text-xs font-mono text-rp-muted select-none">
+        <span class="code-lang tracking-wider text-[10px] sm:text-[11px] text-rp-subtle font-bold">${displayLang}</span>
         <button
           type="button"
-          class="copy-code-btn p-1 rounded text-ctp-subtext0 hover:text-ctp-text hover:bg-ctp-surface0/60 transition-colors cursor-pointer"
+          class="copy-code-btn p-1 rounded text-rp-muted hover:text-rp-text hover:bg-rp-highlight-med/50 transition-colors cursor-pointer"
           data-code="${encodedRawCode}"
           aria-label="Copy code"
           title="Copy code to clipboard"
@@ -421,7 +517,7 @@ export function processCallouts(content: string): string {
       <div class="callout-header font-serif italic text-xs sm:text-sm font-semibold text-[var(--color-accent)] select-none">
         ${typeLower}
       </div>
-      <div class="callout-body font-mono text-xs sm:text-sm leading-relaxed text-ctp-text break-words">
+      <div class="callout-body font-mono text-xs sm:text-sm leading-relaxed text-rp-text break-words">
         ${bodyHtml}
       </div>
     </div>\n\n`;
@@ -451,7 +547,7 @@ export function processAnimationTags(content: string): string {
       }
 
       return `<div class="blog-animation-wrapper my-6 sm:my-8" data-anim-id="${animId}" data-anim-desc="${desc}">
-      <div id="anim-slot-${animId}" class="anim-slot flex flex-col items-center justify-center p-4 sm:p-6 border border-dashed border-ctp-surface0 rounded-lg bg-ctp-mantle/40 font-mono text-xs text-ctp-subtext0">
+      <div id="anim-slot-${animId}" class="anim-slot flex flex-col items-center justify-center p-4 sm:p-6 border border-dashed border-rp-highlight-med/40 rounded-lg bg-rp-surface/40 font-mono text-xs text-rp-muted">
         <span class="text-[var(--color-accent)] font-semibold mb-1">Interactive Visualizer [${animId}]</span>
         <span>${desc}</span>
       </div>
@@ -535,7 +631,7 @@ export function processListBlock(block: string): string | null {
       const listHtml = processListBlock(listLines);
       if (listHtml) {
         const introHtml = introLines
-          ? `<p class="font-mono text-xs sm:text-sm leading-relaxed text-ctp-text my-3.5 sm:my-4">${parseSimpleMarkdownInline(introLines)}</p>`
+          ? `<p class="font-mono text-xs sm:text-sm leading-relaxed text-rp-text my-3.5 sm:my-4">${parseSimpleMarkdownInline(introLines)}</p>`
           : "";
         return introHtml ? `${introHtml}\n\n${listHtml}` : listHtml;
       }
@@ -568,10 +664,10 @@ export function processListBlock(block: string): string | null {
     const itemsHtml = items
       .map(
         (item) =>
-          `<li class="leading-relaxed pl-4 relative before:content-['-'] before:absolute before:left-0 before:text-ctp-subtext0">${parseSimpleMarkdownInline(item)}</li>`,
+          `<li class="leading-relaxed pl-4 relative before:content-['-'] before:absolute before:left-0 before:text-rp-muted">${parseSimpleMarkdownInline(item)}</li>`,
       )
       .join("\n");
-    return `<ul class="list-none space-y-1.5 my-3.5 sm:my-4 font-mono text-xs sm:text-sm text-ctp-text">\n${itemsHtml}\n</ul>`;
+    return `<ul class="list-none space-y-1.5 my-3.5 sm:my-4 font-mono text-xs sm:text-sm text-rp-text">\n${itemsHtml}\n</ul>`;
   } else {
     const itemsHtml = items
       .map(
@@ -579,7 +675,7 @@ export function processListBlock(block: string): string | null {
           `<li class="leading-relaxed">${parseSimpleMarkdownInline(item)}</li>`,
       )
       .join("\n");
-    return `<ol class="list-decimal list-inside space-y-1.5 my-3.5 sm:my-4 font-mono text-xs sm:text-sm text-ctp-text">\n${itemsHtml}\n</ol>`;
+    return `<ol class="list-decimal list-inside space-y-1.5 my-3.5 sm:my-4 font-mono text-xs sm:text-sm text-rp-text">\n${itemsHtml}\n</ol>`;
   }
 }
 
@@ -647,32 +743,46 @@ export async function parseMarkdownBlog(
   html = processCallouts(html);
   html = processAnimationTags(html);
 
+  // H1
+  html = html.replace(/^#\s+([^#\n].*)$/gm, (_, title) => {
+    const id = slugify(title);
+    return `<h1 id="${id}" class="font-serif italic text-2xl sm:text-4xl font-semibold mt-8 sm:mt-10 mb-3 sm:mb-4 text-rp-text leading-tight break-words">
+      <span>${parseSimpleMarkdownInline(title)}</span>
+    </h1>`;
+  });
+
   // H2 with symbol prefix (e.g. § or ⁕)
   html = html.replace(/^##\s+([§⁕])\s+(.*)$/gm, (_, symbol, title) => {
     const id = slugify(title);
-    return `<h2 id="${id}" class="font-serif text-lg sm:text-2xl font-semibold mt-8 sm:mt-10 mb-3 sm:mb-4 text-ctp-text flex items-center gap-2 group flex-wrap">
+    return `<h2 id="${id}" class="font-serif text-lg sm:text-2xl font-semibold mt-8 sm:mt-10 mb-3 sm:mb-4 text-rp-text flex items-center gap-2 group flex-wrap">
       <span class="text-[var(--color-accent)] font-mono font-normal">${symbol}</span>
       <span>${parseSimpleMarkdownInline(title)}</span>
-      <a href="#${id}" class="opacity-0 group-hover:opacity-100 text-ctp-subtext0 hover:text-[var(--color-accent)] font-mono text-xs transition-opacity ml-2">#</a>
+      <a href="#${id}" class="opacity-0 group-hover:opacity-100 text-rp-muted hover:text-[var(--color-accent)] font-mono text-xs transition-opacity ml-2">#</a>
     </h2>`;
   });
 
   // Regular H2
   html = html.replace(/^##\s+([^§⁕\n].*)$/gm, (_, title) => {
     const id = slugify(title);
-    return `<h2 id="${id}" class="font-serif text-lg sm:text-2xl font-semibold mt-8 sm:mt-10 mb-3 sm:mb-4 text-ctp-text flex items-center gap-2 group flex-wrap">
+    return `<h2 id="${id}" class="font-serif text-lg sm:text-2xl font-semibold mt-8 sm:mt-10 mb-3 sm:mb-4 text-rp-text flex items-center gap-2 group flex-wrap">
       <span>${parseSimpleMarkdownInline(title)}</span>
-      <a href="#${id}" class="opacity-0 group-hover:opacity-100 text-ctp-subtext0 hover:text-[var(--color-accent)] font-mono text-xs transition-opacity ml-2">#</a>
     </h2>`;
   });
 
   // H3
   html = html.replace(/^###\s+(.*)$/gm, (_, title) => {
     const id = slugify(title);
-    return `<h3 id="${id}" class="font-serif text-base sm:text-xl font-semibold mt-6 sm:mt-8 mb-2 sm:mb-3 text-ctp-text flex items-center gap-2 group flex-wrap">
+    return `<h3 id="${id}" class="font-serif text-base sm:text-xl font-semibold mt-6 sm:mt-8 mb-2 sm:mb-3 text-rp-text flex items-center gap-2 group flex-wrap">
       <span>${parseSimpleMarkdownInline(title)}</span>
-      <a href="#${id}" class="opacity-0 group-hover:opacity-100 text-ctp-subtext0 hover:text-[var(--color-accent)] font-mono text-xs transition-opacity ml-2">#</a>
     </h3>`;
+  });
+
+  // H4
+  html = html.replace(/^####\s+(.*)$/gm, (_, title) => {
+    const id = slugify(title);
+    return `<h4 id="${id}" class="font-serif text-sm sm:text-base font-semibold mt-4 sm:mt-6 mb-2 text-rp-text flex items-center gap-2 group flex-wrap">
+      <span>${parseSimpleMarkdownInline(title)}</span>
+    </h4>`;
   });
 
   const blocks = html.split(/\n\s*\n/);
@@ -704,7 +814,7 @@ export async function parseMarkdownBlog(
       return listHtml;
     }
 
-    return `<p class="font-mono text-xs sm:text-sm leading-relaxed text-ctp-text my-3.5 sm:my-4">${parseSimpleMarkdownInline(trimmed)}</p>`;
+    return `<p class="font-mono text-xs sm:text-sm leading-relaxed text-rp-text my-3.5 sm:my-4">${parseSimpleMarkdownInline(trimmed)}</p>`;
   });
 
   html = processedBlocks.filter(Boolean).join("\n\n");

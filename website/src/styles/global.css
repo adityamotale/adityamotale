@@ -3,6 +3,9 @@
 @import 'katex/dist/katex.min.css';
 
 @import 'tailwindcss';
+@source '../../../mdparser/src';
+@source '../../../blogs';
+@plugin '@tailwindcss/typography';
 
 @theme {
   --font-serif: 'Instrument Serif', serif;
@@ -132,4 +135,193 @@ body,
       background-color 0.25s ease,
       color 0.25s ease;
   }
+}
+
+/* Custom Typography (.prose) integration with JetBrains Mono (body), Instrument Serif (headings) & Rose Pine */
+.prose {
+  font-family: var(--font-mono);
+  color: var(--rp-text);
+  max-width: 100%;
+}
+
+.prose p,
+.prose li,
+.prose blockquote,
+.prose div {
+  font-family: var(--font-mono);
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  color: var(--rp-text);
+  font-family: var(--font-serif);
+  font-weight: 600;
+}
+
+.prose a {
+  color: var(--color-accent);
+  text-decoration-color: var(--color-accent);
+}
+
+.prose strong {
+  color: var(--rp-text);
+  font-weight: 600;
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  color: var(--color-accent);
+  font-style: italic;
+  font-size: 0.875em;
+  font-weight: 400;
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.prose code::before,
+.prose code::after {
+  content: '';
+}
+
+.prose pre {
+  font-family: var(--font-mono);
+  background-color: var(--rp-surface);
+  color: var(--rp-text);
+  border: 1px solid var(--rp-highlight-med);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.prose pre code {
+  background-color: transparent !important;
+  padding: 0 !important;
+  color: inherit;
+  font-style: normal;
+  font-size: 0.875em;
+  border: none !important;
+}
+
+.prose blockquote {
+  border-left-color: var(--color-accent);
+  color: var(--rp-subtle);
+  font-style: italic;
+}
+
+/* KaTeX Display Styling (Transparent Background & Borderless) */
+.katex-display-block {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.5rem 0;
+  margin: 1.5rem 0;
+  background-color: transparent;
+  border: none;
+  text-align: center;
+}
+
+/* Custom Code Block Highlighting Overrides & Shiki Theme Support */
+.custom-code-block pre.shiki,
+.prose pre.shiki {
+  background-color: transparent !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+.custom-code-block pre.shiki code,
+.prose pre.shiki code {
+  background-color: transparent !important;
+  padding: 0 !important;
+}
+
+/* Force Shiki syntax tokens to use Rose Pine Moon in Dark Mode */
+html.theme-moon .shiki span,
+html.theme-rp-moon .shiki span,
+html.theme-default .shiki span,
+html.theme-main .shiki span,
+html.theme-rp .shiki span,
+html:not([class*='theme-']) .shiki span,
+html:not(.theme-dawn):not(.theme-rp-dawn) .shiki span {
+  color: var(--shiki-dark) !important;
+  font-style: var(--shiki-dark-font-style, inherit) !important;
+  font-weight: var(--shiki-dark-font-weight, inherit) !important;
+  text-decoration: var(--shiki-dark-text-decoration, inherit) !important;
+}
+
+/* Dawn (Light) theme for Shiki tokens */
+html.theme-dawn .shiki span,
+html.theme-rp-dawn .shiki span {
+  color: var(--shiki-light) !important;
+  font-style: var(--shiki-light-font-style, inherit) !important;
+  font-weight: var(--shiki-light-font-weight, inherit) !important;
+  text-decoration: var(--shiki-light-text-decoration, inherit) !important;
+}
+
+/* Callout Styling */
+.callout {
+  border-left-color: var(--color-accent);
+  background-color: color-mix(in srgb, var(--color-accent) 5%, transparent);
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+@supports (color: color-mix(in oklab, red, red)) {
+  .callout {
+    background-color: color-mix(in oklab, var(--color-accent) 5%, transparent);
+  }
+}
+
+.callout-header {
+  font-family: var(--font-serif);
+  color: var(--color-accent);
+}
+
+.callout-body {
+  font-family: var(--font-mono);
+}
+
+.callout-body a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.callout-body strong {
+  font-weight: 600;
+}
+
+/* Custom Table Styling */
+.custom-table-container {
+  border-color: var(--rp-highlight-med);
+}
+
+.custom-table-container table {
+  margin: 0 !important;
+  border-collapse: collapse !important;
+}
+
+.custom-table-container thead tr {
+  background-color: var(--rp-surface);
+}
+
+.custom-table-container th {
+  color: var(--color-accent) !important;
+  font-weight: 600;
+  border-color: color-mix(in srgb, var(--rp-highlight-med) 30%, transparent);
+}
+
+.custom-table-container td {
+  border-color: color-mix(in srgb, var(--rp-highlight-med) 30%, transparent);
+}
+
+/* Mobile Responsive Touch & Overflow Safety */
+.code-body pre,
+.prose pre,
+.katex-display-block {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }

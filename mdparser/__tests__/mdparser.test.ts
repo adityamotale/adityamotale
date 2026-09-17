@@ -194,26 +194,21 @@ describe("mdparser: Markdown Tables", () => {
 
     const html = parseTableBlock(tableMd);
     assert.ok(html !== null);
+    assert.ok(html.includes("custom-table-container not-prose"));
     assert.ok(
       html.includes(
-        '<table class="w-full text-left font-mono text-xs sm:text-sm border-collapse">',
+        '<table class="w-full m-0 text-left font-mono text-xs sm:text-sm border-collapse">',
       ),
     );
     assert.ok(
       html.includes(
-        '<th scope="col" class="py-2.5 px-3.5 sm:py-3 sm:px-4 text-left">Item</th>',
+        "text-[var(--color-accent)] font-semibold border-r border-rp-highlight-med/30",
       ),
     );
-    assert.ok(
-      html.includes(
-        '<th scope="col" class="py-2.5 px-3.5 sm:py-3 sm:px-4 text-center">Alignment</th>',
-      ),
-    );
-    assert.ok(
-      html.includes(
-        '<th scope="col" class="py-2.5 px-3.5 sm:py-3 sm:px-4 text-right">Score</th>',
-      ),
-    );
+    assert.ok(html.includes("bg-rp-surface/80"));
+    assert.ok(html.includes("Item</th>"));
+    assert.ok(html.includes("Alignment</th>"));
+    assert.ok(html.includes("Score</th>"));
     assert.ok(html.includes("<strong>Alpha</strong>"));
     assert.ok(html.includes("<em>Beta</em>"));
     assert.ok(html.includes("<code>100</code>"));
@@ -266,7 +261,7 @@ describe("mdparser: Full Blog Post Parser (Isolated Dummy Post)", () => {
     const parsed = await parseMarkdownBlog(DUMMY_BLOG_POST);
     assert.ok(parsed.html.includes("custom-code-block-angle"));
     assert.ok(parsed.html.includes("custom-code-block-tilde"));
-    assert.ok(parsed.html.includes("rust"));
+    assert.ok(parsed.html.includes("Rust"));
     assert.ok(parsed.html.includes("copy-code-btn"));
     assert.ok(parsed.html.includes("Rust implementation of dummy scan"));
     assert.ok(parsed.html.includes("C extern signature"));
