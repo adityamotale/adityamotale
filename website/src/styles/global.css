@@ -1,11 +1,13 @@
-@import "@fontsource/instrument-serif";
-@import "@fontsource-variable/jetbrains-mono";
+@import '@fontsource/instrument-serif';
+@import '@fontsource-variable/jetbrains-mono';
 
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
-  --font-serif: "Instrument Serif", serif;
-  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-serif: 'Instrument Serif', serif;
+  --font-mono:
+    'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, SFMono-Regular,
+    Menlo, Monaco, Consolas, monospace;
 
   --color-rp-base: var(--rp-base);
   --color-rp-surface: var(--rp-surface);
@@ -27,7 +29,7 @@
 html.theme-default,
 html.theme-main,
 html.theme-rp,
-html:not([class*="theme-"]) {
+html:not([class*='theme-']) {
   --rp-base: #191724;
   --rp-surface: #1f1d2e;
   --rp-overlay: #26233a;
@@ -86,14 +88,28 @@ html.theme-rp-dawn {
   --color-accent: var(--rp-rose);
 }
 
-html[data-accent="rose"] { --color-accent: var(--rp-rose); }
-html[data-accent="gold"] { --color-accent: var(--rp-gold); }
-html[data-accent="love"] { --color-accent: var(--rp-love); }
-html[data-accent="pine"] { --color-accent: var(--rp-pine); }
-html[data-accent="foam"] { --color-accent: var(--rp-foam); }
-html[data-accent="iris"] { --color-accent: var(--rp-iris); }
+html[data-accent='rose'] {
+  --color-accent: var(--rp-rose);
+}
+html[data-accent='gold'] {
+  --color-accent: var(--rp-gold);
+}
+html[data-accent='love'] {
+  --color-accent: var(--rp-love);
+}
+html[data-accent='pine'] {
+  --color-accent: var(--rp-pine);
+}
+html[data-accent='foam'] {
+  --color-accent: var(--rp-foam);
+}
+html[data-accent='iris'] {
+  --color-accent: var(--rp-iris);
+}
 
-html, body, * {
+html,
+body,
+* {
   scrollbar-width: none !important;
   -ms-overflow-style: none !important;
 }
@@ -111,6 +127,8 @@ html, body, * {
     color: var(--rp-text);
     font-family: var(--font-mono);
     min-height: 100vh;
-    transition: background-color 0.25s ease, color 0.25s ease;
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
   }
 }

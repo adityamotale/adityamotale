@@ -12,14 +12,19 @@ const pid7Repos = (stats.repositories_contributed_to || [])
   .map((r) => ({
     name: r.repository.replace(/^pid7-org\//, ''),
     url: `https://github.com/${r.repository}`,
-    contributions: r.total_contributions
+    contributions: r.total_contributions,
   }));
 ---
 
-<div class="font-mono text-xs w-full max-w-xl text-rp-subtle pt-1 space-y-3.5" id="tui-experience">
+<div
+  class="font-mono text-xs w-full max-w-xl text-rp-subtle pt-1 space-y-3.5"
+  id="tui-experience"
+>
   <div class="flex items-center gap-2 text-rp-muted">
     <span class="text-[var(--color-accent)] font-semibold">&gt;</span>
-    <span class="text-rp-text font-semibold uppercase tracking-wider text-[11px]">Experience</span>
+    <span class="text-rp-text font-semibold uppercase tracking-wider text-[11px]">
+      Experience
+    </span>
     <span class="flex-1 border-b border-rp-muted/20"></span>
   </div>
 
@@ -32,14 +37,25 @@ const pid7Repos = (stats.repositories_contributed_to || [])
           <span class="text-rp-text">OSS Contributions</span>
           <span class="text-rp-muted">]</span>
         </div>
-        <span class="text-rp-muted text-[11px] shrink-0">Sep 2024 — Present</span>
+        <span class="text-rp-muted text-[11px] shrink-0">
+          Sep 2024 — Present
+        </span>
       </div>
 
       <div class="space-y-1">
         <div class="flex items-center gap-2 min-w-0">
-          <svg class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
-            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+          <svg
+            class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
           </svg>
           <span class="text-rp-subtle w-14 shrink-0 select-none">role:</span>
           <span class="text-rp-text font-medium truncate">
@@ -48,9 +64,18 @@ const pid7Repos = (stats.repositories_contributed_to || [])
         </div>
 
         <div class="flex items-center gap-2 min-w-0">
-          <svg class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          <svg
+            class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
           </svg>
           <span class="text-rp-subtle w-14 shrink-0 select-none">repos:</span>
           <div class="text-rp-text font-medium truncate flex flex-wrap items-center gap-x-1.5 min-w-0">
@@ -64,16 +89,27 @@ const pid7Repos = (stats.repositories_contributed_to || [])
                 >
                   {repo.name}
                 </a>
-                {idx < pid7Repos.length - 1 && <span class="text-rp-muted select-none">·</span>}
+                {idx < pid7Repos.length - 1 && (
+                  <span class="text-rp-muted select-none">·</span>
+                )}
               </span>
             ))}
           </div>
         </div>
 
         <div class="flex items-center gap-2 min-w-0">
-          <svg class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polyline points="16 18 22 12 16 6"/>
-            <polyline points="8 6 2 12 8 18"/>
+          <svg
+            class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polyline points="16 18 22 12 16 6" />
+            <polyline points="8 6 2 12 8 18" />
           </svg>
           <span class="text-rp-subtle w-14 shrink-0 select-none">stack:</span>
           <span class="text-rp-text font-medium truncate">
@@ -82,12 +118,22 @@ const pid7Repos = (stats.repositories_contributed_to || [])
         </div>
 
         <div class="flex items-start gap-2 min-w-0">
-          <svg class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          <svg
+            class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none mt-0.5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
           </svg>
           <span class="text-rp-subtle w-14 shrink-0 select-none">impact:</span>
           <span class="text-rp-text font-medium leading-relaxed">
-            Building hardware-accelerated algorithms, embedded KV stores &amp; storage engines
+            Building hardware-accelerated algorithms, embedded KV stores &amp;
+            storage engines
           </span>
         </div>
       </div>
@@ -98,28 +144,53 @@ const pid7Repos = (stats.repositories_contributed_to || [])
       <div class="flex items-center justify-between gap-2">
         <div class="flex items-center gap-1.5 font-medium text-rp-text">
           <span class="text-rp-muted">[</span>
-          <span class="text-rp-text">Freelance &amp; Contract · Web &amp; Tooling</span>
+          <span class="text-rp-text">
+            Freelance &amp; Contract · Web &amp; Tooling
+          </span>
           <span class="text-rp-muted">]</span>
         </div>
-        <span class="text-rp-muted text-[11px] shrink-0">Jul 2024 — Present</span>
+        <span class="text-rp-muted text-[11px] shrink-0">
+          Jul 2024 — Present
+        </span>
       </div>
 
       <div class="space-y-1">
         <div class="flex items-center gap-2 min-w-0">
-          <svg class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
-            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+          <svg
+            class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
           </svg>
           <span class="text-rp-subtle w-14 shrink-0 select-none">role:</span>
           <span class="text-rp-text font-medium truncate">
-            Web &amp; Tooling Developer <span class="text-rp-muted text-[11px] font-normal">(Multiple Clients)</span>
+            Web &amp; Tooling Developer{' '}
+            <span class="text-rp-muted text-[11px] font-normal">
+              (Multiple Clients)
+            </span>
           </span>
         </div>
 
         <div class="flex items-center gap-2 min-w-0">
-          <svg class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polyline points="16 18 22 12 16 6"/>
-            <polyline points="8 6 2 12 8 18"/>
+          <svg
+            class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polyline points="16 18 22 12 16 6" />
+            <polyline points="8 6 2 12 8 18" />
           </svg>
           <span class="text-rp-subtle w-14 shrink-0 select-none">stack:</span>
           <span class="text-rp-text font-medium truncate">
@@ -128,12 +199,22 @@ const pid7Repos = (stats.repositories_contributed_to || [])
         </div>
 
         <div class="flex items-start gap-2 min-w-0">
-          <svg class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          <svg
+            class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none mt-0.5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
           </svg>
           <span class="text-rp-subtle w-14 shrink-0 select-none">impact:</span>
           <span class="text-rp-text font-medium leading-relaxed">
-            Shipped startup landing pages, SMTP microservices &amp; event ticket booking
+            Shipped startup landing pages, SMTP microservices &amp; event ticket
+            booking
           </span>
         </div>
       </div>
@@ -147,27 +228,52 @@ const pid7Repos = (stats.repositories_contributed_to || [])
           <span class="text-rp-text">Internships · Mobile Engineering</span>
           <span class="text-rp-muted">]</span>
         </div>
-        <span class="text-rp-muted text-[11px] shrink-0">Nov 2021 — Apr 2024 <span class="text-rp-subtle">(9 mos total)</span></span>
+        <span class="text-rp-muted text-[11px] shrink-0">
+          Nov 2021 — Apr 2024 <span class="text-rp-subtle">(9 mos total)</span>
+        </span>
       </div>
 
       <div class="space-y-1">
         <div class="flex items-center gap-2 min-w-0">
-          <svg class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          <svg
+            class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
           </svg>
           <span class="text-rp-subtle w-14 shrink-0 select-none">orgs:</span>
           <span class="text-rp-text font-medium truncate">
-            kraftbase <span class="text-rp-muted text-[11px] font-normal">(1 mo)</span> · Rojgary <span class="text-rp-muted text-[11px] font-normal">(5 mos)</span> · FOLKDevelopers <span class="text-rp-muted text-[11px] font-normal">(3 mos)</span>
+            kraftbase{' '}
+            <span class="text-rp-muted text-[11px] font-normal">(1 mo)</span> ·
+            Rojgary{' '}
+            <span class="text-rp-muted text-[11px] font-normal">(5 mos)</span> ·
+            FOLKDevelopers{' '}
+            <span class="text-rp-muted text-[11px] font-normal">(3 mos)</span>
           </span>
         </div>
 
         <div class="flex items-center gap-2 min-w-0">
-          <svg class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
-            <line x1="12" y1="18" x2="12.01" y2="18"/>
+          <svg
+            class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+            <line x1="12" y1="18" x2="12.01" y2="18" />
           </svg>
           <span class="text-rp-subtle w-14 shrink-0 select-none">stack:</span>
           <span class="text-rp-text font-medium truncate">
@@ -176,12 +282,22 @@ const pid7Repos = (stats.repositories_contributed_to || [])
         </div>
 
         <div class="flex items-start gap-2 min-w-0">
-          <svg class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          <svg
+            class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none mt-0.5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
           </svg>
           <span class="text-rp-subtle w-14 shrink-0 select-none">impact:</span>
           <span class="text-rp-text font-medium leading-relaxed">
-            Built MVP mobile apps for multiple clients from scratch, refactored codebases &amp; enhanced reliability
+            Built MVP mobile apps for multiple clients from scratch, refactored
+            codebases &amp; enhanced reliability
           </span>
         </div>
       </div>

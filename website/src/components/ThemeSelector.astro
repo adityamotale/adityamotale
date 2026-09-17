@@ -8,24 +8,32 @@
   class="rounded-full border border-rp-highlight-med bg-rp-surface/60 backdrop-blur-xs px-2.5 py-1 text-rp-subtle transition-colors hover:text-rp-text cursor-pointer flex items-center justify-center select-none focus:outline-none font-mono text-xs"
   aria-label="Switch theme"
 >
-  <span id="theme-label" class="font-mono text-xs">moon</span>
+  <span id="theme-label" class="font-mono text-xs">
+    moon
+  </span>
 </button>
 
 <script>
   const themes = ['moon', 'dawn'] as const;
-  type ThemeName = typeof themes[number];
+  type ThemeName = (typeof themes)[number];
 
   function getActiveTheme(): ThemeName {
     const stored = localStorage.getItem('theme') as ThemeName | null;
     if (stored && themes.includes(stored)) {
       return stored;
     }
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches;
     return prefersDark ? 'moon' : 'dawn';
   }
 
   function applyTheme(themeName: ThemeName, persist = false) {
-    document.documentElement.classList.remove('theme-default', 'theme-moon', 'theme-dawn');
+    document.documentElement.classList.remove(
+      'theme-default',
+      'theme-moon',
+      'theme-dawn'
+    );
     document.documentElement.classList.add(`theme-${themeName}`);
     document.documentElement.setAttribute('data-theme', themeName);
 
@@ -50,11 +58,13 @@
       applyTheme(nextTheme, true);
     });
 
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-      if (!localStorage.getItem('theme')) {
-        applyTheme(e.matches ? 'moon' : 'dawn', false);
-      }
-    });
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+          applyTheme(e.matches ? 'moon' : 'dawn', false);
+        }
+      });
   }
 
   initThemeBtn();

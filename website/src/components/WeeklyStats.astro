@@ -19,7 +19,7 @@ function getAsciiBar(pct: number, len = BAR_LENGTH) {
   return {
     filled: FILLED_GLYPH.repeat(filled),
     empty: EMPTY_GLYPH.repeat(empty),
-    pctFormatted: `${safePct.toFixed(1)}%`
+    pctFormatted: `${safePct.toFixed(1)}%`,
   };
 }
 
@@ -27,8 +27,12 @@ const weeklyData = stats.weekly_summary || {
   lines_of_code: { total_additions: 0, total_deletions: 0, net_lines: 0 },
   commits: 0,
   pull_requests: { total: 0, merged: 0, merge_rate_percentage: 0 },
-  streaks_and_consistency: { longest_streak_days: 0, active_days_count: 0, activity_rate_percentage: 0 },
-  repositories: { total: 0, public: 0, private: 0, org: 0 }
+  streaks_and_consistency: {
+    longest_streak_days: 0,
+    active_days_count: 0,
+    activity_rate_percentage: 0,
+  },
+  repositories: { total: 0, public: 0, private: 0, org: 0 },
 };
 
 const weeklyAdditions = weeklyData.lines_of_code.total_additions;
@@ -48,13 +52,22 @@ const streakBar = getAsciiBar(activeRate, 16);
 const longestStreak = weeklyData.streaks_and_consistency.longest_streak_days;
 const activeDays = weeklyData.streaks_and_consistency.active_days_count;
 
-const topLanguages = (weeklyData.languages || []).slice(0, 3).map((l) => `${l.name} ${Math.round(l.percentage)}%`).join(' · ') || '--';
+const topLanguages =
+  (weeklyData.languages || [])
+    .slice(0, 3)
+    .map((l) => `${l.name} ${Math.round(l.percentage)}%`)
+    .join(' · ') || '--';
 ---
 
-<div class="font-mono text-xs w-full max-w-xl text-rp-subtle pt-2 space-y-2.5" id="tui-weekly-telemetry">
+<div
+  class="font-mono text-xs w-full max-w-xl text-rp-subtle pt-2 space-y-2.5"
+  id="tui-weekly-telemetry"
+>
   <div class="flex items-center gap-2 text-rp-muted">
     <span class="text-[var(--color-accent)] font-semibold">&gt;</span>
-    <span class="text-rp-text font-semibold uppercase tracking-wider text-[11px]">Last Week</span>
+    <span class="text-rp-text font-semibold uppercase tracking-wider text-[11px]">
+      Last Week
+    </span>
     <span class="flex-1 border-b border-rp-muted/20"></span>
   </div>
 
@@ -64,7 +77,11 @@ const topLanguages = (weeklyData.languages || []).slice(0, 3).map((l) => `${l.na
         <span class="text-rp-muted w-3">&amp;</span>
         <span class="text-rp-subtle w-14 shrink-0">loc:</span>
         <span class="text-rp-text font-medium truncate">
-          {fmt.format(weeklyNetLines)} <span class="text-rp-muted text-[11px] font-normal">(+{formatCompact(weeklyAdditions)} / -{formatCompact(weeklyDeletions)})</span>
+          {fmt.format(weeklyNetLines)}{' '}
+          <span class="text-rp-muted text-[11px] font-normal">
+            (+{formatCompact(weeklyAdditions)} / -
+            {formatCompact(weeklyDeletions)})
+          </span>
         </span>
       </div>
 
@@ -78,7 +95,9 @@ const topLanguages = (weeklyData.languages || []).slice(0, 3).map((l) => `${l.na
             <span class="text-rp-muted/40">{churnBar.empty}</span>
             <span>]</span>
           </div>
-          <span class="text-rp-text font-medium text-[11px] tabular-nums min-w-[34px] text-right">{churnBar.pctFormatted}</span>
+          <span class="text-rp-text font-medium text-[11px] tabular-nums min-w-[34px] text-right">
+            {churnBar.pctFormatted}
+          </span>
         </div>
       </div>
 
@@ -86,7 +105,11 @@ const topLanguages = (weeklyData.languages || []).slice(0, 3).map((l) => `${l.na
         <span class="text-rp-muted w-3">#</span>
         <span class="text-rp-subtle w-14 shrink-0">repos:</span>
         <span class="text-rp-text font-medium truncate">
-          {weeklyRepos.total} <span class="text-rp-muted text-[11px] font-normal">({weeklyRepos.public} public, {weeklyRepos.private} private, {weeklyRepos.org} org)</span>
+          {weeklyRepos.total}{' '}
+          <span class="text-rp-muted text-[11px] font-normal">
+            ({weeklyRepos.public} public, {weeklyRepos.private} private,{' '}
+            {weeklyRepos.org} org)
+          </span>
         </span>
       </div>
 
@@ -110,7 +133,9 @@ const topLanguages = (weeklyData.languages || []).slice(0, 3).map((l) => `${l.na
             <span class="text-rp-muted/40">{prBar.empty}</span>
             <span>]</span>
           </div>
-          <span class="text-rp-text font-medium text-[11px] tabular-nums min-w-[34px] text-right">{weeklyPrs.merged}/{weeklyPrs.total}</span>
+          <span class="text-rp-text font-medium text-[11px] tabular-nums min-w-[34px] text-right">
+            {weeklyPrs.merged}/{weeklyPrs.total}
+          </span>
         </div>
       </div>
 
@@ -124,7 +149,9 @@ const topLanguages = (weeklyData.languages || []).slice(0, 3).map((l) => `${l.na
             <span class="text-rp-muted/40">{streakBar.empty}</span>
             <span>]</span>
           </div>
-          <span class="text-rp-text font-medium text-[11px] tabular-nums min-w-[34px] text-right">{streakBar.pctFormatted}</span>
+          <span class="text-rp-text font-medium text-[11px] tabular-nums min-w-[34px] text-right">
+            {streakBar.pctFormatted}
+          </span>
         </div>
       </div>
 
@@ -132,16 +159,17 @@ const topLanguages = (weeklyData.languages || []).slice(0, 3).map((l) => `${l.na
         <span class="text-rp-muted w-3">^</span>
         <span class="text-rp-subtle w-14 shrink-0">streak:</span>
         <span class="text-rp-text font-medium truncate">
-          {longestStreak} days <span class="text-rp-muted text-[11px] font-normal">({activeDays} active)</span>
+          {longestStreak} days{' '}
+          <span class="text-rp-muted text-[11px] font-normal">
+            ({activeDays} active)
+          </span>
         </span>
       </div>
 
       <div class="flex items-center gap-2 min-w-0">
         <span class="text-rp-muted w-3">$</span>
         <span class="text-rp-subtle w-14 shrink-0">stack:</span>
-        <span class="text-rp-text font-medium truncate">
-          {topLanguages}
-        </span>
+        <span class="text-rp-text font-medium truncate">{topLanguages}</span>
       </div>
     </div>
   </div>

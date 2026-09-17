@@ -4,10 +4,14 @@ import stats from '../../../data/github-stats.json';
 const monthlyHistory = stats.monthly_history || [];
 
 const monthsData = monthlyHistory.map((m) => {
-  const totalChurn = m.lines_of_code.total_additions + m.lines_of_code.total_deletions;
-  const churnRatio = totalChurn > 0
-    ? parseFloat(((m.lines_of_code.total_additions / totalChurn) * 100).toFixed(1))
-    : 0;
+  const totalChurn =
+    m.lines_of_code.total_additions + m.lines_of_code.total_deletions;
+  const churnRatio =
+    totalChurn > 0
+      ? parseFloat(
+          ((m.lines_of_code.total_additions / totalChurn) * 100).toFixed(1)
+        )
+      : 0;
 
   return {
     month: m.label,
@@ -35,22 +39,30 @@ function getAsciiBar(value: number, max: number, len = BAR_LENGTH) {
   const empty = len - filled;
   return {
     filled: FILLED_GLYPH.repeat(filled),
-    empty: EMPTY_GLYPH.repeat(empty)
+    empty: EMPTY_GLYPH.repeat(empty),
   };
 }
 
 const maxCommits = Math.max(1, ...monthsData.map((m) => m.commits));
 ---
 
-<div class="font-mono text-xs w-full max-w-xl text-rp-subtle pt-2 space-y-3" id="tui-metric-graph">
+<div
+  class="font-mono text-xs w-full max-w-xl text-rp-subtle pt-2 space-y-3"
+  id="tui-metric-graph"
+>
   <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-rp-muted">
     <div class="flex items-center gap-2 flex-1 min-w-0">
       <span class="text-[var(--color-accent)] font-semibold">&gt;</span>
-      <span class="text-rp-text font-semibold uppercase tracking-wider text-[11px] shrink-0">COMPARE</span>
+      <span class="text-rp-text font-semibold uppercase tracking-wider text-[11px] shrink-0">
+        COMPARE
+      </span>
       <span class="flex-1 border-b border-rp-muted/20"></span>
     </div>
 
-    <div class="flex items-center gap-1 text-[11px] self-start sm:self-auto shrink-0" id="graph-tabs">
+    <div
+      class="flex items-center gap-1 text-[11px] self-start sm:self-auto shrink-0"
+      id="graph-tabs"
+    >
       <button
         type="button"
         data-metric="commits"
@@ -86,13 +98,20 @@ const maxCommits = Math.max(1, ...monthsData.map((m) => m.commits));
     {monthsData.map((m) => {
       const bar = getAsciiBar(m.commits, maxCommits, BAR_LENGTH);
       return (
-        <div class="graph-row flex items-center justify-between gap-x-3 text-xs" data-month={m.month}>
+        <div
+          class="graph-row flex items-center justify-between gap-x-3 text-xs"
+          data-month={m.month}
+        >
           <div class="flex items-center gap-2 min-w-0">
-            <span class="text-rp-subtle w-16 shrink-0 font-medium">{m.month}</span>
+            <span class="text-rp-subtle w-16 shrink-0 font-medium">
+              {m.month}
+            </span>
             <span class="text-rp-muted/60">│</span>
             <div class="inline-flex items-center font-mono tracking-tight text-xs">
               <span>[</span>
-              <span class="graph-bar-filled text-[var(--color-accent)] font-bold">{bar.filled}</span>
+              <span class="graph-bar-filled text-[var(--color-accent)] font-bold">
+                {bar.filled}
+              </span>
               <span class="graph-bar-empty text-rp-muted/40">{bar.empty}</span>
               <span>]</span>
             </div>
@@ -120,7 +139,7 @@ const maxCommits = Math.max(1, ...monthsData.map((m) => m.commits));
     const empty = BAR_LENGTH - filled;
     return {
       filled: FILLED_GLYPH.repeat(filled),
-      empty: EMPTY_GLYPH.repeat(empty)
+      empty: EMPTY_GLYPH.repeat(empty),
     };
   }
 
@@ -131,9 +150,11 @@ const maxCommits = Math.max(1, ...monthsData.map((m) => m.commits));
     tabs.forEach((tab) => {
       const isCurrent = tab.getAttribute('data-metric') === metric;
       if (isCurrent) {
-        tab.className = 'graph-tab px-2 py-0.5 rounded cursor-pointer transition-colors bg-rp-surface text-rp-text font-semibold border border-rp-muted/30';
+        tab.className =
+          'graph-tab px-2 py-0.5 rounded cursor-pointer transition-colors bg-rp-surface text-rp-text font-semibold border border-rp-muted/30';
       } else {
-        tab.className = 'graph-tab px-2 py-0.5 rounded cursor-pointer transition-colors text-rp-muted hover:text-rp-text border border-transparent';
+        tab.className =
+          'graph-tab px-2 py-0.5 rounded cursor-pointer transition-colors text-rp-muted hover:text-rp-text border border-transparent';
       }
     });
 

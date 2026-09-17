@@ -19,11 +19,19 @@ function getAsciiBar(pct: number, len = BAR_LENGTH) {
   return {
     filled: FILLED_GLYPH.repeat(filled),
     empty: EMPTY_GLYPH.repeat(empty),
-    pctFormatted: `${safePct.toFixed(1)}%`
+    pctFormatted: `${safePct.toFixed(1)}%`,
   };
 }
 
-const { lines_of_code, repositories, contributions, streaks_and_consistency, pull_requests, repositories_contributed_to, languages } = stats;
+const {
+  lines_of_code,
+  repositories,
+  contributions,
+  streaks_and_consistency,
+  pull_requests,
+  repositories_contributed_to,
+  languages,
+} = stats;
 
 const totalAdditions = lines_of_code.total_additions;
 const totalDeletions = lines_of_code.total_deletions;
@@ -35,9 +43,14 @@ const churnBar = getAsciiBar(addRatio, 16);
 const totalReposContributed = repositories_contributed_to?.length || 0;
 const publicRepos = repositories.public;
 const privateRepos = repositories.private;
-const orgRepos = Math.max(0, totalReposContributed - (publicRepos + privateRepos));
+const orgRepos = Math.max(
+  0,
+  totalReposContributed - (publicRepos + privateRepos)
+);
 
-const totalCommits = repositories_contributed_to?.reduce((sum, r) => sum + (r.commits || 0), 0) || contributions.commits;
+const totalCommits =
+  repositories_contributed_to?.reduce((sum, r) => sum + (r.commits || 0), 0) ||
+  contributions.commits;
 
 const prMergeRate = pull_requests.merge_rate_percentage;
 const prBar = getAsciiBar(prMergeRate, 16);
@@ -45,13 +58,22 @@ const prBar = getAsciiBar(prMergeRate, 16);
 const activeRate = streaks_and_consistency.activity_rate_percentage;
 const streakBar = getAsciiBar(activeRate, 16);
 
-const topLanguages = (languages || []).slice(0, 3).map((l) => `${l.name} ${Math.round(l.percentage)}%`).join(' · ') || '--';
+const topLanguages =
+  (languages || [])
+    .slice(0, 3)
+    .map((l) => `${l.name} ${Math.round(l.percentage)}%`)
+    .join(' · ') || '--';
 ---
 
-<div class="font-mono text-xs w-full max-w-xl text-rp-subtle pt-2 space-y-2.5" id="tui-coding-telemetry">
+<div
+  class="font-mono text-xs w-full max-w-xl text-rp-subtle pt-2 space-y-2.5"
+  id="tui-coding-telemetry"
+>
   <div class="flex items-center gap-2 text-rp-muted">
     <span class="text-[var(--color-accent)] font-semibold">&gt;</span>
-    <span class="text-rp-text font-semibold uppercase tracking-wider text-[11px]">Telemetry</span>
+    <span class="text-rp-text font-semibold uppercase tracking-wider text-[11px]">
+      Telemetry
+    </span>
     <span class="flex-1 border-b border-rp-muted/20"></span>
   </div>
 
@@ -61,7 +83,11 @@ const topLanguages = (languages || []).slice(0, 3).map((l) => `${l.name} ${Math.
         <span class="text-rp-muted w-3">&amp;</span>
         <span class="text-rp-subtle w-14 shrink-0">loc:</span>
         <span class="text-rp-text font-medium truncate">
-          {fmt.format(netLines)} <span class="text-rp-muted text-[11px] font-normal">(+{formatCompact(totalAdditions)} / -{formatCompact(totalDeletions)})</span>
+          {fmt.format(netLines)}{' '}
+          <span class="text-rp-muted text-[11px] font-normal">
+            (+{formatCompact(totalAdditions)} / -{formatCompact(totalDeletions)}
+            )
+          </span>
         </span>
       </div>
 
@@ -75,7 +101,9 @@ const topLanguages = (languages || []).slice(0, 3).map((l) => `${l.name} ${Math.
             <span class="text-rp-muted/40">{churnBar.empty}</span>
             <span>]</span>
           </div>
-          <span class="text-rp-text font-medium text-[11px] tabular-nums min-w-[34px] text-right">{churnBar.pctFormatted}</span>
+          <span class="text-rp-text font-medium text-[11px] tabular-nums min-w-[34px] text-right">
+            {churnBar.pctFormatted}
+          </span>
         </div>
       </div>
 
@@ -83,7 +111,10 @@ const topLanguages = (languages || []).slice(0, 3).map((l) => `${l.name} ${Math.
         <span class="text-rp-muted w-3">#</span>
         <span class="text-rp-subtle w-14 shrink-0">repos:</span>
         <span class="text-rp-text font-medium truncate">
-          {totalReposContributed} <span class="text-rp-muted text-[11px] font-normal">({publicRepos} public, {privateRepos} private, {orgRepos} org)</span>
+          {totalReposContributed}{' '}
+          <span class="text-rp-muted text-[11px] font-normal">
+            ({publicRepos} public, {privateRepos} private, {orgRepos} org)
+          </span>
         </span>
       </div>
 
@@ -107,7 +138,9 @@ const topLanguages = (languages || []).slice(0, 3).map((l) => `${l.name} ${Math.
             <span class="text-rp-muted/40">{prBar.empty}</span>
             <span>]</span>
           </div>
-          <span class="text-rp-text font-medium text-[11px] tabular-nums min-w-[34px] text-right">{prBar.pctFormatted}</span>
+          <span class="text-rp-text font-medium text-[11px] tabular-nums min-w-[34px] text-right">
+            {prBar.pctFormatted}
+          </span>
         </div>
       </div>
 
@@ -121,7 +154,9 @@ const topLanguages = (languages || []).slice(0, 3).map((l) => `${l.name} ${Math.
             <span class="text-rp-muted/40">{streakBar.empty}</span>
             <span>]</span>
           </div>
-          <span class="text-rp-text font-medium text-[11px] tabular-nums min-w-[34px] text-right">{streakBar.pctFormatted}</span>
+          <span class="text-rp-text font-medium text-[11px] tabular-nums min-w-[34px] text-right">
+            {streakBar.pctFormatted}
+          </span>
         </div>
       </div>
 
@@ -129,16 +164,17 @@ const topLanguages = (languages || []).slice(0, 3).map((l) => `${l.name} ${Math.
         <span class="text-rp-muted w-3">^</span>
         <span class="text-rp-subtle w-14 shrink-0">streak:</span>
         <span class="text-rp-text font-medium truncate">
-          {streaks_and_consistency.longest_streak_days} days <span class="text-rp-muted text-[11px] font-normal">({streaks_and_consistency.active_days_count} active)</span>
+          {streaks_and_consistency.longest_streak_days} days{' '}
+          <span class="text-rp-muted text-[11px] font-normal">
+            ({streaks_and_consistency.active_days_count} active)
+          </span>
         </span>
       </div>
 
       <div class="flex items-center gap-2 min-w-0">
         <span class="text-rp-muted w-3">$</span>
         <span class="text-rp-subtle w-14 shrink-0">stack:</span>
-        <span class="text-rp-text font-medium truncate">
-          {topLanguages}
-        </span>
+        <span class="text-rp-text font-medium truncate">{topLanguages}</span>
       </div>
     </div>
   </div>

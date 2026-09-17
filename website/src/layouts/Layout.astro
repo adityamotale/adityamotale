@@ -2,43 +2,52 @@
 import '../styles/global.css';
 
 interface Props {
-	title?: string;
-	description?: string;
+  title?: string;
+  description?: string;
 }
 
 const {
-	title = 'aditya motale ~ an engineer by choice',
-	description = 'an engineer by choice',
+  title = 'aditya motale ~ an engineer by choice',
+  description = 'an engineer by choice',
 } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>{title}</title>
-		<meta name="title" content={title} />
-		<meta name="description" content={description} />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
 
-		<script is:inline>
-			(function() {
-				const themes = ['moon', 'dawn'];
-				const stored = typeof localStorage !== 'undefined' ? localStorage.getItem('theme') : null;
-				let theme = stored;
-				if (!theme || !themes.includes(theme)) {
-					const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-					theme = prefersDark ? 'moon' : 'dawn';
-				}
-				document.documentElement.classList.remove('theme-moon', 'theme-dawn', 'theme-default');
-				document.documentElement.classList.add(`theme-${theme}`);
-				document.documentElement.setAttribute('data-theme', theme);
-			})();
-		</script>
-	</head>
-	<body class="text-rp-text min-h-screen transition-colors duration-200 antialiased pb-12 sm:pb-14">
-		<slot />
-	</body>
+    <script is:inline>
+      (function () {
+        const themes = ['moon', 'dawn'];
+        const stored =
+          typeof localStorage !== 'undefined'
+            ? localStorage.getItem('theme')
+            : null;
+        let theme = stored;
+        if (!theme || !themes.includes(theme)) {
+          const prefersDark =
+            window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches;
+          theme = prefersDark ? 'moon' : 'dawn';
+        }
+        document.documentElement.classList.remove(
+          'theme-moon',
+          'theme-dawn',
+          'theme-default'
+        );
+        document.documentElement.classList.add(`theme-${theme}`);
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+  </head>
+  <body class="text-rp-text min-h-screen transition-colors duration-200 antialiased pb-12 sm:pb-14">
+    <slot />
+  </body>
 </html>

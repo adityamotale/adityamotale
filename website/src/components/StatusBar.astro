@@ -1,94 +1,175 @@
 ---
 ---
 
-<div class="font-mono text-xs w-full max-w-xl text-rp-subtle pt-1 space-y-2.5" id="tui-telemetry-panel">
+<div
+  class="font-mono text-xs w-full max-w-xl text-rp-subtle pt-1 space-y-2.5"
+  id="tui-telemetry-panel"
+>
   <div class="flex items-center gap-2 text-rp-muted">
     <span class="text-[var(--color-accent)] font-semibold">&gt;</span>
-    <span class="text-rp-text font-semibold uppercase tracking-wider text-[11px]">Status</span>
+    <span class="text-rp-text font-semibold uppercase tracking-wider text-[11px]">
+      Status
+    </span>
     <span class="flex-1 border-b border-rp-muted/20"></span>
   </div>
 
   <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-y-2.5 gap-x-6">
     <div class="space-y-2">
       <div class="flex items-center gap-2 min-w-0">
-        <svg class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <polyline points="4 17 10 11 4 5"/>
-          <line x1="12" y1="19" x2="20" y2="19"/>
+        <svg
+          class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <polyline points="4 17 10 11 4 5" />
+          <line x1="12" y1="19" x2="20" y2="19" />
         </svg>
         <span class="text-rp-subtle w-14 shrink-0 select-none">os:</span>
-        <span id="sys-os" class="text-rp-text font-medium truncate">--</span>
+        <span id="sys-os" class="text-rp-text font-medium truncate">
+          --
+        </span>
       </div>
 
       <div class="flex items-center gap-2 min-w-0">
-        <svg class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="4" y="4" width="16" height="16" rx="2"/>
-          <rect x="9" y="9" width="6" height="6"/>
-          <line x1="9" y1="1" x2="9" y2="4"/>
-          <line x1="15" y1="1" x2="15" y2="4"/>
-          <line x1="9" y1="20" x2="9" y2="23"/>
-          <line x1="15" y1="20" x2="15" y2="23"/>
-          <line x1="20" y1="9" x2="23" y2="9"/>
-          <line x1="20" y1="15" x2="23" y2="15"/>
-          <line x1="1" y1="9" x2="4" y2="9"/>
-          <line x1="1" y1="15" x2="4" y2="15"/>
+        <svg
+          class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <rect x="4" y="4" width="16" height="16" rx="2" />
+          <rect x="9" y="9" width="6" height="6" />
+          <line x1="9" y1="1" x2="9" y2="4" />
+          <line x1="15" y1="1" x2="15" y2="4" />
+          <line x1="9" y1="20" x2="9" y2="23" />
+          <line x1="15" y1="20" x2="15" y2="23" />
+          <line x1="20" y1="9" x2="23" y2="9" />
+          <line x1="20" y1="15" x2="23" y2="15" />
+          <line x1="1" y1="9" x2="4" y2="9" />
+          <line x1="1" y1="15" x2="4" y2="15" />
         </svg>
         <span class="text-rp-subtle w-14 shrink-0 select-none">cpu:</span>
-        <span id="sys-cpu" class="text-rp-text font-medium truncate">--</span>
+        <span id="sys-cpu" class="text-rp-text font-medium truncate">
+          --
+        </span>
       </div>
 
       <div class="flex items-center gap-2 min-w-0">
-        <svg class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-          <line x1="8" y1="21" x2="16" y2="21"/>
-          <line x1="12" y1="17" x2="12" y2="21"/>
+        <svg
+          class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+          <line x1="8" y1="21" x2="16" y2="21" />
+          <line x1="12" y1="17" x2="12" y2="21" />
         </svg>
         <span class="text-rp-subtle w-14 shrink-0 select-none">display:</span>
-        <span id="sys-display" class="text-rp-text font-medium truncate">--</span>
+        <span id="sys-display" class="text-rp-text font-medium truncate">
+          --
+        </span>
       </div>
     </div>
 
     <div class="space-y-2">
       <div class="flex items-center gap-2 min-w-0">
-        <svg class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-          <line x1="16" y1="2" x2="16" y2="6"/>
-          <line x1="8" y1="2" x2="8" y2="6"/>
-          <line x1="3" y1="10" x2="21" y2="10"/>
+        <svg
+          class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+          <line x1="16" y1="2" x2="16" y2="6" />
+          <line x1="8" y1="2" x2="8" y2="6" />
+          <line x1="3" y1="10" x2="21" y2="10" />
         </svg>
         <span class="text-rp-subtle w-10 shrink-0 select-none">date:</span>
-        <span id="tui-date" class="text-rp-text font-medium truncate">---, -- --- ----</span>
+        <span id="tui-date" class="text-rp-text font-medium truncate">
+          ---, -- --- ----
+        </span>
       </div>
 
       <div class="flex items-center gap-2 min-w-0">
-        <svg class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="10"/>
-          <polyline points="12 6 12 12 16 14"/>
+        <svg
+          class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
         </svg>
         <span class="text-rp-subtle w-10 shrink-0 select-none">time:</span>
-        <span id="tui-time" class="text-rp-text font-medium truncate">--:--:-- IST +05:30</span>
+        <span id="tui-time" class="text-rp-text font-medium truncate">
+          --:--:-- IST +05:30
+        </span>
       </div>
 
       <div class="flex items-center gap-2 min-w-0">
-        <svg class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="4"/>
-          <path d="M12 2v2"/>
-          <path d="M12 20v2"/>
-          <path d="m4.93 4.93 1.41 1.41"/>
-          <path d="m17.66 17.66 1.41 1.41"/>
-          <path d="M2 12h2"/>
-          <path d="M20 12h2"/>
-          <path d="m6.34 17.66-1.41 1.41"/>
-          <path d="m19.07 4.93-1.41 1.41"/>
+        <svg
+          class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2" />
+          <path d="M12 20v2" />
+          <path d="m4.93 4.93 1.41 1.41" />
+          <path d="m17.66 17.66 1.41 1.41" />
+          <path d="M2 12h2" />
+          <path d="M20 12h2" />
+          <path d="m6.34 17.66-1.41 1.41" />
+          <path d="m19.07 4.93-1.41 1.41" />
         </svg>
         <span class="text-rp-subtle w-10 shrink-0 select-none">day:</span>
         <div class="inline-flex items-center gap-2 text-rp-subtle font-mono">
           <div class="inline-flex items-center font-mono tracking-tight text-xs">
             <span>[</span>
-            <span id="tui-bar-filled" class="text-[var(--color-accent)] font-bold">#######</span>
-            <span id="tui-bar-empty" class="text-rp-muted/40">.........</span>
+            <span
+              id="tui-bar-filled"
+              class="text-[var(--color-accent)] font-bold"
+            >
+              #######
+            </span>
+            <span id="tui-bar-empty" class="text-rp-muted/40">
+              .........
+            </span>
             <span>]</span>
           </div>
-          <span id="tui-pct" class="text-rp-text font-medium text-[11px] tabular-nums min-w-[34px] text-right">--.-%</span>
+          <span
+            id="tui-pct"
+            class="text-rp-text font-medium text-[11px] tabular-nums min-w-[34px] text-right"
+          >
+            --.-%
+          </span>
         </div>
       </div>
     </div>
@@ -102,18 +183,28 @@
 
   function getOsInfo(): string {
     const userAgent = navigator.userAgent;
-    if (userAgent.includes('Macintosh') || userAgent.includes('Mac OS')) return 'macOS';
+    if (userAgent.includes('Macintosh') || userAgent.includes('Mac OS'))
+      return 'macOS';
     if (userAgent.includes('Windows')) return 'Windows';
     if (userAgent.includes('Android')) return 'Android';
-    if (userAgent.includes('iPhone') || userAgent.includes('iPad')) return 'iOS';
+    if (userAgent.includes('iPhone') || userAgent.includes('iPad'))
+      return 'iOS';
     return 'Linux';
   }
 
   function getCpuArch(): string {
     const userAgent = navigator.userAgent;
-    if (userAgent.includes('x86_64') || userAgent.includes('x64') || userAgent.includes('Win64')) {
+    if (
+      userAgent.includes('x86_64') ||
+      userAgent.includes('x64') ||
+      userAgent.includes('Win64')
+    ) {
       return 'x86_64 (64-bit)';
-    } else if (userAgent.includes('arm64') || userAgent.includes('aarch64') || navigator.maxTouchPoints > 0) {
+    } else if (
+      userAgent.includes('arm64') ||
+      userAgent.includes('aarch64') ||
+      navigator.maxTouchPoints > 0
+    ) {
       return 'ARM64 (64-bit)';
     }
     return (navigator as any).platform || '64-bit CPU';
@@ -152,7 +243,7 @@
         weekday: 'short',
         day: '2-digit',
         month: 'short',
-        year: 'numeric'
+        year: 'numeric',
       });
       dateEl.textContent = formatterDate.format(now);
     }
@@ -162,7 +253,7 @@
       hour: '2-digit',
       minute: '2-digit',
       second: '2-digit',
-      hour12: false
+      hour12: false,
     });
 
     if (timeEl) {
@@ -170,16 +261,28 @@
     }
 
     const parts = formatterTime.formatToParts(now);
-    const hour = parseInt(parts.find((p) => p.type === 'hour')?.value || '0', 10);
-    const minute = parseInt(parts.find((p) => p.type === 'minute')?.value || '0', 10);
-    const second = parseInt(parts.find((p) => p.type === 'second')?.value || '0', 10);
+    const hour = parseInt(
+      parts.find((p) => p.type === 'hour')?.value || '0',
+      10
+    );
+    const minute = parseInt(
+      parts.find((p) => p.type === 'minute')?.value || '0',
+      10
+    );
+    const second = parseInt(
+      parts.find((p) => p.type === 'second')?.value || '0',
+      10
+    );
 
     const totalSecondsInDay = 86400;
     const currentSeconds = hour * 3600 + minute * 60 + second;
     const percentage = (currentSeconds / totalSecondsInDay) * 100;
 
     pctEl.textContent = `${percentage.toFixed(1)}%`;
-    const filledCount = Math.min(BAR_LENGTH, Math.floor((percentage / 100) * BAR_LENGTH));
+    const filledCount = Math.min(
+      BAR_LENGTH,
+      Math.floor((percentage / 100) * BAR_LENGTH)
+    );
     const emptyCount = BAR_LENGTH - filledCount;
 
     filledEl.textContent = FILLED_GLYPH.repeat(filledCount);
