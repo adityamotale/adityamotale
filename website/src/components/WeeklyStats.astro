@@ -1,0 +1,167 @@
+---
+import stats from '../../../data/github-stats.json';
+
+const fmt = new Intl.NumberFormat('en-US');
+const formatCompact = (n: number) => {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}k`;
+  return n.toString();
+};
+
+const BAR_LENGTH = 16;
+const FILLED_GLYPH = '#';
+const EMPTY_GLYPH = '.';
+
+function getAsciiBar(pct: number, len = BAR_LENGTH) {
+  const safePct = Math.max(0, Math.min(100, pct));
+  const filled = Math.min(len, Math.floor((safePct / 100) * len));
+  const empty = len - filled;
+  return {
+    filled: FILLED_GLYPH.repeat(filled),
+    empty: EMPTY_GLYPH.repeat(empty),
+    pctFormatted: `${safePct.toFixed(1)}%`
+  };
+}
+
+// Compute preceding Sunday to Saturday window
+const now = new Date();
+const dayOfWeek = now.getUTCDay();
+const daysSinceSaturday = (dayOfWeek + 1) % 7 || 7;
+
+const lastSaturday = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - daysSinceSaturday));
+const prevSunday = new Date(Date.UTC(lastSaturday.getUTCFullYear(), lastSaturday.getUTCMonth(), lastSaturday.getUTCDate() - 6));
+
+const fromDate = prevSunday.toISOString().slice(0, 10);
+const toDate = lastSaturday.toISOString().slice(0, 10);
+
+const dailyEntries = Object.entries(stats.daily_contributions || {})
+  .filter(([date]) => date >= fromDate && date <= toDate)
+  .sort(([a], [b]) => a.localeCompare(b));
+
+let activeDays = 0;
+let longestStreak = 0;
+let tempStreak = 0;
+
+for (const [_, count] of dailyEntries) {
+  if (count > 0) {
+    activeDays++;
+    tempStreak++;
+    if (tempStreak > longestStreak) longestStreak = tempStreak;
+  } else {
+    tempStreak = 0;
+  }
+}
+
+const activeRate = (activeDays / 7) * 100;
+const streakBar = getAsciiBar(activeRate, 16);
+
+// Last week metrics (2026-09-06 to 2026-09-12)
+const weeklyAdditions = 11325;
+const weeklyDeletions = 2404;
+const weeklyNetLines = weeklyAdditions - weeklyDeletions;
+const totalChurn = weeklyAdditions + weeklyDeletions;
+const addRatio = totalChurn > 0 ? (weeklyAdditions / totalChurn) * 100 : 0;
+const churnBar = getAsciiBar(addRatio, 16);
+
+const weeklyCommits = 87;
+const weeklyRepos = { total: 2, public: 0, private: 0, org: 2 };
+const weeklyPrs = { merged: 1, total: 1, rate: 100 };
+const prBar = getAsciiBar(weeklyPrs.rate, 16);
+const topStack = 'Astro 90% · Rust 10%';
+---
+
+<div class="font-mono text-xs w-full max-w-xl text-rp-subtle pt-2 space-y-2.5" id="tui-weekly-telemetry">
+  <div class="flex items-center gap-2 text-rp-muted">
+    <span class="text-[var(--color-accent)] font-semibold">&gt;</span>
+    <span class="text-rp-text font-semibold uppercase tracking-wider text-[11px]">Last Week</span>
+    <span class="flex-1 border-b border-rp-muted/20"></span>
+  </div>
+
+  <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-y-2.5 gap-x-6">
+    <div class="space-y-2">
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="text-rp-muted w-3">&amp;</span>
+        <span class="text-rp-subtle w-14 shrink-0">loc:</span>
+        <span class="text-rp-text font-medium truncate">
+          {fmt.format(weeklyNetLines)} <span class="text-rp-muted text-[11px] font-normal">(+{formatCompact(weeklyAdditions)} / -{formatCompact(weeklyDeletions)})</span>
+        </span>
+      </div>
+
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="text-rp-muted w-3">%</span>
+        <span class="text-rp-subtle w-14 shrink-0">churn:</span>
+        <div class="inline-flex items-center gap-2 text-rp-subtle">
+          <div class="inline-flex items-center font-mono tracking-tight text-xs">
+            <span>[</span>
+            <span class="text-rp-pine font-bold">{churnBar.filled}</span>
+            <span class="text-rp-muted/40">{churnBar.empty}</span>
+            <span>]</span>
+          </div>
+          <span class="text-rp-text font-medium text-[11px] tabular-nums min-w-[34px] text-right">{churnBar.pctFormatted}</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="text-rp-muted w-3">#</span>
+        <span class="text-rp-subtle w-14 shrink-0">repos:</span>
+        <span class="text-rp-text font-medium truncate">
+          {weeklyRepos.total} <span class="text-rp-muted text-[11px] font-normal">({weeklyRepos.public} public, {weeklyRepos.private} private, {weeklyRepos.org} org)</span>
+        </span>
+      </div>
+
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="text-rp-muted w-3">*</span>
+        <span class="text-rp-subtle w-14 shrink-0">commits:</span>
+        <span class="text-rp-text font-medium truncate">
+          {fmt.format(weeklyCommits)}
+        </span>
+      </div>
+    </div>
+
+    <div class="space-y-2">
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="text-rp-muted w-3">+</span>
+        <span class="text-rp-subtle w-14 shrink-0">prs:</span>
+        <div class="inline-flex items-center gap-2 text-rp-subtle">
+          <div class="inline-flex items-center font-mono tracking-tight text-xs">
+            <span>[</span>
+            <span class="text-rp-foam font-bold">{prBar.filled}</span>
+            <span class="text-rp-muted/40">{prBar.empty}</span>
+            <span>]</span>
+          </div>
+          <span class="text-rp-text font-medium text-[11px] tabular-nums min-w-[34px] text-right">{weeklyPrs.merged}/{weeklyPrs.total}</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="text-rp-muted w-3">@</span>
+        <span class="text-rp-subtle w-14 shrink-0">active:</span>
+        <div class="inline-flex items-center gap-2 text-rp-subtle">
+          <div class="inline-flex items-center font-mono tracking-tight text-xs">
+            <span>[</span>
+            <span class="text-rp-gold font-bold">{streakBar.filled}</span>
+            <span class="text-rp-muted/40">{streakBar.empty}</span>
+            <span>]</span>
+          </div>
+          <span class="text-rp-text font-medium text-[11px] tabular-nums min-w-[34px] text-right">{streakBar.pctFormatted}</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="text-rp-muted w-3">^</span>
+        <span class="text-rp-subtle w-14 shrink-0">streak:</span>
+        <span class="text-rp-text font-medium truncate">
+          {longestStreak} days <span class="text-rp-muted text-[11px] font-normal">({activeDays} active)</span>
+        </span>
+      </div>
+
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="text-rp-muted w-3">$</span>
+        <span class="text-rp-subtle w-14 shrink-0">stack:</span>
+        <span class="text-rp-text font-medium truncate">
+          {topStack}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
