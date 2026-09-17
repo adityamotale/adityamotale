@@ -188,7 +188,11 @@ export function buildRepositoryActivities(params: {
   const repoMeta = new Map(
     viewerRepos.map((r) => [
       r.nameWithOwner,
-      { isPrivate: r.isPrivate, isFork: r.isFork },
+      {
+        isPrivate: r.isPrivate,
+        isFork: r.isFork,
+        description: r.description ?? null,
+      },
     ]),
   );
 
@@ -202,6 +206,7 @@ export function buildRepositoryActivities(params: {
     const isPrivate =
       meta?.isPrivate ?? contrib?.isPrivate ?? loc?.is_private ?? false;
     const isFork = meta?.isFork ?? loc?.is_fork ?? false;
+    const description = meta?.description ?? null;
     const commits = Math.max(contrib?.commits ?? 0, loc?.commit_count ?? 0);
     const additions = loc?.additions ?? 0;
     const deletions = loc?.deletions ?? 0;
@@ -217,6 +222,7 @@ export function buildRepositoryActivities(params: {
         repository: name,
         is_private: isPrivate,
         is_fork: isFork,
+        description,
         commits,
         pull_requests: pullRequests,
         issues,

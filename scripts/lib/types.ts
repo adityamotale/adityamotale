@@ -21,6 +21,7 @@ export interface RepoActivityStat {
   repository: string;
   is_private: boolean;
   is_fork: boolean;
+  description?: string | null;
   commits: number;
   pull_requests: number;
   issues: number;

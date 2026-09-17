@@ -256,12 +256,20 @@ async function executeIncremental(
       entry.deletions += dels;
       entry.net_lines = entry.additions - entry.deletions;
       entry.total_contributions += contribCount;
+      if (!entry.description) {
+        entry.description =
+          viewer.repositories.find((r) => r.nameWithOwner === name)
+            ?.description ?? null;
+      }
     } else {
       repoMap.set(name, {
         repository: name,
         is_private: stat.isPrivate,
         is_fork:
           candidateRepos.find((r) => r.nameWithOwner === name)?.isFork ?? false,
+        description:
+          viewer.repositories.find((r) => r.nameWithOwner === name)
+            ?.description ?? null,
         commits: commitCount,
         issues: stat.issues,
         pull_requests: stat.pullRequests,

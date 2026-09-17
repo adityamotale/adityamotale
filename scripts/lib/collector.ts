@@ -12,6 +12,7 @@ const GET_VIEWER_REPOS_QUERY = `
           name
           isPrivate
           isFork
+          description
           stargazerCount
           forkCount
           owner { login }
@@ -123,6 +124,7 @@ export interface ViewerRepoNode {
   name: string;
   isPrivate: boolean;
   isFork: boolean;
+  description?: string | null;
   stargazerCount: number;
   forkCount: number;
   owner: { login: string };
