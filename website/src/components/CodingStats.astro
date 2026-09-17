@@ -45,7 +45,7 @@ const prBar = getAsciiBar(prMergeRate, 16);
 const activeRate = streaks_and_consistency.activity_rate_percentage;
 const streakBar = getAsciiBar(activeRate, 16);
 
-const topLanguages = (languages || []).slice(0, 3).map((l) => `${l.name} ${Math.round(l.percentage)}%`).join(' · ');
+const topLanguages = (languages || []).slice(0, 3).map((l) => `${l.name} ${Math.round(l.percentage)}%`).join(' · ') || '--';
 ---
 
 <div class="font-mono text-xs w-full max-w-xl text-rp-subtle pt-2 space-y-2.5" id="tui-coding-telemetry">

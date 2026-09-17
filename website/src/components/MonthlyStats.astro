@@ -50,7 +50,7 @@ const streakBar = getAsciiBar(activeRate, 16);
 const longestStreak = targetMonth.streaks_and_consistency.longest_streak_days;
 const activeDays = targetMonth.streaks_and_consistency.active_days_count;
 
-const topStack = (targetMonth.top_stack || []).join(' · ') || 'C';
+const topLanguages = (targetMonth.languages || []).slice(0, 3).map((l) => `${l.name} ${Math.round(l.percentage)}%`).join(' · ') || '--';
 ---
 
 <div class="font-mono text-xs w-full max-w-xl text-rp-subtle pt-2 space-y-2.5" id="tui-monthly-telemetry">
@@ -142,7 +142,7 @@ const topStack = (targetMonth.top_stack || []).join(' · ') || 'C';
         <span class="text-rp-muted w-3">$</span>
         <span class="text-rp-subtle w-14 shrink-0">stack:</span>
         <span class="text-rp-text font-medium truncate">
-          {topStack}
+          {topLanguages}
         </span>
       </div>
     </div>
