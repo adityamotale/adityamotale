@@ -204,6 +204,41 @@ async function executeIncremental(
   const totalPRs = existing.pull_requests.total + windowPRs.total;
   const mergedPRs = existing.pull_requests.merged + windowPRs.merged;
 
+  let windowPub = 0;
+  let windowPriv = 0;
+  let windowOrg = 0;
+  let windowCommits = 0;
+
+  for (const [name, stat] of windowData.repoContributions.entries()) {
+    const loc = locResults.get(name);
+    const commitCount = Math.max(stat.commits, loc?.commit_count ?? 0);
+    windowCommits += commitCount;
+    if (name.startsWith(viewer.login + '/')) {
+      if (stat.isPrivate) windowPriv++;
+      else windowPub++;
+    } else {
+      windowOrg++;
+    }
+  }
+
+  const weeklySummary = {
+    period: window,
+    lines_of_code: {
+      total_additions: newAdditions,
+      total_deletions: newDeletions,
+      net_lines: newAdditions - newDeletions,
+    },
+    commits: windowCommits || windowData.commits,
+    pull_requests: windowPRs,
+    streaks_and_consistency: calculateStreaks(windowData.daily, window),
+    repositories: {
+      total: windowData.repoContributions.size,
+      public: windowPub,
+      private: windowPriv,
+      org: windowOrg,
+    },
+  };
+
   const fullPeriod: DateRange = {
     from: existing.metadata.period.from,
     to: window.to > existing.metadata.period.to ? window.to : existing.metadata.period.to,
@@ -248,6 +283,8 @@ async function executeIncremental(
       (a, b) => b.total_contributions - a.total_contributions || b.additions - a.additions
     ),
     daily_contributions: daily,
+    weekly_summary: weeklySummary,
+    monthly_history: existing.monthly_history,
   };
 }
 

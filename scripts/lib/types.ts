@@ -63,6 +63,31 @@ export interface ContributionBreakdown {
   private: number;
 }
 
+export interface PeriodMetrics {
+  period: DateRange;
+  lines_of_code: {
+    total_additions: number;
+    total_deletions: number;
+    net_lines: number;
+  };
+  commits: number;
+  pull_requests: PullRequestSummary;
+  streaks_and_consistency: StreaksAndConsistency;
+  repositories: {
+    total: number;
+    public: number;
+    private: number;
+    org: number;
+  };
+}
+
+export interface MonthlyStatItem extends PeriodMetrics {
+  label: string;
+  year: number;
+  month: number;
+  top_stack: string[];
+}
+
 export interface GitHubStatsOutput {
   metadata: {
     username: string;
@@ -81,4 +106,6 @@ export interface GitHubStatsOutput {
   pull_requests: PullRequestSummary;
   repositories_contributed_to: RepoActivityStat[];
   daily_contributions: Record<string, number>;
+  weekly_summary?: PeriodMetrics;
+  monthly_history?: MonthlyStatItem[];
 }
