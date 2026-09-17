@@ -3,8 +3,8 @@ import stats from '../../../data/github-stats.json';
 
 const fmt = new Intl.NumberFormat('en-US');
 const formatCompact = (n: number) => {
-  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
-  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}k`;
+  if (Math.abs(n) >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+  if (Math.abs(n) >= 1_000) return `${(n / 1_000).toFixed(1)}k`;
   return n.toString();
 };
 
@@ -23,48 +23,34 @@ function getAsciiBar(pct: number, len = BAR_LENGTH) {
   };
 }
 
-// Compute target previous calendar month (e.g. August 2026 if current is September 2026)
-const now = new Date();
-const lastMonthDate = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 1, 1));
-const year = lastMonthDate.getUTCFullYear();
-const monthIndex = lastMonthDate.getUTCMonth();
-const monthPrefix = `${year}-${String(monthIndex + 1).padStart(2, '0')}`;
-const totalDaysInMonth = new Date(Date.UTC(year, monthIndex + 1, 0)).getUTCDate();
+const monthlyList = stats.monthly_history || [];
+const targetMonth = monthlyList[monthlyList.length - 1] || {
+  lines_of_code: { total_additions: 0, total_deletions: 0, net_lines: 0 },
+  commits: 0,
+  pull_requests: { total: 0, merged: 0, merge_rate_percentage: 0 },
+  streaks_and_consistency: { longest_streak_days: 0, active_days_count: 0, activity_rate_percentage: 0 },
+  repositories: { total: 0, public: 0, private: 0, org: 0 },
+  top_stack: []
+};
 
-const dailyEntries = Object.entries(stats.daily_contributions || {})
-  .filter(([date]) => date.startsWith(monthPrefix))
-  .sort(([a], [b]) => a.localeCompare(b));
-
-let activeDays = 0;
-let longestStreak = 0;
-let tempStreak = 0;
-
-for (const [_, count] of dailyEntries) {
-  if (count > 0) {
-    activeDays++;
-    tempStreak++;
-    if (tempStreak > longestStreak) longestStreak = tempStreak;
-  } else {
-    tempStreak = 0;
-  }
-}
-
-const activeRate = totalDaysInMonth > 0 ? (activeDays / totalDaysInMonth) * 100 : 0;
-const streakBar = getAsciiBar(activeRate, 16);
-
-// Last month figures (August 2026)
-const monthlyAdditions = 28973;
-const monthlyDeletions = 8972;
-const monthlyNetLines = monthlyAdditions - monthlyDeletions;
+const monthlyAdditions = targetMonth.lines_of_code.total_additions;
+const monthlyDeletions = targetMonth.lines_of_code.total_deletions;
+const monthlyNetLines = targetMonth.lines_of_code.net_lines;
 const totalChurn = monthlyAdditions + monthlyDeletions;
 const addRatio = totalChurn > 0 ? (monthlyAdditions / totalChurn) * 100 : 0;
 const churnBar = getAsciiBar(addRatio, 16);
 
-const monthlyCommits = 309;
-const monthlyRepos = { total: 1, public: 0, private: 0, org: 1 };
-const monthlyPrs = { merged: 0, total: 0, rate: 0 };
-const prBar = getAsciiBar(monthlyPrs.rate, 16);
-const topStack = 'C 100%';
+const monthlyCommits = targetMonth.commits;
+const monthlyRepos = targetMonth.repositories;
+const monthlyPrs = targetMonth.pull_requests;
+const prBar = getAsciiBar(monthlyPrs.merge_rate_percentage, 16);
+
+const activeRate = targetMonth.streaks_and_consistency.activity_rate_percentage;
+const streakBar = getAsciiBar(activeRate, 16);
+const longestStreak = targetMonth.streaks_and_consistency.longest_streak_days;
+const activeDays = targetMonth.streaks_and_consistency.active_days_count;
+
+const topStack = (targetMonth.top_stack || []).join(' · ') || 'C';
 ---
 
 <div class="font-mono text-xs w-full max-w-xl text-rp-subtle pt-2 space-y-2.5" id="tui-monthly-telemetry">

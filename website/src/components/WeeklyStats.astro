@@ -3,8 +3,8 @@ import stats from '../../../data/github-stats.json';
 
 const fmt = new Intl.NumberFormat('en-US');
 const formatCompact = (n: number) => {
-  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
-  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}k`;
+  if (Math.abs(n) >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+  if (Math.abs(n) >= 1_000) return `${(n / 1_000).toFixed(1)}k`;
   return n.toString();
 };
 
@@ -23,50 +23,31 @@ function getAsciiBar(pct: number, len = BAR_LENGTH) {
   };
 }
 
-// Compute preceding Sunday to Saturday window
-const now = new Date();
-const dayOfWeek = now.getUTCDay();
-const daysSinceSaturday = (dayOfWeek + 1) % 7 || 7;
+const weeklyData = stats.weekly_summary || {
+  lines_of_code: { total_additions: 0, total_deletions: 0, net_lines: 0 },
+  commits: 0,
+  pull_requests: { total: 0, merged: 0, merge_rate_percentage: 0 },
+  streaks_and_consistency: { longest_streak_days: 0, active_days_count: 0, activity_rate_percentage: 0 },
+  repositories: { total: 0, public: 0, private: 0, org: 0 }
+};
 
-const lastSaturday = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - daysSinceSaturday));
-const prevSunday = new Date(Date.UTC(lastSaturday.getUTCFullYear(), lastSaturday.getUTCMonth(), lastSaturday.getUTCDate() - 6));
-
-const fromDate = prevSunday.toISOString().slice(0, 10);
-const toDate = lastSaturday.toISOString().slice(0, 10);
-
-const dailyEntries = Object.entries(stats.daily_contributions || {})
-  .filter(([date]) => date >= fromDate && date <= toDate)
-  .sort(([a], [b]) => a.localeCompare(b));
-
-let activeDays = 0;
-let longestStreak = 0;
-let tempStreak = 0;
-
-for (const [_, count] of dailyEntries) {
-  if (count > 0) {
-    activeDays++;
-    tempStreak++;
-    if (tempStreak > longestStreak) longestStreak = tempStreak;
-  } else {
-    tempStreak = 0;
-  }
-}
-
-const activeRate = (activeDays / 7) * 100;
-const streakBar = getAsciiBar(activeRate, 16);
-
-// Last week metrics (2026-09-06 to 2026-09-12)
-const weeklyAdditions = 11325;
-const weeklyDeletions = 2404;
-const weeklyNetLines = weeklyAdditions - weeklyDeletions;
+const weeklyAdditions = weeklyData.lines_of_code.total_additions;
+const weeklyDeletions = weeklyData.lines_of_code.total_deletions;
+const weeklyNetLines = weeklyData.lines_of_code.net_lines;
 const totalChurn = weeklyAdditions + weeklyDeletions;
 const addRatio = totalChurn > 0 ? (weeklyAdditions / totalChurn) * 100 : 0;
 const churnBar = getAsciiBar(addRatio, 16);
 
-const weeklyCommits = 87;
-const weeklyRepos = { total: 2, public: 0, private: 0, org: 2 };
-const weeklyPrs = { merged: 1, total: 1, rate: 100 };
-const prBar = getAsciiBar(weeklyPrs.rate, 16);
+const weeklyCommits = weeklyData.commits;
+const weeklyRepos = weeklyData.repositories;
+const weeklyPrs = weeklyData.pull_requests;
+const prBar = getAsciiBar(weeklyPrs.merge_rate_percentage, 16);
+
+const activeRate = weeklyData.streaks_and_consistency.activity_rate_percentage;
+const streakBar = getAsciiBar(activeRate, 16);
+const longestStreak = weeklyData.streaks_and_consistency.longest_streak_days;
+const activeDays = weeklyData.streaks_and_consistency.active_days_count;
+
 const topStack = 'Astro 90% · Rust 10%';
 ---
 
