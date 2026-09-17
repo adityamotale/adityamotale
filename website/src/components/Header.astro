@@ -3,8 +3,16 @@ import ThemeSelector from './ThemeSelector.astro';
 ---
 
 <header class="flex flex-col min-w-0 space-y-4">
-  <div class="flex items-center justify-start">
+  <div class="flex items-center justify-start gap-2.5">
     <ThemeSelector />
+    <a
+      href="/adityamotale.pdf"
+      download="adityamotale.pdf"
+      class="rounded-full border border-rp-highlight-med bg-rp-surface/60 backdrop-blur-xs px-2.5 py-1 text-rp-subtle transition-colors hover:text-rp-text hover:border-rp-highlight-high flex items-center justify-center select-none font-mono text-xs"
+      title="View and download resume"
+    >
+      resume
+    </a>
   </div>
 
   <a
