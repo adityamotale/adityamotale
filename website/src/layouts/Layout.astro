@@ -1,15 +1,82 @@
 ---
 import '../styles/global.css';
 
+interface ArticleMeta {
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
+  tags?: string[];
+}
+
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  imageAlt?: string;
+  type?: 'website' | 'article';
+  article?: ArticleMeta;
 }
 
 const {
   title = 'aditya motale ~ an engineer by choice',
   description = 'an engineer by choice',
+  image = '/og-image.png',
+  imageAlt = 'aditya motale ~ an engineer by choice',
+  type = 'website',
+  article,
 } = Astro.props;
+
+const canonicalURL = new URL(
+  Astro.url.pathname,
+  Astro.site || 'https://adii.fyi'
+);
+const ogImageURL = new URL(image, Astro.site || 'https://adii.fyi');
+
+const schemaData =
+  type === 'article'
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: title,
+        description: description,
+        url: canonicalURL.href,
+        image: ogImageURL.href,
+        datePublished: article?.publishedTime,
+        dateModified: article?.modifiedTime || article?.publishedTime,
+        author: {
+          '@type': 'Person',
+          name: article?.author || 'Aditya Motale',
+          url: 'https://adii.fyi',
+        },
+        publisher: {
+          '@type': 'Person',
+          name: 'Aditya Motale',
+          url: 'https://adii.fyi',
+        },
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': canonicalURL.href,
+        },
+        keywords: article?.tags?.join(', '),
+      }
+    : {
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: 'aditya motale',
+        url: 'https://adii.fyi',
+        description: 'an engineer by choice',
+        inLanguage: 'en-US',
+        publisher: {
+          '@type': 'Person',
+          name: 'Aditya Motale',
+          url: 'https://adii.fyi',
+          sameAs: [
+            'https://github.com/adityamotale',
+            'https://x.com/arctic_byte',
+            'https://www.linkedin.com/in/aditya-motale',
+          ],
+        },
+      };
 ---
 
 <!doctype html>
@@ -20,9 +87,81 @@ const {
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="author" content="Aditya Motale" />
+    <meta name="robots" content="index, follow" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="format-detection" content="telephone=no" />
     <meta name="generator" content={Astro.generator} />
 
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="sitemap" href="/sitemap.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="aditya motale ~ an engineer by choice"
+      href="/rss.xml"
+    />
+
+    <!-- Favicons & App Manifest -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Adii" />
+    <meta name="application-name" content="Adii" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#232136"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#faf4ed"
+    />
+
+    <!-- OpenGraph -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:site_name" content="aditya motale" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:locale" content="en_US" />
+    {article?.publishedTime && (
+      <meta property="article:published_time" content={article.publishedTime} />
+    )}
+    {article?.modifiedTime && (
+      <meta property="article:modified_time" content={article.modifiedTime} />
+    )}
+    {article?.author && (
+      <meta property="article:author" content={article.author} />
+    )}
+    {article?.tags?.map((tag) => (
+      <meta property="article:tag" content={tag} />
+    ))}
+
+    <!-- Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@arctic_byte" />
+    <meta name="twitter:creator" content="@arctic_byte" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+
+    <!-- JSON-LD Structured Data -->
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(schemaData)}
+    ></script>
     <script is:inline>
       (function () {
         const themes = ['moon', 'dawn'];

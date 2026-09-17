@@ -2,7 +2,11 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import { formatBlogDate, getAllBlogPosts } from '../../lib/blog';
+import {
+  formatBlogDate,
+  getAllBlogPosts,
+  parseDateToTimestamp,
+} from '../../lib/blog';
 import type { ParsedBlogPost } from 'mdparser';
 
 export async function getStaticPaths() {
@@ -39,11 +43,30 @@ const fallbackExcerpt =
 
 const pageDescription =
   post.frontmatter.description || fallbackExcerpt || 'an engineer by choice';
+
+const pubTimestamp = parseDateToTimestamp(post.frontmatter.created);
+const isoPublishedDate = pubTimestamp
+  ? new Date(pubTimestamp).toISOString()
+  : undefined;
+
+const modTimestamp = post.frontmatter.lastUpdated
+  ? parseDateToTimestamp(post.frontmatter.lastUpdated)
+  : pubTimestamp;
+const isoModifiedDate = modTimestamp
+  ? new Date(modTimestamp).toISOString()
+  : isoPublishedDate;
 ---
 
 <Layout
   title={`${post.frontmatter.title} ~ aditya motale`}
   description={pageDescription}
+  type="article"
+  article={{
+    publishedTime: isoPublishedDate,
+    modifiedTime: isoModifiedDate,
+    author: 'Aditya Motale',
+    tags: post.frontmatter.tags,
+  }}
 >
   <main class="w-full max-w-screen-md mx-auto px-4 sm:px-6 py-8 sm:py-14 space-y-8 sm:space-y-10 min-w-0 overflow-hidden">
     <div
