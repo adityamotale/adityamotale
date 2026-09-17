@@ -1,11 +1,9 @@
-@import "@fontsource-variable/playwrite-us-trad";
 @import "@fontsource/instrument-serif";
 @import "@fontsource-variable/jetbrains-mono";
 
 @import "tailwindcss";
 
 @theme {
-  --font-playwrite: "Playwrite US Trad Variable", "Playwrite US Trad", cursive, sans-serif;
   --font-serif: "Instrument Serif", serif;
   --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
