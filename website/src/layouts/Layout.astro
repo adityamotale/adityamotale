@@ -25,14 +25,14 @@ const {
 
 		<script is:inline>
 			(function() {
-				const themes = ['default', 'moon', 'dawn'];
+				const themes = ['moon', 'dawn'];
 				const stored = typeof localStorage !== 'undefined' ? localStorage.getItem('theme') : null;
 				let theme = stored;
 				if (!theme || !themes.includes(theme)) {
 					const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 					theme = prefersDark ? 'moon' : 'dawn';
 				}
-				document.documentElement.classList.remove('theme-default', 'theme-moon', 'theme-dawn');
+				document.documentElement.classList.remove('theme-moon', 'theme-dawn', 'theme-default');
 				document.documentElement.classList.add(`theme-${theme}`);
 				document.documentElement.setAttribute('data-theme', theme);
 			})();

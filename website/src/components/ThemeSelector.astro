@@ -5,14 +5,14 @@
   id="theme-btn"
   type="button"
   title="switch theme"
-  class="rounded-full border border-rp-highlight-med bg-rp-surface/60 backdrop-blur-xs px-2.5 py-1 text-rp-subtle transition-colors hover:text-rp-text cursor-pointer flex items-center justify-center select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--color-accent)] font-mono text-xs"
-  aria-label="Switch Rosé Pine theme"
+  class="rounded-full border border-rp-highlight-med bg-rp-surface/60 backdrop-blur-xs px-2.5 py-1 text-rp-subtle transition-colors hover:text-rp-text cursor-pointer flex items-center justify-center select-none focus:outline-none font-mono text-xs"
+  aria-label="Switch theme"
 >
-  <span id="theme-label" class="font-mono text-xs">default</span>
+  <span id="theme-label" class="font-mono text-xs">moon</span>
 </button>
 
 <script>
-  const themes = ['default', 'moon', 'dawn'] as const;
+  const themes = ['moon', 'dawn'] as const;
   type ThemeName = typeof themes[number];
 
   function getActiveTheme(): ThemeName {
@@ -46,8 +46,7 @@
     const btn = document.getElementById('theme-btn');
     btn?.addEventListener('click', () => {
       const active = getActiveTheme();
-      const currentIndex = themes.indexOf(active);
-      const nextTheme = themes[(currentIndex + 1) % themes.length];
+      const nextTheme: ThemeName = active === 'moon' ? 'dawn' : 'moon';
       applyTheme(nextTheme, true);
     });
 
