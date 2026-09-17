@@ -166,18 +166,17 @@ export async function generateResumePdf() {
 
   // Helper for Section Headers (Generously spaced)
   function drawSectionHeader(title) {
-    y -= 34;
-    page.drawText('>', { x: left, y, size: 9, font, color: cAccent });
-    page.drawText(title.toUpperCase(), { x: left + 10, y, size: 9, font, color: cText });
-    const titleWidth = font.widthOfTextAtSize(title.toUpperCase(), 9);
+    y -= 24;
+    page.drawText('>', { x: left, y, size: 8.5, font, color: cAccent });
+    page.drawText(title.toUpperCase(), { x: left + 10, y, size: 8.5, font, color: cText });
+    const titleWidth = font.widthOfTextAtSize(title.toUpperCase(), 8.5);
     page.drawLine({
       start: { x: left + 14 + titleWidth, y: y + 3 },
       end: { x: right, y: y + 3 },
       thickness: 0.5,
       color: cBorder
     });
-    // Increased spacing between section heading and below content
-    y -= 20;
+    y -= 14;
   }
 
   // 1. Header (ASCII Art Logo, Subheading & Live Site Badge)
@@ -189,7 +188,7 @@ export async function generateResumePdf() {
   const siteUrlW = font.widthOfTextAtSize(siteUrl, 8.5);
   drawClickableText(siteUrl, right - siteUrlW, y - 6, 8.5, 'https://adii.fyi', cAccent, cAccent);
 
-  y -= 26;
+  y -= 24;
   page.drawText('hello, my name is Aditya — an engineer by choice', {
     x: left,
     y,
@@ -206,26 +205,58 @@ export async function generateResumePdf() {
     "building embedded storage engines and speeding up mundane routines using SIMD."
   ];
   for (const line of aboutLines) {
-    page.drawText(line, { x: left, y, size: 8, font, color: cSubtle });
-    y -= 14;
+    page.drawText(line, { x: left, y, size: 7.5, font, color: cSubtle });
+    y -= 12;
   }
 
-  y -= 4;
+  y -= 2;
   // Social navigation links inside About section (github / twitter / linkedin)
   let curNavX = left;
-  curNavX += drawClickableText('github', curNavX, y, 8, 'https://github.com/adityamotale', cSubtle, cDot);
+  curNavX += drawClickableText('github', curNavX, y, 7.5, 'https://github.com/adityamotale', cSubtle, cDot);
 
-  page.drawText(' / ', { x: curNavX, y, size: 8, font, color: cMuted });
-  curNavX += font.widthOfTextAtSize(' / ', 8);
+  page.drawText(' / ', { x: curNavX, y, size: 7.5, font, color: cMuted });
+  curNavX += font.widthOfTextAtSize(' / ', 7.5);
 
-  curNavX += drawClickableText('twitter', curNavX, y, 8, 'https://x.com/arctic_byte', cSubtle, cDot);
+  curNavX += drawClickableText('twitter', curNavX, y, 7.5, 'https://x.com/arctic_byte', cSubtle, cDot);
 
-  page.drawText(' / ', { x: curNavX, y, size: 8, font, color: cMuted });
-  curNavX += font.widthOfTextAtSize(' / ', 8);
+  page.drawText(' / ', { x: curNavX, y, size: 7.5, font, color: cMuted });
+  curNavX += font.widthOfTextAtSize(' / ', 7.5);
 
-  drawClickableText('linkedin', curNavX, y, 8, 'https://www.linkedin.com/in/aditya-motale', cSubtle, cDot);
+  drawClickableText('linkedin', curNavX, y, 7.5, 'https://www.linkedin.com/in/aditya-motale', cSubtle, cDot);
 
-  // 3. Education Section
+  // 3. Projects Section (Top 5 contributed projects dynamically from data)
+  const topProjects = (stats.repositories_contributed_to || [])
+    .filter(
+      (r) =>
+        !r.is_private &&
+        !r.is_fork &&
+        !r.repository.endsWith('/website') &&
+        Boolean(r.description)
+    )
+    .sort((a, b) => (b.total_contributions || 0) - (a.total_contributions || 0))
+    .slice(0, 5)
+    .map((r) => ({
+      name: r.repository.split('/')[1] || r.repository,
+      url: `https://github.com/${r.repository}`,
+      description: r.description
+    }));
+
+  if (topProjects.length > 0) {
+    drawSectionHeader('Projects');
+    for (const proj of topProjects) {
+      const nameW = drawClickableText(proj.name, left, y, 7.5, proj.url, cPine, cDot);
+      page.drawText(` — ${proj.description}`, {
+        x: left + nameW,
+        y,
+        size: 7.5,
+        font,
+        color: cSubtle
+      });
+      y -= 12;
+    }
+  }
+
+  // 4. Education Section
   drawSectionHeader('Education');
   const eduCol1 = left;
   const eduCol2 = left + 265;
