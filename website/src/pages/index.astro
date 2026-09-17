@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import StatusBar from '../components/StatusBar.astro';
 import CodingStats from '../components/CodingStats.astro';
+import MonthlyStats from '../components/MonthlyStats.astro';
 ---
 
 <Layout>
@@ -17,6 +18,10 @@ import CodingStats from '../components/CodingStats.astro';
 
 		<section id="section-coding-stats">
 			<CodingStats />
+		</section>
+
+		<section id="section-monthly-stats">
+			<MonthlyStats />
 		</section>
 	</main>
 </Layout>
