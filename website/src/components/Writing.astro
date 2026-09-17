@@ -1,0 +1,36 @@
+---
+import { formatBlogDate, getTopRecentBlogPosts } from '../lib/blog';
+
+const posts = await getTopRecentBlogPosts(5);
+---
+
+{posts.length > 0 && (
+  <div
+    class="font-mono text-xs w-full max-w-xl text-rp-subtle pt-1 space-y-2.5"
+    id="tui-writing"
+  >
+    <div class="flex items-center gap-2 text-rp-muted">
+      <span class="text-[var(--color-accent)] font-semibold">&gt;</span>
+      <span class="text-rp-text font-semibold uppercase tracking-wider text-[11px]">
+        Writing
+      </span>
+      <span class="flex-1 border-b border-rp-muted/20" />
+    </div>
+
+    <div class="space-y-1">
+      {posts.map((post) => (
+        <div class="group flex items-baseline justify-between gap-3 py-1 border-b border-rp-muted/10 last:border-0">
+          <a
+            href={`/blogs/${post.frontmatter.slug}`}
+            class="text-rp-text font-medium hover:text-[var(--color-accent)] transition-colors underline decoration-dotted decoration-rp-muted/50 underline-offset-3 leading-snug flex-1 truncate"
+          >
+            {post.frontmatter.title}
+          </a>
+          <span class="shrink-0 text-rp-muted text-[11px] select-none font-mono">
+            {formatBlogDate(post.frontmatter.created)}
+          </span>
+        </div>
+      ))}
+    </div>
+  </div>
+)}

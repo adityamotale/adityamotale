@@ -1,5 +1,6 @@
 @import '@fontsource/instrument-serif';
 @import '@fontsource-variable/jetbrains-mono';
+@import 'katex/dist/katex.min.css';
 
 @import 'tailwindcss';
 

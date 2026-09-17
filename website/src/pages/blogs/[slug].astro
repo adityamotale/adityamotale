@@ -1,0 +1,245 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import { formatBlogDate, getAllBlogPosts } from '../../lib/blog';
+import type { ParsedBlogPost } from '../../lib/md_parser/types';
+
+export async function getStaticPaths() {
+  const posts = await getAllBlogPosts();
+  return posts.map((post) => ({
+    params: { slug: post.frontmatter.slug },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: ParsedBlogPost;
+}
+
+const { post } = Astro.props;
+
+const cleanContent = post.rawMarkdown
+  .replace(/^---[\s\S]*?---/, '')
+  .replace(/<[^>]*>/g, '')
+  .replace(/\{@[^}]*\}/g, '')
+  .replace(/\[\^[^\]]*\]/g, '')
+  .replace(/#+\s+/g, '')
+  .replace(/[\*\_`~]/g, '')
+  .replace(/\s+/g, ' ')
+  .trim();
+
+const fallbackExcerpt =
+  cleanContent.length > 160
+    ? cleanContent
+        .slice(0, 160)
+        .slice(0, Math.max(120, cleanContent.slice(0, 160).lastIndexOf(' '))) +
+      '...'
+    : cleanContent;
+
+const pageDescription =
+  post.frontmatter.description || fallbackExcerpt || 'an engineer by choice';
+---
+
+<Layout
+  title={`${post.frontmatter.title} ~ aditya motale`}
+  description={pageDescription}
+>
+  <main class="w-full max-w-screen-md mx-auto px-4 sm:px-6 py-8 sm:py-14 space-y-8 sm:space-y-10 min-w-0 overflow-hidden">
+    <div
+      id="blog-eyeline"
+      class="hidden sm:flex fixed top-[28vh] left-0 right-0 pointer-events-none z-20 border-b border-dashed border-[var(--color-accent)] items-center justify-end px-4 sm:px-8 select-none transition-[top,opacity] duration-150"
+      style="opacity: 0.35;"
+    >
+      <span class="font-mono text-[9px] uppercase tracking-widest text-[var(--color-accent)]">
+        eyeline
+      </span>
+    </div>
+
+    <script is:inline>
+      (function () {
+        const el = document.getElementById('blog-eyeline');
+        if (!el) return;
+
+        let config = { enabled: true, opacity: 35, pos: 28 };
+        try {
+          const saved = localStorage.getItem('eyeline_config');
+          if (saved) {
+            const parsed = JSON.parse(saved);
+            if (typeof parsed.enabled === 'boolean')
+              config.enabled = parsed.enabled;
+            if (typeof parsed.opacity === 'number')
+              config.opacity = parsed.opacity;
+            if (typeof parsed.pos === 'number') config.pos = parsed.pos;
+          }
+        } catch {}
+
+        function applyConfig(cfg) {
+          if (typeof cfg.enabled === 'boolean') {
+            el.style.display = cfg.enabled ? 'flex' : 'none';
+          }
+          if (typeof cfg.opacity === 'number') {
+            el.style.opacity = (cfg.opacity / 100).toFixed(2);
+          }
+          if (typeof cfg.pos === 'number') {
+            el.style.top = `${cfg.pos}vh`;
+          }
+        }
+
+        applyConfig(config);
+
+        window.__eyeline = {
+          getConfig: () => ({ ...config }),
+          setConfig: (newCfg) => {
+            config = { ...config, ...newCfg };
+            applyConfig(config);
+            try {
+              localStorage.setItem('eyeline_config', JSON.stringify(config));
+            } catch {}
+            return { ...config };
+          },
+        };
+      })();
+    </script>
+    <div id="section-intro">
+      <Header />
+    </div>
+
+    <header class="space-y-2.5 sm:space-y-3 pt-2">
+      <div class="flex items-center gap-2 text-rp-muted text-xs font-mono mb-2">
+        <a
+          href="/"
+          class="hover:text-[var(--color-accent)] transition-colors underline decoration-dotted decoration-rp-muted/50 underline-offset-3"
+        >
+          &larr; back to home
+        </a>
+      </div>
+
+      <h1 class="font-serif italic text-2xl sm:text-4xl font-semibold tracking-tight text-rp-text leading-tight break-words">
+        {post.frontmatter.title}
+      </h1>
+
+      <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono italic text-xs text-rp-subtle">
+        <span>{formatBlogDate(post.frontmatter.created)}</span>
+        <span class="text-rp-muted">•</span>
+        <span>{post.readTimeMinutes} min read</span>
+        <span class="text-rp-muted">•</span>
+        <span>{post.wordCount} words</span>
+      </div>
+    </header>
+
+    <article
+      id="section-article"
+      class="prose max-w-none font-mono leading-relaxed text-rp-text space-y-5 sm:space-y-6 min-w-0"
+    >
+      <div set:html={post.html} />
+    </article>
+
+    <div class="mt-6 sm:mt-8 flex flex-wrap items-center justify-between gap-3 sm:gap-4 font-mono italic text-xs text-rp-subtle border-t border-rp-muted/20 pt-4">
+      <div class="flex flex-wrap items-center gap-2">
+        {post.frontmatter.tags.map((tag) => (
+          <span class="text-rp-muted">#{tag}</span>
+        ))}
+      </div>
+      {post.frontmatter.lastUpdated &&
+        post.frontmatter.lastUpdated !== post.frontmatter.created && (
+          <span class="text-rp-muted text-xs select-none">
+            last updated on {formatBlogDate(post.frontmatter.lastUpdated)}
+          </span>
+        )}
+    </div>
+
+    {post.glossary.length > 0 && (
+      <section
+        id="section-glossary"
+        class="mt-8 sm:mt-12 space-y-4 sm:space-y-6"
+      >
+        <div class="flex items-center gap-2 text-rp-muted font-mono text-xs">
+          <span class="text-[var(--color-accent)] font-semibold">&gt;</span>
+          <span class="text-rp-text font-semibold uppercase tracking-wider text-[11px]">
+            Glossary
+          </span>
+          <span class="flex-1 border-b border-rp-muted/20" />
+        </div>
+
+        <div class="space-y-3.5 sm:space-y-4">
+          {post.glossary.map((item) => (
+            <div class="space-y-1 min-w-0">
+              <div class="font-mono text-xs sm:text-sm font-semibold text-[var(--color-accent)]">
+                {item.term}
+              </div>
+              <div
+                class="font-mono text-xs sm:text-sm text-rp-text leading-relaxed break-words"
+                set:html={item.definitionHtml}
+              />
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {post.references.length > 0 && (
+      <section class="mt-8 sm:mt-12 space-y-4 sm:space-y-6">
+        <div class="flex items-center gap-2 text-rp-muted font-mono text-xs">
+          <span class="text-[var(--color-accent)] font-semibold">&gt;</span>
+          <span class="text-rp-text font-semibold uppercase tracking-wider text-[11px]">
+            References
+          </span>
+          <span class="flex-1 border-b border-rp-muted/20" />
+        </div>
+
+        <ol class="space-y-3.5 sm:space-y-4">
+          {post.references.map((ref) => (
+            <li
+              id={`fn-${ref.id}`}
+              class="flex items-start gap-2.5 sm:gap-3 font-mono text-xs sm:text-sm"
+            >
+              <span class="font-mono text-xs font-bold text-[var(--color-accent)] shrink-0 mt-0.5">
+                [{ref.label}]
+              </span>
+              <div class="space-y-2 flex-1 min-w-0">
+                <div
+                  class="leading-relaxed text-rp-text break-words"
+                  set:html={ref.contentHtml}
+                />
+              </div>
+              <a
+                href={`#fnref-${ref.id}`}
+                class="font-mono text-xs text-rp-muted hover:text-[var(--color-accent)] transition-colors shrink-0 select-none"
+                title="Back to text"
+              >
+                ↩
+              </a>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )}
+  </main>
+</Layout>
+
+<script>
+  function setupCopyButtons() {
+    document.querySelectorAll('.copy-code-btn').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const encodedCode = btn.getAttribute('data-code');
+        let textToCopy = '';
+        if (encodedCode) {
+          textToCopy = decodeURIComponent(encodedCode);
+        } else {
+          const card = btn.closest('.custom-code-block');
+          const codeEl = card?.querySelector('.code-body pre code');
+          textToCopy = codeEl?.textContent || '';
+        }
+
+        try {
+          await navigator.clipboard.writeText(textToCopy);
+        } catch (err) {
+          console.error('Failed to copy code to clipboard', err);
+        }
+      });
+    });
+  }
+
+  setupCopyButtons();
+  document.addEventListener('astro:after-swap', setupCopyButtons);
+</script>
