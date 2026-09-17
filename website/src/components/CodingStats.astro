@@ -49,7 +49,6 @@ const topLanguages = (languages || []).slice(0, 3).map((l) => `${l.name} ${Math.
 ---
 
 <div class="font-mono text-xs w-full max-w-xl text-rp-subtle pt-2 space-y-2.5" id="tui-coding-telemetry">
-  <!-- Section Title / Divider -->
   <div class="flex items-center gap-2 text-rp-muted">
     <span class="text-[var(--color-accent)] font-semibold">&gt;</span>
     <span class="text-rp-text font-semibold uppercase tracking-wider text-[11px]">Telemetry</span>
@@ -57,9 +56,7 @@ const topLanguages = (languages || []).slice(0, 3).map((l) => `${l.name} ${Math.
   </div>
 
   <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-y-2.5 gap-x-6">
-    <!-- Left Column -->
     <div class="space-y-2">
-      <!-- LoC -->
       <div class="flex items-center gap-2 min-w-0">
         <span class="text-rp-muted w-3">&amp;</span>
         <span class="text-rp-subtle w-14 shrink-0">loc:</span>
@@ -68,7 +65,6 @@ const topLanguages = (languages || []).slice(0, 3).map((l) => `${l.name} ${Math.
         </span>
       </div>
 
-      <!-- Churn Ratio -->
       <div class="flex items-center gap-2 min-w-0">
         <span class="text-rp-muted w-3">%</span>
         <span class="text-rp-subtle w-14 shrink-0">churn:</span>
@@ -83,7 +79,6 @@ const topLanguages = (languages || []).slice(0, 3).map((l) => `${l.name} ${Math.
         </div>
       </div>
 
-      <!-- Repos -->
       <div class="flex items-center gap-2 min-w-0">
         <span class="text-rp-muted w-3">#</span>
         <span class="text-rp-subtle w-14 shrink-0">repos:</span>
@@ -92,7 +87,6 @@ const topLanguages = (languages || []).slice(0, 3).map((l) => `${l.name} ${Math.
         </span>
       </div>
 
-      <!-- Commits -->
       <div class="flex items-center gap-2 min-w-0">
         <span class="text-rp-muted w-3">*</span>
         <span class="text-rp-subtle w-14 shrink-0">commits:</span>
@@ -102,9 +96,7 @@ const topLanguages = (languages || []).slice(0, 3).map((l) => `${l.name} ${Math.
       </div>
     </div>
 
-    <!-- Right Column -->
     <div class="space-y-2">
-      <!-- PRs -->
       <div class="flex items-center gap-2 min-w-0">
         <span class="text-rp-muted w-3">+</span>
         <span class="text-rp-subtle w-14 shrink-0">prs:</span>
@@ -119,7 +111,6 @@ const topLanguages = (languages || []).slice(0, 3).map((l) => `${l.name} ${Math.
         </div>
       </div>
 
-      <!-- Active Rate -->
       <div class="flex items-center gap-2 min-w-0">
         <span class="text-rp-muted w-3">@</span>
         <span class="text-rp-subtle w-14 shrink-0">active:</span>
@@ -134,7 +125,6 @@ const topLanguages = (languages || []).slice(0, 3).map((l) => `${l.name} ${Math.
         </div>
       </div>
 
-      <!-- Streak -->
       <div class="flex items-center gap-2 min-w-0">
         <span class="text-rp-muted w-3">^</span>
         <span class="text-rp-subtle w-14 shrink-0">streak:</span>
@@ -143,7 +133,6 @@ const topLanguages = (languages || []).slice(0, 3).map((l) => `${l.name} ${Math.
         </span>
       </div>
 
-      <!-- Stack -->
       <div class="flex items-center gap-2 min-w-0">
         <span class="text-rp-muted w-3">$</span>
         <span class="text-rp-subtle w-14 shrink-0">stack:</span>
