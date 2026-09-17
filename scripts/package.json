@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "fetch:stats": "node fetch-github-stats.ts",
-    "test": "node --test"
+    "test": "node --test",
+    "format": "prettier --write \"**/*.{ts,js,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,js,json,md}\""
   }
 }

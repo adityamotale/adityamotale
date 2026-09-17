@@ -4,11 +4,20 @@ import type {
   RepoActivityStat,
   RepositorySummary,
   StreaksAndConsistency,
-} from './types.ts';
-import type { RepoContribDelta, RepoLocStat, ViewerRepoNode } from './collector.ts';
+} from "./types.ts";
+import type {
+  RepoContribDelta,
+  RepoLocStat,
+  ViewerRepoNode,
+} from "./collector.ts";
 
-export function calculateWeightedLanguages(activities: RepoActivityStat[]): LanguageStat[] {
-  const languageMap = new Map<string, { name: string; color: string | null; loc: number }>();
+export function calculateWeightedLanguages(
+  activities: RepoActivityStat[],
+): LanguageStat[] {
+  const languageMap = new Map<
+    string,
+    { name: string; color: string | null; loc: number }
+  >();
   let totalLoc = 0;
 
   for (const repo of activities) {
@@ -18,7 +27,11 @@ export function calculateWeightedLanguages(activities: RepoActivityStat[]): Lang
     for (const l of langs) {
       const share = (l.percentage / 100) * repoLoc;
       totalLoc += share;
-      const entry = languageMap.get(l.name) ?? { name: l.name, color: l.color || null, loc: 0 };
+      const entry = languageMap.get(l.name) ?? {
+        name: l.name,
+        color: l.color || null,
+        loc: 0,
+      };
       entry.loc += share;
       if (l.color && !entry.color) entry.color = l.color;
       languageMap.set(l.name, entry);
@@ -30,38 +43,58 @@ export function calculateWeightedLanguages(activities: RepoActivityStat[]): Lang
       name: item.name,
       color: item.color,
       bytes: Math.round(item.loc),
-      percentage: totalLoc > 0 ? parseFloat(((item.loc / totalLoc) * 100).toFixed(2)) : 0,
+      percentage:
+        totalLoc > 0 ? parseFloat(((item.loc / totalLoc) * 100).toFixed(2)) : 0,
     }))
     .sort((a, b) => b.percentage - a.percentage);
 }
 
-export function calculateLanguages(repos: ViewerRepoNode[], username: string): LanguageStat[] {
-  const languageMap = new Map<string, { name: string; color: string | null; bytes: number }>();
+export function calculateLanguages(
+  repos: ViewerRepoNode[],
+  username: string,
+): LanguageStat[] {
+  const languageMap = new Map<
+    string,
+    { name: string; color: string | null; bytes: number }
+  >();
 
   for (const repo of repos) {
     if (repo.owner.login !== username || !repo.languages?.edges) continue;
 
     for (const { size, node } of repo.languages.edges) {
-      const entry = languageMap.get(node.name) ?? { name: node.name, color: node.color, bytes: 0 };
+      const entry = languageMap.get(node.name) ?? {
+        name: node.name,
+        color: node.color,
+        bytes: 0,
+      };
       entry.bytes += size || 0;
       if (node.color && !entry.color) entry.color = node.color;
       languageMap.set(node.name, entry);
     }
   }
 
-  const totalBytes = Array.from(languageMap.values()).reduce((sum, item) => sum + item.bytes, 0);
+  const totalBytes = Array.from(languageMap.values()).reduce(
+    (sum, item) => sum + item.bytes,
+    0,
+  );
 
   return Array.from(languageMap.values())
     .map((item) => ({
       name: item.name,
       color: item.color,
       bytes: item.bytes,
-      percentage: totalBytes > 0 ? parseFloat(((item.bytes / totalBytes) * 100).toFixed(2)) : 0,
+      percentage:
+        totalBytes > 0
+          ? parseFloat(((item.bytes / totalBytes) * 100).toFixed(2))
+          : 0,
     }))
     .sort((a, b) => b.bytes - a.bytes);
 }
 
-export function calculateRepositorySummary(repos: ViewerRepoNode[], username: string): RepositorySummary {
+export function calculateRepositorySummary(
+  repos: ViewerRepoNode[],
+  username: string,
+): RepositorySummary {
   let publicCount = 0;
   let privateCount = 0;
   let forkCount = 0;
@@ -92,7 +125,7 @@ export function calculateRepositorySummary(repos: ViewerRepoNode[], username: st
 
 export function calculateStreaks(
   dailyContributions: Record<string, number>,
-  dateRange: DateRange
+  dateRange: DateRange,
 ): StreaksAndConsistency {
   const fromDate = dateRange.from.slice(0, 10);
   const toDate = dateRange.to.slice(0, 10);
@@ -104,7 +137,7 @@ export function calculateStreaks(
   let longestStreak = 0;
   let tempStreak = 0;
   let activeDaysCount = 0;
-  let busiestDay = { date: '', count: 0 };
+  let busiestDay = { date: "", count: 0 };
 
   for (const [date, count] of entries) {
     if (count > 0) {
@@ -127,7 +160,10 @@ export function calculateStreaks(
   }
 
   const totalDaysInPeriod = entries.length;
-  const activityRate = totalDaysInPeriod > 0 ? parseFloat(((activeDaysCount / totalDaysInPeriod) * 100).toFixed(2)) : 0;
+  const activityRate =
+    totalDaysInPeriod > 0
+      ? parseFloat(((activeDaysCount / totalDaysInPeriod) * 100).toFixed(2))
+      : 0;
 
   return {
     longest_streak_days: longestStreak,
@@ -145,8 +181,16 @@ export function buildRepositoryActivities(params: {
   viewerRepos: ViewerRepoNode[];
 }): RepoActivityStat[] {
   const { repoContributions, locResults, viewerRepos } = params;
-  const repoNames = new Set([...repoContributions.keys(), ...locResults.keys()]);
-  const repoMeta = new Map(viewerRepos.map((r) => [r.nameWithOwner, { isPrivate: r.isPrivate, isFork: r.isFork }]));
+  const repoNames = new Set([
+    ...repoContributions.keys(),
+    ...locResults.keys(),
+  ]);
+  const repoMeta = new Map(
+    viewerRepos.map((r) => [
+      r.nameWithOwner,
+      { isPrivate: r.isPrivate, isFork: r.isFork },
+    ]),
+  );
 
   const activities: RepoActivityStat[] = [];
 
@@ -155,7 +199,8 @@ export function buildRepositoryActivities(params: {
     const loc = locResults.get(name);
     const meta = repoMeta.get(name);
 
-    const isPrivate = meta?.isPrivate ?? contrib?.isPrivate ?? loc?.is_private ?? false;
+    const isPrivate =
+      meta?.isPrivate ?? contrib?.isPrivate ?? loc?.is_private ?? false;
     const isFork = meta?.isFork ?? loc?.is_fork ?? false;
     const commits = Math.max(contrib?.commits ?? 0, loc?.commit_count ?? 0);
     const additions = loc?.additions ?? 0;
@@ -163,7 +208,9 @@ export function buildRepositoryActivities(params: {
     const issues = contrib?.issues ?? 0;
     const pullRequests = contrib?.pullRequests ?? 0;
     const reviews = contrib?.reviews ?? 0;
-    const totalContrib = contrib ? commits + issues + pullRequests + reviews : commits;
+    const totalContrib = contrib
+      ? commits + issues + pullRequests + reviews
+      : commits;
 
     if (totalContrib > 0 || additions > 0 || deletions > 0) {
       activities.push({
@@ -182,5 +229,9 @@ export function buildRepositoryActivities(params: {
     }
   }
 
-  return activities.sort((a, b) => b.total_contributions - a.total_contributions || b.additions - a.additions);
+  return activities.sort(
+    (a, b) =>
+      b.total_contributions - a.total_contributions ||
+      b.additions - a.additions,
+  );
 }

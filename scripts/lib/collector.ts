@@ -1,5 +1,5 @@
-import { runGraphQLAsync } from './graphql.ts';
-import type { DateRange, PullRequestSummary } from './types.ts';
+import { runGraphQLAsync } from "./graphql.ts";
+import type { DateRange, PullRequestSummary } from "./types.ts";
 
 const GET_VIEWER_REPOS_QUERY = `
   query getViewerRepos($cursor: String) {
@@ -176,8 +176,8 @@ export async function fetchViewerContext(): Promise<ViewerContext> {
   const repositories: ViewerRepoNode[] = [];
   let cursor: string | null = null;
   let hasNextPage = true;
-  let login = '';
-  let id = '';
+  let login = "";
+  let id = "";
 
   while (hasNextPage) {
     const data: any = await runGraphQLAsync(GET_VIEWER_REPOS_QUERY, { cursor });
@@ -198,8 +198,14 @@ export async function fetchViewerContext(): Promise<ViewerContext> {
   return { login, id, repositories };
 }
 
-export async function fetchContributionsWindow(fromISO: string, toISO: string): Promise<WindowContributions> {
-  const data: any = await runGraphQLAsync(GET_CONTRIBUTIONS_QUERY, { from: fromISO, to: toISO });
+export async function fetchContributionsWindow(
+  fromISO: string,
+  toISO: string,
+): Promise<WindowContributions> {
+  const data: any = await runGraphQLAsync(GET_CONTRIBUTIONS_QUERY, {
+    from: fromISO,
+    to: toISO,
+  });
   const cc = data.viewer?.contributionsCollection;
   if (!cc) {
     throw new Error(`Failed to fetch contributions for ${fromISO} - ${toISO}`);
@@ -216,22 +222,31 @@ export async function fetchContributionsWindow(fromISO: string, toISO: string): 
 
   const getOrCreate = (name: string, isPrivate: boolean): RepoContribDelta => {
     if (!repoContributions.has(name)) {
-      repoContributions.set(name, { commits: 0, issues: 0, pullRequests: 0, reviews: 0, isPrivate });
+      repoContributions.set(name, {
+        commits: 0,
+        issues: 0,
+        pullRequests: 0,
+        reviews: 0,
+        isPrivate,
+      });
     }
     return repoContributions.get(name)!;
   };
 
   const tally = (items: any[], field: keyof RepoContribDelta) => {
     for (const item of items || []) {
-      const entry = getOrCreate(item.repository.nameWithOwner, item.repository.isPrivate);
+      const entry = getOrCreate(
+        item.repository.nameWithOwner,
+        item.repository.isPrivate,
+      );
       (entry[field] as number) += item.contributions?.totalCount || 0;
     }
   };
 
-  tally(cc.commitContributionsByRepository, 'commits');
-  tally(cc.issueContributionsByRepository, 'issues');
-  tally(cc.pullRequestContributionsByRepository, 'pullRequests');
-  tally(cc.pullRequestReviewContributionsByRepository, 'reviews');
+  tally(cc.commitContributionsByRepository, "commits");
+  tally(cc.issueContributionsByRepository, "issues");
+  tally(cc.pullRequestContributionsByRepository, "pullRequests");
+  tally(cc.pullRequestReviewContributionsByRepository, "reviews");
 
   return {
     totalContributions: cc.contributionCalendar?.totalContributions || 0,
@@ -249,7 +264,7 @@ export async function fetchRepoLOC(
   viewerId: string,
   repos: Array<{ nameWithOwner: string; isPrivate: boolean; isFork: boolean }>,
   dateRange: DateRange,
-  concurrency = 5
+  concurrency = 5,
 ): Promise<Map<string, RepoLocStat>> {
   const results = new Map<string, RepoLocStat>();
 
@@ -257,7 +272,7 @@ export async function fetchRepoLOC(
     const chunk = repos.slice(i, i + concurrency);
     await Promise.all(
       chunk.map(async ({ nameWithOwner, isPrivate, isFork }) => {
-        const [owner, name] = nameWithOwner.split('/');
+        const [owner, name] = nameWithOwner.split("/");
         if (!owner || !name) return;
 
         let additions = 0;
@@ -301,7 +316,7 @@ export async function fetchRepoLOC(
             });
           }
         } catch {}
-      })
+      }),
     );
   }
 
@@ -310,7 +325,7 @@ export async function fetchRepoLOC(
 
 export async function fetchPullRequests(
   username: string,
-  dateRange: DateRange
+  dateRange: DateRange,
 ): Promise<PullRequestSummary> {
   const fromDate = dateRange.from.slice(0, 10);
   const toDate = dateRange.to.slice(0, 10);
@@ -324,14 +339,17 @@ export async function fetchPullRequests(
   let hasNextPage = true;
 
   while (hasNextPage) {
-    const data: any = await runGraphQLAsync(GET_PRS_QUERY, { searchQuery, cursor });
+    const data: any = await runGraphQLAsync(GET_PRS_QUERY, {
+      searchQuery,
+      cursor,
+    });
     const search = data.search;
     if (!search?.nodes) break;
 
     for (const pr of search.nodes) {
       total++;
       if (pr.merged) merged++;
-      else if (pr.state === 'OPEN') open++;
+      else if (pr.state === "OPEN") open++;
       else closedUnmerged++;
     }
 
@@ -339,7 +357,8 @@ export async function fetchPullRequests(
     cursor = search.pageInfo?.endCursor;
   }
 
-  const mergeRate = total > 0 ? parseFloat(((merged / total) * 100).toFixed(2)) : 0;
+  const mergeRate =
+    total > 0 ? parseFloat(((merged / total) * 100).toFixed(2)) : 0;
 
   return {
     total,
