@@ -44,17 +44,17 @@ const maxCommits = Math.max(1, ...monthsData.map((m) => m.commits));
 
 <div class="font-mono text-xs w-full max-w-xl text-rp-subtle pt-2 space-y-3" id="tui-metric-graph">
   <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-rp-muted">
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-2 flex-1 min-w-0">
       <span class="text-[var(--color-accent)] font-semibold">&gt;</span>
-      <span class="text-rp-text font-semibold uppercase tracking-wider text-[11px]">Compare (5-Month)</span>
-      <span class="hidden sm:inline-block w-6 border-b border-rp-muted/20"></span>
+      <span class="text-rp-text font-semibold uppercase tracking-wider text-[11px] shrink-0">COMPARE</span>
+      <span class="flex-1 border-b border-rp-muted/20"></span>
     </div>
 
-    <div class="flex items-center gap-1 text-[11px] self-start sm:self-auto" id="graph-tabs">
+    <div class="flex items-center gap-1 text-[11px] self-start sm:self-auto shrink-0" id="graph-tabs">
       <button
         type="button"
         data-metric="commits"
-        class="graph-tab px-2 py-0.5 rounded cursor-pointer transition-colors bg-rp-surface text-[var(--color-accent)] font-semibold border border-rp-muted/30"
+        class="graph-tab px-2 py-0.5 rounded cursor-pointer transition-colors bg-rp-surface text-rp-text font-semibold border border-rp-muted/30"
       >
         [commits]
       </button>
@@ -131,7 +131,7 @@ const maxCommits = Math.max(1, ...monthsData.map((m) => m.commits));
     tabs.forEach((tab) => {
       const isCurrent = tab.getAttribute('data-metric') === metric;
       if (isCurrent) {
-        tab.className = 'graph-tab px-2 py-0.5 rounded cursor-pointer transition-colors bg-rp-surface text-[var(--color-accent)] font-semibold border border-rp-muted/30';
+        tab.className = 'graph-tab px-2 py-0.5 rounded cursor-pointer transition-colors bg-rp-surface text-rp-text font-semibold border border-rp-muted/30';
       } else {
         tab.className = 'graph-tab px-2 py-0.5 rounded cursor-pointer transition-colors text-rp-muted hover:text-rp-text border border-transparent';
       }
