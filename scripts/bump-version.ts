@@ -139,6 +139,18 @@ function main() {
     }
   }
 
+  // 4. Update README.md
+  console.log("  ↻ Updating README.md with latest metrics...");
+  if (!options.dryRun) {
+    try {
+      runCommand("node scripts/generate-readme.ts", rootDir);
+      console.log("  ✓ Updated README.md");
+    } catch (err: any) {
+      console.error("❌ Failed to update README.md:", err.message);
+      throw err;
+    }
+  }
+
   if (options.dryRun) {
     console.log(
       `\n[DRY RUN] Release v${nextVersion} prepared successfully (no files written or committed).`,
@@ -165,7 +177,7 @@ function main() {
 
   // Stage changes
   runCommand(
-    "git add data/github-stats.json CHANGELOG.md mdparser/package.json mdparser/package-lock.json scripts/package.json scripts/package-lock.json website/package.json website/package-lock.json website/public/adityamotale.pdf",
+    "git add data/github-stats.json README.md assets CHANGELOG.md mdparser/package.json mdparser/package-lock.json scripts/package.json scripts/package-lock.json website/package.json website/package-lock.json website/public/adityamotale.pdf",
     rootDir,
   );
 
