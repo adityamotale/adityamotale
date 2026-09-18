@@ -13,7 +13,13 @@ interface Props {
   description?: string;
   image?: string;
   imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
   type?: 'website' | 'article';
+  publishedTime?: string;
+  modifiedTime?: string;
+  tags?: string[];
+  author?: string;
   article?: ArticleMeta;
 }
 
@@ -21,55 +27,66 @@ const {
   title = 'aditya motale ~ an engineer by choice',
   description = 'an engineer by choice',
   image = '/og-image.png',
-  imageAlt = 'aditya motale ~ an engineer by choice',
+  imageAlt,
+  imageWidth = 1200,
+  imageHeight = 630,
   type = 'website',
-  article,
+  publishedTime = Astro.props.article?.publishedTime,
+  modifiedTime = Astro.props.article?.modifiedTime,
+  tags = Astro.props.article?.tags || [],
+  author = Astro.props.article?.author || 'Aditya Motale',
 } = Astro.props;
 
-const canonicalURL = new URL(
-  Astro.url.pathname,
-  Astro.site || 'https://adii.fyi'
-);
-const ogImageURL = new URL(image, Astro.site || 'https://adii.fyi');
+const siteUrl = Astro.site || Astro.url.origin || 'https://adii.fyi';
+const canonicalURL = new URL(Astro.url.pathname, siteUrl);
+const socialImageURL = new URL(image, siteUrl);
 
-const schemaData =
+const resolvedImageAlt = imageAlt || title;
+const imageType =
+  image.endsWith('.jpg') || image.endsWith('.jpeg')
+    ? 'image/jpeg'
+    : image.endsWith('.svg')
+      ? 'image/svg+xml'
+      : 'image/png';
+
+const jsonLd =
   type === 'article'
     ? {
         '@context': 'https://schema.org',
         '@type': 'BlogPosting',
         headline: title,
         description: description,
-        url: canonicalURL.href,
-        image: ogImageURL.href,
-        datePublished: article?.publishedTime,
-        dateModified: article?.modifiedTime || article?.publishedTime,
+        url: canonicalURL.toString(),
+        image: socialImageURL.toString(),
+        datePublished: publishedTime,
+        dateModified: modifiedTime || publishedTime,
         author: {
           '@type': 'Person',
-          name: article?.author || 'Aditya Motale',
-          url: 'https://adii.fyi',
+          name: author,
+          url: siteUrl.toString(),
         },
         publisher: {
           '@type': 'Person',
           name: 'Aditya Motale',
-          url: 'https://adii.fyi',
+          url: siteUrl.toString(),
         },
+        ...(tags.length > 0 ? { keywords: tags.join(', ') } : {}),
         mainEntityOfPage: {
           '@type': 'WebPage',
-          '@id': canonicalURL.href,
+          '@id': canonicalURL.toString(),
         },
-        keywords: article?.tags?.join(', '),
       }
     : {
         '@context': 'https://schema.org',
         '@type': 'WebSite',
         name: 'aditya motale',
-        url: 'https://adii.fyi',
-        description: 'an engineer by choice',
+        url: canonicalURL.toString(),
+        description: description,
         inLanguage: 'en-US',
         publisher: {
           '@type': 'Person',
           name: 'Aditya Motale',
-          url: 'https://adii.fyi',
+          url: siteUrl.toString(),
           sameAs: [
             'https://github.com/adityamotale',
             'https://x.com/arctic_byte',
@@ -87,12 +104,11 @@ const schemaData =
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
-    <meta name="author" content="Aditya Motale" />
+    <meta name="author" content={author} />
+    {tags.length > 0 && <meta name="keywords" content={tags.join(', ')} />}
     <meta name="robots" content="index, follow" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="format-detection" content="telephone=no" />
-    <meta name="generator" content={Astro.generator} />
-
     <link rel="canonical" href={canonicalURL} />
     <link rel="sitemap" href="/sitemap.xml" />
     <link
@@ -108,7 +124,6 @@ const schemaData =
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Adii" />
     <meta name="application-name" content="Adii" />
-    <link rel="manifest" href="/site.webmanifest" />
     <meta
       name="theme-color"
       media="(prefers-color-scheme: dark)"
@@ -119,28 +134,28 @@ const schemaData =
       media="(prefers-color-scheme: light)"
       content="#faf4ed"
     />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <meta property="og:type" content={type} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:site_name" content="aditya motale" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImageURL} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:image" content={socialImageURL} />
+    <meta property="og:image:secure_url" content={socialImageURL} />
+    <meta property="og:image:width" content={String(imageWidth)} />
+    <meta property="og:image:height" content={String(imageHeight)} />
+    <meta property="og:image:type" content={imageType} />
+    <meta property="og:image:alt" content={resolvedImageAlt} />
     <meta property="og:locale" content="en_US" />
-    {article?.publishedTime && (
-      <meta property="article:published_time" content={article.publishedTime} />
+    {publishedTime && (
+      <meta property="article:published_time" content={publishedTime} />
     )}
-    {article?.modifiedTime && (
-      <meta property="article:modified_time" content={article.modifiedTime} />
+    {modifiedTime && (
+      <meta property="article:modified_time" content={modifiedTime} />
     )}
-    {article?.author && (
-      <meta property="article:author" content={article.author} />
-    )}
-    {article?.tags?.map((tag) => (
+    {author && <meta property="article:author" content={author} />}
+    {tags.map((tag) => (
       <meta property="article:tag" content={tag} />
     ))}
 
@@ -150,14 +165,15 @@ const schemaData =
     <meta name="twitter:url" content={canonicalURL} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImageURL} />
-    <meta name="twitter:image:alt" content={imageAlt} />
+    <meta name="twitter:image" content={socialImageURL} />
+    <meta name="twitter:image:alt" content={resolvedImageAlt} />
 
     <script
       type="application/ld+json"
       is:inline
-      set:html={JSON.stringify(schemaData)}
+      set:html={JSON.stringify(jsonLd)}
     ></script>
+    <meta name="generator" content={Astro.generator} />
     <script is:inline>
       (function () {
         const themes = ['moon', 'dawn'];

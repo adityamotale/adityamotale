@@ -62,12 +62,10 @@ const isoModifiedDate = modTimestamp
   description={pageDescription}
   imageAlt={post.frontmatter.title}
   type="article"
-  article={{
-    publishedTime: isoPublishedDate,
-    modifiedTime: isoModifiedDate,
-    author: 'Aditya Motale',
-    tags: post.frontmatter.tags,
-  }}
+  publishedTime={isoPublishedDate}
+  modifiedTime={isoModifiedDate}
+  author="Aditya Motale"
+  tags={post.frontmatter.tags}
 >
   <main class="w-full max-w-screen-md mx-auto px-4 sm:px-6 py-8 sm:py-14 space-y-8 sm:space-y-10 min-w-0 overflow-hidden">
     <div
