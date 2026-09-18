@@ -12,7 +12,7 @@ describe("readme generator", () => {
     // Verify badge links and Shields.io URLs
     assert.ok(
       readme.includes(
-        "https://img.shields.io/badge/website-adii.fyi-286983?logo=googlechrome&logoColor=faf4ed&labelColor=575279",
+        "https://img.shields.io/badge/website-adii.fyi-286983?style=flat-square&logo=googlechrome&logoColor=faf4ed&labelColor=575279",
       ),
       "Should include website Shields badge",
     );
@@ -22,7 +22,7 @@ describe("readme generator", () => {
     );
     assert.ok(
       readme.includes(
-        "https://img.shields.io/badge/resume-adityamotale.pdf-d7827e?logo=googledocs&logoColor=faf4ed&labelColor=575279",
+        "https://img.shields.io/badge/resume-adityamotale.pdf-d7827e?style=flat-square&logo=googledocs&logoColor=faf4ed&labelColor=575279",
       ),
       "Should include resume Shields badge",
     );
@@ -32,25 +32,25 @@ describe("readme generator", () => {
     );
     assert.ok(
       readme.includes(
-        "https://img.shields.io/github/v/release/adityamotale/adityamotale?label=release&logo=github&logoColor=faf4ed&labelColor=575279&color=ea9d34",
+        "https://img.shields.io/github/v/release/adityamotale/adityamotale?style=flat-square&label=release&logo=github&logoColor=faf4ed&labelColor=575279&color=ea9d34",
       ),
       "Should include release Shields badge",
     );
     assert.ok(
       readme.includes(
-        "https://img.shields.io/badge/github-adityamotale-575279?logo=github&logoColor=faf4ed&labelColor=575279",
+        "https://img.shields.io/badge/github-adityamotale-575279?style=flat-square&logo=github&logoColor=faf4ed&labelColor=575279",
       ),
       "Should include GitHub Shields badge",
     );
     assert.ok(
       readme.includes(
-        "https://img.shields.io/badge/twitter-@arctic__byte-56949f?logo=x&logoColor=faf4ed&labelColor=575279",
+        "https://img.shields.io/badge/twitter-@arctic__byte-56949f?style=flat-square&logo=x&logoColor=faf4ed&labelColor=575279",
       ),
       "Should include Twitter/X Shields badge",
     );
     assert.ok(
       readme.includes(
-        "https://img.shields.io/badge/linkedin-aditya--motale-286983?logo=linkedin&logoColor=faf4ed&labelColor=575279",
+        "https://img.shields.io/badge/linkedin-aditya--motale-286983?style=flat-square&logo=linkedin&logoColor=faf4ed&labelColor=575279",
       ),
       "Should include LinkedIn Shields badge",
     );
