@@ -6,6 +6,7 @@
   "scripts": {
     "fetch:stats": "node fetch-github-stats.ts",
     "bump:version": "node bump-version.ts",
+    "update:readme": "node generate-readme.ts",
     "test": "node --test",
     "format": "prettier --write \"**/*.{ts,js,json,md}\"",
     "format:check": "prettier --check \"**/*.{ts,js,json,md}\""
