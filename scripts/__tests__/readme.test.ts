@@ -5,18 +5,52 @@ import test, { describe } from "node:test";
 import { generateReadme } from "../generate-readme.ts";
 
 describe("readme generator", () => {
-  test("generates complete README markdown with all sections unified as Rosé Pine Dawn SVG cards", () => {
+  test("generates complete README markdown with all badges, SVG cards, and clean About section", () => {
     const rootDir = path.resolve(import.meta.dirname, "../..");
     const readme = generateReadme(rootDir);
 
-    // Verify resume button
+    // Verify badges
     assert.ok(
-      readme.includes("https://adii.fyi/adityamotale.pdf"),
-      "Should include resume link",
+      readme.includes("https://adii.fyi"),
+      "Should include website badge link",
     );
     assert.ok(
-      readme.includes("shields.io/badge/resume-adityamotale.pdf"),
-      "Should include styled resume badge",
+      readme.includes("badge/website-adii.fyi"),
+      "Should include website badge",
+    );
+    assert.ok(
+      readme.includes("https://adii.fyi/adityamotale.pdf"),
+      "Should include resume badge link",
+    );
+    assert.ok(
+      readme.includes("badge/resume-adityamotale.pdf"),
+      "Should include resume badge",
+    );
+    assert.ok(
+      readme.includes("https://github.com/adityamotale"),
+      "Should include GitHub social badge link",
+    );
+    assert.ok(
+      readme.includes("https://x.com/arctic_byte"),
+      "Should include Twitter/X social badge link",
+    );
+    assert.ok(
+      readme.includes("https://www.linkedin.com/in/aditya-motale"),
+      "Should include LinkedIn social badge link",
+    );
+    assert.ok(
+      readme.includes(
+        "workflow/status/adityamotale/adityamotale/activity.yaml",
+      ),
+      "Should include activity workflow badge",
+    );
+    assert.ok(
+      readme.includes("workflow/status/adityamotale/adityamotale/release.yaml"),
+      "Should include release workflow badge",
+    );
+    assert.ok(
+      readme.includes("workflow/status/adityamotale/adityamotale/test.yaml"),
+      "Should include test workflow badge",
     );
 
     // Verify all section SVG assets exist
@@ -44,52 +78,15 @@ describe("readme generator", () => {
       );
     }
 
-    // Verify Header SVG has single line ASCII art name
-    const headerSvg = readFileSync(path.join(assetsDir, "header.svg"), "utf-8");
-    assert.ok(
-      headerSvg.includes("▄▀█ █▀▄ █ ▀█▀ █▄█ ▄▀█   █▀▄▀█ █▀█ ▀█▀ ▄▀█ █   █▀▀"),
-      "Header SVG should contain side-by-side single-line ASCII art name line 1",
-    );
-    assert.ok(
-      headerSvg.includes("█▀█ █▄▀ █  █   █  █▀█   █ ▀ █ █▄█  █  █▀█ █▄▄ ██▄"),
-      "Header SVG should contain side-by-side single-line ASCII art name line 2",
-    );
-    assert.ok(
-      headerSvg.includes("hello, my name is Aditya — an engineer by choice"),
-      "Header SVG should contain subtitle",
-    );
-
-    // Verify Rosé Pine Dawn colors across cards
+    // Verify About SVG does NOT contain bottom social link text anymore
     const aboutSvg = readFileSync(path.join(assetsDir, "about.svg"), "utf-8");
     assert.ok(
-      aboutSvg.includes("#d7827e"),
-      "About SVG should use accent color #d7827e",
-    );
-
-    const projectsSvg = readFileSync(
-      path.join(assetsDir, "projects.svg"),
-      "utf-8",
+      !aboutSvg.includes("github / twitter / linkedin"),
+      "About SVG should not contain social link text",
     );
     assert.ok(
-      projectsSvg.includes("turbofox"),
-      "Projects SVG should contain top project",
-    );
-
-    const telemetrySvg = readFileSync(
-      path.join(assetsDir, "telemetry.svg"),
-      "utf-8",
-    );
-    assert.ok(
-      telemetrySvg.includes("#286983"),
-      "Telemetry SVG should contain Rosé Pine Pine color for churn",
-    );
-    assert.ok(
-      telemetrySvg.includes("#56949f"),
-      "Telemetry SVG should contain Rosé Pine Foam color for PRs",
-    );
-    assert.ok(
-      telemetrySvg.includes("#ea9d34"),
-      "Telemetry SVG should contain Rosé Pine Gold color for streak/active",
+      aboutSvg.includes("Passionate about systems programming"),
+      "About SVG should contain about paragraph",
     );
   });
 });
