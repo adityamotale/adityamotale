@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 20" width="100%" height="20" fill="none">
+  <style>
+    
+  .mono {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  }
+  .accent { fill: #d7827e; font-weight: 600; }
+  .text { fill: #575279; font-weight: 500; }
+  .subtle { fill: #797593; font-weight: 400; }
+  .muted { fill: #9893a5; font-weight: 400; }
+  .pine { fill: #286983; font-weight: 700; }
+  .foam { fill: #56949f; font-weight: 700; }
+  .gold { fill: #ea9d34; font-weight: 700; }
+  .love { fill: #b4637a; font-weight: 700; }
+  .bar-empty { fill: #dfdad9; }
+  .header-line { stroke: #dfdad9; }
+
+  @media (prefers-color-scheme: dark) {
+    .accent { fill: #ea9a97; }
+    .text { fill: #e0def4; }
+    .subtle { fill: #908caa; }
+    .muted { fill: #6e6a86; }
+    .pine { fill: #3e8fb0; }
+    .foam { fill: #9ccfd8; }
+    .gold { fill: #f6c177; }
+    .love { fill: #eb6f92; }
+    .bar-empty { fill: #44415a; }
+    .header-line { stroke: #44415a; }
+  }
+
+  </style>
+  <g class="mono" font-size="11.5">
+    <text x="0" y="14">
+      <tspan class="text" font-weight="600">ashwa         </tspan> <tspan class="muted">—</tspan> <tspan class="subtle">Hardware accelerated routines for single substring search.</tspan>
+    </text>
+  </g>
+</svg>
