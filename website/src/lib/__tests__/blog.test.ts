@@ -73,9 +73,9 @@ describe('blog: Chronological Sorting on Dummy Posts', () => {
         parseDateToTimestamp(a.frontmatter.created)
     );
 
-    assert.equal(sorted[0].frontmatter.slug, 'test-blog-b'); // 15-09-2026
-    assert.equal(sorted[1].frontmatter.slug, 'test-blog-c'); // 10-09-2026
-    assert.equal(sorted[2].frontmatter.slug, 'test-blog-a'); // 01-08-2026
+    assert.equal(sorted[0].frontmatter.slug, 'test-blog-b');
+    assert.equal(sorted[1].frontmatter.slug, 'test-blog-c');
+    assert.equal(sorted[2].frontmatter.slug, 'test-blog-a');
   });
 
   it('limits top recent posts correctly', async () => {

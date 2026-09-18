@@ -7,7 +7,6 @@ import fontkit from '@pdf-lib/fontkit';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Data sources
 const rootDir = path.resolve(__dirname, '../..');
 const statsPath = path.resolve(rootDir, 'data/github-stats.json');
 const blogsDir = path.resolve(rootDir, 'blogs');
@@ -35,7 +34,6 @@ if (fs.existsSync(statsPath)) {
   }
 }
 
-// Read blog posts for Writing section
 let blogPosts = [];
 if (fs.existsSync(blogsDir)) {
   const files = fs.readdirSync(blogsDir).filter((f) => f.endsWith('.md'));
@@ -58,12 +56,10 @@ export async function generateResumePdf() {
   const doc = await PDFDocument.create();
   doc.registerFontkit(fontkit);
 
-  // Set fixed deterministic metadata for reproducible builds
   doc.setCreationDate(new Date(0));
   doc.setModificationDate(new Date(0));
   doc.setProducer('pdf-lib');
 
-  // Load TrueType JetBrains Mono font (Regular 400 weight only)
   const fontRegularPath = path.resolve(rootDir, 'website/fonts/JetBrainsMono-Regular.ttf');
   const regularBytes = fs.readFileSync(fontRegularPath);
   const font = await doc.embedFont(regularBytes, { subset: true });
@@ -72,16 +68,15 @@ export async function generateResumePdf() {
   const pageHeight = 841.89;
   const page = doc.addPage([pageWidth, pageHeight]);
 
-  // Rose Pine Theme Colors
-  const cText = rgb(0.12, 0.11, 0.18);       // #1f1d2e
-  const cSubtle = rgb(0.38, 0.36, 0.46);     // #605c75
-  const cMuted = rgb(0.55, 0.53, 0.62);      // #8c889f
-  const cAccent = rgb(0.85, 0.38, 0.52);     // Rose Pine Love/Accent
-  const cPine = rgb(0.19, 0.45, 0.56);       // Rose Pine Pine
-  const cFoam = rgb(0.22, 0.55, 0.60);       // Rose Pine Foam
-  const cGold = rgb(0.82, 0.55, 0.20);       // Rose Pine Gold
-  const cBorder = rgb(0.85, 0.84, 0.88);     // Subtle divider line
-  const cDot = rgb(0.70, 0.68, 0.76);        // Subtle dotted underline color
+  const cText = rgb(0.12, 0.11, 0.18);
+  const cSubtle = rgb(0.38, 0.36, 0.46);
+  const cMuted = rgb(0.55, 0.53, 0.62);
+  const cAccent = rgb(0.85, 0.38, 0.52);
+  const cPine = rgb(0.19, 0.45, 0.56);
+  const cFoam = rgb(0.22, 0.55, 0.60);
+  const cGold = rgb(0.82, 0.55, 0.20);
+  const cBorder = rgb(0.85, 0.84, 0.88);
+  const cDot = rgb(0.70, 0.68, 0.76);
 
   const left = 36;
   const right = 559;
@@ -103,7 +98,6 @@ export async function generateResumePdf() {
     page.node.addAnnot(linkRef);
   }
 
-  // Draw discrete dotted underline beneath links to indicate interactivity
   function drawDottedUnderline(x1, x2, lineY, color = cDot) {
     const dotSpacing = 2.4;
     const dotWidth = 0.8;
@@ -118,7 +112,6 @@ export async function generateResumePdf() {
     }
   }
 
-  // Draw clickable text with attached link annotation and dotted underline
   function drawClickableText(text, x, yPos, size, url, textColor = cSubtle, dotColor = cDot) {
     page.drawText(text, { x, y: yPos, size, font, color: textColor });
     const textW = font.widthOfTextAtSize(text, size);
@@ -127,7 +120,6 @@ export async function generateResumePdf() {
     return textW;
   }
 
-  // Helper to render ASCII Art Logo vector glyphs exactly as seen on the website
   function renderAsciiArtLogo(startX, topY, cellW = 3.2, cellH = 6.4) {
     const logoLines = [
       "▄▀█ █▀▄ █ ▀█▀ █▄█ ▄▀█   █▀▄▀█ █▀█ ▀█▀ ▄▀█ █   █▀▀",
@@ -169,7 +161,6 @@ export async function generateResumePdf() {
     }
   }
 
-  // Helper for Section Headers (Generously spaced)
   function drawSectionHeader(title) {
     y -= 24;
     page.drawText('>', { x: left, y, size: 8.5, font, color: cAccent });
@@ -184,11 +175,9 @@ export async function generateResumePdf() {
     y -= 14;
   }
 
-  // 1. Header (ASCII Art Logo, Subheading & Live Site Badge)
   renderAsciiArtLogo(left, y, 3.2, 6.4);
   addLink([left, y - 14, left + 165, y + 2], 'https://adii.fyi');
 
-  // Top right site url badge with dotted underline
   const siteUrl = 'https://adii.fyi';
   const siteUrlW = font.widthOfTextAtSize(siteUrl, 8.5);
   drawClickableText(siteUrl, right - siteUrlW, y - 6, 8.5, 'https://adii.fyi', cAccent, cAccent);
@@ -202,7 +191,6 @@ export async function generateResumePdf() {
     color: cSubtle
   });
 
-  // 2. About Section (Bio + Social Navigation inside About section)
   drawSectionHeader('About');
   const aboutLines = [
     "Engineer by choice. Passionate about systems programming, database architecture, and low-latency design.",
@@ -215,7 +203,6 @@ export async function generateResumePdf() {
   }
 
   y -= 2;
-  // Social navigation links inside About section (github / twitter / linkedin)
   let curNavX = left;
   curNavX += drawClickableText('github', curNavX, y, 7.5, 'https://github.com/adityamotale', cSubtle, cDot);
 
@@ -229,7 +216,6 @@ export async function generateResumePdf() {
 
   drawClickableText('linkedin', curNavX, y, 7.5, 'https://www.linkedin.com/in/aditya-motale', cSubtle, cDot);
 
-  // 3. Projects Section (Top 5 contributed projects dynamically from data)
   const topProjects = (stats.repositories_contributed_to || [])
     .filter(
       (r) =>
@@ -261,12 +247,10 @@ export async function generateResumePdf() {
     }
   }
 
-  // 4. Education Section
   drawSectionHeader('Education');
   const eduCol1 = left;
   const eduCol2 = left + 265;
 
-  // Row 1: degree / period
   page.drawText('degree:', { x: eduCol1, y, size: 7.5, font, color: cSubtle });
   page.drawText('B.Tech (CSE)', { x: eduCol1 + 48, y, size: 7.5, font, color: cText });
 
@@ -274,7 +258,6 @@ export async function generateResumePdf() {
   page.drawText('Jun 2020 – Jun 2024 (4 yrs)', { x: eduCol2 + 48, y, size: 7.5, font, color: cText });
   y -= 14;
 
-  // Row 2: major / status
   page.drawText('major:', { x: eduCol1, y, size: 7.5, font, color: cSubtle });
   page.drawText('Computer Science & Engineering', { x: eduCol1 + 48, y, size: 7.5, font, color: cText });
 
@@ -282,14 +265,12 @@ export async function generateResumePdf() {
   page.drawText('Graduated', { x: eduCol2 + 48, y, size: 7.5, font, color: cText });
   y -= 14;
 
-  // Row 3: inst / place
   page.drawText('inst:', { x: eduCol1, y, size: 7.5, font, color: cSubtle });
   page.drawText('Marathwada Inst. of Technology', { x: eduCol1 + 48, y, size: 7.5, font, color: cText });
 
   page.drawText('place:', { x: eduCol2, y, size: 7.5, font, color: cSubtle });
   page.drawText('CPSN, Maharashtra, Bharat', { x: eduCol2 + 48, y, size: 7.5, font, color: cText });
 
-  // 4. Experience Section
   drawSectionHeader('Experience');
 
   function drawExperienceEntry({ tag, period, role, repos, orgs, stack, impact }) {
@@ -339,7 +320,6 @@ export async function generateResumePdf() {
     y -= 6;
   }
 
-  // OSS Entry
   const MIN_CONTRIBUTIONS = 100;
   const TOP_COUNT = 5;
 
@@ -370,7 +350,6 @@ export async function generateResumePdf() {
     impact: 'Building hardware-accelerated algorithms, embedded KV stores & storage engines'
   });
 
-  // Freelance Entry
   drawExperienceEntry({
     tag: 'Freelance & Contract · Web & Tooling',
     period: 'Jul 2024 — Present',
@@ -379,7 +358,6 @@ export async function generateResumePdf() {
     impact: 'Shipped startup landing pages, SMTP microservices & event ticket booking'
   });
 
-  // Internships Entry
   drawExperienceEntry({
     tag: 'Internships · Mobile Engineering',
     period: 'Nov 2021 — Apr 2024 (9 mos total)',
@@ -388,7 +366,6 @@ export async function generateResumePdf() {
     impact: 'Built MVP mobile apps for multiple clients from scratch, refactored codebases & enhanced reliability'
   });
 
-  // 5. Writing Section
   drawSectionHeader('Writing');
   const postsToShow = blogPosts.slice(0, 3);
   if (postsToShow.length === 0) {
@@ -407,7 +384,6 @@ export async function generateResumePdf() {
     y -= 14;
   }
 
-  // 6. Telemetry Section (Exact 2-column layout from CodingStats.astro)
   drawSectionHeader('Telemetry');
 
   function getAsciiBar(pct, len = 14) {
@@ -462,7 +438,6 @@ export async function generateResumePdf() {
 
   const charW = font.widthOfTextAtSize('#', 7.5);
 
-  // Row 1: & loc / + prs
   page.drawText('&', { x: col1X, y, size: 7.5, font, color: cMuted });
   page.drawText('loc:', { x: col1X + 10, y, size: 7.5, font, color: cSubtle });
   page.drawText(`${fmt.format(netLines)} (+${formatCompact(totalAdd)} / -${formatCompact(totalDel)})`, { x: col1X + 48, y, size: 7.5, font, color: cText });
@@ -475,7 +450,6 @@ export async function generateResumePdf() {
   page.drawText(`] ${prBar.pctFormatted}`, { x: col2X + 48 + charW + (14 * charW), y, size: 7.5, font, color: cText });
   y -= 15;
 
-  // Row 2: % churn / @ active
   page.drawText('%', { x: col1X, y, size: 7.5, font, color: cMuted });
   page.drawText('churn:', { x: col1X + 10, y, size: 7.5, font, color: cSubtle });
   page.drawText('[', { x: col1X + 48, y, size: 7.5, font, color: cMuted });
@@ -491,7 +465,6 @@ export async function generateResumePdf() {
   page.drawText(`] ${streakBar.pctFormatted}`, { x: col2X + 48 + charW + (14 * charW), y, size: 7.5, font, color: cText });
   y -= 15;
 
-  // Row 3: # repos / ^ streak
   page.drawText('#', { x: col1X, y, size: 7.5, font, color: cMuted });
   page.drawText('repos:', { x: col1X + 10, y, size: 7.5, font, color: cSubtle });
   page.drawText(`${reposContributed} (${pubRepos} public, ${privRepos} private, ${orgRepos} org)`, { x: col1X + 48, y, size: 7.5, font, color: cText });
@@ -501,7 +474,6 @@ export async function generateResumePdf() {
   page.drawText(`${longestStreak} days (${activeDays} active)`, { x: col2X + 48, y, size: 7.5, font, color: cText });
   y -= 15;
 
-  // Row 4: * commits / $ stack
   page.drawText('*', { x: col1X, y, size: 7.5, font, color: cMuted });
   page.drawText('commits:', { x: col1X + 10, y, size: 7.5, font, color: cSubtle });
   page.drawText(`${fmt.format(totalCommits)}`, { x: col1X + 48, y, size: 7.5, font, color: cText });
@@ -513,7 +485,6 @@ export async function generateResumePdf() {
   return await doc.save();
 }
 
-// Generate to public/adityamotale.pdf
 const publicDir = path.resolve(__dirname, '../public');
 if (!fs.existsSync(publicDir)) {
   fs.mkdirSync(publicDir, { recursive: true });

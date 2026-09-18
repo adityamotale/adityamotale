@@ -55,14 +55,12 @@ export function parseDateToTimestamp(dStr: string): number {
   const parts = dStr.split(/[-/]/);
   if (parts.length === 3) {
     if (parts[2].length === 4) {
-      // Format: DD-MM-YYYY
       return new Date(
         Number(parts[2]),
         Number(parts[1]) - 1,
         Number(parts[0])
       ).getTime();
     } else if (parts[0].length === 4) {
-      // Format: YYYY-MM-DD
       return new Date(
         Number(parts[0]),
         Number(parts[1]) - 1,
