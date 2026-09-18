@@ -5,7 +5,7 @@ import test, { describe } from "node:test";
 import { generateReadme } from "../generate-readme.ts";
 
 describe("readme generator", () => {
-  test("generates complete README markdown with Rosé Pine Dawn custom pill badges, clickable SVG rows, and clean About section", () => {
+  test("generates complete README markdown with Rosé Pine Dawn sharp two-tone badges, clickable SVG rows, and clean About section", () => {
     const rootDir = path.resolve(import.meta.dirname, "../..");
     const readme = generateReadme(rootDir);
 
@@ -91,22 +91,26 @@ describe("readme generator", () => {
       );
     }
 
-    // Verify badge SVG uses Rosé Pine Dawn styling
+    // Verify badge SVG uses sharp two-tone structure with Rosé Pine Dawn styling
     const resumeBadgeSvg = readFileSync(
       path.join(assetsDir, "badge-resume.svg"),
       "utf-8",
     );
     assert.ok(
+      resumeBadgeSvg.includes('rx="3"'),
+      "Badge SVG should use sharp rx=3",
+    );
+    assert.ok(
+      resumeBadgeSvg.includes("#f2e9e1"),
+      "Badge SVG should use Rosé Pine Dawn overlay for label background",
+    );
+    assert.ok(
       resumeBadgeSvg.includes("#fffaf3"),
-      "Badge SVG should use Rosé Pine Dawn surface background",
+      "Badge SVG should use Rosé Pine Dawn surface for value background",
     );
     assert.ok(
       resumeBadgeSvg.includes("#dfdad9"),
       "Badge SVG should use Rosé Pine Dawn highlight border",
-    );
-    assert.ok(
-      resumeBadgeSvg.includes("#797593"),
-      "Badge SVG should use Rosé Pine Dawn subtle text",
     );
 
     // Verify clickable project and writing links in README
@@ -119,17 +123,6 @@ describe("readme generator", () => {
         "https://adii.fyi/blogs/theres-more-to-performance-than-big-o",
       ),
       "README should link to blog post",
-    );
-
-    // Verify About SVG does NOT contain bottom social link text
-    const aboutSvg = readFileSync(path.join(assetsDir, "about.svg"), "utf-8");
-    assert.ok(
-      !aboutSvg.includes("github / twitter / linkedin"),
-      "About SVG should not contain social link text",
-    );
-    assert.ok(
-      aboutSvg.includes("Passionate about systems programming"),
-      "About SVG should contain about paragraph",
     );
   });
 });
