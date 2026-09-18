@@ -58,6 +58,11 @@ export async function generateResumePdf() {
   const doc = await PDFDocument.create();
   doc.registerFontkit(fontkit);
 
+  // Set fixed deterministic metadata for reproducible builds
+  doc.setCreationDate(new Date(0));
+  doc.setModificationDate(new Date(0));
+  doc.setProducer('pdf-lib');
+
   // Load TrueType JetBrains Mono font (Regular 400 weight only)
   const fontRegularPath = path.resolve(rootDir, 'website/fonts/JetBrainsMono-Regular.ttf');
   const regularBytes = fs.readFileSync(fontRegularPath);
@@ -517,7 +522,15 @@ if (!fs.existsSync(publicDir)) {
 const outputPath = path.resolve(publicDir, 'adityamotale.pdf');
 
 generateResumePdf().then((pdfBytes) => {
-  fs.writeFileSync(outputPath, pdfBytes);
+  const newBuffer = Buffer.from(pdfBytes);
+  if (fs.existsSync(outputPath)) {
+    const existingBuffer = fs.readFileSync(outputPath);
+    if (existingBuffer.equals(newBuffer)) {
+      console.log(`ℹ️ Resume PDF is up to date: ${outputPath}`);
+      return;
+    }
+  }
+  fs.writeFileSync(outputPath, newBuffer);
   console.log(`✅ Resume PDF successfully generated at: ${outputPath} (${pdfBytes.length} bytes)`);
 }).catch((err) => {
   console.error('❌ Failed to generate resume PDF:', err);
