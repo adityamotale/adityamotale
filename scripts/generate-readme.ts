@@ -258,61 +258,6 @@ const SVG_STYLE = `
   }
 `;
 
-function generateBadgeSvg(
-  id: string,
-  label: string,
-  value: string,
-  valueClass?: string,
-): string {
-  const charWidth = 6.4;
-  const padding = 14;
-  const leftWidth = Math.round(label.length * charWidth + padding);
-  const rightWidth = Math.round(value.length * charWidth + padding);
-  const totalWidth = leftWidth + rightWidth;
-
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${totalWidth} 20" width="${totalWidth}" height="20" fill="none">
-  <style>
-    .badge-border { stroke: #dfdad9; stroke-width: 1; }
-    .badge-left-bg { fill: #f2e9e1; }
-    .badge-right-bg { fill: #fffaf3; }
-    .badge-label { fill: #797593; font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10.5px; font-weight: 500; }
-    .badge-value { fill: #575279; font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10.5px; font-weight: 600; }
-    .badge-divider { stroke: #dfdad9; stroke-width: 1; }
-
-    .val-accent { fill: #d7827e; }
-    .val-pine { fill: #286983; }
-    .val-foam { fill: #56949f; }
-    .val-gold { fill: #ea9d34; }
-    .val-iris { fill: #907aa9; }
-
-    @media (prefers-color-scheme: dark) {
-      .badge-border { stroke: #44415a; }
-      .badge-left-bg { fill: #2a273f; }
-      .badge-right-bg { fill: #232136; }
-      .badge-label { fill: #908caa; }
-      .badge-value { fill: #e0def4; }
-      .badge-divider { stroke: #44415a; }
-      .val-accent { fill: #ea9a97; }
-      .val-pine { fill: #3e8fb0; }
-      .val-foam { fill: #9ccfd8; }
-      .val-gold { fill: #f6c177; }
-      .val-iris { fill: #c4a7e7; }
-    }
-  </style>
-  <clipPath id="clip-${id}">
-    <rect width="${totalWidth}" height="20" rx="3" />
-  </clipPath>
-  <g clip-path="url(#clip-${id})">
-    <rect x="0" y="0" width="${leftWidth}" height="20" class="badge-left-bg" />
-    <rect x="${leftWidth}" y="0" width="${rightWidth}" height="20" class="badge-right-bg" />
-    <line x1="${leftWidth}" y1="0" x2="${leftWidth}" y2="20" class="badge-divider" />
-    <text x="${leftWidth / 2}" y="14" text-anchor="middle" class="badge-label">${escapeXml(label)}</text>
-    <text x="${leftWidth + rightWidth / 2}" y="14" text-anchor="middle" class="badge-value ${valueClass ? `val-${valueClass}` : ""}">${escapeXml(value)}</text>
-  </g>
-  <rect x="0.5" y="0.5" width="${totalWidth - 1}" height="19" rx="2.5" class="badge-border" />
-</svg>`;
-}
-
 function generateHeaderSvg(): string {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 75" width="100%" height="75" fill="none">
   <style>
@@ -637,54 +582,7 @@ export function generateReadme(rootDir: string): string {
       .map((l) => `${l.name} ${Math.round(l.percentage)}%`)
       .join(" · ") || "--";
 
-  // 5. Generate Rosé Pine Dawn Two-Tone Badges with Sharp rx=3
-  writeFileSync(
-    path.join(assetsDir, "badge-website.svg"),
-    generateBadgeSvg("web", "website", "adii.fyi", "pine"),
-    "utf-8",
-  );
-  writeFileSync(
-    path.join(assetsDir, "badge-resume.svg"),
-    generateBadgeSvg("res", "resume", "adityamotale.pdf", "accent"),
-    "utf-8",
-  );
-  writeFileSync(
-    path.join(assetsDir, "badge-release.svg"),
-    generateBadgeSvg("rel", "release", releaseTag, "gold"),
-    "utf-8",
-  );
-  writeFileSync(
-    path.join(assetsDir, "badge-github.svg"),
-    generateBadgeSvg("gh", "github", "adityamotale"),
-    "utf-8",
-  );
-  writeFileSync(
-    path.join(assetsDir, "badge-twitter.svg"),
-    generateBadgeSvg("tw", "twitter", "@arctic_byte", "foam"),
-    "utf-8",
-  );
-  writeFileSync(
-    path.join(assetsDir, "badge-linkedin.svg"),
-    generateBadgeSvg("in", "linkedin", "aditya-motale", "pine"),
-    "utf-8",
-  );
-  writeFileSync(
-    path.join(assetsDir, "badge-tests.svg"),
-    generateBadgeSvg("tst", "tests", "passing", "foam"),
-    "utf-8",
-  );
-  writeFileSync(
-    path.join(assetsDir, "badge-activity.svg"),
-    generateBadgeSvg("act", "activity", "passing", "pine"),
-    "utf-8",
-  );
-  writeFileSync(
-    path.join(assetsDir, "badge-release-action.svg"),
-    generateBadgeSvg("relact", "release", "workflow", "iris"),
-    "utf-8",
-  );
-
-  // 6. Generate All Main SVGs in Rosé Pine Dawn / Moon palette
+  // 5. Generate All Main SVGs in Rosé Pine Dawn / Moon palette
   writeFileSync(
     path.join(assetsDir, "header.svg"),
     generateHeaderSvg(),
@@ -847,17 +745,17 @@ export function generateReadme(rootDir: string): string {
     hasWeekly = true;
   }
 
-  // Construct Badges (Website, Resume, Release Tag, Socials, Actions) with Rosé Pine Dawn Custom Two-Tone Badges
+  // Construct GitHub-style Shields.io Badges themed with Rosé Pine Dawn palette
   const badges = [
-    `[![website](./assets/badge-website.svg)](https://adii.fyi)`,
-    `[![resume](./assets/badge-resume.svg)](https://adii.fyi/adityamotale.pdf)`,
-    `[![${releaseTag}](./assets/badge-release.svg)](https://github.com/adityamotale/adityamotale/releases)`,
-    `[![github](./assets/badge-github.svg)](https://github.com/adityamotale)`,
-    `[![twitter](./assets/badge-twitter.svg)](https://x.com/arctic_byte)`,
-    `[![linkedin](./assets/badge-linkedin.svg)](https://www.linkedin.com/in/aditya-motale)`,
-    `[![tests](./assets/badge-tests.svg)](https://github.com/adityamotale/adityamotale/actions/workflows/test.yaml)`,
-    `[![activity](./assets/badge-activity.svg)](https://github.com/adityamotale/adityamotale/actions/workflows/activity.yaml)`,
-    `[![release](./assets/badge-release-action.svg)](https://github.com/adityamotale/adityamotale/actions/workflows/release.yaml)`,
+    `[![Website](https://img.shields.io/badge/website-adii.fyi-286983?logo=googlechrome&logoColor=faf4ed&labelColor=575279)](https://adii.fyi)`,
+    `[![Resume](https://img.shields.io/badge/resume-adityamotale.pdf-d7827e?logo=googledocs&logoColor=faf4ed&labelColor=575279)](https://adii.fyi/adityamotale.pdf)`,
+    `[![Release](https://img.shields.io/github/v/release/adityamotale/adityamotale?label=release&logo=github&logoColor=faf4ed&labelColor=575279&color=ea9d34)](https://github.com/adityamotale/adityamotale/releases)`,
+    `[![GitHub](https://img.shields.io/badge/github-adityamotale-575279?logo=github&logoColor=faf4ed&labelColor=575279)](https://github.com/adityamotale)`,
+    `[![Twitter](https://img.shields.io/badge/twitter-@arctic__byte-56949f?logo=x&logoColor=faf4ed&labelColor=575279)](https://x.com/arctic_byte)`,
+    `[![LinkedIn](https://img.shields.io/badge/linkedin-aditya--motale-286983?logo=linkedin&logoColor=faf4ed&labelColor=575279)](https://www.linkedin.com/in/aditya-motale)`,
+    `[![Test](https://img.shields.io/github/actions/workflow/status/adityamotale/adityamotale/test.yaml?label=tests&logo=githubactions&logoColor=faf4ed&labelColor=575279&color=56949f)](https://github.com/adityamotale/adityamotale/actions/workflows/test.yaml)`,
+    `[![Activity](https://img.shields.io/github/actions/workflow/status/adityamotale/adityamotale/activity.yaml?label=activity&logo=githubactions&logoColor=faf4ed&labelColor=575279&color=286983)](https://github.com/adityamotale/adityamotale/actions/workflows/activity.yaml)`,
+    `[![Release Action](https://img.shields.io/github/actions/workflow/status/adityamotale/adityamotale/release.yaml?label=release%20workflow&logo=githubactions&logoColor=faf4ed&labelColor=575279&color=907aa9)](https://github.com/adityamotale/adityamotale/actions/workflows/release.yaml)`,
   ].join("\n");
 
   // Projects clickable rows
