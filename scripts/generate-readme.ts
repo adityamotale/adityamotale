@@ -355,7 +355,6 @@ function generateEducationSvg(): string {
     <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">EDUCATION</text>
     <line x1="92" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
 
-    <!-- Row 1 -->
     <text x="0" y="38">
       <tspan class="subtle">degree:</tspan>  <tspan class="text" font-weight="600">B.Tech</tspan> <tspan class="muted">(CSE)</tspan>
     </text>
@@ -363,7 +362,6 @@ function generateEducationSvg(): string {
       <tspan class="subtle">period:</tspan>  <tspan class="text" font-weight="600">Jun 2020 – Jun 2024</tspan> <tspan class="muted">(4 yrs)</tspan>
     </text>
 
-    <!-- Row 2 -->
     <text x="0" y="58">
       <tspan class="subtle">major:</tspan>   <tspan class="text" font-weight="600">Computer Science &amp; Engineering</tspan>
     </text>
@@ -371,7 +369,6 @@ function generateEducationSvg(): string {
       <tspan class="subtle">status:</tspan>  <tspan class="text" font-weight="600">Graduated</tspan>
     </text>
 
-    <!-- Row 3 -->
     <text x="0" y="78">
       <tspan class="subtle">inst:</tspan>    <tspan class="text" font-weight="600">Marathwada Inst. of Technology</tspan>
     </text>
@@ -394,7 +391,6 @@ function generateExperienceSvg(pid7Repos: { name: string }[]): string {
     <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">EXPERIENCE</text>
     <line x1="102" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
 
-    <!-- 1. OSS Contributions -->
     <text x="0" y="38" class="text" font-weight="600">[ OSS Contributions ]</text>
     <text x="680" y="38" text-anchor="end" class="muted">Sep 2024 — Present</text>
     <text x="0" y="56">
@@ -410,7 +406,6 @@ function generateExperienceSvg(pid7Repos: { name: string }[]): string {
       <tspan class="subtle">  impact:</tspan> <tspan class="text">Building hardware-accelerated algorithms, embedded KV stores &amp; storage engines</tspan>
     </text>
 
-    <!-- 2. Freelance -->
     <text x="0" y="136" class="text" font-weight="600">[ Freelance &amp; Contract · Web &amp; Tooling ]</text>
     <text x="680" y="136" text-anchor="end" class="muted">Jul 2024 — Present</text>
     <text x="0" y="154">
@@ -423,7 +418,6 @@ function generateExperienceSvg(pid7Repos: { name: string }[]): string {
       <tspan class="subtle">  impact:</tspan> <tspan class="text">Shipped startup landing pages, SMTP microservices &amp; event ticket booking</tspan>
     </text>
 
-    <!-- 3. Internships -->
     <text x="0" y="216" class="text" font-weight="600">[ Internships · Mobile Engineering ]</text>
     <text x="680" y="216" text-anchor="end" class="muted">Nov 2021 — Apr 2024 (9 mos total)</text>
     <text x="0" y="234">
@@ -457,12 +451,10 @@ function generateTelemetrySvg(
     ${SVG_STYLE}
   </style>
   <g class="mono" font-size="11.5">
-    <!-- Header -->
     <text x="0" y="14" class="accent" font-size="12">&gt;</text>
     <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">${escapeXml(title.toUpperCase())}</text>
     <line x1="${24 + title.length * 7.5}" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
 
-    <!-- Row 1 -->
     <text x="0" y="38">
       <tspan class="muted">&amp;</tspan> <tspan class="subtle">loc:</tspan>     <tspan class="text" font-weight="600">${escapeXml(netLoc)}</tspan> <tspan class="muted text-xs">(+${escapeXml(additions)} / -${escapeXml(deletions)})</tspan>
     </text>
@@ -470,7 +462,6 @@ function generateTelemetrySvg(
       <tspan class="muted">+</tspan> <tspan class="subtle">prs:</tspan>     <tspan class="muted">[</tspan><tspan class="foam">${escapeXml(prBar.filled)}</tspan><tspan class="bar-empty">${escapeXml(prBar.empty)}</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">${escapeXml(prValue)}</tspan>
     </text>
 
-    <!-- Row 2 -->
     <text x="0" y="58">
       <tspan class="muted">%</tspan> <tspan class="subtle">churn:</tspan>   <tspan class="muted">[</tspan><tspan class="pine">${escapeXml(churnBar.filled)}</tspan><tspan class="bar-empty">${escapeXml(churnBar.empty)}</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">${escapeXml(churnBar.pctFormatted)}</tspan>
     </text>
@@ -478,7 +469,6 @@ function generateTelemetrySvg(
       <tspan class="muted">@</tspan> <tspan class="subtle">active:</tspan>  <tspan class="muted">[</tspan><tspan class="gold">${escapeXml(activeBar.filled)}</tspan><tspan class="bar-empty">${escapeXml(activeBar.empty)}</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">${escapeXml(activeBar.pctFormatted)}</tspan>
     </text>
 
-    <!-- Row 3 -->
     <text x="0" y="78">
       <tspan class="muted">#</tspan> <tspan class="subtle">repos:</tspan>   <tspan class="text" font-weight="600">${escapeXml(String(reposTotal))}</tspan> <tspan class="muted text-xs">(${escapeXml(reposDetail)})</tspan>
     </text>
@@ -486,7 +476,6 @@ function generateTelemetrySvg(
       <tspan class="muted">^</tspan> <tspan class="subtle">streak:</tspan>  <tspan class="text" font-weight="600">${escapeXml(String(streakDays))} days</tspan> <tspan class="muted text-xs">(${escapeXml(String(activeDays))} active)</tspan>
     </text>
 
-    <!-- Row 4 -->
     <text x="0" y="98">
       <tspan class="muted">*</tspan> <tspan class="subtle">commits:</tspan> <tspan class="text" font-weight="600">${escapeXml(commits)}</tspan>
     </text>
@@ -510,14 +499,12 @@ export function generateReadme(rootDir: string): string {
 
   const stats: GithubStats = JSON.parse(readFileSync(statsPath, "utf-8"));
 
-  // Get current release version from website/package.json
   const websitePkgPath = path.join(rootDir, "website", "package.json");
   const websitePkg = existsSync(websitePkgPath)
     ? JSON.parse(readFileSync(websitePkgPath, "utf-8"))
     : { version: "0.2.0" };
   const releaseTag = `v${websitePkg.version || "0.2.0"}`;
 
-  // 1. Projects
   const projects = (stats.repositories_contributed_to || [])
     .filter(
       (r) =>
@@ -534,10 +521,8 @@ export function generateReadme(rootDir: string): string {
       description: r.description || "",
     }));
 
-  // 2. Writing
   const blogPosts = getBlogPosts(rootDir, 5);
 
-  // 3. Experience pid7 repos
   const pid7Repos = (stats.repositories_contributed_to || [])
     .filter((r) => r.repository.startsWith("pid7-org/"))
     .filter((r) => (r.total_contributions || 0) >= 100)
@@ -548,7 +533,6 @@ export function generateReadme(rootDir: string): string {
       url: `https://github.com/${r.repository}`,
     }));
 
-  // 4. Telemetry (All Time)
   const totalAdd = stats.lines_of_code.total_additions;
   const totalDel = stats.lines_of_code.total_deletions;
   const netLines = stats.lines_of_code.net_lines;
@@ -582,7 +566,6 @@ export function generateReadme(rootDir: string): string {
       .map((l) => `${l.name} ${Math.round(l.percentage)}%`)
       .join(" · ") || "--";
 
-  // 5. Generate All Main SVGs in Rosé Pine Dawn / Moon palette
   writeFileSync(
     path.join(assetsDir, "header.svg"),
     generateHeaderSvg(),
@@ -600,7 +583,6 @@ export function generateReadme(rootDir: string): string {
     "utf-8",
   );
 
-  // Projects Header & Rows
   writeFileSync(
     path.join(assetsDir, "projects-header.svg"),
     generateProjectsHeaderSvg(),
@@ -614,7 +596,6 @@ export function generateReadme(rootDir: string): string {
     );
   });
 
-  // Writing Header & Rows
   writeFileSync(
     path.join(assetsDir, "writing-header.svg"),
     generateWritingHeaderSvg(),
@@ -646,7 +627,6 @@ export function generateReadme(rootDir: string): string {
   );
   writeFileSync(path.join(assetsDir, "telemetry.svg"), telemetrySvg, "utf-8");
 
-  // 7. Monthly Stats
   const monthlyList = stats.monthly_history || [];
   const targetMonth = monthlyList[monthlyList.length - 1];
 
@@ -698,7 +678,6 @@ export function generateReadme(rootDir: string): string {
     hasMonthly = true;
   }
 
-  // 8. Weekly Stats
   let hasWeekly = false;
   if (stats.weekly_summary) {
     const w = stats.weekly_summary;
@@ -745,7 +724,6 @@ export function generateReadme(rootDir: string): string {
     hasWeekly = true;
   }
 
-  // Construct minimal GitHub-style Shields.io Badges (flat-square) themed with Rosé Pine Dawn palette
   const badges = [
     `[![Website](https://img.shields.io/badge/website-adii.fyi-286983?style=flat-square&logo=googlechrome&logoColor=faf4ed&labelColor=575279)](https://adii.fyi)`,
     `[![Resume](https://img.shields.io/badge/resume-adityamotale.pdf-d7827e?style=flat-square&logo=googledocs&logoColor=faf4ed&labelColor=575279)](https://adii.fyi/adityamotale.pdf)`,
@@ -758,7 +736,6 @@ export function generateReadme(rootDir: string): string {
     `[![Release Action](https://img.shields.io/github/actions/workflow/status/adityamotale/adityamotale/release.yaml?style=flat-square&label=release%20workflow&logo=githubactions&logoColor=faf4ed&labelColor=575279&color=907aa9)](https://github.com/adityamotale/adityamotale/actions/workflows/release.yaml)`,
   ].join(" ");
 
-  // Projects clickable rows
   const projectItems = [
     `![Projects](./assets/projects-header.svg)`,
     ...projects.map(
@@ -766,7 +743,6 @@ export function generateReadme(rootDir: string): string {
     ),
   ].join("\n");
 
-  // Writing clickable rows
   const writingItems =
     blogPosts.length > 0
       ? [
@@ -778,7 +754,6 @@ export function generateReadme(rootDir: string): string {
         ].join("\n")
       : `![Writing](./assets/writing-header.svg)`;
 
-  // Construct Full README
   const sections = [
     badges,
     `![Aditya Motale](./assets/header.svg)`,

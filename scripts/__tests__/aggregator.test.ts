@@ -58,7 +58,7 @@ describe("calculateLanguages", () => {
     assert.equal(result[0].name, "Rust");
     assert.equal(result[0].bytes, 1600);
     assert.equal(result[0].percentage, 80);
-    assert.equal(result[0].color, "#dea584"); // preserved non-null color across repos
+    assert.equal(result[0].color, "#dea584");
 
     assert.equal(result[1].name, "TypeScript");
     assert.equal(result[1].bytes, 400);
@@ -164,7 +164,7 @@ describe("calculateStreaks", () => {
     const daily = {
       "2026-09-01": 5,
       "2026-09-02": 8,
-      "2026-09-03": 0, // broken at the end
+      "2026-09-03": 0,
     };
 
     const result = calculateStreaks(daily, {

@@ -9,7 +9,6 @@ describe("readme generator", () => {
     const rootDir = path.resolve(import.meta.dirname, "../..");
     const readme = generateReadme(rootDir);
 
-    // Verify badge links and Shields.io URLs
     assert.ok(
       readme.includes(
         "https://img.shields.io/badge/website-adii.fyi-286983?style=flat-square&logo=googlechrome&logoColor=faf4ed&labelColor=575279",
@@ -67,7 +66,6 @@ describe("readme generator", () => {
       "Should include test workflow badge link",
     );
 
-    // Verify all section SVG assets exist
     const assetsDir = path.join(rootDir, "assets");
     const requiredAssets = [
       "header.svg",
@@ -94,7 +92,6 @@ describe("readme generator", () => {
       );
     }
 
-    // Verify clickable project and writing links in README
     assert.ok(
       readme.includes("https://github.com/pid7-org/turbofox"),
       "README should link to project repository",

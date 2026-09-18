@@ -30,12 +30,10 @@
 
   </style>
   <g class="mono" font-size="11.5">
-    <!-- Header -->
     <text x="0" y="14" class="accent" font-size="12">&gt;</text>
     <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">TELEMETRY</text>
     <line x1="91.5" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
 
-    <!-- Row 1 -->
     <text x="0" y="38">
       <tspan class="muted">&amp;</tspan> <tspan class="subtle">loc:</tspan>     <tspan class="text" font-weight="600">1,258,325</tspan> <tspan class="muted text-xs">(+2.5M / -1.3M)</tspan>
     </text>
@@ -43,7 +41,6 @@
       <tspan class="muted">+</tspan> <tspan class="subtle">prs:</tspan>     <tspan class="muted">[</tspan><tspan class="foam">###############</tspan><tspan class="bar-empty">.</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">97.9%</tspan>
     </text>
 
-    <!-- Row 2 -->
     <text x="0" y="58">
       <tspan class="muted">%</tspan> <tspan class="subtle">churn:</tspan>   <tspan class="muted">[</tspan><tspan class="pine">##########</tspan><tspan class="bar-empty">......</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">66.6%</tspan>
     </text>
@@ -51,7 +48,6 @@
       <tspan class="muted">@</tspan> <tspan class="subtle">active:</tspan>  <tspan class="muted">[</tspan><tspan class="gold">#######</tspan><tspan class="bar-empty">.........</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">47.1%</tspan>
     </text>
 
-    <!-- Row 3 -->
     <text x="0" y="78">
       <tspan class="muted">#</tspan> <tspan class="subtle">repos:</tspan>   <tspan class="text" font-weight="600">92</tspan> <tspan class="muted text-xs">(29 public, 31 private, 32 org)</tspan>
     </text>
@@ -59,7 +55,6 @@
       <tspan class="muted">^</tspan> <tspan class="subtle">streak:</tspan>  <tspan class="text" font-weight="600">112 days</tspan> <tspan class="muted text-xs">(982 active)</tspan>
     </text>
 
-    <!-- Row 4 -->
     <text x="0" y="98">
       <tspan class="muted">*</tspan> <tspan class="subtle">commits:</tspan> <tspan class="text" font-weight="600">3,779</tspan>
     </text>

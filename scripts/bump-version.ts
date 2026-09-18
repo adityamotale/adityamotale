@@ -47,7 +47,6 @@ function main() {
   const statsFile = path.join(rootDir, "data", "github-stats.json");
   const websitePkgFile = path.join(rootDir, "website", "package.json");
 
-  // Check if data/github-stats.json has changes
   let hasStatsChanges = false;
   try {
     const statusOutput = runCommand(
@@ -79,7 +78,6 @@ function main() {
     `🚀 Preparing release v${nextVersion} (bumped from v${currentVersion}, type: ${options.type})`,
   );
 
-  // 1. Update packages and package-locks
   const packages = ["mdparser", "scripts", "website"];
   for (const pkgName of packages) {
     const pkgJsonPath = path.join(rootDir, pkgName, "package.json");
@@ -104,7 +102,6 @@ function main() {
     }
   }
 
-  // 2. Update CHANGELOG.md
   const changelogPath = path.join(rootDir, "CHANGELOG.md");
   if (existsSync(changelogPath)) {
     const currentChangelog = readFileSync(changelogPath, "utf-8");
@@ -122,7 +119,6 @@ function main() {
     );
   }
 
-  // 3. Regenerate resume PDF
   if (!options.skipPdf) {
     console.log("  ↻ Regenerating resume PDF with latest metrics...");
     if (!options.dryRun) {
@@ -139,7 +135,6 @@ function main() {
     }
   }
 
-  // 4. Update README.md
   console.log("  ↻ Updating README.md with latest metrics...");
   if (!options.dryRun) {
     try {
@@ -158,10 +153,8 @@ function main() {
     return;
   }
 
-  // 4. Git commit, tag, and push
   console.log("  📦 Committing and tagging release...");
 
-  // Setup git identity in CI if not already set
   try {
     const existingUser = runCommand("git config user.name || true", rootDir);
     if (!existingUser) {
@@ -171,11 +164,8 @@ function main() {
         rootDir,
       );
     }
-  } catch (_) {
-    // Ignore config errors
-  }
+  } catch (_) {}
 
-  // Stage changes
   runCommand(
     "git add data/github-stats.json README.md assets CHANGELOG.md mdparser/package.json mdparser/package-lock.json scripts/package.json scripts/package-lock.json website/package.json website/package-lock.json website/public/adityamotale.pdf",
     rootDir,

@@ -34,7 +34,6 @@
     <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">EXPERIENCE</text>
     <line x1="102" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
 
-    <!-- 1. OSS Contributions -->
     <text x="0" y="38" class="text" font-weight="600">[ OSS Contributions ]</text>
     <text x="680" y="38" text-anchor="end" class="muted">Sep 2024 — Present</text>
     <text x="0" y="56">
@@ -50,7 +49,6 @@
       <tspan class="subtle">  impact:</tspan> <tspan class="text">Building hardware-accelerated algorithms, embedded KV stores &amp; storage engines</tspan>
     </text>
 
-    <!-- 2. Freelance -->
     <text x="0" y="136" class="text" font-weight="600">[ Freelance &amp; Contract · Web &amp; Tooling ]</text>
     <text x="680" y="136" text-anchor="end" class="muted">Jul 2024 — Present</text>
     <text x="0" y="154">
@@ -63,7 +61,6 @@
       <tspan class="subtle">  impact:</tspan> <tspan class="text">Shipped startup landing pages, SMTP microservices &amp; event ticket booking</tspan>
     </text>
 
-    <!-- 3. Internships -->
     <text x="0" y="216" class="text" font-weight="600">[ Internships · Mobile Engineering ]</text>
     <text x="680" y="216" text-anchor="end" class="muted">Nov 2021 — Apr 2024 (9 mos total)</text>
     <text x="0" y="234">

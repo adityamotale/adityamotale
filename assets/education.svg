@@ -34,7 +34,6 @@
     <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">EDUCATION</text>
     <line x1="92" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
 
-    <!-- Row 1 -->
     <text x="0" y="38">
       <tspan class="subtle">degree:</tspan>  <tspan class="text" font-weight="600">B.Tech</tspan> <tspan class="muted">(CSE)</tspan>
     </text>
@@ -42,7 +41,6 @@
       <tspan class="subtle">period:</tspan>  <tspan class="text" font-weight="600">Jun 2020 – Jun 2024</tspan> <tspan class="muted">(4 yrs)</tspan>
     </text>
 
-    <!-- Row 2 -->
     <text x="0" y="58">
       <tspan class="subtle">major:</tspan>   <tspan class="text" font-weight="600">Computer Science &amp; Engineering</tspan>
     </text>
@@ -50,7 +48,6 @@
       <tspan class="subtle">status:</tspan>  <tspan class="text" font-weight="600">Graduated</tspan>
     </text>
 
-    <!-- Row 3 -->
     <text x="0" y="78">
       <tspan class="subtle">inst:</tspan>    <tspan class="text" font-weight="600">Marathwada Inst. of Technology</tspan>
     </text>

@@ -28,7 +28,6 @@ describe("getSundayToSaturdayWindow", () => {
   });
 
   it("correctly crosses month boundaries (e.g. March into February)", () => {
-    // 2026-03-02 is a Monday
     const mondayInMarch = new Date("2026-03-02T02:00:00Z");
     const window = getSundayToSaturdayWindow(mondayInMarch);
 
@@ -37,7 +36,6 @@ describe("getSundayToSaturdayWindow", () => {
   });
 
   it("correctly crosses year boundaries (e.g. early January into previous December)", () => {
-    // 2026-01-05 is a Monday
     const firstMondayOfYear = new Date("2026-01-05T02:00:00Z");
     const window = getSundayToSaturdayWindow(firstMondayOfYear);
 
