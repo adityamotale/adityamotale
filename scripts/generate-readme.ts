@@ -748,9 +748,7 @@ export function generateReadme(rootDir: string): string {
         .map((l) => `${l.name} ${Math.round(l.percentage)}%`)
         .join(" · ") || "--";
 
-    const mLabel = targetMonth.label
-      ? `Last Month (${targetMonth.label})`
-      : "Last Month";
+    const mLabel = "Last Month";
 
     const monthlySvg = generateTelemetrySvg(
       mLabel,
