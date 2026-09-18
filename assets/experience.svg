@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 255" width="100%" height="255" fill="none">
+  <style>
+    
+  .mono {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  }
+  .accent { fill: #d7827e; font-weight: 600; }
+  .text { fill: #575279; font-weight: 500; }
+  .subtle { fill: #797593; font-weight: 400; }
+  .muted { fill: #9893a5; font-weight: 400; }
+  .pine { fill: #286983; font-weight: 700; }
+  .foam { fill: #56949f; font-weight: 700; }
+  .gold { fill: #ea9d34; font-weight: 700; }
+  .love { fill: #b4637a; font-weight: 700; }
+  .bar-empty { fill: #dfdad9; }
+  .header-line { stroke: #dfdad9; }
+
+  @media (prefers-color-scheme: dark) {
+    .accent { fill: #ea9a97; }
+    .text { fill: #e0def4; }
+    .subtle { fill: #908caa; }
+    .muted { fill: #6e6a86; }
+    .pine { fill: #3e8fb0; }
+    .foam { fill: #9ccfd8; }
+    .gold { fill: #f6c177; }
+    .love { fill: #eb6f92; }
+    .bar-empty { fill: #44415a; }
+    .header-line { stroke: #44415a; }
+  }
+
+  </style>
+  <g class="mono" font-size="11.5">
+    <text x="0" y="14" class="accent" font-size="12">&gt;</text>
+    <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">EXPERIENCE</text>
+    <line x1="102" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
+
+    <!-- 1. OSS Contributions -->
+    <text x="0" y="38" class="text" font-weight="600">[ OSS Contributions ]</text>
+    <text x="680" y="38" text-anchor="end" class="muted">Sep 2024 — Present</text>
+    <text x="0" y="56">
+      <tspan class="subtle">  role:</tspan>   <tspan class="text" font-weight="600">Core Maintainer &amp; Systems Developer</tspan>
+    </text>
+    <text x="0" y="74">
+      <tspan class="subtle">  repos:</tspan>  <tspan class="text" font-weight="600">turbofox · frozen-core · ashwa · website · kosa</tspan>
+    </text>
+    <text x="0" y="92">
+      <tspan class="subtle">  stack:</tspan>  <tspan class="text">Rust · SIMD · Embedded Storage · Systems Programming</tspan>
+    </text>
+    <text x="0" y="110">
+      <tspan class="subtle">  impact:</tspan> <tspan class="text">Building hardware-accelerated algorithms, embedded KV stores &amp; storage engines</tspan>
+    </text>
+
+    <!-- 2. Freelance -->
+    <text x="0" y="136" class="text" font-weight="600">[ Freelance &amp; Contract · Web &amp; Tooling ]</text>
+    <text x="680" y="136" text-anchor="end" class="muted">Jul 2024 — Present</text>
+    <text x="0" y="154">
+      <tspan class="subtle">  role:</tspan>   <tspan class="text" font-weight="600">Web &amp; Tooling Developer</tspan> <tspan class="muted">(Multiple Clients)</tspan>
+    </text>
+    <text x="0" y="172">
+      <tspan class="subtle">  stack:</tspan>  <tspan class="text">Astro · React · TypeScript · Microservices · VS Code API</tspan>
+    </text>
+    <text x="0" y="190">
+      <tspan class="subtle">  impact:</tspan> <tspan class="text">Shipped startup landing pages, SMTP microservices &amp; event ticket booking</tspan>
+    </text>
+
+    <!-- 3. Internships -->
+    <text x="0" y="216" class="text" font-weight="600">[ Internships · Mobile Engineering ]</text>
+    <text x="680" y="216" text-anchor="end" class="muted">Nov 2021 — Apr 2024 (9 mos total)</text>
+    <text x="0" y="234">
+      <tspan class="subtle">  orgs:</tspan>   <tspan class="text">kraftbase (1 mo) · Rojgary (5 mos) · FOLKDevelopers (3 mos)</tspan>
+    </text>
+    <text x="0" y="252">
+      <tspan class="subtle">  impact:</tspan> <tspan class="text">Built MVP mobile apps for clients from scratch, refactored &amp; enhanced reliability</tspan>
+    </text>
+  </g>
+</svg>

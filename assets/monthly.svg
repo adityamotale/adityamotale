@@ -3,7 +3,6 @@
     
   .mono {
     font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-    letter-spacing: -0.01em;
   }
   .accent { fill: #d7827e; font-weight: 600; }
   .text { fill: #575279; font-weight: 500; }
@@ -14,7 +13,6 @@
   .gold { fill: #ea9d34; font-weight: 700; }
   .love { fill: #b4637a; font-weight: 700; }
   .bar-empty { fill: #dfdad9; }
-  .divider { stroke: #dfdad9; stroke-dasharray: 2 2; }
   .header-line { stroke: #dfdad9; }
 
   @media (prefers-color-scheme: dark) {
@@ -27,7 +25,6 @@
     .gold { fill: #f6c177; }
     .love { fill: #eb6f92; }
     .bar-empty { fill: #44415a; }
-    .divider { stroke: #393552; }
     .header-line { stroke: #44415a; }
   }
 
@@ -35,7 +32,7 @@
   <g class="mono" font-size="11.5">
     <!-- Header -->
     <text x="0" y="14" class="accent" font-size="12">&gt;</text>
-    <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">LAST MONTH (AUG '26)</text>
+    <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">LAST MONTH (AUG &apos;26)</text>
     <line x1="174" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
 
     <!-- Row 1 -->
