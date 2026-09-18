@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 120" width="100%" height="120" fill="none">
+  <style>
+    
+  .mono {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    letter-spacing: -0.01em;
+  }
+  .accent { fill: #d7827e; font-weight: 600; }
+  .text { fill: #575279; font-weight: 500; }
+  .subtle { fill: #797593; font-weight: 400; }
+  .muted { fill: #9893a5; font-weight: 400; }
+  .pine { fill: #286983; font-weight: 700; }
+  .foam { fill: #56949f; font-weight: 700; }
+  .gold { fill: #ea9d34; font-weight: 700; }
+  .love { fill: #b4637a; font-weight: 700; }
+  .bar-empty { fill: #dfdad9; }
+  .divider { stroke: #dfdad9; stroke-dasharray: 2 2; }
+  .header-line { stroke: #dfdad9; }
+
+  @media (prefers-color-scheme: dark) {
+    .accent { fill: #ea9a97; }
+    .text { fill: #e0def4; }
+    .subtle { fill: #908caa; }
+    .muted { fill: #6e6a86; }
+    .pine { fill: #3e8fb0; }
+    .foam { fill: #9ccfd8; }
+    .gold { fill: #f6c177; }
+    .love { fill: #eb6f92; }
+    .bar-empty { fill: #44415a; }
+    .divider { stroke: #393552; }
+    .header-line { stroke: #44415a; }
+  }
+
+  </style>
+  <g class="mono" font-size="11.5">
+    <!-- Header -->
+    <text x="0" y="14" class="accent" font-size="12">&gt;</text>
+    <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">LAST WEEK</text>
+    <line x1="91.5" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
+
+    <!-- Row 1 -->
+    <text x="0" y="38">
+      <tspan class="muted">&amp;</tspan> <tspan class="subtle">loc:</tspan>     <tspan class="text" font-weight="600">8,921</tspan> <tspan class="muted text-xs">(+11.3k / -2.4k)</tspan>
+    </text>
+    <text x="340" y="38">
+      <tspan class="muted">+</tspan> <tspan class="subtle">prs:</tspan>     <tspan class="muted">[</tspan><tspan class="foam">################</tspan><tspan class="bar-empty"></tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">1/1</tspan>
+    </text>
+
+    <!-- Row 2 -->
+    <text x="0" y="58">
+      <tspan class="muted">%</tspan> <tspan class="subtle">churn:</tspan>   <tspan class="muted">[</tspan><tspan class="pine">#############</tspan><tspan class="bar-empty">...</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">82.5%</tspan>
+    </text>
+    <text x="340" y="58">
+      <tspan class="muted">@</tspan> <tspan class="subtle">active:</tspan>  <tspan class="muted">[</tspan><tspan class="gold">###########</tspan><tspan class="bar-empty">.....</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">71.4%</tspan>
+    </text>
+
+    <!-- Row 3 -->
+    <text x="0" y="78">
+      <tspan class="muted">#</tspan> <tspan class="subtle">repos:</tspan>   <tspan class="text" font-weight="600">2</tspan> <tspan class="muted text-xs">(0 public, 0 private, 2 org)</tspan>
+    </text>
+    <text x="340" y="78">
+      <tspan class="muted">^</tspan> <tspan class="subtle">streak:</tspan>  <tspan class="text" font-weight="600">5 days</tspan> <tspan class="muted text-xs">(5 active)</tspan>
+    </text>
+
+    <!-- Row 4 -->
+    <text x="0" y="98">
+      <tspan class="muted">*</tspan> <tspan class="subtle">commits:</tspan> <tspan class="text" font-weight="600">87</tspan>
+    </text>
+    <text x="340" y="98">
+      <tspan class="muted">$</tspan> <tspan class="subtle">stack:</tspan>   <tspan class="text" font-weight="600">TypeScript 53% · Astro 44% · CSS 2%</tspan>
+    </text>
+  </g>
+</svg>
