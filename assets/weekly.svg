@@ -59,7 +59,7 @@
       <tspan class="muted">*</tspan> <tspan class="subtle">commits:</tspan> <tspan class="text" font-weight="600">87</tspan>
     </text>
     <text x="340" y="98">
-      <tspan class="muted">$</tspan> <tspan class="subtle">stack:</tspan>   <tspan class="text" font-weight="600">TypeScript 53% · Astro 44% · CSS 2%</tspan>
+      <tspan class="muted">$</tspan> <tspan class="subtle">stack:</tspan>   <tspan class="text" font-weight="600">--</tspan>
     </text>
   </g>
 </svg>

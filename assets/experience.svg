@@ -40,7 +40,7 @@
       <tspan class="subtle">  role:</tspan>   <tspan class="text" font-weight="600">Core Maintainer &amp; Systems Developer</tspan>
     </text>
     <text x="0" y="74">
-      <tspan class="subtle">  repos:</tspan>  <tspan class="text" font-weight="600">turbofox · frozen-core · ashwa · website · kosa</tspan>
+      <tspan class="subtle">  repos:</tspan>  <tspan class="text" font-weight="600">turbofox · frozen-core · website · ashwa · kosa</tspan>
     </text>
     <text x="0" y="92">
       <tspan class="subtle">  stack:</tspan>  <tspan class="text">Rust · SIMD · Embedded Storage · Systems Programming</tspan>

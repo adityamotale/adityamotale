@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.3.1] - 2026-09-18
+
+- update github activity and coding metrics
+
 ## [0.3.0] - 2026-09-18
 
 - complete Open Graph & Twitter Card social preview cards with full metadata

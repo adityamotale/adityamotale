@@ -1,6 +1,6 @@
 {
   "name": "mdparser",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Custom Markdown blog parser with KaTeX math, Shiki syntax highlighting, GFM tables, and blog integrity validator",
   "type": "module",
   "main": "./src/index.ts",
