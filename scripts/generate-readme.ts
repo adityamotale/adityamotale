@@ -289,21 +289,8 @@ function generateAboutSvg(): string {
 </svg>`;
 }
 
-function generateProjectsSvg(
-  projects: { name: string; description: string }[],
-): string {
-  const height = 30 + projects.length * 20;
-  const rows = projects
-    .map((p, i) => {
-      const y = 36 + i * 20;
-      const namePad = p.name.padEnd(14, " ");
-      return `    <text x="0" y="${y}">
-      <tspan class="text" font-weight="600">${escapeXml(namePad)}</tspan> <tspan class="muted">—</tspan> <tspan class="subtle">${escapeXml(p.description)}</tspan>
-    </text>`;
-    })
-    .join("\n");
-
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 ${height}" width="100%" height="${height}" fill="none">
+function generateProjectsHeaderSvg(): string {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 24" width="100%" height="24" fill="none">
   <style>
     ${SVG_STYLE}
   </style>
@@ -311,32 +298,26 @@ function generateProjectsSvg(
     <text x="0" y="14" class="accent" font-size="12">&gt;</text>
     <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">PROJECTS</text>
     <line x1="85" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
-
-${rows}
   </g>
 </svg>`;
 }
 
-function generateWritingSvg(
-  posts: { title: string; created: string }[],
-): string {
-  const height = 30 + Math.max(1, posts.length) * 20;
-  const rows =
-    posts.length > 0
-      ? posts
-          .map((post, i) => {
-            const y = 36 + i * 20;
-            return `    <text x="0" y="${y}">
-      <tspan class="text" font-weight="600">${escapeXml(post.title)}</tspan>
+function generateProjectRowSvg(name: string, description: string): string {
+  const namePad = name.padEnd(14, " ");
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 20" width="100%" height="20" fill="none">
+  <style>
+    ${SVG_STYLE}
+  </style>
+  <g class="mono" font-size="11.5">
+    <text x="0" y="14">
+      <tspan class="text" font-weight="600">${escapeXml(namePad)}</tspan> <tspan class="muted">—</tspan> <tspan class="subtle">${escapeXml(description)}</tspan>
     </text>
-    <text x="680" y="${y}" text-anchor="end" class="muted">
-      ${escapeXml(formatBlogDate(post.created))}
-    </text>`;
-          })
-          .join("\n")
-      : `    <text x="0" y="36" class="muted">No posts available</text>`;
+  </g>
+</svg>`;
+}
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 ${height}" width="100%" height="${height}" fill="none">
+function generateWritingHeaderSvg(): string {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 24" width="100%" height="24" fill="none">
   <style>
     ${SVG_STYLE}
   </style>
@@ -344,8 +325,22 @@ function generateWritingSvg(
     <text x="0" y="14" class="accent" font-size="12">&gt;</text>
     <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">WRITING</text>
     <line x1="75" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
+  </g>
+</svg>`;
+}
 
-${rows}
+function generateWritingRowSvg(title: string, dateStr: string): string {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 20" width="100%" height="20" fill="none">
+  <style>
+    ${SVG_STYLE}
+  </style>
+  <g class="mono" font-size="11.5">
+    <text x="0" y="14">
+      <tspan class="text" font-weight="600">${escapeXml(title)}</tspan>
+    </text>
+    <text x="680" y="14" text-anchor="end" class="muted">
+      ${escapeXml(formatBlogDate(dateStr))}
+    </text>
   </g>
 </svg>`;
 }
@@ -588,16 +583,6 @@ export function generateReadme(rootDir: string): string {
   );
   writeFileSync(path.join(assetsDir, "about.svg"), generateAboutSvg(), "utf-8");
   writeFileSync(
-    path.join(assetsDir, "projects.svg"),
-    generateProjectsSvg(projects),
-    "utf-8",
-  );
-  writeFileSync(
-    path.join(assetsDir, "writing.svg"),
-    generateWritingSvg(blogPosts),
-    "utf-8",
-  );
-  writeFileSync(
     path.join(assetsDir, "education.svg"),
     generateEducationSvg(),
     "utf-8",
@@ -607,6 +592,34 @@ export function generateReadme(rootDir: string): string {
     generateExperienceSvg(pid7Repos),
     "utf-8",
   );
+
+  // Projects Header & Rows
+  writeFileSync(
+    path.join(assetsDir, "projects-header.svg"),
+    generateProjectsHeaderSvg(),
+    "utf-8",
+  );
+  projects.forEach((p, i) => {
+    writeFileSync(
+      path.join(assetsDir, `project-${i}.svg`),
+      generateProjectRowSvg(p.name, p.description),
+      "utf-8",
+    );
+  });
+
+  // Writing Header & Rows
+  writeFileSync(
+    path.join(assetsDir, "writing-header.svg"),
+    generateWritingHeaderSvg(),
+    "utf-8",
+  );
+  blogPosts.forEach((post, i) => {
+    writeFileSync(
+      path.join(assetsDir, `writing-${i}.svg`),
+      generateWritingRowSvg(post.title, post.created),
+      "utf-8",
+    );
+  });
 
   const telemetrySvg = generateTelemetrySvg(
     "Telemetry",
@@ -727,25 +740,46 @@ export function generateReadme(rootDir: string): string {
     hasWeekly = true;
   }
 
-  // Construct Badges (Website, Resume, Socials, Actions)
+  // Construct Badges (Website, Resume, Tag/Release, Socials, Actions) with Rosé Pine Dawn themed colors
   const badges = [
-    `[![Website](https://img.shields.io/badge/website-adii.fyi-faf4ed?style=flat-square&logo=googlechrome&logoColor=d7827e&labelColor=fffaf3&color=dfdad9)](https://adii.fyi)`,
-    `[![Resume](https://img.shields.io/badge/resume-adityamotale.pdf-faf4ed?style=flat-square&logo=googledocs&logoColor=d7827e&labelColor=fffaf3&color=dfdad9)](https://adii.fyi/adityamotale.pdf)`,
-    `[![GitHub](https://img.shields.io/badge/github-adityamotale-faf4ed?style=flat-square&logo=github&logoColor=d7827e&labelColor=fffaf3&color=dfdad9)](https://github.com/adityamotale)`,
-    `[![Twitter](https://img.shields.io/badge/twitter-@arctic__byte-faf4ed?style=flat-square&logo=x&logoColor=d7827e&labelColor=fffaf3&color=dfdad9)](https://x.com/arctic_byte)`,
-    `[![LinkedIn](https://img.shields.io/badge/linkedin-aditya--motale-faf4ed?style=flat-square&logo=linkedin&logoColor=d7827e&labelColor=fffaf3&color=dfdad9)](https://www.linkedin.com/in/aditya-motale)`,
-    `[![Test](https://img.shields.io/github/actions/workflow/status/adityamotale/adityamotale/test.yaml?style=flat-square&label=tests&logo=githubactions&logoColor=d7827e&labelColor=fffaf3&color=dfdad9)](https://github.com/adityamotale/adityamotale/actions/workflows/test.yaml)`,
-    `[![Activity](https://img.shields.io/github/actions/workflow/status/adityamotale/adityamotale/activity.yaml?style=flat-square&label=activity&logo=githubactions&logoColor=d7827e&labelColor=fffaf3&color=dfdad9)](https://github.com/adityamotale/adityamotale/actions/workflows/activity.yaml)`,
-    `[![Release](https://img.shields.io/github/actions/workflow/status/adityamotale/adityamotale/release.yaml?style=flat-square&label=release&logo=githubactions&logoColor=d7827e&labelColor=fffaf3&color=dfdad9)](https://github.com/adityamotale/adityamotale/actions/workflows/release.yaml)`,
+    `[![Website](https://img.shields.io/badge/website-adii.fyi-286983?style=flat-square&logo=googlechrome&logoColor=faf4ed&labelColor=575279)](https://adii.fyi)`,
+    `[![Resume](https://img.shields.io/badge/resume-adityamotale.pdf-d7827e?style=flat-square&logo=googledocs&logoColor=faf4ed&labelColor=575279)](https://adii.fyi/adityamotale.pdf)`,
+    `[![Release](https://img.shields.io/github/v/release/adityamotale/adityamotale?style=flat-square&label=release&logo=github&logoColor=faf4ed&labelColor=575279&color=ea9d34)](https://github.com/adityamotale/adityamotale/releases)`,
+    `[![GitHub](https://img.shields.io/badge/github-adityamotale-393552?style=flat-square&logo=github&logoColor=faf4ed&labelColor=575279)](https://github.com/adityamotale)`,
+    `[![Twitter](https://img.shields.io/badge/twitter-@arctic__byte-56949f?style=flat-square&logo=x&logoColor=faf4ed&labelColor=575279)](https://x.com/arctic_byte)`,
+    `[![LinkedIn](https://img.shields.io/badge/linkedin-aditya--motale-286983?style=flat-square&logo=linkedin&logoColor=faf4ed&labelColor=575279)](https://www.linkedin.com/in/aditya-motale)`,
+    `[![Test](https://img.shields.io/github/actions/workflow/status/adityamotale/adityamotale/test.yaml?style=flat-square&label=tests&logo=githubactions&logoColor=faf4ed&labelColor=575279)](https://github.com/adityamotale/adityamotale/actions/workflows/test.yaml)`,
+    `[![Activity](https://img.shields.io/github/actions/workflow/status/adityamotale/adityamotale/activity.yaml?style=flat-square&label=activity&logo=githubactions&logoColor=faf4ed&labelColor=575279)](https://github.com/adityamotale/adityamotale/actions/workflows/activity.yaml)`,
+    `[![Release Action](https://img.shields.io/github/actions/workflow/status/adityamotale/adityamotale/release.yaml?style=flat-square&label=release%20workflow&logo=githubactions&logoColor=faf4ed&labelColor=575279)](https://github.com/adityamotale/adityamotale/actions/workflows/release.yaml)`,
   ].join("\n");
+
+  // Projects clickable rows
+  const projectItems = [
+    `![Projects](./assets/projects-header.svg)`,
+    ...projects.map(
+      (p, i) => `[![${p.name}](./assets/project-${i}.svg)](${p.url})`,
+    ),
+  ].join("\n");
+
+  // Writing clickable rows
+  const writingItems =
+    blogPosts.length > 0
+      ? [
+          `![Writing](./assets/writing-header.svg)`,
+          ...blogPosts.map(
+            (post, i) =>
+              `[![${post.title}](./assets/writing-${i}.svg)](https://adii.fyi/blogs/${post.slug})`,
+          ),
+        ].join("\n")
+      : `![Writing](./assets/writing-header.svg)`;
 
   // Construct Full README
   const sections = [
     badges,
     `![Aditya Motale](./assets/header.svg)`,
     `![About](./assets/about.svg)`,
-    `![Projects](./assets/projects.svg)`,
-    `![Writing](./assets/writing.svg)`,
+    projectItems,
+    writingItems,
     `![Education](./assets/education.svg)`,
     `![Experience](./assets/experience.svg)`,
     `![Telemetry](./assets/telemetry.svg)`,
@@ -767,7 +801,7 @@ function main() {
   const readmePath = path.join(rootDir, "README.md");
 
   console.log(
-    "🔄 Generating unified Rosé Pine Dawn themed README.md, badges, and SVG cards...",
+    "🔄 Generating unified Rosé Pine Dawn themed README.md, badges, and clickable SVG rows...",
   );
   const content = generateReadme(rootDir);
   writeFileSync(readmePath, content, "utf-8");

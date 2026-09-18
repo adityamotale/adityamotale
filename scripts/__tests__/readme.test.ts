@@ -5,7 +5,7 @@ import test, { describe } from "node:test";
 import { generateReadme } from "../generate-readme.ts";
 
 describe("readme generator", () => {
-  test("generates complete README markdown with all badges, SVG cards, and clean About section", () => {
+  test("generates complete README markdown with all badges, clickable SVG rows, and clean About section", () => {
     const rootDir = path.resolve(import.meta.dirname, "../..");
     const readme = generateReadme(rootDir);
 
@@ -25,6 +25,10 @@ describe("readme generator", () => {
     assert.ok(
       readme.includes("badge/resume-adityamotale.pdf"),
       "Should include resume badge",
+    );
+    assert.ok(
+      readme.includes("github/v/release/adityamotale/adityamotale"),
+      "Should include release tag badge",
     );
     assert.ok(
       readme.includes("https://github.com/adityamotale"),
@@ -58,8 +62,10 @@ describe("readme generator", () => {
     const requiredAssets = [
       "header.svg",
       "about.svg",
-      "projects.svg",
-      "writing.svg",
+      "projects-header.svg",
+      "project-0.svg",
+      "writing-header.svg",
+      "writing-0.svg",
       "education.svg",
       "experience.svg",
       "telemetry.svg",
@@ -78,7 +84,19 @@ describe("readme generator", () => {
       );
     }
 
-    // Verify About SVG does NOT contain bottom social link text anymore
+    // Verify clickable project and writing links in README
+    assert.ok(
+      readme.includes("https://github.com/pid7-org/turbofox"),
+      "README should link to project repository",
+    );
+    assert.ok(
+      readme.includes(
+        "https://adii.fyi/blogs/theres-more-to-performance-than-big-o",
+      ),
+      "README should link to blog post",
+    );
+
+    // Verify About SVG does NOT contain bottom social link text
     const aboutSvg = readFileSync(path.join(assetsDir, "about.svg"), "utf-8");
     assert.ok(
       !aboutSvg.includes("github / twitter / linkedin"),
