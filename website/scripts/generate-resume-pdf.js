@@ -508,18 +508,16 @@ export async function generateResumePdf() {
   return await doc.save();
 }
 
-// Generate to public/adityamotale.pdf and public/resume.pdf
+// Generate to public/adityamotale.pdf
 const publicDir = path.resolve(__dirname, '../public');
 if (!fs.existsSync(publicDir)) {
   fs.mkdirSync(publicDir, { recursive: true });
 }
 
 const outputPath = path.resolve(publicDir, 'adityamotale.pdf');
-const legacyPath = path.resolve(publicDir, 'resume.pdf');
 
 generateResumePdf().then((pdfBytes) => {
   fs.writeFileSync(outputPath, pdfBytes);
-  fs.writeFileSync(legacyPath, pdfBytes);
   console.log(`✅ Resume PDF successfully generated at: ${outputPath} (${pdfBytes.length} bytes)`);
 }).catch((err) => {
   console.error('❌ Failed to generate resume PDF:', err);
