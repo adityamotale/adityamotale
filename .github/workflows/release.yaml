@@ -1,0 +1,86 @@
+name: Publish & Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  id-token: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release:
+    name: Build, Deploy & Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Install dependencies (mdparser)
+        run: npm --prefix mdparser ci
+
+      - name: Install dependencies (website)
+        run: npm --prefix website ci
+
+      - name: Install dependencies (scripts)
+        run: npm --prefix scripts ci
+
+      - name: Run format check
+        run: ./format.sh --check
+
+      - name: Run tests
+        run: ./test.sh
+
+      - name: Build static site
+        run: npm --prefix website run build
+
+      - name: Deploy to Cloudflare Pages
+        if: env.CLOUDFLARE_API_TOKEN != ''
+        run: npx wrangler pages deploy website/dist --project-name=adityamotale --branch=master
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Read CHANGELOG
+        id: changelog
+        shell: bash
+        run: |
+          body=$(awk '
+            /^## / {
+              if (seen) exit
+              seen=1
+            }
+            seen
+          ' CHANGELOG.md)
+
+          {
+            echo 'body<<EOF'
+            echo "$body"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          prerelease: false
+          generate_release_notes: true
+          tag_name: ${{ github.ref_name }}
+          name: Release of ${{ github.ref_name }}
+          body: ${{ steps.changelog.outputs.body }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

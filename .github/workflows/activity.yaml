@@ -25,6 +25,10 @@ on:
         description: 'End date (YYYY-MM-DD, if custom-range selected)'
         required: false
         default: ''
+      force_release:
+        description: 'Force version bump and release even if stats have not changed'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -36,11 +40,23 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GH_STATS_TOKEN || secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
           node-version: 24
+
+      - name: Install dependencies (mdparser)
+        run: npm --prefix mdparser ci
+
+      - name: Install dependencies (website)
+        run: npm --prefix website ci
+
+      - name: Install dependencies (scripts)
+        run: npm --prefix scripts ci
 
       - name: Run GitHub activity & stats collector
         env:
@@ -63,15 +79,10 @@ jobs:
           echo "Running: node scripts/fetch-github-stats.ts ${ARGS[*]}"
           node scripts/fetch-github-stats.ts "${ARGS[@]}"
 
-      - name: Commit and push changes
+      - name: Bump version, update changelog & trigger release tag
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
-          git add data/github-stats.json
-          if git diff --staged --quiet; then
-            echo "No changes detected in data/github-stats.json."
-          else
-            git commit -m "(gh-actions) data: update weekly GitHub stats [skip ci]"
-            git push
+          EXTRA_ARGS=()
+          if [ "${{ inputs.force_release }}" = "true" ]; then
+            EXTRA_ARGS+=(--force)
           fi
+          node scripts/bump-version.ts "${EXTRA_ARGS[@]}"
