@@ -31,7 +31,6 @@ export function validateBlogPost(
   const errors: ValidationError[] = [];
   const tag = filename ? `[${filename}] ` : "";
 
-  // 1. Slug validation
   if (!post.frontmatter.slug || post.frontmatter.slug === "untitled") {
     errors.push({
       file: filename,
@@ -48,7 +47,6 @@ export function validateBlogPost(
     });
   }
 
-  // 2. Title validation
   if (!post.frontmatter.title || post.frontmatter.title === "Untitled Post") {
     errors.push({
       file: filename,
@@ -58,7 +56,6 @@ export function validateBlogPost(
     });
   }
 
-  // 3. Date validation
   if (!isValidDateString(post.frontmatter.created)) {
     errors.push({
       file: filename,
@@ -80,7 +77,6 @@ export function validateBlogPost(
     });
   }
 
-  // 4. Tags validation
   if (
     !Array.isArray(post.frontmatter.tags) ||
     post.frontmatter.tags.length === 0
@@ -93,7 +89,6 @@ export function validateBlogPost(
     });
   }
 
-  // 5. HTML Content & metrics validation
   if (!post.html || post.html.trim().length === 0) {
     errors.push({
       file: filename,
@@ -121,7 +116,6 @@ export function validateBlogPost(
     });
   }
 
-  // 6. Syntax leak detection in generated HTML
   if (/<p>\s*&lt;&gt;\s*<\/p>|<p>\s*&lt;\/&gt;\s*<\/p>/i.test(post.html)) {
     errors.push({
       file: filename,
@@ -171,7 +165,6 @@ export function validateBlogPost(
     });
   }
 
-  // 7. Glossary item validation
   for (const item of post.glossary) {
     if (!item.term.trim() || !item.definitionHtml.trim()) {
       errors.push({
@@ -183,7 +176,6 @@ export function validateBlogPost(
     }
   }
 
-  // 8. References validation
   const definedRefIds = new Set(post.references.map((r) => r.id));
   for (const ref of post.references) {
     if (!ref.id.trim() || !ref.contentHtml.trim()) {
@@ -196,7 +188,6 @@ export function validateBlogPost(
     }
   }
 
-  // Check footnote citation references
   const citationMatches = post.rawMarkdown.matchAll(
     /\[\^([a-zA-Z0-9_-]+)\](?!:)/g,
   );

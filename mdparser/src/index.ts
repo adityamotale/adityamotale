@@ -26,7 +26,6 @@ export {
   isValidDateString,
 } from "./validator.ts";
 
-// NOTE: Custom syntax pattern definitions for blog markdown dialect
 const FRONTMATTER_REGEX = /^---\r?\n([\s\S]*?)\r?\n---/;
 const ANGLE_BLOCK_REGEX = /^<>\s*\r?\n([\s\S]*?)\r?\n^<\/>\s*$/gm;
 const TILDE_BLOCK_REGEX = /^~\s*\r?\n([\s\S]*?)\r?\n^~\s*$/gm;
@@ -123,26 +122,21 @@ export function slugify(text: string): string {
 export function parseSimpleMarkdownInline(text: string): string {
   let html = renderMathInText(text);
 
-  // Footnote citations [^1]
   html = html.replace(FOOTNOTE_REF_REGEX, (_, id) => {
     return `<sup class="footnote-ref"><a href="#fn-${id}" id="fnref-${id}" class="text-[var(--color-accent)] hover:underline font-mono text-[11px]">[${id}]</a></sup>`;
   });
 
-  // Code spans `code`
   html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
 
-  // Bold **text** or __text__
   html = html.replace(/\*\*([\s\S]+?)\*\*/g, "<strong>$1</strong>");
   html = html.replace(/__([\s\S]+?)__/g, "<strong>$1</strong>");
 
-  // Italic *text* or _text_
   html = html.replace(/(?<!\*)\*([^*]+?)\*(?!\*)/g, "<em>$1</em>");
   html = html.replace(
     /(?<![a-zA-Z0-9_])_([^_]+?)_(?![a-zA-Z0-9_])/g,
     "<em>$1</em>",
   );
 
-  // Links [label](url)
   html = html.replace(
     /\[([^\]]+)\]\(([^)]+)\)/g,
     '<a href="$2" target="_blank" rel="noreferrer">$1</a>',
@@ -435,13 +429,11 @@ export async function processCustomBlocks(content: string): Promise<string> {
 
     const blockText = lines.join("\n").trim();
 
-    // Check if the inner block is a markdown table
     const tableHtml = parseTableBlock(blockText, desc);
     if (tableHtml) {
       return `${tableHtml}\n\n`;
     }
 
-    // Otherwise treat as custom code block
     let codeStr = "";
     let lang = "";
     const fenceMatch = blockText.match(CODE_FENCE_REGEX);
@@ -743,7 +735,6 @@ export async function parseMarkdownBlog(
   html = processCallouts(html);
   html = processAnimationTags(html);
 
-  // H1
   html = html.replace(/^#\s+([^#\n].*)$/gm, (_, title) => {
     const id = slugify(title);
     return `<h1 id="${id}" class="font-serif italic text-2xl sm:text-4xl font-semibold mt-8 sm:mt-10 mb-3 sm:mb-4 text-rp-text leading-tight break-words">
@@ -751,7 +742,6 @@ export async function parseMarkdownBlog(
     </h1>`;
   });
 
-  // H2 with symbol prefix (e.g. § or ⁕)
   html = html.replace(/^##\s+([§⁕])\s+(.*)$/gm, (_, symbol, title) => {
     const id = slugify(title);
     return `<h2 id="${id}" class="font-serif text-lg sm:text-2xl font-semibold mt-8 sm:mt-10 mb-3 sm:mb-4 text-rp-text flex items-center gap-2 group flex-wrap">
@@ -761,7 +751,6 @@ export async function parseMarkdownBlog(
     </h2>`;
   });
 
-  // Regular H2
   html = html.replace(/^##\s+([^§⁕\n].*)$/gm, (_, title) => {
     const id = slugify(title);
     return `<h2 id="${id}" class="font-serif text-lg sm:text-2xl font-semibold mt-8 sm:mt-10 mb-3 sm:mb-4 text-rp-text flex items-center gap-2 group flex-wrap">
@@ -769,7 +758,6 @@ export async function parseMarkdownBlog(
     </h2>`;
   });
 
-  // H3
   html = html.replace(/^###\s+(.*)$/gm, (_, title) => {
     const id = slugify(title);
     return `<h3 id="${id}" class="font-serif text-base sm:text-xl font-semibold mt-6 sm:mt-8 mb-2 sm:mb-3 text-rp-text flex items-center gap-2 group flex-wrap">
@@ -777,7 +765,6 @@ export async function parseMarkdownBlog(
     </h3>`;
   });
 
-  // H4
   html = html.replace(/^####\s+(.*)$/gm, (_, title) => {
     const id = slugify(title);
     return `<h4 id="${id}" class="font-serif text-sm sm:text-base font-semibold mt-4 sm:mt-6 mb-2 text-rp-text flex items-center gap-2 group flex-wrap">

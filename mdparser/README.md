@@ -59,12 +59,10 @@ Benchmarking vector throughput:
 | AVX2 | 11 ns | **6.0x** |
 `;
 
-// Parse markdown to HTML and structured metadata
 const post = await parseMarkdownBlog(rawMarkdown);
 console.log(post.frontmatter);
 console.log(post.html);
 
-// Validate blog post structure and content
 const errors = validateBlogPost(post);
 if (errors.length > 0) {
   console.error("Blog validation errors:", errors);
