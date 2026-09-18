@@ -9,6 +9,12 @@ export interface GraphQLOptions {
   retryDelayMs?: number;
 }
 
+export function isTransientGraphQLError(message: string): boolean {
+  return /HTTP (403|429|499|500|502|503|504)|Something went wrong while executing your query|rate limit|secondary rate limit|was submitted too quickly|abuse detection|ETIMEDOUT|ECONNRESET|ECONNREFUSED|ENOTFOUND|EAI_AGAIN|socket hang up|timed out|timeout|fetch failed|Service Unavailable|Gateway Timeout|Bad Gateway|Internal Server Error/i.test(
+    message,
+  );
+}
+
 export function getGitHubToken(): string {
   const envToken =
     process.env.GH_TOKEN?.trim() || process.env.GITHUB_TOKEN?.trim();
@@ -40,8 +46,8 @@ export async function runGraphQLAsync<T>(
     }
   }
 
-  const maxRetries = options?.maxRetries ?? 3;
-  let delayMs = options?.retryDelayMs ?? 1000;
+  const maxRetries = options?.maxRetries ?? 4;
+  let delayMs = options?.retryDelayMs ?? 1500;
 
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
@@ -65,13 +71,11 @@ export async function runGraphQLAsync<T>(
       return parsed.data as T;
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : String(err);
-      const isTransient = /HTTP (499|502|503|403)|ETIMEDOUT|ECONNRESET/.test(
-        message,
-      );
+      const isTransient = isTransientGraphQLError(message);
 
       if (isTransient && attempt < maxRetries) {
         console.warn(
-          `[GraphQL Retry] Attempt ${attempt}/${maxRetries} failed. Retrying in ${delayMs}ms...`,
+          `[GraphQL Retry] Attempt ${attempt}/${maxRetries} failed: ${message.slice(0, 120)}... Retrying in ${delayMs}ms...`,
         );
         await new Promise((resolve) => setTimeout(resolve, delayMs));
         delayMs *= 2;
