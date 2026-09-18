@@ -1,10 +1,11 @@
 {
   "name": "scripts",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
     "fetch:stats": "node fetch-github-stats.ts",
+    "bump:version": "node bump-version.ts",
     "test": "node --test",
     "format": "prettier --write \"**/*.{ts,js,json,md}\"",
     "format:check": "prettier --check \"**/*.{ts,js,json,md}\""
