@@ -258,6 +258,31 @@ const SVG_STYLE = `
   }
 `;
 
+function generateBadgeSvg(text: string, dotColor?: string): string {
+  const charWidth = 6.8;
+  const padding = 20;
+  const hasDot = Boolean(dotColor);
+  const dotExtra = hasDot ? 12 : 0;
+  const width = Math.max(
+    50,
+    Math.round(padding + text.length * charWidth + dotExtra),
+  );
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} 22" width="${width}" height="22" fill="none">
+  <style>
+    .badge-bg { fill: #fffaf3; stroke: #dfdad9; stroke-width: 1; }
+    .badge-text { fill: #797593; font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 11px; font-weight: 500; }
+    @media (prefers-color-scheme: dark) {
+      .badge-bg { fill: #2a273f; stroke: #44415a; }
+      .badge-text { fill: #908caa; }
+    }
+  </style>
+  <rect x="0.5" y="0.5" width="${width - 1}" height="21" rx="10.5" class="badge-bg" />
+  ${hasDot ? `<circle cx="12" cy="11" r="3" fill="${dotColor}" />` : ""}
+  <text x="${hasDot ? (width + 12) / 2 : width / 2}" y="14.5" text-anchor="middle" class="badge-text">${escapeXml(text)}</text>
+</svg>`;
+}
+
 function generateHeaderSvg(): string {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 75" width="100%" height="75" fill="none">
   <style>
@@ -510,6 +535,13 @@ export function generateReadme(rootDir: string): string {
 
   const stats: GithubStats = JSON.parse(readFileSync(statsPath, "utf-8"));
 
+  // Get current release version from website/package.json
+  const websitePkgPath = path.join(rootDir, "website", "package.json");
+  const websitePkg = existsSync(websitePkgPath)
+    ? JSON.parse(readFileSync(websitePkgPath, "utf-8"))
+    : { version: "0.2.0" };
+  const releaseTag = `v${websitePkg.version || "0.2.0"}`;
+
   // 1. Projects
   const projects = (stats.repositories_contributed_to || [])
     .filter(
@@ -575,7 +607,54 @@ export function generateReadme(rootDir: string): string {
       .map((l) => `${l.name} ${Math.round(l.percentage)}%`)
       .join(" · ") || "--";
 
-  // 5. Generate All SVGs in Rosé Pine Dawn / Moon palette
+  // 5. Generate Rosé Pine Dawn Custom Badge SVGs
+  writeFileSync(
+    path.join(assetsDir, "badge-website.svg"),
+    generateBadgeSvg("adii.fyi"),
+    "utf-8",
+  );
+  writeFileSync(
+    path.join(assetsDir, "badge-resume.svg"),
+    generateBadgeSvg("resume", "#d7827e"),
+    "utf-8",
+  );
+  writeFileSync(
+    path.join(assetsDir, "badge-release.svg"),
+    generateBadgeSvg(releaseTag, "#ea9d34"),
+    "utf-8",
+  );
+  writeFileSync(
+    path.join(assetsDir, "badge-github.svg"),
+    generateBadgeSvg("github"),
+    "utf-8",
+  );
+  writeFileSync(
+    path.join(assetsDir, "badge-twitter.svg"),
+    generateBadgeSvg("twitter"),
+    "utf-8",
+  );
+  writeFileSync(
+    path.join(assetsDir, "badge-linkedin.svg"),
+    generateBadgeSvg("linkedin"),
+    "utf-8",
+  );
+  writeFileSync(
+    path.join(assetsDir, "badge-tests.svg"),
+    generateBadgeSvg("tests", "#56949f"),
+    "utf-8",
+  );
+  writeFileSync(
+    path.join(assetsDir, "badge-activity.svg"),
+    generateBadgeSvg("activity", "#286983"),
+    "utf-8",
+  );
+  writeFileSync(
+    path.join(assetsDir, "badge-release-action.svg"),
+    generateBadgeSvg("release", "#907aa9"),
+    "utf-8",
+  );
+
+  // 6. Generate All Main SVGs in Rosé Pine Dawn / Moon palette
   writeFileSync(
     path.join(assetsDir, "header.svg"),
     generateHeaderSvg(),
@@ -639,7 +718,7 @@ export function generateReadme(rootDir: string): string {
   );
   writeFileSync(path.join(assetsDir, "telemetry.svg"), telemetrySvg, "utf-8");
 
-  // 6. Monthly Stats
+  // 7. Monthly Stats
   const monthlyList = stats.monthly_history || [];
   const targetMonth = monthlyList[monthlyList.length - 1];
 
@@ -693,7 +772,7 @@ export function generateReadme(rootDir: string): string {
     hasMonthly = true;
   }
 
-  // 7. Weekly Stats
+  // 8. Weekly Stats
   let hasWeekly = false;
   if (stats.weekly_summary) {
     const w = stats.weekly_summary;
@@ -740,17 +819,17 @@ export function generateReadme(rootDir: string): string {
     hasWeekly = true;
   }
 
-  // Construct Badges (Website, Resume, Tag/Release, Socials, Actions) with Rosé Pine Dawn themed colors
+  // Construct Badges (Website, Resume, Release Tag, Socials, Actions) with Rosé Pine Dawn Custom Pill Badges
   const badges = [
-    `[![Website](https://img.shields.io/badge/website-adii.fyi-286983?style=flat-square&logo=googlechrome&logoColor=faf4ed&labelColor=575279)](https://adii.fyi)`,
-    `[![Resume](https://img.shields.io/badge/resume-adityamotale.pdf-d7827e?style=flat-square&logo=googledocs&logoColor=faf4ed&labelColor=575279)](https://adii.fyi/adityamotale.pdf)`,
-    `[![Release](https://img.shields.io/github/v/release/adityamotale/adityamotale?style=flat-square&label=release&logo=github&logoColor=faf4ed&labelColor=575279&color=ea9d34)](https://github.com/adityamotale/adityamotale/releases)`,
-    `[![GitHub](https://img.shields.io/badge/github-adityamotale-393552?style=flat-square&logo=github&logoColor=faf4ed&labelColor=575279)](https://github.com/adityamotale)`,
-    `[![Twitter](https://img.shields.io/badge/twitter-@arctic__byte-56949f?style=flat-square&logo=x&logoColor=faf4ed&labelColor=575279)](https://x.com/arctic_byte)`,
-    `[![LinkedIn](https://img.shields.io/badge/linkedin-aditya--motale-286983?style=flat-square&logo=linkedin&logoColor=faf4ed&labelColor=575279)](https://www.linkedin.com/in/aditya-motale)`,
-    `[![Test](https://img.shields.io/github/actions/workflow/status/adityamotale/adityamotale/test.yaml?style=flat-square&label=tests&logo=githubactions&logoColor=faf4ed&labelColor=575279)](https://github.com/adityamotale/adityamotale/actions/workflows/test.yaml)`,
-    `[![Activity](https://img.shields.io/github/actions/workflow/status/adityamotale/adityamotale/activity.yaml?style=flat-square&label=activity&logo=githubactions&logoColor=faf4ed&labelColor=575279)](https://github.com/adityamotale/adityamotale/actions/workflows/activity.yaml)`,
-    `[![Release Action](https://img.shields.io/github/actions/workflow/status/adityamotale/adityamotale/release.yaml?style=flat-square&label=release%20workflow&logo=githubactions&logoColor=faf4ed&labelColor=575279)](https://github.com/adityamotale/adityamotale/actions/workflows/release.yaml)`,
+    `[![website](./assets/badge-website.svg)](https://adii.fyi)`,
+    `[![resume](./assets/badge-resume.svg)](https://adii.fyi/adityamotale.pdf)`,
+    `[![${releaseTag}](./assets/badge-release.svg)](https://github.com/adityamotale/adityamotale/releases)`,
+    `[![github](./assets/badge-github.svg)](https://github.com/adityamotale)`,
+    `[![twitter](./assets/badge-twitter.svg)](https://x.com/arctic_byte)`,
+    `[![linkedin](./assets/badge-linkedin.svg)](https://www.linkedin.com/in/aditya-motale)`,
+    `[![tests](./assets/badge-tests.svg)](https://github.com/adityamotale/adityamotale/actions/workflows/test.yaml)`,
+    `[![activity](./assets/badge-activity.svg)](https://github.com/adityamotale/adityamotale/actions/workflows/activity.yaml)`,
+    `[![release](./assets/badge-release-action.svg)](https://github.com/adityamotale/adityamotale/actions/workflows/release.yaml)`,
   ].join("\n");
 
   // Projects clickable rows
@@ -801,7 +880,7 @@ function main() {
   const readmePath = path.join(rootDir, "README.md");
 
   console.log(
-    "🔄 Generating unified Rosé Pine Dawn themed README.md, badges, and clickable SVG rows...",
+    "🔄 Generating unified Rosé Pine Dawn themed README.md, custom pill badges, and clickable SVG rows...",
   );
   const content = generateReadme(rootDir);
   writeFileSync(readmePath, content, "utf-8");
