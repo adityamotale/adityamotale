@@ -220,10 +220,18 @@ function getBlogPosts(rootDir: string, limit = 5) {
   return posts.slice(0, limit);
 }
 
+function escapeXml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
 const SVG_STYLE = `
   .mono {
     font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-    letter-spacing: -0.01em;
   }
   .accent { fill: #d7827e; font-weight: 600; }
   .text { fill: #575279; font-weight: 500; }
@@ -234,7 +242,6 @@ const SVG_STYLE = `
   .gold { fill: #ea9d34; font-weight: 700; }
   .love { fill: #b4637a; font-weight: 700; }
   .bar-empty { fill: #dfdad9; }
-  .divider { stroke: #dfdad9; stroke-dasharray: 2 2; }
   .header-line { stroke: #dfdad9; }
 
   @media (prefers-color-scheme: dark) {
@@ -247,22 +254,193 @@ const SVG_STYLE = `
     .gold { fill: #f6c177; }
     .love { fill: #eb6f92; }
     .bar-empty { fill: #44415a; }
-    .divider { stroke: #393552; }
     .header-line { stroke: #44415a; }
   }
 `;
 
 function generateHeaderSvg(): string {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 125" width="100%" height="125" fill="none">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 75" width="100%" height="75" fill="none">
   <style>
     ${SVG_STYLE}
   </style>
   <g class="mono">
-    <text x="0" y="20" class="accent" font-size="14">▄▀█ █▀▄ █ ▀█▀ █▄█ ▄▀█</text>
-    <text x="0" y="38" class="accent" font-size="14">█▀█ █▄▀ █  █   █  █▀█</text>
-    <text x="0" y="56" class="accent" font-size="14">█▀▄▀█ █▀█ ▀█▀ ▄▀█ █   █▀▀</text>
-    <text x="0" y="74" class="accent" font-size="14">█ ▀ █ █▄█  █  █▀█ █▄▄ ██▄</text>
-    <text x="0" y="106" class="subtle" font-size="12">hello, my name is Aditya — an engineer by choice</text>
+    <text x="0" y="18" class="accent" font-size="12.5" font-weight="600" xml:space="preserve">▄▀█ █▀▄ █ ▀█▀ █▄█ ▄▀█   █▀▄▀█ █▀█ ▀█▀ ▄▀█ █   █▀▀</text>
+    <text x="0" y="34" class="accent" font-size="12.5" font-weight="600" xml:space="preserve">█▀█ █▄▀ █  █   █  █▀█   █ ▀ █ █▄█  █  █▀█ █▄▄ ██▄</text>
+    <text x="0" y="60" class="subtle" font-size="11.5">hello, my name is Aditya — an engineer by choice</text>
+  </g>
+</svg>`;
+}
+
+function generateAboutSvg(): string {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 120" width="100%" height="120" fill="none">
+  <style>
+    ${SVG_STYLE}
+  </style>
+  <g class="mono" font-size="11.5">
+    <text x="0" y="14" class="accent" font-size="12">&gt;</text>
+    <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">ABOUT</text>
+    <line x1="65" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
+
+    <text x="0" y="36" class="subtle">Engineer by choice. Passionate about systems programming, database architecture,</text>
+    <text x="0" y="54" class="subtle">and low-latency design. I learn fast, love hand-crafting reliable codebases,</text>
+    <text x="0" y="72" class="subtle">and obsess over micro-optimizations. Right now, I&apos;m building embedded storage</text>
+    <text x="0" y="90" class="subtle">engines and speeding up mundane routines using SIMD.</text>
+
+    <text x="0" y="112">
+      <tspan class="text" font-weight="600">github</tspan> <tspan class="muted">/</tspan> <tspan class="text" font-weight="600">twitter</tspan> <tspan class="muted">/</tspan> <tspan class="text" font-weight="600">linkedin</tspan>
+    </text>
+  </g>
+</svg>`;
+}
+
+function generateProjectsSvg(
+  projects: { name: string; description: string }[],
+): string {
+  const height = 30 + projects.length * 20;
+  const rows = projects
+    .map((p, i) => {
+      const y = 36 + i * 20;
+      const namePad = p.name.padEnd(14, " ");
+      return `    <text x="0" y="${y}">
+      <tspan class="text" font-weight="600">${escapeXml(namePad)}</tspan> <tspan class="muted">—</tspan> <tspan class="subtle">${escapeXml(p.description)}</tspan>
+    </text>`;
+    })
+    .join("\n");
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 ${height}" width="100%" height="${height}" fill="none">
+  <style>
+    ${SVG_STYLE}
+  </style>
+  <g class="mono" font-size="11.5">
+    <text x="0" y="14" class="accent" font-size="12">&gt;</text>
+    <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">PROJECTS</text>
+    <line x1="85" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
+
+${rows}
+  </g>
+</svg>`;
+}
+
+function generateWritingSvg(
+  posts: { title: string; created: string }[],
+): string {
+  const height = 30 + Math.max(1, posts.length) * 20;
+  const rows =
+    posts.length > 0
+      ? posts
+          .map((post, i) => {
+            const y = 36 + i * 20;
+            return `    <text x="0" y="${y}">
+      <tspan class="text" font-weight="600">${escapeXml(post.title)}</tspan>
+    </text>
+    <text x="680" y="${y}" text-anchor="end" class="muted">
+      ${escapeXml(formatBlogDate(post.created))}
+    </text>`;
+          })
+          .join("\n")
+      : `    <text x="0" y="36" class="muted">No posts available</text>`;
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 ${height}" width="100%" height="${height}" fill="none">
+  <style>
+    ${SVG_STYLE}
+  </style>
+  <g class="mono" font-size="11.5">
+    <text x="0" y="14" class="accent" font-size="12">&gt;</text>
+    <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">WRITING</text>
+    <line x1="75" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
+
+${rows}
+  </g>
+</svg>`;
+}
+
+function generateEducationSvg(): string {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 95" width="100%" height="95" fill="none">
+  <style>
+    ${SVG_STYLE}
+  </style>
+  <g class="mono" font-size="11.5">
+    <text x="0" y="14" class="accent" font-size="12">&gt;</text>
+    <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">EDUCATION</text>
+    <line x1="92" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
+
+    <!-- Row 1 -->
+    <text x="0" y="38">
+      <tspan class="subtle">degree:</tspan>  <tspan class="text" font-weight="600">B.Tech</tspan> <tspan class="muted">(CSE)</tspan>
+    </text>
+    <text x="340" y="38">
+      <tspan class="subtle">period:</tspan>  <tspan class="text" font-weight="600">Jun 2020 – Jun 2024</tspan> <tspan class="muted">(4 yrs)</tspan>
+    </text>
+
+    <!-- Row 2 -->
+    <text x="0" y="58">
+      <tspan class="subtle">major:</tspan>   <tspan class="text" font-weight="600">Computer Science &amp; Engineering</tspan>
+    </text>
+    <text x="340" y="58">
+      <tspan class="subtle">status:</tspan>  <tspan class="text" font-weight="600">Graduated</tspan>
+    </text>
+
+    <!-- Row 3 -->
+    <text x="0" y="78">
+      <tspan class="subtle">inst:</tspan>    <tspan class="text" font-weight="600">Marathwada Inst. of Technology</tspan>
+    </text>
+    <text x="340" y="78">
+      <tspan class="subtle">place:</tspan>   <tspan class="text" font-weight="600">CPSN, Maharashtra, Bharat</tspan>
+    </text>
+  </g>
+</svg>`;
+}
+
+function generateExperienceSvg(pid7Repos: { name: string }[]): string {
+  const repoNames = pid7Repos.map((r) => r.name).join(" · ");
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 255" width="100%" height="255" fill="none">
+  <style>
+    ${SVG_STYLE}
+  </style>
+  <g class="mono" font-size="11.5">
+    <text x="0" y="14" class="accent" font-size="12">&gt;</text>
+    <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">EXPERIENCE</text>
+    <line x1="102" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
+
+    <!-- 1. OSS Contributions -->
+    <text x="0" y="38" class="text" font-weight="600">[ OSS Contributions ]</text>
+    <text x="680" y="38" text-anchor="end" class="muted">Sep 2024 — Present</text>
+    <text x="0" y="56">
+      <tspan class="subtle">  role:</tspan>   <tspan class="text" font-weight="600">Core Maintainer &amp; Systems Developer</tspan>
+    </text>
+    <text x="0" y="74">
+      <tspan class="subtle">  repos:</tspan>  <tspan class="text" font-weight="600">${escapeXml(repoNames)}</tspan>
+    </text>
+    <text x="0" y="92">
+      <tspan class="subtle">  stack:</tspan>  <tspan class="text">Rust · SIMD · Embedded Storage · Systems Programming</tspan>
+    </text>
+    <text x="0" y="110">
+      <tspan class="subtle">  impact:</tspan> <tspan class="text">Building hardware-accelerated algorithms, embedded KV stores &amp; storage engines</tspan>
+    </text>
+
+    <!-- 2. Freelance -->
+    <text x="0" y="136" class="text" font-weight="600">[ Freelance &amp; Contract · Web &amp; Tooling ]</text>
+    <text x="680" y="136" text-anchor="end" class="muted">Jul 2024 — Present</text>
+    <text x="0" y="154">
+      <tspan class="subtle">  role:</tspan>   <tspan class="text" font-weight="600">Web &amp; Tooling Developer</tspan> <tspan class="muted">(Multiple Clients)</tspan>
+    </text>
+    <text x="0" y="172">
+      <tspan class="subtle">  stack:</tspan>  <tspan class="text">Astro · React · TypeScript · Microservices · VS Code API</tspan>
+    </text>
+    <text x="0" y="190">
+      <tspan class="subtle">  impact:</tspan> <tspan class="text">Shipped startup landing pages, SMTP microservices &amp; event ticket booking</tspan>
+    </text>
+
+    <!-- 3. Internships -->
+    <text x="0" y="216" class="text" font-weight="600">[ Internships · Mobile Engineering ]</text>
+    <text x="680" y="216" text-anchor="end" class="muted">Nov 2021 — Apr 2024 (9 mos total)</text>
+    <text x="0" y="234">
+      <tspan class="subtle">  orgs:</tspan>   <tspan class="text">kraftbase (1 mo) · Rojgary (5 mos) · FOLKDevelopers (3 mos)</tspan>
+    </text>
+    <text x="0" y="252">
+      <tspan class="subtle">  impact:</tspan> <tspan class="text">Built MVP mobile apps for clients from scratch, refactored &amp; enhanced reliability</tspan>
+    </text>
   </g>
 </svg>`;
 }
@@ -290,77 +468,39 @@ function generateTelemetrySvg(
   <g class="mono" font-size="11.5">
     <!-- Header -->
     <text x="0" y="14" class="accent" font-size="12">&gt;</text>
-    <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">${title.toUpperCase()}</text>
+    <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">${escapeXml(title.toUpperCase())}</text>
     <line x1="${24 + title.length * 7.5}" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
 
     <!-- Row 1 -->
     <text x="0" y="38">
-      <tspan class="muted">&amp;</tspan> <tspan class="subtle">loc:</tspan>     <tspan class="text" font-weight="600">${netLoc}</tspan> <tspan class="muted text-xs">(+${additions} / -${deletions})</tspan>
+      <tspan class="muted">&amp;</tspan> <tspan class="subtle">loc:</tspan>     <tspan class="text" font-weight="600">${escapeXml(netLoc)}</tspan> <tspan class="muted text-xs">(+${escapeXml(additions)} / -${escapeXml(deletions)})</tspan>
     </text>
     <text x="340" y="38">
-      <tspan class="muted">+</tspan> <tspan class="subtle">prs:</tspan>     <tspan class="muted">[</tspan><tspan class="foam">${prBar.filled}</tspan><tspan class="bar-empty">${prBar.empty}</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">${prValue}</tspan>
+      <tspan class="muted">+</tspan> <tspan class="subtle">prs:</tspan>     <tspan class="muted">[</tspan><tspan class="foam">${escapeXml(prBar.filled)}</tspan><tspan class="bar-empty">${escapeXml(prBar.empty)}</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">${escapeXml(prValue)}</tspan>
     </text>
 
     <!-- Row 2 -->
     <text x="0" y="58">
-      <tspan class="muted">%</tspan> <tspan class="subtle">churn:</tspan>   <tspan class="muted">[</tspan><tspan class="pine">${churnBar.filled}</tspan><tspan class="bar-empty">${churnBar.empty}</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">${churnBar.pctFormatted}</tspan>
+      <tspan class="muted">%</tspan> <tspan class="subtle">churn:</tspan>   <tspan class="muted">[</tspan><tspan class="pine">${escapeXml(churnBar.filled)}</tspan><tspan class="bar-empty">${escapeXml(churnBar.empty)}</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">${escapeXml(churnBar.pctFormatted)}</tspan>
     </text>
     <text x="340" y="58">
-      <tspan class="muted">@</tspan> <tspan class="subtle">active:</tspan>  <tspan class="muted">[</tspan><tspan class="gold">${activeBar.filled}</tspan><tspan class="bar-empty">${activeBar.empty}</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">${activeBar.pctFormatted}</tspan>
+      <tspan class="muted">@</tspan> <tspan class="subtle">active:</tspan>  <tspan class="muted">[</tspan><tspan class="gold">${escapeXml(activeBar.filled)}</tspan><tspan class="bar-empty">${escapeXml(activeBar.empty)}</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">${escapeXml(activeBar.pctFormatted)}</tspan>
     </text>
 
     <!-- Row 3 -->
     <text x="0" y="78">
-      <tspan class="muted">#</tspan> <tspan class="subtle">repos:</tspan>   <tspan class="text" font-weight="600">${reposTotal}</tspan> <tspan class="muted text-xs">(${reposDetail})</tspan>
+      <tspan class="muted">#</tspan> <tspan class="subtle">repos:</tspan>   <tspan class="text" font-weight="600">${escapeXml(String(reposTotal))}</tspan> <tspan class="muted text-xs">(${escapeXml(reposDetail)})</tspan>
     </text>
     <text x="340" y="78">
-      <tspan class="muted">^</tspan> <tspan class="subtle">streak:</tspan>  <tspan class="text" font-weight="600">${streakDays} days</tspan> <tspan class="muted text-xs">(${activeDays} active)</tspan>
+      <tspan class="muted">^</tspan> <tspan class="subtle">streak:</tspan>  <tspan class="text" font-weight="600">${escapeXml(String(streakDays))} days</tspan> <tspan class="muted text-xs">(${escapeXml(String(activeDays))} active)</tspan>
     </text>
 
     <!-- Row 4 -->
     <text x="0" y="98">
-      <tspan class="muted">*</tspan> <tspan class="subtle">commits:</tspan> <tspan class="text" font-weight="600">${commits}</tspan>
+      <tspan class="muted">*</tspan> <tspan class="subtle">commits:</tspan> <tspan class="text" font-weight="600">${escapeXml(commits)}</tspan>
     </text>
     <text x="340" y="98">
-      <tspan class="muted">$</tspan> <tspan class="subtle">stack:</tspan>   <tspan class="text" font-weight="600">${stack}</tspan>
-    </text>
-  </g>
-</svg>`;
-}
-
-function generateEducationSvg(): string {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 95" width="100%" height="95" fill="none">
-  <style>
-    ${SVG_STYLE}
-  </style>
-  <g class="mono" font-size="11.5">
-    <!-- Header -->
-    <text x="0" y="14" class="accent" font-size="12">&gt;</text>
-    <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">EDUCATION</text>
-    <line x1="90" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
-
-    <!-- Row 1 -->
-    <text x="0" y="38">
-      <tspan class="subtle">degree:</tspan>  <tspan class="text" font-weight="600">B.Tech</tspan> <tspan class="muted">(CSE)</tspan>
-    </text>
-    <text x="340" y="38">
-      <tspan class="subtle">period:</tspan>  <tspan class="text" font-weight="600">Jun 2020 – Jun 2024</tspan> <tspan class="muted">(4 yrs)</tspan>
-    </text>
-
-    <!-- Row 2 -->
-    <text x="0" y="58">
-      <tspan class="subtle">major:</tspan>   <tspan class="text" font-weight="600">Computer Science &amp; Engineering</tspan>
-    </text>
-    <text x="340" y="58">
-      <tspan class="subtle">status:</tspan>  <tspan class="text" font-weight="600">Graduated</tspan>
-    </text>
-
-    <!-- Row 3 -->
-    <text x="0" y="78">
-      <tspan class="subtle">inst:</tspan>    <tspan class="text" font-weight="600">Marathwada Inst. of Technology</tspan>
-    </text>
-    <text x="340" y="78">
-      <tspan class="subtle">place:</tspan>   <tspan class="text" font-weight="600">CPSN, Maharashtra, Bharat</tspan>
+      <tspan class="muted">$</tspan> <tspan class="subtle">stack:</tspan>   <tspan class="text" font-weight="600">${escapeXml(stack)}</tspan>
     </text>
   </g>
 </svg>`;
@@ -393,7 +533,7 @@ export function generateReadme(rootDir: string): string {
     .map((r) => ({
       name: r.repository.split("/")[1] || r.repository,
       url: `https://github.com/${r.repository}`,
-      description: r.description,
+      description: r.description || "",
     }));
 
   // 2. Writing
@@ -444,12 +584,33 @@ export function generateReadme(rootDir: string): string {
       .map((l) => `${l.name} ${Math.round(l.percentage)}%`)
       .join(" · ") || "--";
 
-  // 5. Generate SVGs
-  const headerSvg = generateHeaderSvg();
-  writeFileSync(path.join(assetsDir, "header.svg"), headerSvg, "utf-8");
-
-  const educationSvg = generateEducationSvg();
-  writeFileSync(path.join(assetsDir, "education.svg"), educationSvg, "utf-8");
+  // 5. Generate All SVGs in Rosé Pine Dawn / Moon palette
+  writeFileSync(
+    path.join(assetsDir, "header.svg"),
+    generateHeaderSvg(),
+    "utf-8",
+  );
+  writeFileSync(path.join(assetsDir, "about.svg"), generateAboutSvg(), "utf-8");
+  writeFileSync(
+    path.join(assetsDir, "projects.svg"),
+    generateProjectsSvg(projects),
+    "utf-8",
+  );
+  writeFileSync(
+    path.join(assetsDir, "writing.svg"),
+    generateWritingSvg(blogPosts),
+    "utf-8",
+  );
+  writeFileSync(
+    path.join(assetsDir, "education.svg"),
+    generateEducationSvg(),
+    "utf-8",
+  );
+  writeFileSync(
+    path.join(assetsDir, "experience.svg"),
+    generateExperienceSvg(pid7Repos),
+    "utf-8",
+  );
 
   const telemetrySvg = generateTelemetrySvg(
     "Telemetry",
@@ -570,60 +731,15 @@ export function generateReadme(rootDir: string): string {
     hasWeekly = true;
   }
 
-  // Experience Repos Markdown
-  const pid7ReposMd = pid7Repos
-    .map((r) => `[\`${r.name}\`](${r.url})`)
-    .join(" · ");
-
-  // Projects Markdown
-  const projectsMd = projects
-    .map((p) => `- [**${p.name}**](${p.url}) — ${p.description}`)
-    .join("\n");
-
-  // Writing Markdown
-  const writingMd =
-    blogPosts.length > 0
-      ? blogPosts
-          .map(
-            (post) =>
-              `- [**${post.title}**](https://adii.fyi/blogs/${post.slug}) — \`${formatBlogDate(post.created)}\``,
-          )
-          .join("\n")
-      : "- _No posts available_";
-
   // Construct Full README
   const sections = [
     `[![Resume](https://img.shields.io/badge/resume-adityamotale.pdf-faf4ed?style=flat-square&logo=googledocs&logoColor=d7827e&labelColor=fffaf3&color=dfdad9)](https://adii.fyi/adityamotale.pdf)`,
     `![Aditya Motale](./assets/header.svg)`,
-    `### > ABOUT
-
-Engineer by choice. Passionate about systems programming, database architecture, and low-latency design. I learn fast, love hand-crafting reliable codebases, and obsess over micro-optimizations. Right now, I'm building embedded storage engines and speeding up mundane routines using SIMD.
-
-[github](https://github.com/adityamotale) / [twitter](https://x.com/arctic_byte) / [linkedin](https://www.linkedin.com/in/aditya-motale)`,
-    `### > PROJECTS
-
-${projectsMd}`,
-    `### > WRITING
-
-${writingMd}`,
+    `![About](./assets/about.svg)`,
+    `![Projects](./assets/projects.svg)`,
+    `![Writing](./assets/writing.svg)`,
     `![Education](./assets/education.svg)`,
-    `### > EXPERIENCE
-
-**[ OSS Contributions ]** \`Sep 2024 — Present\`
-- **role:** Core Maintainer & Systems Developer
-- **repos:** ${pid7ReposMd}
-- **stack:** Rust · SIMD · Embedded Storage · Systems Programming
-- **impact:** Building hardware-accelerated algorithms, embedded KV stores & storage engines
-
-**[ Freelance & Contract · Web & Tooling ]** \`Jul 2024 — Present\`
-- **role:** Web & Tooling Developer (Multiple Clients)
-- **stack:** Astro · React · TypeScript · Microservices · VS Code API
-- **impact:** Shipped startup landing pages, SMTP microservices & event ticket booking
-
-**[ Internships · Mobile Engineering ]** \`Nov 2021 — Apr 2024 (9 mos total)\`
-- **orgs:** kraftbase (1 mo) · Rojgary (5 mos) · FOLKDevelopers (3 mos)
-- **stack:** Flutter · Dart · State Management · REST APIs
-- **impact:** Built MVP mobile apps for multiple clients from scratch, refactored codebases & enhanced reliability`,
+    `![Experience](./assets/experience.svg)`,
     `![Telemetry](./assets/telemetry.svg)`,
   ];
 
@@ -643,7 +759,7 @@ function main() {
   const readmePath = path.join(rootDir, "README.md");
 
   console.log(
-    "🔄 Generating README.md and Rosé Pine styled assets from data/github-stats.json and blogs/...",
+    "🔄 Generating unified Rosé Pine Dawn themed README.md and SVG cards...",
   );
   const content = generateReadme(rootDir);
   writeFileSync(readmePath, content, "utf-8");

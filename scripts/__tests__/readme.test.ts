@@ -5,7 +5,7 @@ import test, { describe } from "node:test";
 import { generateReadme } from "../generate-readme.ts";
 
 describe("readme generator", () => {
-  test("generates complete README markdown with Rosé Pine styled assets and required sections", () => {
+  test("generates complete README markdown with all sections unified as Rosé Pine Dawn SVG cards", () => {
     const rootDir = path.resolve(import.meta.dirname, "../..");
     const readme = generateReadme(rootDir);
 
@@ -19,38 +19,60 @@ describe("readme generator", () => {
       "Should include styled resume badge",
     );
 
-    // Verify SVG assets exist
+    // Verify all section SVG assets exist
     const assetsDir = path.join(rootDir, "assets");
-    assert.ok(
-      existsSync(path.join(assetsDir, "header.svg")),
-      "Should generate header.svg",
-    );
-    assert.ok(
-      existsSync(path.join(assetsDir, "telemetry.svg")),
-      "Should generate telemetry.svg",
-    );
-    assert.ok(
-      existsSync(path.join(assetsDir, "monthly.svg")),
-      "Should generate monthly.svg",
-    );
-    assert.ok(
-      existsSync(path.join(assetsDir, "weekly.svg")),
-      "Should generate weekly.svg",
-    );
-    assert.ok(
-      existsSync(path.join(assetsDir, "education.svg")),
-      "Should generate education.svg",
-    );
+    const requiredAssets = [
+      "header.svg",
+      "about.svg",
+      "projects.svg",
+      "writing.svg",
+      "education.svg",
+      "experience.svg",
+      "telemetry.svg",
+      "monthly.svg",
+      "weekly.svg",
+    ];
 
-    // Verify SVG content uses Rosé Pine Dawn colors
+    for (const asset of requiredAssets) {
+      assert.ok(
+        existsSync(path.join(assetsDir, asset)),
+        `Should generate ${asset}`,
+      );
+      assert.ok(
+        readme.includes(`./assets/${asset}`),
+        `README should reference ${asset}`,
+      );
+    }
+
+    // Verify Header SVG has single line ASCII art name
     const headerSvg = readFileSync(path.join(assetsDir, "header.svg"), "utf-8");
     assert.ok(
-      headerSvg.includes("#d7827e"),
-      "Header SVG should contain Rosé Pine Rose accent color",
+      headerSvg.includes("▄▀█ █▀▄ █ ▀█▀ █▄█ ▄▀█   █▀▄▀█ █▀█ ▀█▀ ▄▀█ █   █▀▀"),
+      "Header SVG should contain side-by-side single-line ASCII art name line 1",
     );
     assert.ok(
-      headerSvg.includes("JetBrains Mono"),
-      "Header SVG should use JetBrains Mono font",
+      headerSvg.includes("█▀█ █▄▀ █  █   █  █▀█   █ ▀ █ █▄█  █  █▀█ █▄▄ ██▄"),
+      "Header SVG should contain side-by-side single-line ASCII art name line 2",
+    );
+    assert.ok(
+      headerSvg.includes("hello, my name is Aditya — an engineer by choice"),
+      "Header SVG should contain subtitle",
+    );
+
+    // Verify Rosé Pine Dawn colors across cards
+    const aboutSvg = readFileSync(path.join(assetsDir, "about.svg"), "utf-8");
+    assert.ok(
+      aboutSvg.includes("#d7827e"),
+      "About SVG should use accent color #d7827e",
+    );
+
+    const projectsSvg = readFileSync(
+      path.join(assetsDir, "projects.svg"),
+      "utf-8",
+    );
+    assert.ok(
+      projectsSvg.includes("turbofox"),
+      "Projects SVG should contain top project",
     );
 
     const telemetrySvg = readFileSync(
@@ -68,80 +90,6 @@ describe("readme generator", () => {
     assert.ok(
       telemetrySvg.includes("#ea9d34"),
       "Telemetry SVG should contain Rosé Pine Gold color for streak/active",
-    );
-
-    // Verify README embeds SVGs
-    assert.ok(
-      readme.includes("./assets/header.svg"),
-      "README should embed header.svg",
-    );
-    assert.ok(
-      readme.includes("./assets/telemetry.svg"),
-      "README should embed telemetry.svg",
-    );
-    assert.ok(
-      readme.includes("./assets/monthly.svg"),
-      "README should embed monthly.svg",
-    );
-    assert.ok(
-      readme.includes("./assets/weekly.svg"),
-      "README should embed weekly.svg",
-    );
-    assert.ok(
-      readme.includes("./assets/education.svg"),
-      "README should embed education.svg",
-    );
-
-    // Verify About section
-    assert.ok(readme.includes("### > ABOUT"), "Should include About header");
-    assert.ok(
-      readme.includes("Passionate about systems programming"),
-      "Should include about text",
-    );
-    assert.ok(
-      readme.includes("https://github.com/adityamotale"),
-      "Should include github link",
-    );
-
-    // Verify Projects section
-    assert.ok(
-      readme.includes("### > PROJECTS"),
-      "Should include Projects header",
-    );
-    assert.ok(
-      readme.includes("turbofox"),
-      "Should include top contributed project",
-    );
-
-    // Verify Writing section
-    assert.ok(
-      readme.includes("### > WRITING"),
-      "Should include Writing header",
-    );
-
-    // Verify Experience section
-    assert.ok(
-      readme.includes("### > EXPERIENCE"),
-      "Should include Experience header",
-    );
-    assert.ok(
-      readme.includes("OSS Contributions"),
-      "Should include OSS Experience",
-    );
-    assert.ok(
-      readme.includes("Freelance & Contract"),
-      "Should include Freelance Experience",
-    );
-    assert.ok(
-      readme.includes("Internships · Mobile Engineering"),
-      "Should include Mobile Internship Experience",
-    );
-
-    // Verify Skipped Sections (status & compare)
-    assert.ok(!readme.includes("STATUS"), "Should NOT include Status section");
-    assert.ok(
-      !readme.includes("COMPARE"),
-      "Should NOT include Compare section",
     );
   });
 });
