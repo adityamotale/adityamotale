@@ -1,16 +1,16 @@
 {
   "metadata": {
     "username": "adityamotale",
-    "generated_at": "2026-09-18T06:01:46.595Z",
+    "generated_at": "2026-09-21T07:37:08.283Z",
     "period": {
       "from": "2021-01-01T00:00:00Z",
-      "to": "2026-09-16T23:59:59Z"
+      "to": "2026-09-19T23:59:59Z"
     }
   },
   "lines_of_code": {
-    "total_additions": 2536581,
-    "total_deletions": 1269335,
-    "net_lines": 1267246
+    "total_additions": 2562885,
+    "total_deletions": 1273163,
+    "net_lines": 1289722
   },
   "languages": [
     {
@@ -40,7 +40,7 @@
     {
       "name": "TypeScript",
       "color": "#3178c6",
-      "bytes": 423755,
+      "bytes": 423950,
       "percentage": 3.54
     },
     {
@@ -197,23 +197,23 @@
     "total_forks": 4
   },
   "contributions": {
-    "commits": 2597,
+    "commits": 2693,
     "pull_requests": 66,
     "issues": 71,
     "reviews": 1,
-    "public": 2735,
-    "private": 2222,
-    "total": 4742
+    "public": 2831,
+    "private": 2231,
+    "total": 4843
   },
   "streaks_and_consistency": {
     "longest_streak_days": 112,
-    "current_streak_days": 1,
-    "active_days_count": 982,
-    "total_days_in_period": 2085,
-    "activity_rate_percentage": 47.1,
+    "current_streak_days": 4,
+    "active_days_count": 985,
+    "total_days_in_period": 2088,
+    "activity_rate_percentage": 47.17,
     "busiest_day": {
-      "date": "2026-08-30",
-      "count": 37
+      "date": "2026-09-18",
+      "count": 50
     }
   },
   "pull_requests": {
@@ -400,14 +400,14 @@
       "description": "Hardware accelerated routines for single substring search.",
       "is_private": false,
       "is_fork": false,
-      "commits": 309,
+      "commits": 310,
       "pull_requests": 0,
       "issues": 0,
       "reviews": 0,
-      "additions": 28973,
+      "additions": 29548,
       "deletions": 8972,
-      "net_lines": 20001,
-      "total_contributions": 309,
+      "net_lines": 20576,
+      "total_contributions": 310,
       "languages": [
         {
           "name": "Rust",
@@ -574,6 +574,52 @@
         }
       ],
       "description": "Fast and lightweight Sanskrit lexical and syntactic analyzer"
+    },
+    {
+      "repository": "adityamotale/adityamotale",
+      "is_private": false,
+      "is_fork": false,
+      "commits": 104,
+      "pull_requests": 0,
+      "issues": 0,
+      "reviews": 0,
+      "additions": 35384,
+      "deletions": 3828,
+      "net_lines": 31556,
+      "total_contributions": 104,
+      "languages": [
+        {
+          "name": "TypeScript",
+          "color": "#3178c6",
+          "bytes": 46098,
+          "percentage": 56.86
+        },
+        {
+          "name": "Astro",
+          "color": "#ff5a03",
+          "bytes": 31590,
+          "percentage": 38.97
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 3092,
+          "percentage": 3.81
+        },
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 168,
+          "percentage": 0.21
+        },
+        {
+          "name": "Shell",
+          "color": "#89e051",
+          "bytes": 123,
+          "percentage": 0.15
+        }
+      ],
+      "description": "Portfolio website"
     },
     {
       "repository": "adityamotale/asm_tcp",
@@ -2483,51 +2529,6 @@
           "color": "#00B4AB",
           "bytes": 15791,
           "percentage": 100
-        }
-      ]
-    },
-    {
-      "repository": "adityamotale/adityamotale",
-      "is_private": false,
-      "is_fork": false,
-      "commits": 7,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 9655,
-      "deletions": 0,
-      "net_lines": 9655,
-      "total_contributions": 7,
-      "languages": [
-        {
-          "name": "TypeScript",
-          "color": "#3178c6",
-          "bytes": 46098,
-          "percentage": 56.86
-        },
-        {
-          "name": "Astro",
-          "color": "#ff5a03",
-          "bytes": 31590,
-          "percentage": 38.97
-        },
-        {
-          "name": "CSS",
-          "color": "#663399",
-          "bytes": 3092,
-          "percentage": 3.81
-        },
-        {
-          "name": "JavaScript",
-          "color": "#f1e05a",
-          "bytes": 168,
-          "percentage": 0.21
-        },
-        {
-          "name": "Shell",
-          "color": "#89e051",
-          "bytes": 123,
-          "percentage": 0.15
         }
       ]
     },
@@ -5508,42 +5509,45 @@
     "2025-12-29": 0,
     "2025-12-30": 3,
     "2025-12-31": 0,
-    "2026-09-16": 1
+    "2026-09-16": 6,
+    "2026-09-17": 45,
+    "2026-09-18": 50,
+    "2026-09-19": 1
   },
   "weekly_summary": {
     "period": {
-      "from": "2026-09-06T00:00:00Z",
-      "to": "2026-09-12T23:59:59Z"
+      "from": "2026-09-13T00:00:00Z",
+      "to": "2026-09-19T23:59:59Z"
     },
     "lines_of_code": {
-      "total_additions": 11325,
-      "total_deletions": 2404,
-      "net_lines": 8921
+      "total_additions": 26304,
+      "total_deletions": 3828,
+      "net_lines": 22476
     },
-    "commits": 87,
+    "commits": 98,
     "pull_requests": {
-      "total": 1,
-      "merged": 1,
+      "total": 0,
+      "merged": 0,
       "open": 0,
       "closed_unmerged": 0,
-      "merge_rate_percentage": 100
+      "merge_rate_percentage": 0
     },
     "streaks_and_consistency": {
-      "longest_streak_days": 5,
-      "current_streak_days": 0,
+      "longest_streak_days": 4,
+      "current_streak_days": 4,
       "active_days_count": 5,
       "total_days_in_period": 7,
       "activity_rate_percentage": 71.43,
       "busiest_day": {
-        "date": "2026-09-09",
-        "count": 27
+        "date": "2026-09-18",
+        "count": 50
       }
     },
     "repositories": {
       "total": 2,
-      "public": 0,
+      "public": 1,
       "private": 0,
-      "org": 2
+      "org": 1
     }
   },
   "monthly_history": [
