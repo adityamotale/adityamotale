@@ -1,16 +1,16 @@
 {
   "metadata": {
     "username": "adityamotale",
-    "generated_at": "2026-09-21T07:37:08.283Z",
+    "generated_at": "2026-09-28T08:12:18.133Z",
     "period": {
       "from": "2021-01-01T00:00:00Z",
-      "to": "2026-09-19T23:59:59Z"
+      "to": "2026-09-26T23:59:59Z"
     }
   },
   "lines_of_code": {
-    "total_additions": 2562885,
-    "total_deletions": 1273163,
-    "net_lines": 1289722
+    "total_additions": 2563290,
+    "total_deletions": 1273210,
+    "net_lines": 1290080
   },
   "languages": [
     {
@@ -197,20 +197,20 @@
     "total_forks": 4
   },
   "contributions": {
-    "commits": 2693,
+    "commits": 2695,
     "pull_requests": 66,
     "issues": 71,
     "reviews": 1,
-    "public": 2831,
+    "public": 2833,
     "private": 2231,
-    "total": 4843
+    "total": 4845
   },
   "streaks_and_consistency": {
     "longest_streak_days": 112,
-    "current_streak_days": 4,
-    "active_days_count": 985,
-    "total_days_in_period": 2088,
-    "activity_rate_percentage": 47.17,
+    "current_streak_days": 0,
+    "active_days_count": 986,
+    "total_days_in_period": 2095,
+    "activity_rate_percentage": 47.06,
     "busiest_day": {
       "date": "2026-09-18",
       "count": 50
@@ -321,6 +321,58 @@
       "description": null
     },
     {
+      "repository": "pid7-org/ashwa",
+      "description": "Hardware accelerated routines for single substring search.",
+      "is_private": false,
+      "is_fork": false,
+      "commits": 312,
+      "pull_requests": 0,
+      "issues": 0,
+      "reviews": 0,
+      "additions": 29953,
+      "deletions": 9019,
+      "net_lines": 20934,
+      "total_contributions": 312,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 236385,
+          "percentage": 50.17
+        },
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 122055,
+          "percentage": 25.9
+        },
+        {
+          "name": "Python",
+          "color": "#3572A5",
+          "bytes": 56738,
+          "percentage": 12.04
+        },
+        {
+          "name": "Shell",
+          "color": "#89e051",
+          "bytes": 48825,
+          "percentage": 10.36
+        },
+        {
+          "name": "HCL",
+          "color": "#844FBA",
+          "bytes": 5580,
+          "percentage": 1.18
+        },
+        {
+          "name": "C",
+          "color": "#555555",
+          "bytes": 1621,
+          "percentage": 0.34
+        }
+      ]
+    },
+    {
       "repository": "adityamotale/Nest-Frontend",
       "is_private": true,
       "is_fork": false,
@@ -392,58 +444,6 @@
           "color": "#C1F12E",
           "bytes": 163,
           "percentage": 0.02
-        }
-      ]
-    },
-    {
-      "repository": "pid7-org/ashwa",
-      "description": "Hardware accelerated routines for single substring search.",
-      "is_private": false,
-      "is_fork": false,
-      "commits": 310,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 29548,
-      "deletions": 8972,
-      "net_lines": 20576,
-      "total_contributions": 310,
-      "languages": [
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "bytes": 236385,
-          "percentage": 50.17
-        },
-        {
-          "name": "JavaScript",
-          "color": "#f1e05a",
-          "bytes": 122055,
-          "percentage": 25.9
-        },
-        {
-          "name": "Python",
-          "color": "#3572A5",
-          "bytes": 56738,
-          "percentage": 12.04
-        },
-        {
-          "name": "Shell",
-          "color": "#89e051",
-          "bytes": 48825,
-          "percentage": 10.36
-        },
-        {
-          "name": "HCL",
-          "color": "#844FBA",
-          "bytes": 5580,
-          "percentage": 1.18
-        },
-        {
-          "name": "C",
-          "color": "#555555",
-          "bytes": 1621,
-          "percentage": 0.34
         }
       ]
     },
@@ -5512,19 +5512,26 @@
     "2026-09-16": 6,
     "2026-09-17": 45,
     "2026-09-18": 50,
-    "2026-09-19": 1
+    "2026-09-19": 1,
+    "2026-09-20": 0,
+    "2026-09-21": 2,
+    "2026-09-22": 0,
+    "2026-09-23": 0,
+    "2026-09-24": 0,
+    "2026-09-25": 0,
+    "2026-09-26": 0
   },
   "weekly_summary": {
     "period": {
-      "from": "2026-09-13T00:00:00Z",
-      "to": "2026-09-19T23:59:59Z"
+      "from": "2026-09-20T00:00:00Z",
+      "to": "2026-09-26T23:59:59Z"
     },
     "lines_of_code": {
-      "total_additions": 26304,
-      "total_deletions": 3828,
-      "net_lines": 22476
+      "total_additions": 405,
+      "total_deletions": 47,
+      "net_lines": 358
     },
-    "commits": 98,
+    "commits": 2,
     "pull_requests": {
       "total": 0,
       "merged": 0,
@@ -5533,19 +5540,19 @@
       "merge_rate_percentage": 0
     },
     "streaks_and_consistency": {
-      "longest_streak_days": 4,
-      "current_streak_days": 4,
-      "active_days_count": 5,
+      "longest_streak_days": 1,
+      "current_streak_days": 0,
+      "active_days_count": 1,
       "total_days_in_period": 7,
-      "activity_rate_percentage": 71.43,
+      "activity_rate_percentage": 14.29,
       "busiest_day": {
-        "date": "2026-09-18",
-        "count": 50
+        "date": "2026-09-21",
+        "count": 2
       }
     },
     "repositories": {
-      "total": 2,
-      "public": 1,
+      "total": 1,
+      "public": 0,
       "private": 0,
       "org": 1
     }
