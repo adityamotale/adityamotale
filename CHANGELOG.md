@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.3.4] - 2026-10-05
+
+- update github activity and coding metrics
+
 ## [0.3.3] - 2026-09-28
 
 - update github activity and coding metrics

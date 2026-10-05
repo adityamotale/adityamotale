@@ -35,28 +35,28 @@
     <line x1="91.5" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
 
     <text x="0" y="38">
-      <tspan class="muted">&amp;</tspan> <tspan class="subtle">loc:</tspan>     <tspan class="text" font-weight="600">358</tspan> <tspan class="muted text-xs">(+405 / -47)</tspan>
+      <tspan class="muted">&amp;</tspan> <tspan class="subtle">loc:</tspan>     <tspan class="text" font-weight="600">-11,534</tspan> <tspan class="muted text-xs">(+860 / -12.4k)</tspan>
     </text>
     <text x="340" y="38">
-      <tspan class="muted">+</tspan> <tspan class="subtle">prs:</tspan>     <tspan class="muted">[</tspan><tspan class="foam"></tspan><tspan class="bar-empty">................</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">0/0</tspan>
+      <tspan class="muted">+</tspan> <tspan class="subtle">prs:</tspan>     <tspan class="muted">[</tspan><tspan class="foam"></tspan><tspan class="bar-empty">................</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">0/1</tspan>
     </text>
 
     <text x="0" y="58">
-      <tspan class="muted">%</tspan> <tspan class="subtle">churn:</tspan>   <tspan class="muted">[</tspan><tspan class="pine">##############</tspan><tspan class="bar-empty">..</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">89.6%</tspan>
+      <tspan class="muted">%</tspan> <tspan class="subtle">churn:</tspan>   <tspan class="muted">[</tspan><tspan class="pine">#</tspan><tspan class="bar-empty">...............</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">6.5%</tspan>
     </text>
     <text x="340" y="58">
-      <tspan class="muted">@</tspan> <tspan class="subtle">active:</tspan>  <tspan class="muted">[</tspan><tspan class="gold">##</tspan><tspan class="bar-empty">..............</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">14.3%</tspan>
+      <tspan class="muted">@</tspan> <tspan class="subtle">active:</tspan>  <tspan class="muted">[</tspan><tspan class="gold">#########</tspan><tspan class="bar-empty">.......</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">57.1%</tspan>
     </text>
 
     <text x="0" y="78">
-      <tspan class="muted">#</tspan> <tspan class="subtle">repos:</tspan>   <tspan class="text" font-weight="600">1</tspan> <tspan class="muted text-xs">(0 public, 0 private, 1 org)</tspan>
+      <tspan class="muted">#</tspan> <tspan class="subtle">repos:</tspan>   <tspan class="text" font-weight="600">2</tspan> <tspan class="muted text-xs">(0 public, 0 private, 2 org)</tspan>
     </text>
     <text x="340" y="78">
-      <tspan class="muted">^</tspan> <tspan class="subtle">streak:</tspan>  <tspan class="text" font-weight="600">1 days</tspan> <tspan class="muted text-xs">(1 active)</tspan>
+      <tspan class="muted">^</tspan> <tspan class="subtle">streak:</tspan>  <tspan class="text" font-weight="600">4 days</tspan> <tspan class="muted text-xs">(4 active)</tspan>
     </text>
 
     <text x="0" y="98">
-      <tspan class="muted">*</tspan> <tspan class="subtle">commits:</tspan> <tspan class="text" font-weight="600">2</tspan>
+      <tspan class="muted">*</tspan> <tspan class="subtle">commits:</tspan> <tspan class="text" font-weight="600">40</tspan>
     </text>
     <text x="340" y="98">
       <tspan class="muted">$</tspan> <tspan class="subtle">stack:</tspan>   <tspan class="text" font-weight="600">--</tspan>

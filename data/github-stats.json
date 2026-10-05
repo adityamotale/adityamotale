@@ -1,47 +1,47 @@
 {
   "metadata": {
     "username": "adityamotale",
-    "generated_at": "2026-09-28T08:12:18.133Z",
+    "generated_at": "2026-10-05T08:18:48.857Z",
     "period": {
       "from": "2021-01-01T00:00:00Z",
-      "to": "2026-09-26T23:59:59Z"
+      "to": "2026-10-03T23:59:59Z"
     }
   },
   "lines_of_code": {
-    "total_additions": 2563290,
-    "total_deletions": 1273210,
-    "net_lines": 1290080
+    "total_additions": 2564150,
+    "total_deletions": 1285604,
+    "net_lines": 1278546
   },
   "languages": [
     {
       "name": "C",
       "color": "#555555",
       "bytes": 5903204,
-      "percentage": 49.3
+      "percentage": 49.2
     },
     {
       "name": "JavaScript",
       "color": "#f1e05a",
-      "bytes": 2006073,
-      "percentage": 16.75
+      "bytes": 2006156,
+      "percentage": 16.72
     },
     {
       "name": "Dart",
       "color": "#00B4AB",
       "bytes": 1524157,
-      "percentage": 12.73
+      "percentage": 12.7
     },
     {
       "name": "Rust",
       "color": "#dea584",
       "bytes": 565594,
-      "percentage": 4.72
+      "percentage": 4.71
     },
     {
       "name": "TypeScript",
       "color": "#3178c6",
-      "bytes": 423950,
-      "percentage": 3.54
+      "bytes": 446703,
+      "percentage": 3.72
     },
     {
       "name": "Python",
@@ -65,13 +65,13 @@
       "name": "Zig",
       "color": "#ec915c",
       "bytes": 170845,
-      "percentage": 1.43
+      "percentage": 1.42
     },
     {
       "name": "Svelte",
       "color": "#ff3e00",
       "bytes": 124010,
-      "percentage": 1.04
+      "percentage": 1.03
     },
     {
       "name": "CMake",
@@ -100,14 +100,14 @@
     {
       "name": "CSS",
       "color": "#663399",
-      "bytes": 54636,
+      "bytes": 55724,
       "percentage": 0.46
     },
     {
       "name": "Julia",
       "color": "#a270ba",
       "bytes": 34184,
-      "percentage": 0.29
+      "percentage": 0.28
     },
     {
       "name": "Makefile",
@@ -189,41 +189,69 @@
     }
   ],
   "repositories": {
-    "total_owned": 60,
-    "public": 29,
+    "total_owned": 61,
+    "public": 30,
     "private": 31,
-    "forks": 1,
+    "forks": 2,
     "total_stars": 14,
     "total_forks": 4
   },
   "contributions": {
-    "commits": 2695,
-    "pull_requests": 66,
+    "commits": 2735,
+    "pull_requests": 67,
     "issues": 71,
     "reviews": 1,
-    "public": 2833,
+    "public": 2874,
     "private": 2231,
-    "total": 4845
+    "total": 4887
   },
   "streaks_and_consistency": {
     "longest_streak_days": 112,
-    "current_streak_days": 0,
-    "active_days_count": 986,
-    "total_days_in_period": 2095,
-    "activity_rate_percentage": 47.06,
+    "current_streak_days": 4,
+    "active_days_count": 990,
+    "total_days_in_period": 2102,
+    "activity_rate_percentage": 47.1,
     "busiest_day": {
       "date": "2026-09-18",
       "count": 50
     }
   },
   "pull_requests": {
-    "total": 236,
+    "total": 237,
     "merged": 231,
-    "open": 0,
+    "open": 1,
     "closed_unmerged": 5,
-    "merge_rate_percentage": 97.88
+    "merge_rate_percentage": 97.47
   },
   "repositories_contributed_to": [
+    {
+      "repository": "pid7-org/frozen-core",
+      "description": "Core utilities for frozen codebases.",
+      "is_private": false,
+      "is_fork": false,
+      "commits": 414,
+      "pull_requests": 43,
+      "issues": 53,
+      "reviews": 0,
+      "additions": 49407,
+      "deletions": 40573,
+      "net_lines": 8834,
+      "total_contributions": 510,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 355572,
+          "percentage": 99.86
+        },
+        {
+          "name": "Nix",
+          "color": "#7e7eff",
+          "bytes": 493,
+          "percentage": 0.14
+        }
+      ]
+    },
     {
       "repository": "pid7-org/turbofox",
       "description": "A persistent and efficient embedded KV database",
@@ -249,34 +277,6 @@
           "color": "#7e7eff",
           "bytes": 493,
           "percentage": 1.19
-        }
-      ]
-    },
-    {
-      "repository": "pid7-org/frozen-core",
-      "description": "Core utilities for frozen codebases.",
-      "is_private": false,
-      "is_fork": false,
-      "commits": 374,
-      "pull_requests": 43,
-      "issues": 53,
-      "reviews": 0,
-      "additions": 48547,
-      "deletions": 28179,
-      "net_lines": 20368,
-      "total_contributions": 470,
-      "languages": [
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "bytes": 355572,
-          "percentage": 99.86
-        },
-        {
-          "name": "Nix",
-          "color": "#7e7eff",
-          "bytes": 493,
-          "percentage": 0.14
         }
       ]
     },
@@ -2703,6 +2703,40 @@
       ]
     },
     {
+      "repository": "infoxiao/museum-chart-crimes",
+      "is_private": false,
+      "is_fork": false,
+      "commits": 2,
+      "pull_requests": 2,
+      "issues": 0,
+      "reviews": 0,
+      "additions": 21,
+      "deletions": 3,
+      "net_lines": 18,
+      "total_contributions": 4,
+      "languages": [
+        {
+          "name": "TypeScript",
+          "color": "#3178c6",
+          "bytes": 22753,
+          "percentage": 95.11
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 1088,
+          "percentage": 4.55
+        },
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 83,
+          "percentage": 0.35
+        }
+      ],
+      "description": null
+    },
+    {
       "repository": "adityamotale/tic_tac_toe_release",
       "is_private": true,
       "is_fork": false,
@@ -2874,39 +2908,6 @@
       "net_lines": 82,
       "total_contributions": 3,
       "languages": []
-    },
-    {
-      "repository": "infoxiao/museum-chart-crimes",
-      "is_private": false,
-      "is_fork": false,
-      "commits": 2,
-      "pull_requests": 1,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 21,
-      "deletions": 3,
-      "net_lines": 18,
-      "total_contributions": 3,
-      "languages": [
-        {
-          "name": "TypeScript",
-          "color": "#3178c6",
-          "bytes": 22753,
-          "percentage": 95.11
-        },
-        {
-          "name": "CSS",
-          "color": "#663399",
-          "bytes": 1088,
-          "percentage": 4.55
-        },
-        {
-          "name": "JavaScript",
-          "color": "#f1e05a",
-          "bytes": 83,
-          "percentage": 0.35
-        }
-      ]
     },
     {
       "repository": "adityamotale/turbo_fox",
@@ -5519,42 +5520,49 @@
     "2026-09-23": 0,
     "2026-09-24": 0,
     "2026-09-25": 0,
-    "2026-09-26": 0
+    "2026-09-26": 0,
+    "2026-09-27": 0,
+    "2026-09-28": 0,
+    "2026-09-29": 0,
+    "2026-09-30": 5,
+    "2026-10-01": 32,
+    "2026-10-02": 4,
+    "2026-10-03": 1
   },
   "weekly_summary": {
     "period": {
-      "from": "2026-09-20T00:00:00Z",
-      "to": "2026-09-26T23:59:59Z"
+      "from": "2026-09-27T00:00:00Z",
+      "to": "2026-10-03T23:59:59Z"
     },
     "lines_of_code": {
-      "total_additions": 405,
-      "total_deletions": 47,
-      "net_lines": 358
+      "total_additions": 860,
+      "total_deletions": 12394,
+      "net_lines": -11534
     },
-    "commits": 2,
+    "commits": 40,
     "pull_requests": {
-      "total": 0,
+      "total": 1,
       "merged": 0,
-      "open": 0,
+      "open": 1,
       "closed_unmerged": 0,
       "merge_rate_percentage": 0
     },
     "streaks_and_consistency": {
-      "longest_streak_days": 1,
-      "current_streak_days": 0,
-      "active_days_count": 1,
+      "longest_streak_days": 4,
+      "current_streak_days": 4,
+      "active_days_count": 4,
       "total_days_in_period": 7,
-      "activity_rate_percentage": 14.29,
+      "activity_rate_percentage": 57.14,
       "busiest_day": {
-        "date": "2026-09-21",
-        "count": 2
+        "date": "2026-10-01",
+        "count": 32
       }
     },
     "repositories": {
-      "total": 1,
+      "total": 2,
       "public": 0,
       "private": 0,
-      "org": 1
+      "org": 2
     }
   },
   "monthly_history": [
