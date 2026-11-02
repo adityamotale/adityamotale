@@ -1,125 +1,125 @@
 {
   "metadata": {
     "username": "adityamotale",
-    "generated_at": "2026-10-26T07:24:28.963Z",
+    "generated_at": "2026-11-02T08:52:03.511Z",
     "period": {
       "from": "2021-01-01T00:00:00Z",
-      "to": "2026-10-24T23:59:59Z"
+      "to": "2026-10-31T23:59:59Z"
     }
   },
   "lines_of_code": {
-    "total_additions": 2604662,
-    "total_deletions": 1307601,
-    "net_lines": 1297061
+    "total_additions": 2626895,
+    "total_deletions": 1317983,
+    "net_lines": 1308912
   },
   "languages": [
     {
       "name": "C",
       "color": "#555555",
       "bytes": 5903204,
-      "percentage": 49.2
+      "percentage": 50.25
     },
     {
       "name": "JavaScript",
       "color": "#f1e05a",
-      "bytes": 2006156,
-      "percentage": 16.72
+      "bytes": 2004693,
+      "percentage": 17.07
     },
     {
       "name": "Dart",
       "color": "#00B4AB",
       "bytes": 1524157,
-      "percentage": 12.7
+      "percentage": 12.98
     },
     {
       "name": "Rust",
       "color": "#dea584",
-      "bytes": 565594,
-      "percentage": 4.71
+      "bytes": 497175,
+      "percentage": 4.23
     },
     {
       "name": "TypeScript",
       "color": "#3178c6",
-      "bytes": 446703,
-      "percentage": 3.72
+      "bytes": 423950,
+      "percentage": 3.61
     },
     {
       "name": "Python",
       "color": "#3572A5",
-      "bytes": 275453,
-      "percentage": 2.3
+      "bytes": 206634,
+      "percentage": 1.76
     },
     {
       "name": "Assembly",
       "color": "#6E4C13",
       "bytes": 202228,
-      "percentage": 1.69
+      "percentage": 1.72
     },
     {
       "name": "C++",
       "color": "#f34b7d",
       "bytes": 186102,
-      "percentage": 1.55
+      "percentage": 1.58
     },
     {
       "name": "Zig",
       "color": "#ec915c",
       "bytes": 170845,
-      "percentage": 1.42
+      "percentage": 1.45
     },
     {
       "name": "Svelte",
       "color": "#ff3e00",
       "bytes": 124010,
-      "percentage": 1.03
+      "percentage": 1.06
     },
     {
       "name": "CMake",
       "color": "#DA3434",
       "bytes": 110137,
-      "percentage": 0.92
-    },
-    {
-      "name": "HTML",
-      "color": "#e34c26",
-      "bytes": 104202,
-      "percentage": 0.87
+      "percentage": 0.94
     },
     {
       "name": "Astro",
       "color": "#ff5a03",
       "bytes": 98269,
-      "percentage": 0.82
+      "percentage": 0.84
     },
     {
       "name": "Jupyter Notebook",
       "color": "#DA5B0B",
       "bytes": 97832,
-      "percentage": 0.82
+      "percentage": 0.83
+    },
+    {
+      "name": "HTML",
+      "color": "#e34c26",
+      "bytes": 53882,
+      "percentage": 0.46
     },
     {
       "name": "CSS",
       "color": "#663399",
-      "bytes": 55724,
-      "percentage": 0.46
+      "bytes": 35177,
+      "percentage": 0.3
     },
     {
       "name": "Julia",
       "color": "#a270ba",
       "bytes": 34184,
-      "percentage": 0.28
+      "percentage": 0.29
     },
     {
       "name": "Makefile",
       "color": "#427819",
       "bytes": 25533,
-      "percentage": 0.21
+      "percentage": 0.22
     },
     {
       "name": "Shell",
       "color": "#89e051",
-      "bytes": 18029,
-      "percentage": 0.15
+      "bytes": 13659,
+      "percentage": 0.12
     },
     {
       "name": "PowerShell",
@@ -131,19 +131,13 @@
       "name": "Swift",
       "color": "#F05138",
       "bytes": 10119,
-      "percentage": 0.08
-    },
-    {
-      "name": "SCSS",
-      "color": "#c6538c",
-      "bytes": 9971,
-      "percentage": 0.08
+      "percentage": 0.09
     },
     {
       "name": "Nix",
       "color": "#7e7eff",
       "bytes": 5364,
-      "percentage": 0.04
+      "percentage": 0.05
     },
     {
       "name": "Cuda",
@@ -152,21 +146,15 @@
       "percentage": 0.04
     },
     {
-      "name": "Just",
-      "color": "#384d54",
-      "bytes": 2918,
-      "percentage": 0.02
+      "name": "Verilog",
+      "color": "#b2b7f8",
+      "bytes": 1336,
+      "percentage": 0.01
     },
     {
       "name": "Dockerfile",
       "color": "#384d54",
-      "bytes": 2387,
-      "percentage": 0.02
-    },
-    {
-      "name": "Verilog",
-      "color": "#b2b7f8",
-      "bytes": 1336,
+      "bytes": 1222,
       "percentage": 0.01
     },
     {
@@ -189,28 +177,28 @@
     }
   ],
   "repositories": {
-    "total_owned": 61,
-    "public": 30,
-    "private": 31,
-    "forks": 2,
+    "total_owned": 59,
+    "public": 27,
+    "private": 32,
+    "forks": 0,
     "total_stars": 14,
     "total_forks": 4
   },
   "contributions": {
-    "commits": 2998,
+    "commits": 3197,
     "pull_requests": 67,
-    "issues": 86,
+    "issues": 88,
     "reviews": 1,
-    "public": 3152,
-    "private": 2231,
-    "total": 5165
+    "public": 3353,
+    "private": 2234,
+    "total": 5369
   },
   "streaks_and_consistency": {
     "longest_streak_days": 112,
-    "current_streak_days": 14,
-    "active_days_count": 1010,
-    "total_days_in_period": 2123,
-    "activity_rate_percentage": 47.57,
+    "current_streak_days": 21,
+    "active_days_count": 1017,
+    "total_days_in_period": 2130,
+    "activity_rate_percentage": 47.75,
     "busiest_day": {
       "date": "2026-09-18",
       "count": 50
@@ -225,46 +213,18 @@
   },
   "repositories_contributed_to": [
     {
-      "repository": "pid7-org/frozen-core",
-      "description": "Core utilities for frozen codebases.",
-      "is_private": false,
-      "is_fork": false,
-      "commits": 543,
-      "pull_requests": 43,
-      "issues": 68,
-      "reviews": 0,
-      "additions": 70427,
-      "deletions": 44153,
-      "net_lines": 26274,
-      "total_contributions": 654,
-      "languages": [
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "bytes": 355572,
-          "percentage": 99.86
-        },
-        {
-          "name": "Nix",
-          "color": "#7e7eff",
-          "bytes": 493,
-          "percentage": 0.14
-        }
-      ]
-    },
-    {
       "repository": "pid7-org/turbofox",
       "description": "A persistent and efficient embedded KV database",
       "is_private": false,
       "is_fork": false,
-      "commits": 645,
+      "commits": 831,
       "pull_requests": 1,
       "issues": 1,
       "reviews": 0,
-      "additions": 81538,
-      "deletions": 78219,
-      "net_lines": 3319,
-      "total_contributions": 647,
+      "additions": 102722,
+      "deletions": 88535,
+      "net_lines": 14187,
+      "total_contributions": 833,
       "languages": [
         {
           "name": "Rust",
@@ -277,6 +237,34 @@
           "color": "#7e7eff",
           "bytes": 493,
           "percentage": 1.19
+        }
+      ]
+    },
+    {
+      "repository": "pid7-org/frozen-core",
+      "description": "Core utilities for frozen codebases.",
+      "is_private": false,
+      "is_fork": false,
+      "commits": 556,
+      "pull_requests": 43,
+      "issues": 70,
+      "reviews": 0,
+      "additions": 71476,
+      "deletions": 44219,
+      "net_lines": 27257,
+      "total_contributions": 669,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 355572,
+          "percentage": 99.86
+        },
+        {
+          "name": "Nix",
+          "color": "#7e7eff",
+          "bytes": 493,
+          "percentage": 0.14
         }
       ]
     },
@@ -5548,19 +5536,26 @@
     "2026-10-21": 43,
     "2026-10-22": 5,
     "2026-10-23": 13,
-    "2026-10-24": 12
+    "2026-10-24": 12,
+    "2026-10-25": 30,
+    "2026-10-26": 24,
+    "2026-10-27": 37,
+    "2026-10-28": 19,
+    "2026-10-29": 27,
+    "2026-10-30": 34,
+    "2026-10-31": 33
   },
   "weekly_summary": {
     "period": {
-      "from": "2026-10-18T00:00:00Z",
-      "to": "2026-10-24T23:59:59Z"
+      "from": "2026-10-25T00:00:00Z",
+      "to": "2026-10-31T23:59:59Z"
     },
     "lines_of_code": {
-      "total_additions": 18022,
-      "total_deletions": 16380,
-      "net_lines": 1642
+      "total_additions": 22233,
+      "total_deletions": 10382,
+      "net_lines": 11851
     },
-    "commits": 137,
+    "commits": 199,
     "pull_requests": {
       "total": 0,
       "merged": 0,
@@ -5575,8 +5570,8 @@
       "total_days_in_period": 7,
       "activity_rate_percentage": 100,
       "busiest_day": {
-        "date": "2026-10-21",
-        "count": 43
+        "date": "2026-10-27",
+        "count": 37
       }
     },
     "repositories": {

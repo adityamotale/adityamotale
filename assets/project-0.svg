@@ -31,7 +31,7 @@
   </style>
   <g class="mono" font-size="11.5">
     <text x="0" y="14">
-      <tspan class="text" font-weight="600">frozen-core   </tspan> <tspan class="muted">—</tspan> <tspan class="subtle">Core utilities for frozen codebases.</tspan>
+      <tspan class="text" font-weight="600">turbofox      </tspan> <tspan class="muted">—</tspan> <tspan class="subtle">A persistent and efficient embedded KV database</tspan>
     </text>
   </g>
 </svg>
