@@ -1,47 +1,47 @@
 {
   "metadata": {
     "username": "adityamotale",
-    "generated_at": "2026-11-02T08:52:03.511Z",
+    "generated_at": "2026-11-09T09:04:43.408Z",
     "period": {
       "from": "2021-01-01T00:00:00Z",
-      "to": "2026-10-31T23:59:59Z"
+      "to": "2026-11-07T23:59:59Z"
     }
   },
   "lines_of_code": {
-    "total_additions": 2626895,
-    "total_deletions": 1317983,
-    "net_lines": 1308912
+    "total_additions": 2656385,
+    "total_deletions": 1331094,
+    "net_lines": 1325291
   },
   "languages": [
     {
       "name": "C",
       "color": "#555555",
       "bytes": 5903204,
-      "percentage": 50.25
+      "percentage": 50.14
     },
     {
       "name": "JavaScript",
       "color": "#f1e05a",
       "bytes": 2004693,
-      "percentage": 17.07
+      "percentage": 17.03
     },
     {
       "name": "Dart",
       "color": "#00B4AB",
       "bytes": 1524157,
-      "percentage": 12.98
+      "percentage": 12.95
     },
     {
       "name": "Rust",
       "color": "#dea584",
-      "bytes": 497175,
-      "percentage": 4.23
+      "bytes": 524375,
+      "percentage": 4.45
     },
     {
       "name": "TypeScript",
       "color": "#3178c6",
       "bytes": 423950,
-      "percentage": 3.61
+      "percentage": 3.6
     },
     {
       "name": "Python",
@@ -71,7 +71,7 @@
       "name": "Svelte",
       "color": "#ff3e00",
       "bytes": 124010,
-      "percentage": 1.06
+      "percentage": 1.05
     },
     {
       "name": "CMake",
@@ -83,7 +83,7 @@
       "name": "Astro",
       "color": "#ff5a03",
       "bytes": 98269,
-      "percentage": 0.84
+      "percentage": 0.83
     },
     {
       "name": "Jupyter Notebook",
@@ -177,28 +177,28 @@
     }
   ],
   "repositories": {
-    "total_owned": 59,
-    "public": 27,
+    "total_owned": 60,
+    "public": 28,
     "private": 32,
     "forks": 0,
     "total_stars": 14,
     "total_forks": 4
   },
   "contributions": {
-    "commits": 3197,
+    "commits": 3324,
     "pull_requests": 67,
-    "issues": 88,
+    "issues": 89,
     "reviews": 1,
-    "public": 3353,
+    "public": 3481,
     "private": 2234,
-    "total": 5369
+    "total": 5498
   },
   "streaks_and_consistency": {
     "longest_streak_days": 112,
-    "current_streak_days": 21,
-    "active_days_count": 1017,
-    "total_days_in_period": 2130,
-    "activity_rate_percentage": 47.75,
+    "current_streak_days": 28,
+    "active_days_count": 1024,
+    "total_days_in_period": 2137,
+    "activity_rate_percentage": 47.92,
     "busiest_day": {
       "date": "2026-09-18",
       "count": 50
@@ -217,14 +217,14 @@
       "description": "A persistent and efficient embedded KV database",
       "is_private": false,
       "is_fork": false,
-      "commits": 831,
+      "commits": 891,
       "pull_requests": 1,
       "issues": 1,
       "reviews": 0,
-      "additions": 102722,
-      "deletions": 88535,
-      "net_lines": 14187,
-      "total_contributions": 833,
+      "additions": 108409,
+      "deletions": 91871,
+      "net_lines": 16538,
+      "total_contributions": 893,
       "languages": [
         {
           "name": "Rust",
@@ -245,14 +245,14 @@
       "description": "Core utilities for frozen codebases.",
       "is_private": false,
       "is_fork": false,
-      "commits": 556,
+      "commits": 562,
       "pull_requests": 43,
-      "issues": 70,
+      "issues": 71,
       "reviews": 0,
-      "additions": 71476,
-      "deletions": 44219,
-      "net_lines": 27257,
-      "total_contributions": 669,
+      "additions": 71603,
+      "deletions": 44277,
+      "net_lines": 27326,
+      "total_contributions": 676,
       "languages": [
         {
           "name": "Rust",
@@ -272,14 +272,14 @@
       "repository": "pid7-org/website",
       "is_private": false,
       "is_fork": false,
-      "commits": 334,
+      "commits": 387,
       "pull_requests": 0,
       "issues": 0,
       "reviews": 0,
-      "additions": 43296,
-      "deletions": 8782,
-      "net_lines": 34514,
-      "total_contributions": 334,
+      "additions": 58501,
+      "deletions": 18158,
+      "net_lines": 40343,
+      "total_contributions": 387,
       "languages": [
         {
           "name": "TypeScript",
@@ -2329,6 +2329,20 @@
       "net_lines": 190,
       "total_contributions": 9,
       "languages": []
+    },
+    {
+      "repository": "adityamotale/shyena",
+      "is_private": false,
+      "is_fork": false,
+      "description": null,
+      "commits": 8,
+      "issues": 0,
+      "pull_requests": 0,
+      "reviews": 0,
+      "additions": 8471,
+      "deletions": 341,
+      "net_lines": 8130,
+      "total_contributions": 8
     },
     {
       "repository": "adityamotale/zeroTab",
@@ -5543,19 +5557,26 @@
     "2026-10-28": 19,
     "2026-10-29": 27,
     "2026-10-30": 34,
-    "2026-10-31": 33
+    "2026-10-31": 33,
+    "2026-11-01": 25,
+    "2026-11-02": 22,
+    "2026-11-03": 36,
+    "2026-11-04": 7,
+    "2026-11-05": 5,
+    "2026-11-06": 6,
+    "2026-11-07": 28
   },
   "weekly_summary": {
     "period": {
-      "from": "2026-10-25T00:00:00Z",
-      "to": "2026-10-31T23:59:59Z"
+      "from": "2026-11-01T00:00:00Z",
+      "to": "2026-11-07T23:59:59Z"
     },
     "lines_of_code": {
-      "total_additions": 22233,
-      "total_deletions": 10382,
-      "net_lines": 11851
+      "total_additions": 29490,
+      "total_deletions": 13111,
+      "net_lines": 16379
     },
-    "commits": 199,
+    "commits": 127,
     "pull_requests": {
       "total": 0,
       "merged": 0,
@@ -5570,15 +5591,15 @@
       "total_days_in_period": 7,
       "activity_rate_percentage": 100,
       "busiest_day": {
-        "date": "2026-10-27",
-        "count": 37
+        "date": "2026-11-03",
+        "count": 36
       }
     },
     "repositories": {
-      "total": 2,
-      "public": 0,
+      "total": 4,
+      "public": 1,
       "private": 0,
-      "org": 2
+      "org": 3
     }
   },
   "monthly_history": [
