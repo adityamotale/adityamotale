@@ -1,59 +1,59 @@
 {
   "metadata": {
     "username": "adityamotale",
-    "generated_at": "2026-11-09T09:04:43.408Z",
+    "generated_at": "2026-11-16T08:59:16.744Z",
     "period": {
       "from": "2021-01-01T00:00:00Z",
-      "to": "2026-11-07T23:59:59Z"
+      "to": "2026-11-14T23:59:59Z"
     }
   },
   "lines_of_code": {
-    "total_additions": 2656385,
-    "total_deletions": 1331094,
-    "net_lines": 1325291
+    "total_additions": 2676367,
+    "total_deletions": 1344568,
+    "net_lines": 1331799
   },
   "languages": [
     {
       "name": "C",
       "color": "#555555",
       "bytes": 5903204,
-      "percentage": 50.14
+      "percentage": 50.02
     },
     {
       "name": "JavaScript",
       "color": "#f1e05a",
       "bytes": 2004693,
-      "percentage": 17.03
+      "percentage": 16.99
     },
     {
       "name": "Dart",
       "color": "#00B4AB",
       "bytes": 1524157,
-      "percentage": 12.95
+      "percentage": 12.92
     },
     {
       "name": "Rust",
       "color": "#dea584",
-      "bytes": 524375,
-      "percentage": 4.45
+      "bytes": 550063,
+      "percentage": 4.66
     },
     {
       "name": "TypeScript",
       "color": "#3178c6",
       "bytes": 423950,
-      "percentage": 3.6
+      "percentage": 3.59
     },
     {
       "name": "Python",
       "color": "#3572A5",
       "bytes": 206634,
-      "percentage": 1.76
+      "percentage": 1.75
     },
     {
       "name": "Assembly",
       "color": "#6E4C13",
       "bytes": 202228,
-      "percentage": 1.72
+      "percentage": 1.71
     },
     {
       "name": "C++",
@@ -77,7 +77,7 @@
       "name": "CMake",
       "color": "#DA3434",
       "bytes": 110137,
-      "percentage": 0.94
+      "percentage": 0.93
     },
     {
       "name": "Astro",
@@ -118,7 +118,7 @@
     {
       "name": "Shell",
       "color": "#89e051",
-      "bytes": 13659,
+      "bytes": 13843,
       "percentage": 0.12
     },
     {
@@ -136,7 +136,7 @@
     {
       "name": "Nix",
       "color": "#7e7eff",
-      "bytes": 5364,
+      "bytes": 6155,
       "percentage": 0.05
     },
     {
@@ -177,28 +177,28 @@
     }
   ],
   "repositories": {
-    "total_owned": 60,
-    "public": 28,
+    "total_owned": 61,
+    "public": 29,
     "private": 32,
     "forks": 0,
     "total_stars": 14,
     "total_forks": 4
   },
   "contributions": {
-    "commits": 3324,
+    "commits": 3412,
     "pull_requests": 67,
-    "issues": 89,
+    "issues": 93,
     "reviews": 1,
-    "public": 3481,
+    "public": 3573,
     "private": 2234,
-    "total": 5498
+    "total": 5590
   },
   "streaks_and_consistency": {
     "longest_streak_days": 112,
-    "current_streak_days": 28,
-    "active_days_count": 1024,
-    "total_days_in_period": 2137,
-    "activity_rate_percentage": 47.92,
+    "current_streak_days": 3,
+    "active_days_count": 1030,
+    "total_days_in_period": 2144,
+    "activity_rate_percentage": 48.04,
     "busiest_day": {
       "date": "2026-09-18",
       "count": 50
@@ -217,14 +217,14 @@
       "description": "A persistent and efficient embedded KV database",
       "is_private": false,
       "is_fork": false,
-      "commits": 891,
+      "commits": 928,
       "pull_requests": 1,
-      "issues": 1,
+      "issues": 4,
       "reviews": 0,
-      "additions": 108409,
-      "deletions": 91871,
-      "net_lines": 16538,
-      "total_contributions": 893,
+      "additions": 114874,
+      "deletions": 94695,
+      "net_lines": 20179,
+      "total_contributions": 933,
       "languages": [
         {
           "name": "Rust",
@@ -245,14 +245,14 @@
       "description": "Core utilities for frozen codebases.",
       "is_private": false,
       "is_fork": false,
-      "commits": 562,
+      "commits": 572,
       "pull_requests": 43,
-      "issues": 71,
+      "issues": 72,
       "reviews": 0,
-      "additions": 71603,
-      "deletions": 44277,
-      "net_lines": 27326,
-      "total_contributions": 676,
+      "additions": 72934,
+      "deletions": 44600,
+      "net_lines": 28334,
+      "total_contributions": 687,
       "languages": [
         {
           "name": "Rust",
@@ -272,14 +272,14 @@
       "repository": "pid7-org/website",
       "is_private": false,
       "is_fork": false,
-      "commits": 387,
+      "commits": 421,
       "pull_requests": 0,
       "issues": 0,
       "reviews": 0,
-      "additions": 58501,
-      "deletions": 18158,
-      "net_lines": 40343,
-      "total_contributions": 387,
+      "additions": 70667,
+      "deletions": 28484,
+      "net_lines": 42183,
+      "total_contributions": 421,
       "languages": [
         {
           "name": "TypeScript",
@@ -313,14 +313,14 @@
       "description": "Hardware accelerated routines for single substring search.",
       "is_private": false,
       "is_fork": false,
-      "commits": 312,
+      "commits": 314,
       "pull_requests": 0,
       "issues": 0,
       "reviews": 0,
-      "additions": 29953,
+      "additions": 29964,
       "deletions": 9019,
-      "net_lines": 20934,
-      "total_contributions": 312,
+      "net_lines": 20945,
+      "total_contributions": 314,
       "languages": [
         {
           "name": "Rust",
@@ -1032,6 +1032,34 @@
       ]
     },
     {
+      "repository": "adityamotale/dotfiles",
+      "is_private": false,
+      "is_fork": false,
+      "commits": 40,
+      "pull_requests": 0,
+      "issues": 0,
+      "reviews": 0,
+      "additions": 2642,
+      "deletions": 1410,
+      "net_lines": 1232,
+      "total_contributions": 40,
+      "languages": [
+        {
+          "name": "PowerShell",
+          "color": "#012456",
+          "bytes": 6354,
+          "percentage": 81.88
+        },
+        {
+          "name": "Nix",
+          "color": "#7e7eff",
+          "bytes": 1406,
+          "percentage": 18.12
+        }
+      ],
+      "description": null
+    },
+    {
       "repository": "adityamotale/turboz",
       "is_private": false,
       "is_fork": false,
@@ -1059,45 +1087,18 @@
       ]
     },
     {
-      "repository": "adityamotale/dotfiles",
-      "is_private": false,
-      "is_fork": false,
-      "commits": 39,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 2641,
-      "deletions": 1410,
-      "net_lines": 1231,
-      "total_contributions": 39,
-      "languages": [
-        {
-          "name": "PowerShell",
-          "color": "#012456",
-          "bytes": 6354,
-          "percentage": 81.88
-        },
-        {
-          "name": "Nix",
-          "color": "#7e7eff",
-          "bytes": 1406,
-          "percentage": 18.12
-        }
-      ]
-    },
-    {
       "repository": "pid7-org/turbo_crc",
       "description": "Hardware-accelerated CRC routines",
       "is_private": false,
       "is_fork": false,
-      "commits": 34,
+      "commits": 38,
       "pull_requests": 1,
       "issues": 1,
       "reviews": 0,
-      "additions": 1873,
-      "deletions": 415,
-      "net_lines": 1458,
-      "total_contributions": 36,
+      "additions": 1881,
+      "deletions": 416,
+      "net_lines": 1465,
+      "total_contributions": 40,
       "languages": [
         {
           "name": "Rust",
@@ -5564,19 +5565,26 @@
     "2026-11-04": 7,
     "2026-11-05": 5,
     "2026-11-06": 6,
-    "2026-11-07": 28
+    "2026-11-07": 28,
+    "2026-11-08": 17,
+    "2026-11-09": 24,
+    "2026-11-10": 7,
+    "2026-11-11": 0,
+    "2026-11-12": 1,
+    "2026-11-13": 11,
+    "2026-11-14": 32
   },
   "weekly_summary": {
     "period": {
-      "from": "2026-11-01T00:00:00Z",
-      "to": "2026-11-07T23:59:59Z"
+      "from": "2026-11-08T00:00:00Z",
+      "to": "2026-11-14T23:59:59Z"
     },
     "lines_of_code": {
-      "total_additions": 29490,
-      "total_deletions": 13111,
-      "net_lines": 16379
+      "total_additions": 19982,
+      "total_deletions": 13474,
+      "net_lines": 6508
     },
-    "commits": 127,
+    "commits": 88,
     "pull_requests": {
       "total": 0,
       "merged": 0,
@@ -5585,21 +5593,21 @@
       "merge_rate_percentage": 0
     },
     "streaks_and_consistency": {
-      "longest_streak_days": 7,
-      "current_streak_days": 7,
-      "active_days_count": 7,
+      "longest_streak_days": 3,
+      "current_streak_days": 3,
+      "active_days_count": 6,
       "total_days_in_period": 7,
-      "activity_rate_percentage": 100,
+      "activity_rate_percentage": 85.71,
       "busiest_day": {
-        "date": "2026-11-03",
-        "count": 36
+        "date": "2026-11-14",
+        "count": 32
       }
     },
     "repositories": {
-      "total": 4,
+      "total": 6,
       "public": 1,
       "private": 0,
-      "org": 3
+      "org": 5
     }
   },
   "monthly_history": [
