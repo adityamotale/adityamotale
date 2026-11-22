@@ -97,6 +97,116 @@ export async function getAllBlogPosts(): Promise<ParsedBlogPost[]> {
   }
 }
 
+export interface WritingItem {
+  title: string;
+  url: string;
+  dateStr: string;
+  timestamp: number;
+  isExternal?: boolean;
+}
+
+export function extractTitleFromHtml(html: string): string {
+  const match = html.match(/<title[^>]*>([^<]+)<\/title>/i);
+  if (!match) return '';
+  return match[1].replace(/^pid7\s*[×\-–—|]\s*/i, '').trim();
+}
+
+export async function fetchPid7BlogPosts(): Promise<WritingItem[]> {
+  try {
+    const sitemapRes = await fetch('https://pid7.com/sitemap.xml', {
+      signal: AbortSignal.timeout(5000),
+    });
+    if (!sitemapRes.ok) return [];
+
+    const xml = await sitemapRes.text();
+    const urlBlocks = xml.match(/<url>[\s\S]*?<\/url>/g) || [];
+    const blogEntries: { loc: string; lastmod: string }[] = [];
+
+    for (const block of urlBlocks) {
+      const locMatch = block.match(/<loc>([^<]+)<\/loc>/);
+      const lastmodMatch = block.match(/<lastmod>([^<]+)<\/lastmod>/);
+      if (!locMatch) continue;
+
+      const loc = locMatch[1].trim();
+      if (!loc.includes('/blog/')) continue;
+
+      blogEntries.push({
+        loc,
+        lastmod: lastmodMatch ? lastmodMatch[1].trim() : '',
+      });
+    }
+
+    const items: WritingItem[] = [];
+    await Promise.all(
+      blogEntries.map(async ({ loc, lastmod }) => {
+        try {
+          const pageRes = await fetch(loc, {
+            signal: AbortSignal.timeout(5000),
+          });
+          if (!pageRes.ok) return;
+
+          const html = await pageRes.text();
+          let title = extractTitleFromHtml(html);
+          if (!title) {
+            const slug = loc.split('/').filter(Boolean).pop() || '';
+            title = slug.replace(/[-_]/g, ' ');
+          }
+
+          const pubDateMatch =
+            html.match(/["']datePublished["']\s*:\s*["']([^"']+)["']/i) ||
+            html.match(
+              /<meta[^>]+property=["']article:published_time["'][^>]+content=["']([^"']+)["']/i
+            );
+
+          const dateStr = pubDateMatch ? pubDateMatch[1] : lastmod;
+          items.push({
+            title,
+            url: loc,
+            dateStr,
+            timestamp: parseDateToTimestamp(dateStr),
+            isExternal: true,
+          });
+        } catch {
+          // fallback if individual post fetch fails
+          const slug = loc.split('/').filter(Boolean).pop() || '';
+          items.push({
+            title: slug.replace(/[-_]/g, ' '),
+            url: loc,
+            dateStr: lastmod,
+            timestamp: parseDateToTimestamp(lastmod),
+            isExternal: true,
+          });
+        }
+      })
+    );
+
+    return items;
+  } catch {
+    return [];
+  }
+}
+
+export async function getRecentWriting(limit = 5): Promise<WritingItem[]> {
+  const [localPosts, pid7Posts] = await Promise.all([
+    getAllBlogPosts(),
+    fetchPid7BlogPosts(),
+  ]);
+
+  const items: WritingItem[] = [
+    ...localPosts.map((p) => ({
+      title: p.frontmatter.title,
+      url: `/blogs/${p.frontmatter.slug}`,
+      dateStr: p.frontmatter.created,
+      timestamp: parseDateToTimestamp(p.frontmatter.created),
+      isExternal: false,
+    })),
+    ...pid7Posts,
+  ];
+
+  items.sort((a, b) => b.timestamp - a.timestamp);
+  return items.slice(0, limit);
+}
+
 export async function getBlogPostBySlug(
   slug: string
 ): Promise<ParsedBlogPost | undefined> {
