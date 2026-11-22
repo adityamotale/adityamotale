@@ -90,6 +90,15 @@ export const GET_CONTRIBUTIONS_QUERY = `
         totalPullRequestContributions
         totalPullRequestReviewContributions
         restrictedContributionsCount
+        contributionCalendar {
+          totalContributions
+          weeks {
+            contributionDays {
+              date
+              contributionCount
+            }
+          }
+        }
         commitContributionsByRepository(maxRepositories: 100) {
           repository {
             nameWithOwner
