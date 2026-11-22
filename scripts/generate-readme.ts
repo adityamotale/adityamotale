@@ -106,9 +106,9 @@ function formatCompact(n: number): string {
   return n.toString();
 }
 
-const BAR_LENGTH = 16;
-const FILLED_GLYPH = "#";
-const EMPTY_GLYPH = ".";
+const BAR_LENGTH = 12;
+const FILLED_GLYPH = "█";
+const EMPTY_GLYPH = "░";
 
 function getAsciiBar(pct: number, len = BAR_LENGTH) {
   const safePct = Math.max(0, Math.min(100, pct));
@@ -435,52 +435,59 @@ function generateTelemetrySvg(
   netLoc: string,
   additions: string,
   deletions: string,
-  churnBar: { filled: string; empty: string; pctFormatted: string },
   reposTotal: number | string,
   reposDetail: string,
   commits: string,
-  prBar: { filled: string; empty: string },
-  prValue: string,
+  stack: string,
+  prBar: { filled: string; empty: string; pctFormatted: string },
   activeBar: { filled: string; empty: string; pctFormatted: string },
   streakDays: number | string,
-  activeDays: number | string,
-  stack: string,
+  maxStreakDays: number | string,
+  churnBar: { filled: string; empty: string; pctFormatted: string },
 ): string {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 120" width="100%" height="120" fill="none">
+  const lineStart = 24 + title.length * 7.5;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 135" width="100%" height="135" fill="none">
   <style>
     ${SVG_STYLE}
   </style>
   <g class="mono" font-size="11.5">
     <text x="0" y="14" class="accent" font-size="12">&gt;</text>
-    <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">${escapeXml(title.toUpperCase())}</text>
-    <line x1="${24 + title.length * 7.5}" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
+    <text x="12" y="14" class="text" font-weight="700" letter-spacing="0.06em">${escapeXml(title.toUpperCase())}</text>
+    <line x1="${lineStart}" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
 
-    <text x="0" y="38">
-      <tspan class="muted">&amp;</tspan> <tspan class="subtle">loc:</tspan>     <tspan class="text" font-weight="600">${escapeXml(netLoc)}</tspan> <tspan class="muted text-xs">(+${escapeXml(additions)} / -${escapeXml(deletions)})</tspan>
-    </text>
-    <text x="340" y="38">
-      <tspan class="muted">+</tspan> <tspan class="subtle">prs:</tspan>     <tspan class="muted">[</tspan><tspan class="foam">${escapeXml(prBar.filled)}</tspan><tspan class="bar-empty">${escapeXml(prBar.empty)}</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">${escapeXml(prValue)}</tspan>
-    </text>
+    <text x="14" y="38" class="muted" font-size="11">// counts</text>
+    <text x="340" y="38" class="muted" font-size="11">// activity</text>
 
-    <text x="0" y="58">
-      <tspan class="muted">%</tspan> <tspan class="subtle">churn:</tspan>   <tspan class="muted">[</tspan><tspan class="pine">${escapeXml(churnBar.filled)}</tspan><tspan class="bar-empty">${escapeXml(churnBar.empty)}</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">${escapeXml(churnBar.pctFormatted)}</tspan>
+    <!-- Row 1: loc & prs -->
+    <text x="14" y="58">
+      <tspan class="subtle">loc</tspan><tspan class="muted">     : </tspan><tspan class="text" font-weight="600">${escapeXml(netLoc)}</tspan> <tspan class="muted text-xs">(+${escapeXml(additions)} / -${escapeXml(deletions)})</tspan>
     </text>
     <text x="340" y="58">
-      <tspan class="muted">@</tspan> <tspan class="subtle">active:</tspan>  <tspan class="muted">[</tspan><tspan class="gold">${escapeXml(activeBar.filled)}</tspan><tspan class="bar-empty">${escapeXml(activeBar.empty)}</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">${escapeXml(activeBar.pctFormatted)}</tspan>
+      <tspan class="subtle">prs</tspan><tspan class="muted">    : [</tspan><tspan class="foam">${escapeXml(prBar.filled)}</tspan><tspan class="bar-empty">${escapeXml(prBar.empty)}</tspan><tspan class="muted">] </tspan><tspan class="text" font-weight="600">${escapeXml(prBar.pctFormatted)}</tspan>
     </text>
 
-    <text x="0" y="78">
-      <tspan class="muted">#</tspan> <tspan class="subtle">repos:</tspan>   <tspan class="text" font-weight="600">${escapeXml(String(reposTotal))}</tspan> <tspan class="muted text-xs">(${escapeXml(reposDetail)})</tspan>
+    <!-- Row 2: commits & active -->
+    <text x="14" y="78">
+      <tspan class="subtle">commits</tspan><tspan class="muted"> : </tspan><tspan class="text" font-weight="600">${escapeXml(commits)}</tspan> <tspan class="muted text-xs">(pub + org)</tspan>
     </text>
     <text x="340" y="78">
-      <tspan class="muted">^</tspan> <tspan class="subtle">streak:</tspan>  <tspan class="text" font-weight="600">${escapeXml(String(streakDays))} days</tspan> <tspan class="muted text-xs">(${escapeXml(String(activeDays))} active)</tspan>
+      <tspan class="subtle">active</tspan><tspan class="muted"> : [</tspan><tspan class="gold">${escapeXml(activeBar.filled)}</tspan><tspan class="bar-empty">${escapeXml(activeBar.empty)}</tspan><tspan class="muted">] </tspan><tspan class="text" font-weight="600">${escapeXml(activeBar.pctFormatted)}</tspan>
     </text>
 
-    <text x="0" y="98">
-      <tspan class="muted">*</tspan> <tspan class="subtle">commits:</tspan> <tspan class="text" font-weight="600">${escapeXml(commits)}</tspan>
+    <!-- Row 3: repos & streak -->
+    <text x="14" y="98">
+      <tspan class="subtle">repos</tspan><tspan class="muted">   : </tspan><tspan class="text" font-weight="600">${escapeXml(String(reposTotal))}</tspan> <tspan class="muted text-xs">(${escapeXml(reposDetail)})</tspan>
     </text>
     <text x="340" y="98">
-      <tspan class="muted">$</tspan> <tspan class="subtle">stack:</tspan>   <tspan class="text" font-weight="600">${escapeXml(stack)}</tspan>
+      <tspan class="subtle">streak</tspan><tspan class="muted"> : </tspan><tspan class="text" font-weight="600">${escapeXml(String(streakDays))}d</tspan> <tspan class="muted text-xs">current (${escapeXml(String(maxStreakDays))}d max)</tspan>
+    </text>
+
+    <!-- Row 4: stack & churn -->
+    <text x="14" y="118">
+      <tspan class="subtle">stack</tspan><tspan class="muted">   : </tspan><tspan class="text" font-weight="600">${escapeXml(stack)}</tspan>
+    </text>
+    <text x="340" y="118">
+      <tspan class="subtle">churn</tspan><tspan class="muted">  : </tspan><tspan class="text" font-weight="600">${escapeXml(churnBar.pctFormatted)}</tspan> <tspan class="muted text-xs">net retention</tspan>
     </text>
   </g>
 </svg>`;
@@ -614,16 +621,15 @@ export function generateReadme(rootDir: string): string {
     fmt.format(netLines),
     formatCompact(totalAdd),
     formatCompact(totalDel),
-    churnBar,
     totalReposContributed,
-    `${publicRepos} public, ${privateRepos} private, ${orgRepos} org`,
+    `${publicRepos} pub · ${privateRepos} pri · ${orgRepos} org`,
     fmt.format(totalCommits),
-    prBar,
-    prBar.pctFormatted,
-    streakBar,
-    stats.streaks_and_consistency.longest_streak_days,
-    stats.streaks_and_consistency.active_days_count,
     topLanguages,
+    prBar,
+    streakBar,
+    stats.streaks_and_consistency.current_streak_days,
+    stats.streaks_and_consistency.longest_streak_days,
+    churnBar,
   );
   writeFileSync(path.join(assetsDir, "telemetry.svg"), telemetrySvg, "utf-8");
 
@@ -670,16 +676,15 @@ export function generateReadme(rootDir: string): string {
       fmt.format(mNet),
       formatCompact(mAdd),
       formatCompact(mDel),
-      mChurnBar,
       mRepos.total || 0,
-      `${mRepos.public} public, ${mRepos.private} private, ${mRepos.org ?? 0} org`,
+      `${mRepos.public} pub · ${mRepos.private} pri · ${mRepos.org ?? 0} org`,
       fmt.format(targetMonth.commits),
-      mPrBar,
-      `${mPrMerged}/${mPrTotal}`,
-      mStreakBar,
-      targetMonth.streaks_and_consistency.longest_streak_days,
-      targetMonth.streaks_and_consistency.active_days_count,
       mTopLanguages,
+      mPrBar,
+      mStreakBar,
+      targetMonth.streaks_and_consistency.current_streak_days,
+      targetMonth.streaks_and_consistency.longest_streak_days,
+      mChurnBar,
     );
     writeFileSync(path.join(assetsDir, "monthly.svg"), monthlySvg, "utf-8");
     hasMonthly = true;
@@ -723,16 +728,15 @@ export function generateReadme(rootDir: string): string {
       fmt.format(wNet),
       formatCompact(wAdd),
       formatCompact(wDel),
-      wChurnBar,
       wRepos.total || 0,
-      `${wRepos.public} public, ${wRepos.private} private, ${wRepos.org ?? 0} org`,
+      `${wRepos.public} pub · ${wRepos.private} pri · ${wRepos.org ?? 0} org`,
       fmt.format(w.commits),
-      wPrBar,
-      `${wPrMerged}/${wPrTotal}`,
-      wStreakBar,
-      w.streaks_and_consistency.longest_streak_days,
-      w.streaks_and_consistency.active_days_count,
       wTopLanguages,
+      wPrBar,
+      wStreakBar,
+      w.streaks_and_consistency.current_streak_days,
+      w.streaks_and_consistency.longest_streak_days,
+      wChurnBar,
     );
     writeFileSync(path.join(assetsDir, "weekly.svg"), weeklySvg, "utf-8");
     hasWeekly = true;
