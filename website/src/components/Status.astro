@@ -1,0 +1,255 @@
+---
+import stats from '../../../data/github-stats.json';
+
+const languages = stats.languages || [];
+const lang1 = languages[0] || { name: 'Rust', percentage: 60.8, loc: 1158770 };
+
+const locData = stats.lines_of_code || {
+  total_additions: 0,
+  total_deletions: 0,
+  net_lines: 0,
+};
+const netLoc = locData.net_lines ?? 0;
+const totalAdditions = locData.total_additions ?? 0;
+const totalDeletions = locData.total_deletions ?? 0;
+
+const formatCompact = (num: number) => {
+  if (num >= 1_000_000) return `${(num / 1_000_000).toFixed(1)}M`;
+  if (num >= 1_000) return `${(num / 1_000).toFixed(1)}k`;
+  return `${num}`;
+};
+
+const netLocFormatted = formatCompact(netLoc);
+const additionsFormatted = formatCompact(totalAdditions);
+const deletionsFormatted = formatCompact(totalDeletions);
+
+const totalCommits = stats.contributions?.commits ?? 3280;
+const commitsFormatted = totalCommits.toLocaleString();
+
+const prData = stats.pull_requests || {
+  total: 234,
+  merged: 228,
+  merge_rate_percentage: 97.4,
+};
+const prTotal = prData.total ?? 234;
+const prMerged = prData.merged ?? 228;
+const prMergeRate = prData.merge_rate_percentage ?? 97.4;
+
+const repos = stats.repositories || { total: 28, public: 17, private: 11 };
+const reposTotal = repos.total ?? 28;
+const reposPublic = repos.public ?? 17;
+const reposPrivate = repos.private ?? 11;
+
+// Period parsing from stats.period
+const periodFrom = stats.period?.from
+  ? new Date(stats.period.from).getFullYear()
+  : '2021';
+const periodTo = stats.period?.to
+  ? new Date(stats.period.to).getFullYear()
+  : '2026';
+const periodStr = `${periodFrom} - ${periodTo}`;
+
+// Top 5 languages formatted
+const top5LangsFormatted = languages
+  .slice(0, 5)
+  .map((l) => `${l.name.toLowerCase()} (${formatCompact(l.loc)})`)
+  .join(' · ');
+
+// Visual meter generator
+const createMeter = (percent: number, total = 10) => {
+  const filled = Math.max(
+    0,
+    Math.min(total, Math.round((percent / 100) * total))
+  );
+  const empty = total - filled;
+  return {
+    fill: '#'.repeat(filled),
+    empty: '.'.repeat(empty),
+  };
+};
+
+const langMeter = createMeter(lang1.percentage, 10);
+const prMeter = createMeter(prMergeRate, 10);
+---
+
+<section
+  id="section-status"
+  class="w-full font-mono text-[11px] sm:text-xs select-none leading-relaxed"
+>
+  <div class="w-full flex flex-col text-rp-subtle font-mono">
+    {/* Top border: +--[ sys.telemetry ]-------...---+ */}
+    <div class="w-full flex items-center overflow-hidden text-rp-muted">
+      <span class="shrink-0 select-none">+--[&nbsp;</span>
+      <span class="shrink-0 text-[var(--color-accent)] font-semibold select-none">
+        sys.telemetry
+      </span>
+      <span class="shrink-0 select-none">&nbsp;]--</span>
+      <span class="flex-1 overflow-hidden select-none whitespace-nowrap text-rp-muted/60">
+        ---------------------------------------------------------------------------------------------------------------------------------------------
+      </span>
+      <span class="shrink-0 select-none">+</span>
+    </div>
+
+    {/* Spacer top row */}
+    <div class="w-full flex items-center justify-between px-2 sm:px-3 text-rp-muted/40">
+      <span class="select-none">|</span>
+      <span class="select-none">|</span>
+    </div>
+
+    {/* Desktop Row 1: STACK & COMMITS (sm and up) */}
+    <div class="hidden sm:flex w-full items-center justify-between px-3">
+      <div class="flex items-center gap-2">
+        <span class="text-rp-muted select-none">|</span>
+        <span class="text-rp-muted w-14 shrink-0">STACK</span>
+        <span class="text-[var(--color-accent)] shrink-0">
+          [{langMeter.fill}
+          <span class="text-rp-muted/40">{langMeter.empty}</span>]
+        </span>
+        <span class="text-rp-text font-medium shrink-0">
+          {lang1.percentage.toFixed(1)}% {lang1.name}
+        </span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-rp-muted">COMMITS</span>
+        <span class="text-rp-text font-medium">{commitsFormatted}</span>
+        <span class="text-rp-muted">[public]</span>
+        <span class="text-rp-muted select-none">|</span>
+      </div>
+    </div>
+
+    {/* Desktop Row 2: MERGE & NET LOC (sm and up) */}
+    <div class="hidden sm:flex w-full items-center justify-between px-3">
+      <div class="flex items-center gap-2">
+        <span class="text-rp-muted select-none">|</span>
+        <span class="text-rp-muted w-14 shrink-0">MERGE</span>
+        <span class="text-rp-pine shrink-0">
+          [{prMeter.fill}
+          <span class="text-rp-muted/40">{prMeter.empty}</span>]
+        </span>
+        <span class="text-rp-text font-medium shrink-0">
+          {prMergeRate.toFixed(1)}% PRs ({prMerged}/{prTotal})
+        </span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-rp-muted">NET LOC</span>
+        <span class="text-rp-text font-medium">{netLocFormatted}</span>
+        <span class="text-[10px] text-rp-muted">
+          (<span class="text-rp-pine">+{additionsFormatted}</span>/
+          <span class="text-rp-love">-{deletionsFormatted}</span>)
+        </span>
+        <span class="text-rp-muted select-none">|</span>
+      </div>
+    </div>
+
+    {/* Mobile Row 1a: STACK (mobile only) */}
+    <div class="flex sm:hidden w-full items-center justify-between px-2">
+      <div class="flex items-center gap-2">
+        <span class="text-rp-muted select-none">|</span>
+        <span class="text-rp-muted w-12 shrink-0">STACK</span>
+        <span class="text-[var(--color-accent)] shrink-0">
+          [{langMeter.fill}
+          <span class="text-rp-muted/40">{langMeter.empty}</span>]
+        </span>
+        <span class="text-rp-text font-medium">
+          {lang1.percentage.toFixed(0)}% {lang1.name}
+        </span>
+      </div>
+      <span class="text-rp-muted select-none">|</span>
+    </div>
+
+    {/* Mobile Row 1b: COMMITS (mobile only) */}
+    <div class="flex sm:hidden w-full items-center justify-between px-2">
+      <div class="flex items-center gap-2">
+        <span class="text-rp-muted select-none">|</span>
+        <span class="text-rp-muted w-12 shrink-0">COMM</span>
+        <span class="text-rp-text font-medium">{commitsFormatted}</span>
+        <span class="text-rp-muted">[public]</span>
+      </div>
+      <span class="text-rp-muted select-none">|</span>
+    </div>
+
+    {/* Mobile Row 2a: MERGE (mobile only) */}
+    <div class="flex sm:hidden w-full items-center justify-between px-2">
+      <div class="flex items-center gap-2">
+        <span class="text-rp-muted select-none">|</span>
+        <span class="text-rp-muted w-12 shrink-0">MERGE</span>
+        <span class="text-rp-pine shrink-0">
+          [{prMeter.fill}
+          <span class="text-rp-muted/40">{prMeter.empty}</span>]
+        </span>
+        <span class="text-rp-text font-medium">
+          {prMergeRate.toFixed(0)}% PRs
+        </span>
+      </div>
+      <span class="text-rp-muted select-none">|</span>
+    </div>
+
+    {/* Mobile Row 2b: NET LOC (mobile only) */}
+    <div class="flex sm:hidden w-full items-center justify-between px-2">
+      <div class="flex items-center gap-2">
+        <span class="text-rp-muted select-none">|</span>
+        <span class="text-rp-muted w-12 shrink-0">LOC</span>
+        <span class="text-rp-text font-medium">{netLocFormatted}</span>
+        <span class="text-[10px] text-rp-muted">
+          (<span class="text-rp-pine">+{additionsFormatted}</span>/
+          <span class="text-rp-love">-{deletionsFormatted}</span>)
+        </span>
+      </div>
+      <span class="text-rp-muted select-none">|</span>
+    </div>
+
+    {/* Empty spacer row */}
+    <div class="w-full flex items-center justify-between px-2 sm:px-3 text-rp-muted/40">
+      <span class="select-none">|</span>
+      <span class="select-none">|</span>
+    </div>
+
+    {/* Row: PERIOD (above repos) */}
+    <div class="w-full flex items-center justify-between px-2 sm:px-3">
+      <div class="flex items-center gap-2">
+        <span class="text-rp-muted select-none">|</span>
+        <span class="text-rp-muted">PERIOD:</span>
+        <span class="text-rp-text font-medium">{periodStr}</span>
+      </div>
+      <span class="text-rp-muted select-none">|</span>
+    </div>
+
+    {/* Row: REPOS */}
+    <div class="w-full flex items-center justify-between px-2 sm:px-3">
+      <div class="flex items-center gap-2">
+        <span class="text-rp-muted select-none">|</span>
+        <span class="text-rp-muted">REPOS:</span>
+        <span class="text-rp-text font-medium">{reposTotal} total</span>
+        <span class="text-rp-muted">
+          ({reposPublic} pub, {reposPrivate} prv)
+        </span>
+      </div>
+      <span class="text-rp-muted select-none">|</span>
+    </div>
+
+    {/* Row: LANGS (strictly limited to top 5) */}
+    <div class="w-full flex items-center justify-between px-2 sm:px-3">
+      <div class="flex items-center gap-2 min-w-0 overflow-hidden">
+        <span class="text-rp-muted select-none shrink-0">|</span>
+        <span class="text-rp-muted shrink-0">LANGS:</span>
+        <span class="text-rp-subtle truncate">{top5LangsFormatted}</span>
+      </div>
+      <span class="text-rp-muted select-none shrink-0">|</span>
+    </div>
+
+    {/* Empty spacer row at bottom */}
+    <div class="w-full flex items-center justify-between px-2 sm:px-3 text-rp-muted/40">
+      <span class="select-none">|</span>
+      <span class="select-none">|</span>
+    </div>
+
+    {/* Bottom border: +---------------------------------------------------------+ */}
+    <div class="w-full flex items-center overflow-hidden text-rp-muted">
+      <span class="shrink-0 select-none">+</span>
+      <span class="flex-1 overflow-hidden select-none whitespace-nowrap text-rp-muted/60">
+        ---------------------------------------------------------------------------------------------------------------------------------------------
+      </span>
+      <span class="shrink-0 select-none">+</span>
+    </div>
+  </div>
+</section>
