@@ -1,3080 +1,2991 @@
 {
-  "generated_at": "2026-11-22T09:51:06.737Z",
-  "period": {
-    "from": "2021-01-01T00:00:00Z",
-    "to": "2026-11-22T09:48:59.372Z"
-  },
-  "user": {
-    "login": "adityamotale",
-    "name": "Aditya"
-  },
-  "categories": {
-    "personal": {
-      "repositories_count": 28,
-      "commits": 1280,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 1354611,
-      "deletions": 700897,
-      "net_lines": 653714,
-      "total_contributions": 1280
-    },
-    "organization": {
-      "repositories_count": 22,
-      "commits": 2205,
-      "pull_requests": 46,
-      "issues": 0,
-      "reviews": 1,
-      "additions": 553651,
-      "deletions": 385371,
-      "net_lines": 168280,
-      "total_contributions": 2252
-    },
-    "external_oss": {
-      "repositories_count": 4,
-      "commits": 5,
-      "pull_requests": 6,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 79,
-      "deletions": 75,
-      "net_lines": 4,
-      "total_contributions": 11
-    }
-  },
-  "contributions": {
-    "total": 3515,
-    "commits": 3280,
-    "pull_requests": 234,
-    "reviews": 1,
-    "issues": 93,
-    "public": 3280,
-    "private": 0
-  },
-  "lines_of_code": {
-    "total_additions": 1908341,
-    "total_deletions": 1086343,
-    "net_lines": 821998
-  },
-  "repositories": {
-    "total": 28,
-    "total_owned": 28,
-    "public": 17,
-    "private": 11,
-    "forks": 0,
-    "org": 0,
-    "total_stars": 5,
-    "total_forks": 4
-  },
-  "pull_requests": {
-    "total": 234,
-    "merged": 228,
-    "closed_unmerged": 6,
-    "open": 0,
-    "merge_rate_percentage": 97.4
-  },
-  "streaks_and_consistency": {
-    "longest_streak_days": 0,
-    "current_streak_days": 0,
-    "active_days_count": 0,
-    "total_days_in_period": 0,
-    "activity_rate_percentage": 0,
-    "busiest_day": {
-      "date": "",
-      "count": 0
-    }
-  },
-  "languages": [
-    {
-      "name": "Rust",
-      "color": "#dea584",
-      "loc": 1158770,
-      "percentage": 60.8
-    },
-    {
-      "name": "Makefile",
-      "color": "#427819",
-      "loc": 149708,
-      "percentage": 7.8
-    },
-    {
-      "name": "C",
-      "color": "#555555",
-      "loc": 128835,
-      "percentage": 6.8
-    },
-    {
-      "name": "TypeScript",
-      "color": "#3178c6",
-      "loc": 112470,
-      "percentage": 5.9
-    },
-    {
-      "name": "Dart",
-      "color": "#00B4AB",
-      "loc": 71328,
-      "percentage": 3.7
-    },
-    {
-      "name": "Assembly",
-      "color": "#6E4C13",
-      "loc": 63958,
-      "percentage": 3.4
-    },
-    {
-      "name": "Python",
-      "color": "#3572A5",
-      "loc": 56685,
-      "percentage": 3
-    },
-    {
-      "name": "JavaScript",
-      "color": "#f1e05a",
-      "loc": 44539,
-      "percentage": 2.3
-    },
-    {
-      "name": "Svelte",
-      "color": "#ff3e00",
-      "loc": 35792,
-      "percentage": 1.9
-    },
-    {
-      "name": "Astro",
-      "color": "#ff5a03",
-      "loc": 22932,
-      "percentage": 1.2
-    },
-    {
-      "name": "C++",
-      "color": "#f34b7d",
-      "loc": 12639,
-      "percentage": 0.7
-    },
-    {
-      "name": "HTML",
-      "color": "#e34c26",
-      "loc": 9013,
-      "percentage": 0.5
-    },
-    {
-      "name": "Shell",
-      "color": "#89e051",
-      "loc": 8198,
-      "percentage": 0.4
-    },
-    {
-      "name": "PowerShell",
-      "color": "#012456",
-      "loc": 8050,
-      "percentage": 0.4
-    },
-    {
-      "name": "Nix",
-      "color": "#7e7eff",
-      "loc": 7601,
-      "percentage": 0.4
-    },
-    {
-      "name": "CSS",
-      "color": "#663399",
-      "loc": 5557,
-      "percentage": 0.3
-    },
-    {
-      "name": "CMake",
-      "color": "#DA3434",
-      "loc": 5349,
-      "percentage": 0.3
-    },
-    {
-      "name": "Zig",
-      "color": "#ec915c",
-      "loc": 3326,
-      "percentage": 0.2
-    },
-    {
-      "name": "HCL",
-      "color": "#844FBA",
-      "loc": 920,
-      "percentage": 0
-    },
-    {
-      "name": "Julia",
-      "color": "#a270ba",
-      "loc": 649,
-      "percentage": 0
-    },
-    {
-      "name": "Cuda",
-      "color": "#3A4E3A",
-      "loc": 412,
-      "percentage": 0
-    },
-    {
-      "name": "Swift",
-      "color": "#F05138",
-      "loc": 324,
-      "percentage": 0
-    },
-    {
-      "name": "Verilog",
-      "color": "#b2b7f8",
-      "loc": 106,
-      "percentage": 0
-    },
-    {
-      "name": "Kotlin",
-      "color": "#A97BFF",
-      "loc": 59,
-      "percentage": 0
-    },
-    {
-      "name": "Ruby",
-      "color": "#701516",
-      "loc": 50,
-      "percentage": 0
-    },
-    {
-      "name": "Java",
-      "color": "#b07219",
-      "loc": 24,
-      "percentage": 0
-    },
-    {
-      "name": "Objective-C",
-      "color": "#438eff",
-      "loc": 18,
-      "percentage": 0
-    },
-    {
-      "name": "SCSS",
-      "color": "#c6538c",
-      "loc": 0,
-      "percentage": 0
-    },
-    {
-      "name": "Just",
-      "color": "#384d54",
-      "loc": 0,
-      "percentage": 0
-    },
-    {
-      "name": "Dockerfile",
-      "color": "#384d54",
-      "loc": 0,
-      "percentage": 0
-    }
-  ],
-  "repositories_contributed_to": [
-    {
-      "repository": "pid7-org/turbofox",
-      "tier": "organization",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "An embedded, memory-mapped key-value engine providing lock-free concurrency & explicit sync barriers",
-      "commits": 924,
-      "pull_requests": 1,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 114874,
-      "deletions": 94695,
-      "net_lines": 20179,
-      "total_contributions": 925,
-      "languages": [
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "bytes": 481291,
-          "percentage": 0
-        },
-        {
-          "name": "Python",
-          "color": "#3572A5",
-          "bytes": 101501,
-          "percentage": 0
-        },
-        {
-          "name": "Shell",
-          "color": "#89e051",
-          "bytes": 20547,
-          "percentage": 0
-        },
-        {
-          "name": "HCL",
-          "color": "#844FBA",
-          "bytes": 3108,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Rust",
-        "color": "#dea584"
+   "categories" : {
+      "external_oss" : {
+         "additions" : 79,
+         "commits" : 5,
+         "deletions" : 75,
+         "issues" : 0,
+         "net_lines" : 4,
+         "pull_requests" : 6,
+         "repositories_count" : 4,
+         "reviews" : 0,
+         "total_contributions" : 11
       },
-      "latest_release": {
-        "tag_name": "v0.0.301",
-        "title": "Release v0.0.301",
-        "published_at": "2026-11-08T18:07:46Z",
-        "url": "https://github.com/pid7-org/turbofox/releases/tag/v0.0.301"
+      "organization" : {
+         "additions" : 334002,
+         "commits" : 2188,
+         "deletions" : 176798,
+         "issues" : 0,
+         "net_lines" : 157204,
+         "pull_requests" : 46,
+         "repositories_count" : 21,
+         "reviews" : 1,
+         "total_contributions" : 2235
+      },
+      "personal" : {
+         "additions" : 1354611,
+         "commits" : 1280,
+         "deletions" : 700897,
+         "issues" : 0,
+         "net_lines" : 653714,
+         "pull_requests" : 0,
+         "repositories_count" : 28,
+         "reviews" : 0,
+         "total_contributions" : 1280
       }
-    },
-    {
-      "repository": "pid7-org/frozen-core",
-      "tier": "organization",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "Core utilities for frozen codebases.",
-      "commits": 571,
-      "pull_requests": 43,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 72934,
-      "deletions": 44600,
-      "net_lines": 28334,
-      "total_contributions": 614,
-      "languages": [
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "bytes": 681298,
-          "percentage": 0
-        },
-        {
-          "name": "Shell",
-          "color": "#89e051",
-          "bytes": 1554,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Rust",
-        "color": "#dea584"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "pid7-org/ashwa",
-      "tier": "organization",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 314,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 29964,
-      "deletions": 9019,
-      "net_lines": 20945,
-      "total_contributions": 314,
-      "languages": [
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "bytes": 269348,
-          "percentage": 0
-        },
-        {
-          "name": "JavaScript",
-          "color": "#f1e05a",
-          "bytes": 122055,
-          "percentage": 0
-        },
-        {
-          "name": "Python",
-          "color": "#3572A5",
-          "bytes": 56738,
-          "percentage": 0
-        },
-        {
-          "name": "Shell",
-          "color": "#89e051",
-          "bytes": 48825,
-          "percentage": 0
-        },
-        {
-          "name": "HCL",
-          "color": "#844FBA",
-          "bytes": 5580,
-          "percentage": 0
-        },
-        {
-          "name": "C",
-          "color": "#555555",
-          "bytes": 1621,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Rust",
-        "color": "#dea584"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/ocelot",
-      "tier": "personal",
-      "is_private": true,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "SIMD™ powered PRNG lib.",
-      "commits": 215,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 15498,
-      "deletions": 15245,
-      "net_lines": 253,
-      "total_contributions": 215,
-      "languages": [
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "bytes": 19,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Rust",
-        "color": "#dea584"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "pid7-org/website",
-      "tier": "organization",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 199,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 40944,
-      "deletions": 22645,
-      "net_lines": 18299,
-      "total_contributions": 199,
-      "languages": [
-        {
-          "name": "TypeScript",
-          "color": "#3178c6",
-          "bytes": 195769,
-          "percentage": 0
-        },
-        {
-          "name": "Astro",
-          "color": "#ff5a03",
-          "bytes": 74530,
-          "percentage": 0
-        },
-        {
-          "name": "CSS",
-          "color": "#663399",
-          "bytes": 10277,
-          "percentage": 0
-        },
-        {
-          "name": "JavaScript",
-          "color": "#f1e05a",
-          "bytes": 208,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "TypeScript",
-        "color": "#3178c6"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/thehraav",
-      "tier": "personal",
-      "is_private": true,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 156,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 48850,
-      "deletions": 21641,
-      "net_lines": 27209,
-      "total_contributions": 156,
-      "languages": [
-        {
-          "name": "TypeScript",
-          "color": "#3178c6",
-          "bytes": 103119,
-          "percentage": 0
-        },
-        {
-          "name": "Astro",
-          "color": "#ff5a03",
-          "bytes": 9336,
-          "percentage": 0
-        },
-        {
-          "name": "JavaScript",
-          "color": "#f1e05a",
-          "bytes": 2404,
-          "percentage": 0
-        },
-        {
-          "name": "CSS",
-          "color": "#663399",
-          "bytes": 1961,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "TypeScript",
-        "color": "#3178c6"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/anvaya",
-      "tier": "personal",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 131,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 655445,
-      "deletions": 630488,
-      "net_lines": 24957,
-      "total_contributions": 131,
-      "languages": [
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "bytes": 239365,
-          "percentage": 0
-        },
-        {
-          "name": "Python",
-          "color": "#3572A5",
-          "bytes": 7982,
-          "percentage": 0
-        },
-        {
-          "name": "Nix",
-          "color": "#7e7eff",
-          "bytes": 1140,
-          "percentage": 0
-        },
-        {
-          "name": "Shell",
-          "color": "#89e051",
-          "bytes": 222,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Rust",
-        "color": "#dea584"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/shyena",
-      "tier": "personal",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "Śyena is a Keyboard-first launcher and transient PowerShell automation runtime for Windows",
-      "commits": 129,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 21907,
-      "deletions": 7034,
-      "net_lines": 14873,
-      "total_contributions": 129,
-      "languages": [
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "bytes": 176381,
-          "percentage": 0
-        },
-        {
-          "name": "PowerShell",
-          "color": "#012456",
-          "bytes": 46539,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Rust",
-        "color": "#dea584"
-      },
-      "latest_release": {
-        "tag_name": "v0.0.102",
-        "title": "v0.0.102",
-        "published_at": "2026-11-20T14:52:47Z",
-        "url": "https://github.com/adityamotale/shyena/releases/tag/v0.0.102"
-      }
-    },
-    {
-      "repository": "adityamotale/adityamotale",
-      "tier": "personal",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "Portfolio website",
-      "commits": 97,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 25729,
-      "deletions": 3828,
-      "net_lines": 21901,
-      "total_contributions": 97,
-      "languages": [
-        {
-          "name": "TypeScript",
-          "color": "#3178c6",
-          "bytes": 154720,
-          "percentage": 0
-        },
-        {
-          "name": "Astro",
-          "color": "#ff5a03",
-          "bytes": 85105,
-          "percentage": 0
-        },
-        {
-          "name": "JavaScript",
-          "color": "#f1e05a",
-          "bytes": 19553,
-          "percentage": 0
-        },
-        {
-          "name": "CSS",
-          "color": "#663399",
-          "bytes": 7556,
-          "percentage": 0
-        },
-        {
-          "name": "Shell",
-          "color": "#89e051",
-          "bytes": 1401,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "TypeScript",
-        "color": "#3178c6"
-      },
-      "latest_release": {
-        "tag_name": "v0.3.10",
-        "title": "Release of v0.3.10",
-        "published_at": "2026-11-16T08:59:59Z",
-        "url": "https://github.com/adityamotale/adityamotale/releases/tag/v0.3.10"
-      }
-    },
-    {
-      "repository": "adityamotale/asm_tcp",
-      "tier": "personal",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 87,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 10500,
-      "deletions": 3192,
-      "net_lines": 7308,
-      "total_contributions": 87,
-      "languages": [
-        {
-          "name": "Assembly",
-          "color": "#6E4C13",
-          "bytes": 115400,
-          "percentage": 0
-        },
-        {
-          "name": "C++",
-          "color": "#f34b7d",
-          "bytes": 38797,
-          "percentage": 0
-        },
-        {
-          "name": "C",
-          "color": "#555555",
-          "bytes": 8161,
-          "percentage": 0
-        },
-        {
-          "name": "Makefile",
-          "color": "#427819",
-          "bytes": 3109,
-          "percentage": 0
-        },
-        {
-          "name": "Shell",
-          "color": "#89e051",
-          "bytes": 887,
-          "percentage": 0
-        },
-        {
-          "name": "Nix",
-          "color": "#7e7eff",
-          "bytes": 127,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Assembly",
-        "color": "#6E4C13"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/L3",
-      "tier": "personal",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "A collection of projects and experiments in low-level and systems engineering.",
-      "commits": 71,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 378094,
-      "deletions": 1690,
-      "net_lines": 376404,
-      "total_contributions": 71,
-      "languages": [
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "bytes": 37736,
-          "percentage": 0
-        },
-        {
-          "name": "Assembly",
-          "color": "#6E4C13",
-          "bytes": 6362,
-          "percentage": 0
-        },
-        {
-          "name": "C",
-          "color": "#555555",
-          "bytes": 1886,
-          "percentage": 0
-        },
-        {
-          "name": "Nix",
-          "color": "#7e7eff",
-          "bytes": 328,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Rust",
-        "color": "#dea584"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/asm_db",
-      "tier": "personal",
-      "is_private": true,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "An in memory key value store written in pure x86 64-bit assembly",
-      "commits": 43,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 2011,
-      "deletions": 402,
-      "net_lines": 1609,
-      "total_contributions": 43,
-      "languages": [
-        {
-          "name": "Assembly",
-          "color": "#6E4C13",
-          "bytes": 21823,
-          "percentage": 0
-        },
-        {
-          "name": "C",
-          "color": "#555555",
-          "bytes": 8239,
-          "percentage": 0
-        },
-        {
-          "name": "Shell",
-          "color": "#89e051",
-          "bytes": 3031,
-          "percentage": 0
-        },
-        {
-          "name": "Makefile",
-          "color": "#427819",
-          "bytes": 269,
-          "percentage": 0
-        },
-        {
-          "name": "Nix",
-          "color": "#7e7eff",
-          "bytes": 128,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Assembly",
-        "color": "#6E4C13"
-      },
-      "latest_release": {
-        "tag_name": "v0.0.1",
-        "title": "Release v0.0.1",
-        "published_at": "2025-04-27T13:34:24Z",
-        "url": "https://github.com/adityamotale/asm_db/releases/tag/v0.0.1"
-      }
-    },
-    {
-      "repository": "adityamotale/dotfiles",
-      "tier": "personal",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 41,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 2951,
-      "deletions": 1410,
-      "net_lines": 1541,
-      "total_contributions": 41,
-      "languages": [
-        {
-          "name": "PowerShell",
-          "color": "#012456",
-          "bytes": 6354,
-          "percentage": 0
-        },
-        {
-          "name": "Nix",
-          "color": "#7e7eff",
-          "bytes": 1406,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "PowerShell",
-        "color": "#012456"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/turboz",
-      "tier": "personal",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "Full text search engine to search supercars",
-      "commits": 40,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 2060,
-      "deletions": 827,
-      "net_lines": 1233,
-      "total_contributions": 40,
-      "languages": [
-        {
-          "name": "HTML",
-          "color": "#e34c26",
-          "bytes": 14653,
-          "percentage": 0
-        },
-        {
-          "name": "Python",
-          "color": "#3572A5",
-          "bytes": 13113,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "HTML",
-        "color": "#e34c26"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "pid7-org/turbo_crc",
-      "tier": "organization",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 38,
-      "pull_requests": 1,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 1881,
-      "deletions": 416,
-      "net_lines": 1465,
-      "total_contributions": 39,
-      "languages": [
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "bytes": 14665,
-          "percentage": 0
-        },
-        {
-          "name": "Nix",
-          "color": "#7e7eff",
-          "bytes": 493,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Rust",
-        "color": "#dea584"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/raven",
-      "tier": "personal",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "Crunch numbers with the intelligence of the namesake.",
-      "commits": 33,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 1567,
-      "deletions": 362,
-      "net_lines": 1205,
-      "total_contributions": 33,
-      "languages": [
-        {
-          "name": "Assembly",
-          "color": "#6E4C13",
-          "bytes": 16656,
-          "percentage": 0
-        },
-        {
-          "name": "C",
-          "color": "#555555",
-          "bytes": 3689,
-          "percentage": 0
-        },
-        {
-          "name": "Shell",
-          "color": "#89e051",
-          "bytes": 2445,
-          "percentage": 0
-        },
-        {
-          "name": "Makefile",
-          "color": "#427819",
-          "bytes": 822,
-          "percentage": 0
-        },
-        {
-          "name": "Nix",
-          "color": "#7e7eff",
-          "bytes": 150,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Assembly",
-        "color": "#6E4C13"
-      },
-      "latest_release": {
-        "tag_name": "v0.0.1",
-        "title": "Release v0.0.1",
-        "published_at": "2025-04-18T19:41:39Z",
-        "url": "https://github.com/adityamotale/raven/releases/tag/v0.0.1"
-      }
-    },
-    {
-      "repository": "adityamotale/byte_lab",
-      "tier": "personal",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 30,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 951,
-      "deletions": 232,
-      "net_lines": 719,
-      "total_contributions": 30,
-      "languages": [
-        {
-          "name": "Cuda",
-          "color": "#3A4E3A",
-          "bytes": 5212,
-          "percentage": 0
-        },
-        {
-          "name": "Assembly",
-          "color": "#6E4C13",
-          "bytes": 2491,
-          "percentage": 0
-        },
-        {
-          "name": "Makefile",
-          "color": "#427819",
-          "bytes": 1533,
-          "percentage": 0
-        },
-        {
-          "name": "C",
-          "color": "#555555",
-          "bytes": 1466,
-          "percentage": 0
-        },
-        {
-          "name": "Verilog",
-          "color": "#b2b7f8",
-          "bytes": 1336,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Cuda",
-        "color": "#3A4E3A"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "atharvaborlepwar/classicline",
-      "tier": "organization",
-      "is_private": true,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 29,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 31622,
-      "deletions": 603,
-      "net_lines": 31019,
-      "total_contributions": 29,
-      "languages": [
-        {
-          "name": "JavaScript",
-          "color": "#f1e05a",
-          "bytes": 18142,
-          "percentage": 0
-        },
-        {
-          "name": "HTML",
-          "color": "#e34c26",
-          "bytes": 1723,
-          "percentage": 0
-        },
-        {
-          "name": "CSS",
-          "color": "#663399",
-          "bytes": 407,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "JavaScript",
-        "color": "#f1e05a"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/asm_tuts",
-      "tier": "personal",
-      "is_private": true,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "Learning x86 Assembly w/ Intel Syntax",
-      "commits": 26,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 402,
-      "deletions": 13,
-      "net_lines": 389,
-      "total_contributions": 26,
-      "languages": [
-        {
-          "name": "Assembly",
-          "color": "#6E4C13",
-          "bytes": 5539,
-          "percentage": 0
-        },
-        {
-          "name": "C",
-          "color": "#555555",
-          "bytes": 142,
-          "percentage": 0
-        },
-        {
-          "name": "Nix",
-          "color": "#7e7eff",
-          "bytes": 141,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Assembly",
-        "color": "#6E4C13"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "histral/news_scrapers",
-      "tier": "organization",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 23,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 5009,
-      "deletions": 3263,
-      "net_lines": 1746,
-      "total_contributions": 23,
-      "languages": [
-        {
-          "name": "Python",
-          "color": "#3572A5",
-          "bytes": 41427,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Python",
-        "color": "#3572A5"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "histral/content",
-      "tier": "organization",
-      "is_private": true,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "Content for Histral",
-      "commits": 23,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 2029,
-      "deletions": 57,
-      "net_lines": 1972,
-      "total_contributions": 23,
-      "languages": [
-        {
-          "name": "HTML",
-          "color": "#e34c26",
-          "bytes": 3786,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "HTML",
-        "color": "#e34c26"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/exercism",
-      "tier": "personal",
-      "is_private": true,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 20,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 116121,
-      "deletions": 3,
-      "net_lines": 116118,
-      "total_contributions": 20,
-      "languages": [
-        {
-          "name": "C",
-          "color": "#555555",
-          "bytes": 5868685,
-          "percentage": 0
-        },
-        {
-          "name": "Zig",
-          "color": "#ec915c",
-          "bytes": 166968,
-          "percentage": 0
-        },
-        {
-          "name": "Julia",
-          "color": "#a270ba",
-          "bytes": 34184,
-          "percentage": 0
-        },
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "bytes": 29640,
-          "percentage": 0
-        },
-        {
-          "name": "Makefile",
-          "color": "#427819",
-          "bytes": 19800,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "C",
-        "color": "#555555"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/ssmm_erp",
-      "tier": "personal",
-      "is_private": true,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 18,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 32409,
-      "deletions": 5271,
-      "net_lines": 27138,
-      "total_contributions": 18,
-      "languages": [
-        {
-          "name": "Svelte",
-          "color": "#ff3e00",
-          "bytes": 56992,
-          "percentage": 0
-        },
-        {
-          "name": "TypeScript",
-          "color": "#3178c6",
-          "bytes": 37394,
-          "percentage": 0
-        },
-        {
-          "name": "CSS",
-          "color": "#663399",
-          "bytes": 2903,
-          "percentage": 0
-        },
-        {
-          "name": "JavaScript",
-          "color": "#f1e05a",
-          "bytes": 1611,
-          "percentage": 0
-        },
-        {
-          "name": "HTML",
-          "color": "#e34c26",
-          "bytes": 331,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Svelte",
-        "color": "#ff3e00"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/dohl",
-      "tier": "personal",
-      "is_private": true,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "A low-latency, SIMD-oriented, non-cryptographic hasher, optimized for short buffers",
-      "commits": 18,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 1089,
-      "deletions": 799,
-      "net_lines": 290,
-      "total_contributions": 18,
-      "languages": [
-        {
-          "name": "Nix",
-          "color": "#7e7eff",
-          "bytes": 493,
-          "percentage": 0
-        },
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "bytes": 419,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Nix",
-        "color": "#7e7eff"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/powershell_scripts",
-      "tier": "personal",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 18,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 1060,
-      "deletions": 726,
-      "net_lines": 334,
-      "total_contributions": 18,
-      "languages": [
-        {
-          "name": "PowerShell",
-          "color": "#012456",
-          "bytes": 3891,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "PowerShell",
-        "color": "#012456"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "KinariwalaS/MitRa_admission_new",
-      "tier": "organization",
-      "is_private": true,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 17,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 219649,
-      "deletions": 208573,
-      "net_lines": 11076,
-      "total_contributions": 17,
-      "languages": [
-        {
-          "name": "Makefile",
-          "color": "#427819",
-          "bytes": 422726,
-          "percentage": 0
-        },
-        {
-          "name": "Dart",
-          "color": "#00B4AB",
-          "bytes": 165384,
-          "percentage": 0
-        },
-        {
-          "name": "C++",
-          "color": "#f34b7d",
-          "bytes": 20313,
-          "percentage": 0
-        },
-        {
-          "name": "CMake",
-          "color": "#DA3434",
-          "bytes": 8244,
-          "percentage": 0
-        },
-        {
-          "name": "HTML",
-          "color": "#e34c26",
-          "bytes": 4378,
-          "percentage": 0
-        },
-        {
-          "name": "CSS",
-          "color": "#663399",
-          "bytes": 863,
-          "percentage": 0
-        },
-        {
-          "name": "C",
-          "color": "#555555",
-          "bytes": 734,
-          "percentage": 0
-        },
-        {
-          "name": "Swift",
-          "color": "#F05138",
-          "bytes": 404,
-          "percentage": 0
-        },
-        {
-          "name": "JavaScript",
-          "color": "#f1e05a",
-          "bytes": 188,
-          "percentage": 0
-        },
-        {
-          "name": "Kotlin",
-          "color": "#A97BFF",
-          "bytes": 122,
-          "percentage": 0
-        },
-        {
-          "name": "Objective-C",
-          "color": "#438eff",
-          "bytes": 38,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Makefile",
-        "color": "#427819"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/csn-tickets",
-      "tier": "personal",
-      "is_private": true,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 17,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 29840,
-      "deletions": 5586,
-      "net_lines": 24254,
-      "total_contributions": 17,
-      "languages": [
-        {
-          "name": "Svelte",
-          "color": "#ff3e00",
-          "bytes": 34868,
-          "percentage": 0
-        },
-        {
-          "name": "TypeScript",
-          "color": "#3178c6",
-          "bytes": 23327,
-          "percentage": 0
-        },
-        {
-          "name": "JavaScript",
-          "color": "#f1e05a",
-          "bytes": 1611,
-          "percentage": 0
-        },
-        {
-          "name": "CSS",
-          "color": "#663399",
-          "bytes": 1172,
-          "percentage": 0
-        },
-        {
-          "name": "HTML",
-          "color": "#e34c26",
-          "bytes": 554,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Svelte",
-        "color": "#ff3e00"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/vuoto",
-      "tier": "personal",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "Benvenuto nel Vuoto",
-      "commits": 17,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 3605,
-      "deletions": 1915,
-      "net_lines": 1690,
-      "total_contributions": 17,
-      "languages": [
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "bytes": 25688,
-          "percentage": 0
-        },
-        {
-          "name": "Nix",
-          "color": "#7e7eff",
-          "bytes": 791,
-          "percentage": 0
-        },
-        {
-          "name": "Shell",
-          "color": "#89e051",
-          "bytes": 184,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Rust",
-        "color": "#dea584"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/python_exercises",
-      "tier": "personal",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "A self-paced set of exercises to master python",
-      "commits": 16,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 1026,
-      "deletions": 33,
-      "net_lines": 993,
-      "total_contributions": 16,
-      "languages": [
-        {
-          "name": "Python",
-          "color": "#3572A5",
-          "bytes": 28277,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Python",
-        "color": "#3572A5"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "ranveer-rajput/python_exercises",
-      "tier": "organization",
-      "is_private": false,
-      "is_fork": true,
-      "is_archived": false,
-      "description": "A self-paced set of exercises to master python",
-      "commits": 16,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 1026,
-      "deletions": 33,
-      "net_lines": 993,
-      "total_contributions": 16,
-      "languages": [
-        {
-          "name": "Python",
-          "color": "#3572A5",
-          "bytes": 29572,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Python",
-        "color": "#3572A5"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/gui_asm",
-      "tier": "personal",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 12,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 1094,
-      "deletions": 60,
-      "net_lines": 1034,
-      "total_contributions": 12,
-      "languages": [
-        {
-          "name": "Assembly",
-          "color": "#6E4C13",
-          "bytes": 24901,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Assembly",
-        "color": "#6E4C13"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "parag1902/onfootage",
-      "tier": "organization",
-      "is_private": true,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "A web app that shows curated & trending movies, web-series and  TV shows. Made with ❤️ by parag  and help of @react-js ",
-      "commits": 11,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 2293,
-      "deletions": 274,
-      "net_lines": 2019,
-      "total_contributions": 11,
-      "languages": [
-        {
-          "name": "JavaScript",
-          "color": "#f1e05a",
-          "bytes": 13563,
-          "percentage": 0
-        },
-        {
-          "name": "HTML",
-          "color": "#e34c26",
-          "bytes": 2243,
-          "percentage": 0
-        },
-        {
-          "name": "CSS",
-          "color": "#663399",
-          "bytes": 375,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "JavaScript",
-        "color": "#f1e05a"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "1code-dev/content_old",
-      "tier": "organization",
-      "is_private": true,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "Content for the courses of 1Code",
-      "commits": 10,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 2763,
-      "deletions": 317,
-      "net_lines": 2446,
-      "total_contributions": 10,
-      "languages": [
-        {
-          "name": "Python",
-          "color": "#3572A5",
-          "bytes": 5525,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Python",
-        "color": "#3572A5"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "histral/histral_core",
-      "tier": "organization",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 10,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 1000,
-      "deletions": 128,
-      "net_lines": 872,
-      "total_contributions": 10,
-      "languages": [
-        {
-          "name": "Python",
-          "color": "#3572A5",
-          "bytes": 16976,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Python",
-        "color": "#3572A5"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "histral/news_summaries",
-      "tier": "organization",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 9,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 1759,
-      "deletions": 38,
-      "net_lines": 1721,
-      "total_contributions": 9,
-      "languages": [
-        {
-          "name": "Python",
-          "color": "#3572A5",
-          "bytes": 7162,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Python",
-        "color": "#3572A5"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/oscill8",
-      "tier": "personal",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 8,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 278,
-      "deletions": 16,
-      "net_lines": 262,
-      "total_contributions": 8,
-      "languages": [
-        {
-          "name": "Assembly",
-          "color": "#6E4C13",
-          "bytes": 1293,
-          "percentage": 0
-        },
-        {
-          "name": "Shell",
-          "color": "#89e051",
-          "bytes": 712,
-          "percentage": 0
-        },
-        {
-          "name": "Nix",
-          "color": "#7e7eff",
-          "bytes": 685,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Assembly",
-        "color": "#6E4C13"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/pi_ninja",
-      "tier": "personal",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "Calculate value of π till a specified range using ASM x86.",
-      "commits": 8,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 253,
-      "deletions": 33,
-      "net_lines": 220,
-      "total_contributions": 8,
-      "languages": [
-        {
-          "name": "Assembly",
-          "color": "#6E4C13",
-          "bytes": 3164,
-          "percentage": 0
-        },
-        {
-          "name": "Shell",
-          "color": "#89e051",
-          "bytes": 307,
-          "percentage": 0
-        },
-        {
-          "name": "Nix",
-          "color": "#7e7eff",
-          "bytes": 150,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Assembly",
-        "color": "#6E4C13"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/asm_dev",
-      "tier": "personal",
-      "is_private": true,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 7,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 298,
-      "deletions": 11,
-      "net_lines": 287,
-      "total_contributions": 7,
-      "languages": [
-        {
-          "name": "Assembly",
-          "color": "#6E4C13",
-          "bytes": 4524,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Assembly",
-        "color": "#6E4C13"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/wyrm",
-      "tier": "personal",
-      "is_private": true,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 7,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 173,
-      "deletions": 39,
-      "net_lines": 134,
-      "total_contributions": 7,
-      "languages": [
-        {
-          "name": "C",
-          "color": "#555555",
-          "bytes": 2343,
-          "percentage": 0
-        },
-        {
-          "name": "Nix",
-          "color": "#7e7eff",
-          "bytes": 150,
-          "percentage": 0
-        },
-        {
-          "name": "Assembly",
-          "color": "#6E4C13",
-          "bytes": 75,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "C",
-        "color": "#555555"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/kak",
-      "tier": "personal",
-      "is_private": true,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "kak is a durable append-only log engine optimized for sequential writes, re-playable event streams, and low-overhead IO for efficient storage.",
-      "commits": 5,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 727,
-      "deletions": 2,
-      "net_lines": 725,
-      "total_contributions": 5,
-      "languages": [
-        {
-          "name": "Nix",
-          "color": "#7e7eff",
-          "bytes": 466,
-          "percentage": 0
-        },
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "bytes": 210,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Nix",
-        "color": "#7e7eff"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/hash_table",
-      "tier": "personal",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "Hash Table in rust from scratch with djb2 algorithm",
-      "commits": 5,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 515,
-      "deletions": 27,
-      "net_lines": 488,
-      "total_contributions": 5,
-      "languages": [
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "bytes": 6936,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Rust",
-        "color": "#dea584"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/zig_dev",
-      "tier": "personal",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 5,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 158,
-      "deletions": 12,
-      "net_lines": 146,
-      "total_contributions": 5,
-      "languages": [
-        {
-          "name": "Zig",
-          "color": "#ec915c",
-          "bytes": 3877,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Zig",
-        "color": "#ec915c"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "aishwaryasuradkar/AtLeave",
-      "tier": "external_oss",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 2,
-      "pull_requests": 2,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 57,
-      "deletions": 72,
-      "net_lines": -15,
-      "total_contributions": 4,
-      "languages": [
-        {
-          "name": "JavaScript",
-          "color": "#f1e05a",
-          "bytes": 10826,
-          "percentage": 0
-        },
-        {
-          "name": "HTML",
-          "color": "#e34c26",
-          "bytes": 1112,
-          "percentage": 0
-        },
-        {
-          "name": "CSS",
-          "color": "#663399",
-          "bytes": 959,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "JavaScript",
-        "color": "#f1e05a"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "infoxiao/museum-chart-crimes",
-      "tier": "external_oss",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 2,
-      "pull_requests": 2,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 21,
-      "deletions": 3,
-      "net_lines": 18,
-      "total_contributions": 4,
-      "languages": [
-        {
-          "name": "TypeScript",
-          "color": "#3178c6",
-          "bytes": 22753,
-          "percentage": 0
-        },
-        {
-          "name": "CSS",
-          "color": "#663399",
-          "bytes": 1088,
-          "percentage": 0
-        },
-        {
-          "name": "JavaScript",
-          "color": "#f1e05a",
-          "bytes": 83,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "TypeScript",
-        "color": "#3178c6"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "parag1902/atleave",
-      "tier": "organization",
-      "is_private": true,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 3,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 575,
-      "deletions": 682,
-      "net_lines": -107,
-      "total_contributions": 3,
-      "languages": [
-        {
-          "name": "TypeScript",
-          "color": "#3178c6",
-          "bytes": 8498,
-          "percentage": 0
-        },
-        {
-          "name": "JavaScript",
-          "color": "#f1e05a",
-          "bytes": 665,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "TypeScript",
-        "color": "#3178c6"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "ranveer-rajput/python_exercises_old",
-      "tier": "organization",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 3,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 469,
-      "deletions": 28,
-      "net_lines": 441,
-      "total_contributions": 3,
-      "languages": [
-        {
-          "name": "Python",
-          "color": "#3572A5",
-          "bytes": 11048,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Python",
-        "color": "#3572A5"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "1code-dev/kickass-space-shooter",
-      "tier": "organization",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "Starting code for Space Game Project made in 1Code's Python Level 0 Course",
-      "commits": 2,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 52,
-      "deletions": 0,
-      "net_lines": 52,
-      "total_contributions": 2,
-      "languages": [
-        {
-          "name": "Python",
-          "color": "#3572A5",
-          "bytes": 1053,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Python",
-        "color": "#3572A5"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "rust-lang/this-week-in-rust",
-      "tier": "external_oss",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 1,
-      "pull_requests": 1,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 1,
-      "deletions": 0,
-      "net_lines": 1,
-      "total_contributions": 2,
-      "languages": [
-        {
-          "name": "Python",
-          "color": "#3572A5",
-          "bytes": 68902,
-          "percentage": 0
-        },
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "bytes": 68419,
-          "percentage": 0
-        },
-        {
-          "name": "HTML",
-          "color": "#e34c26",
-          "bytes": 50320,
-          "percentage": 0
-        },
-        {
-          "name": "CSS",
-          "color": "#663399",
-          "bytes": 19459,
-          "percentage": 0
-        },
-        {
-          "name": "SCSS",
-          "color": "#c6538c",
-          "bytes": 9971,
-          "percentage": 0
-        },
-        {
-          "name": "Shell",
-          "color": "#89e051",
-          "bytes": 4370,
-          "percentage": 0
-        },
-        {
-          "name": "Just",
-          "color": "#384d54",
-          "bytes": 2918,
-          "percentage": 0
-        },
-        {
-          "name": "JavaScript",
-          "color": "#f1e05a",
-          "bytes": 1380,
-          "percentage": 0
-        },
-        {
-          "name": "Dockerfile",
-          "color": "#384d54",
-          "bytes": 1163,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Python",
-        "color": "#3572A5"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "trustopay/trustopay_app_old_1",
-      "tier": "organization",
-      "is_private": true,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 1,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 14273,
-      "deletions": 0,
-      "net_lines": 14273,
-      "total_contributions": 1,
-      "languages": [
-        {
-          "name": "Dart",
-          "color": "#00B4AB",
-          "bytes": 350553,
-          "percentage": 0
-        },
-        {
-          "name": "C++",
-          "color": "#f34b7d",
-          "bytes": 24386,
-          "percentage": 0
-        },
-        {
-          "name": "CMake",
-          "color": "#DA3434",
-          "bytes": 18898,
-          "percentage": 0
-        },
-        {
-          "name": "HTML",
-          "color": "#e34c26",
-          "bytes": 1847,
-          "percentage": 0
-        },
-        {
-          "name": "C",
-          "color": "#555555",
-          "bytes": 1425,
-          "percentage": 0
-        },
-        {
-          "name": "Ruby",
-          "color": "#701516",
-          "bytes": 1414,
-          "percentage": 0
-        },
-        {
-          "name": "Swift",
-          "color": "#F05138",
-          "bytes": 689,
-          "percentage": 0
-        },
-        {
-          "name": "Java",
-          "color": "#b07219",
-          "bytes": 670,
-          "percentage": 0
-        },
-        {
-          "name": "Kotlin",
-          "color": "#A97BFF",
-          "bytes": 127,
-          "percentage": 0
-        },
-        {
-          "name": "Objective-C",
-          "color": "#438eff",
-          "bytes": 38,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Dart",
-        "color": "#00B4AB"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "histral/core_wa",
-      "tier": "organization",
-      "is_private": true,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "Histral Core Web App",
-      "commits": 1,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 5580,
-      "deletions": 0,
-      "net_lines": 5580,
-      "total_contributions": 1,
-      "languages": [
-        {
-          "name": "JavaScript",
-          "color": "#f1e05a",
-          "bytes": 1208,
-          "percentage": 0
-        },
-        {
-          "name": "TypeScript",
-          "color": "#3178c6",
-          "bytes": 848,
-          "percentage": 0
-        },
-        {
-          "name": "HTML",
-          "color": "#e34c26",
-          "bytes": 329,
-          "percentage": 0
-        },
-        {
-          "name": "Svelte",
-          "color": "#ff3e00",
-          "bytes": 121,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "JavaScript",
-        "color": "#f1e05a"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "trustopay/trustopay_app",
-      "tier": "organization",
-      "is_private": true,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "Mobile app for Trustopay build with @Flutter",
-      "commits": 1,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 4955,
-      "deletions": 0,
-      "net_lines": 4955,
-      "total_contributions": 1,
-      "languages": [
-        {
-          "name": "C++",
-          "color": "#f34b7d",
-          "bytes": 23771,
-          "percentage": 0
-        },
-        {
-          "name": "CMake",
-          "color": "#DA3434",
-          "bytes": 19436,
-          "percentage": 0
-        },
-        {
-          "name": "Dart",
-          "color": "#00B4AB",
-          "bytes": 6032,
-          "percentage": 0
-        },
-        {
-          "name": "HTML",
-          "color": "#e34c26",
-          "bytes": 1853,
-          "percentage": 0
-        },
-        {
-          "name": "Swift",
-          "color": "#F05138",
-          "bytes": 1728,
-          "percentage": 0
-        },
-        {
-          "name": "C",
-          "color": "#555555",
-          "bytes": 1425,
-          "percentage": 0
-        },
-        {
-          "name": "Kotlin",
-          "color": "#A97BFF",
-          "bytes": 126,
-          "percentage": 0
-        },
-        {
-          "name": "Objective-C",
-          "color": "#438eff",
-          "bytes": 38,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "C++",
-        "color": "#f34b7d"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "ranveer-rajput/shoes-website",
-      "tier": "organization",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 0,
-      "pull_requests": 1,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 0,
-      "deletions": 0,
-      "net_lines": 0,
-      "total_contributions": 1,
-      "languages": [],
-      "primary_language": null,
-      "latest_release": null
-    },
-    {
-      "repository": "jonataslaw/getx",
-      "tier": "external_oss",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 0,
-      "pull_requests": 1,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 0,
-      "deletions": 0,
-      "net_lines": 0,
-      "total_contributions": 1,
-      "languages": [],
-      "primary_language": null,
-      "latest_release": null
-    },
-    {
-      "repository": "ranveer-rajput/word_counter",
-      "tier": "organization",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 0,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 1,
-      "additions": 0,
-      "deletions": 0,
-      "net_lines": 0,
-      "total_contributions": 1,
-      "languages": [
-        {
-          "name": "JavaScript",
-          "color": "#f1e05a",
-          "bytes": 1912,
-          "percentage": 0
-        },
-        {
-          "name": "HTML",
-          "color": "#e34c26",
-          "bytes": 1721,
-          "percentage": 0
-        },
-        {
-          "name": "CSS",
-          "color": "#663399",
-          "bytes": 930,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "JavaScript",
-        "color": "#f1e05a"
-      },
-      "latest_release": null
-    }
-  ],
-  "releases": [
-    {
-      "repo": "adityamotale/shyena",
-      "tag_name": "v0.0.102",
-      "title": "v0.0.102",
-      "published_at": "2026-11-20T14:52:47Z",
-      "url": "https://github.com/adityamotale/shyena/releases/tag/v0.0.102"
-    },
-    {
-      "repo": "adityamotale/adityamotale",
-      "tag_name": "v0.3.10",
-      "title": "Release of v0.3.10",
-      "published_at": "2026-11-16T08:59:59Z",
-      "url": "https://github.com/adityamotale/adityamotale/releases/tag/v0.3.10"
-    },
-    {
-      "repo": "pid7-org/turbofox",
-      "tag_name": "v0.0.301",
-      "title": "Release v0.0.301",
-      "published_at": "2026-11-08T18:07:46Z",
-      "url": "https://github.com/pid7-org/turbofox/releases/tag/v0.0.301"
-    },
-    {
-      "repo": "adityamotale/asm_db",
-      "tag_name": "v0.0.1",
-      "title": "Release v0.0.1",
-      "published_at": "2025-04-27T13:34:24Z",
-      "url": "https://github.com/adityamotale/asm_db/releases/tag/v0.0.1"
-    },
-    {
-      "repo": "adityamotale/raven",
-      "tag_name": "v0.0.1",
-      "title": "Release v0.0.1",
-      "published_at": "2025-04-18T19:41:39Z",
-      "url": "https://github.com/adityamotale/raven/releases/tag/v0.0.1"
-    },
-    {
-      "repo": "adityamotale/paw",
-      "tag_name": "v-0.0.4",
-      "title": "v-0.0.4",
-      "published_at": "2024-04-08T12:29:01Z",
-      "url": "https://github.com/adityamotale/paw/releases/tag/v-0.0.4"
-    },
-    {
-      "repo": "adityamotale/bharat_city_connect",
-      "tag_name": "v-0.1.0",
-      "title": "v-0.1.0",
-      "published_at": "2024-02-06T14:40:29Z",
-      "url": "https://github.com/adityamotale/bharat_city_connect/releases/tag/v-0.1.0"
-    }
-  ],
-  "monthly_history": [
-    {
-      "label": "Jun '26",
-      "month": 6,
-      "period": {
-        "from": "2026-06-01T00:00:00Z",
-        "to": "2026-06-30T23:59:59Z"
-      },
-      "commits": 0,
-      "lines_of_code": {
-        "total_additions": 0,
-        "total_deletions": 0,
-        "net_lines": 0
-      },
-      "pull_requests": {
-        "total": 0,
-        "merged": 0,
-        "closed_unmerged": 0,
-        "open": 0,
-        "merge_rate_percentage": 97.4
-      },
-      "repositories": {
-        "total": 5,
-        "public": 4,
-        "private": 1,
-        "org": 3
-      },
-      "streaks_and_consistency": {
-        "longest_streak_days": 0,
-        "current_streak_days": 0,
-        "active_days_count": 0,
-        "total_days_in_period": 0,
-        "activity_rate_percentage": 0,
-        "busiest_day": {
-          "date": "",
-          "count": 0
-        }
-      },
-      "languages": [
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "loc": 1158770,
-          "percentage": 60.8
-        },
-        {
-          "name": "Makefile",
-          "color": "#427819",
-          "loc": 149708,
-          "percentage": 7.8
-        },
-        {
-          "name": "C",
-          "color": "#555555",
-          "loc": 128835,
-          "percentage": 6.8
-        },
-        {
-          "name": "TypeScript",
-          "color": "#3178c6",
-          "loc": 112470,
-          "percentage": 5.9
-        },
-        {
-          "name": "Dart",
-          "color": "#00B4AB",
-          "loc": 71328,
-          "percentage": 3.7
-        }
-      ]
-    },
-    {
-      "label": "Jul '26",
-      "month": 7,
-      "period": {
-        "from": "2026-07-01T00:00:00Z",
-        "to": "2026-07-31T23:59:59Z"
-      },
-      "commits": 0,
-      "lines_of_code": {
-        "total_additions": 0,
-        "total_deletions": 0,
-        "net_lines": 0
-      },
-      "pull_requests": {
-        "total": 0,
-        "merged": 0,
-        "closed_unmerged": 0,
-        "open": 0,
-        "merge_rate_percentage": 97.4
-      },
-      "repositories": {
-        "total": 5,
-        "public": 4,
-        "private": 1,
-        "org": 3
-      },
-      "streaks_and_consistency": {
-        "longest_streak_days": 0,
-        "current_streak_days": 0,
-        "active_days_count": 0,
-        "total_days_in_period": 0,
-        "activity_rate_percentage": 0,
-        "busiest_day": {
-          "date": "",
-          "count": 0
-        }
-      },
-      "languages": [
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "loc": 1158770,
-          "percentage": 60.8
-        },
-        {
-          "name": "Makefile",
-          "color": "#427819",
-          "loc": 149708,
-          "percentage": 7.8
-        },
-        {
-          "name": "C",
-          "color": "#555555",
-          "loc": 128835,
-          "percentage": 6.8
-        },
-        {
-          "name": "TypeScript",
-          "color": "#3178c6",
-          "loc": 112470,
-          "percentage": 5.9
-        },
-        {
-          "name": "Dart",
-          "color": "#00B4AB",
-          "loc": 71328,
-          "percentage": 3.7
-        }
-      ]
-    },
-    {
-      "label": "Aug '26",
-      "month": 8,
-      "period": {
-        "from": "2026-08-01T00:00:00Z",
-        "to": "2026-08-31T23:59:59Z"
-      },
-      "commits": 0,
-      "lines_of_code": {
-        "total_additions": 0,
-        "total_deletions": 0,
-        "net_lines": 0
-      },
-      "pull_requests": {
-        "total": 0,
-        "merged": 0,
-        "closed_unmerged": 0,
-        "open": 0,
-        "merge_rate_percentage": 97.4
-      },
-      "repositories": {
-        "total": 5,
-        "public": 4,
-        "private": 1,
-        "org": 3
-      },
-      "streaks_and_consistency": {
-        "longest_streak_days": 0,
-        "current_streak_days": 0,
-        "active_days_count": 0,
-        "total_days_in_period": 0,
-        "activity_rate_percentage": 0,
-        "busiest_day": {
-          "date": "",
-          "count": 0
-        }
-      },
-      "languages": [
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "loc": 1158770,
-          "percentage": 60.8
-        },
-        {
-          "name": "Makefile",
-          "color": "#427819",
-          "loc": 149708,
-          "percentage": 7.8
-        },
-        {
-          "name": "C",
-          "color": "#555555",
-          "loc": 128835,
-          "percentage": 6.8
-        },
-        {
-          "name": "TypeScript",
-          "color": "#3178c6",
-          "loc": 112470,
-          "percentage": 5.9
-        },
-        {
-          "name": "Dart",
-          "color": "#00B4AB",
-          "loc": 71328,
-          "percentage": 3.7
-        }
-      ]
-    },
-    {
-      "label": "Sep '26",
-      "month": 9,
-      "period": {
-        "from": "2026-09-01T00:00:00Z",
-        "to": "2026-09-30T23:59:59Z"
-      },
-      "commits": 0,
-      "lines_of_code": {
-        "total_additions": 0,
-        "total_deletions": 0,
-        "net_lines": 0
-      },
-      "pull_requests": {
-        "total": 0,
-        "merged": 0,
-        "closed_unmerged": 0,
-        "open": 0,
-        "merge_rate_percentage": 97.4
-      },
-      "repositories": {
-        "total": 5,
-        "public": 4,
-        "private": 1,
-        "org": 3
-      },
-      "streaks_and_consistency": {
-        "longest_streak_days": 0,
-        "current_streak_days": 0,
-        "active_days_count": 0,
-        "total_days_in_period": 0,
-        "activity_rate_percentage": 0,
-        "busiest_day": {
-          "date": "",
-          "count": 0
-        }
-      },
-      "languages": [
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "loc": 1158770,
-          "percentage": 60.8
-        },
-        {
-          "name": "Makefile",
-          "color": "#427819",
-          "loc": 149708,
-          "percentage": 7.8
-        },
-        {
-          "name": "C",
-          "color": "#555555",
-          "loc": 128835,
-          "percentage": 6.8
-        },
-        {
-          "name": "TypeScript",
-          "color": "#3178c6",
-          "loc": 112470,
-          "percentage": 5.9
-        },
-        {
-          "name": "Dart",
-          "color": "#00B4AB",
-          "loc": 71328,
-          "percentage": 3.7
-        }
-      ]
-    },
-    {
-      "label": "Oct '26",
-      "month": 10,
-      "period": {
-        "from": "2026-10-01T00:00:00Z",
-        "to": "2026-10-31T23:59:59Z"
-      },
-      "commits": 0,
-      "lines_of_code": {
-        "total_additions": 0,
-        "total_deletions": 0,
-        "net_lines": 0
-      },
-      "pull_requests": {
-        "total": 0,
-        "merged": 0,
-        "closed_unmerged": 0,
-        "open": 0,
-        "merge_rate_percentage": 97.4
-      },
-      "repositories": {
-        "total": 5,
-        "public": 4,
-        "private": 1,
-        "org": 3
-      },
-      "streaks_and_consistency": {
-        "longest_streak_days": 0,
-        "current_streak_days": 0,
-        "active_days_count": 0,
-        "total_days_in_period": 0,
-        "activity_rate_percentage": 0,
-        "busiest_day": {
-          "date": "",
-          "count": 0
-        }
-      },
-      "languages": [
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "loc": 1158770,
-          "percentage": 60.8
-        },
-        {
-          "name": "Makefile",
-          "color": "#427819",
-          "loc": 149708,
-          "percentage": 7.8
-        },
-        {
-          "name": "C",
-          "color": "#555555",
-          "loc": 128835,
-          "percentage": 6.8
-        },
-        {
-          "name": "TypeScript",
-          "color": "#3178c6",
-          "loc": 112470,
-          "percentage": 5.9
-        },
-        {
-          "name": "Dart",
-          "color": "#00B4AB",
-          "loc": 71328,
-          "percentage": 3.7
-        }
-      ]
-    },
-    {
-      "label": "Nov '26",
-      "month": 11,
-      "period": {
-        "from": "2026-11-01T00:00:00Z",
-        "to": "2026-11-22T09:48:59.372Z"
-      },
-      "commits": 0,
-      "lines_of_code": {
-        "total_additions": 0,
-        "total_deletions": 0,
-        "net_lines": 0
-      },
-      "pull_requests": {
-        "total": 0,
-        "merged": 0,
-        "closed_unmerged": 0,
-        "open": 0,
-        "merge_rate_percentage": 97.4
-      },
-      "repositories": {
-        "total": 5,
-        "public": 4,
-        "private": 1,
-        "org": 3
-      },
-      "streaks_and_consistency": {
-        "longest_streak_days": 0,
-        "current_streak_days": 0,
-        "active_days_count": 0,
-        "total_days_in_period": 0,
-        "activity_rate_percentage": 0,
-        "busiest_day": {
-          "date": "",
-          "count": 0
-        }
-      },
-      "languages": [
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "loc": 1158770,
-          "percentage": 60.8
-        },
-        {
-          "name": "Makefile",
-          "color": "#427819",
-          "loc": 149708,
-          "percentage": 7.8
-        },
-        {
-          "name": "C",
-          "color": "#555555",
-          "loc": 128835,
-          "percentage": 6.8
-        },
-        {
-          "name": "TypeScript",
-          "color": "#3178c6",
-          "loc": 112470,
-          "percentage": 5.9
-        },
-        {
-          "name": "Dart",
-          "color": "#00B4AB",
-          "loc": 71328,
-          "percentage": 3.7
-        }
-      ]
-    }
-  ],
-  "weekly_summary": {
-    "period": {
-      "from": "2026-11-15T00:00:00Z",
-      "to": "2026-11-21T23:59:59Z"
-    },
-    "commits": 0,
-    "lines_of_code": {
-      "total_additions": 0,
-      "total_deletions": 0,
-      "net_lines": 0
-    },
-    "pull_requests": {
-      "total": 0,
-      "merged": 0,
-      "closed_unmerged": 0,
-      "open": 0,
-      "merge_rate_percentage": 0
-    },
-    "repositories": {
-      "total": 3,
-      "public": 2,
-      "private": 0,
-      "org": 2
-    },
-    "streaks_and_consistency": {
-      "longest_streak_days": 0,
-      "current_streak_days": 0,
-      "active_days_count": 0,
-      "total_days_in_period": 0,
-      "activity_rate_percentage": 0,
-      "busiest_day": {
-        "date": "",
-        "count": 0
-      }
-    },
-    "languages": [
+   },
+   "contributions" : {
+      "commits" : 3280,
+      "issues" : 93,
+      "private" : 0,
+      "public" : 3280,
+      "pull_requests" : 234,
+      "reviews" : 1,
+      "total" : 3515
+   },
+   "generated_at" : "2026-11-22T09:51:06.737Z",
+   "languages" : [
       {
-        "name": "Rust",
-        "color": "#dea584",
-        "loc": 1158770,
-        "percentage": 60.8
+         "color" : "#dea584",
+         "loc" : 1158770,
+         "name" : "Rust",
+         "percentage" : 68.7
       },
       {
-        "name": "Makefile",
-        "color": "#427819",
-        "loc": 149708,
-        "percentage": 7.8
+         "color" : "#555555",
+         "loc" : 128576,
+         "name" : "C",
+         "percentage" : 7.6
       },
       {
-        "name": "C",
-        "color": "#555555",
-        "loc": 128835,
-        "percentage": 6.8
+         "color" : "#3178c6",
+         "loc" : 112470,
+         "name" : "TypeScript",
+         "percentage" : 6.7
+      },
+      {
+         "color" : "#6E4C13",
+         "loc" : 63958,
+         "name" : "Assembly",
+         "percentage" : 3.8
+      },
+      {
+         "color" : "#3572A5",
+         "loc" : 56685,
+         "name" : "Python",
+         "percentage" : 3.4
+      },
+      {
+         "color" : "#f1e05a",
+         "loc" : 44473,
+         "name" : "JavaScript",
+         "percentage" : 2.6
+      },
+      {
+         "color" : "#ff3e00",
+         "loc" : 35792,
+         "name" : "Svelte",
+         "percentage" : 2.1
+      },
+      {
+         "color" : "#ff5a03",
+         "loc" : 22932,
+         "name" : "Astro",
+         "percentage" : 1.4
+      },
+      {
+         "color" : "#00B4AB",
+         "loc" : 13056,
+         "name" : "Dart",
+         "percentage" : 0.8
+      },
+      {
+         "color" : "#89e051",
+         "loc" : 8198,
+         "name" : "Shell",
+         "percentage" : 0.5
+      },
+      {
+         "color" : "#012456",
+         "loc" : 8050,
+         "name" : "PowerShell",
+         "percentage" : 0.5
+      },
+      {
+         "color" : "#7e7eff",
+         "loc" : 7601,
+         "name" : "Nix",
+         "percentage" : 0.5
+      },
+      {
+         "color" : "#e34c26",
+         "loc" : 7471,
+         "name" : "HTML",
+         "percentage" : 0.4
+      },
+      {
+         "color" : "#f34b7d",
+         "loc" : 5482,
+         "name" : "C++",
+         "percentage" : 0.3
+      },
+      {
+         "color" : "#663399",
+         "loc" : 5253,
+         "name" : "CSS",
+         "percentage" : 0.3
+      },
+      {
+         "color" : "#ec915c",
+         "loc" : 3326,
+         "name" : "Zig",
+         "percentage" : 0.2
+      },
+      {
+         "color" : "#DA3434",
+         "loc" : 2444,
+         "name" : "CMake",
+         "percentage" : 0.1
+      },
+      {
+         "color" : "#844FBA",
+         "loc" : 920,
+         "name" : "HCL",
+         "percentage" : 0.1
+      },
+      {
+         "color" : "#427819",
+         "loc" : 763,
+         "name" : "Makefile",
+         "percentage" : 0
+      },
+      {
+         "color" : "#a270ba",
+         "loc" : 649,
+         "name" : "Julia",
+         "percentage" : 0
+      },
+      {
+         "color" : "#3A4E3A",
+         "loc" : 412,
+         "name" : "Cuda",
+         "percentage" : 0
+      },
+      {
+         "color" : "#F05138",
+         "loc" : 182,
+         "name" : "Swift",
+         "percentage" : 0
+      },
+      {
+         "color" : "#b2b7f8",
+         "loc" : 106,
+         "name" : "Verilog",
+         "percentage" : 0
+      },
+      {
+         "color" : "#701516",
+         "loc" : 50,
+         "name" : "Ruby",
+         "percentage" : 0
+      },
+      {
+         "color" : "#b07219",
+         "loc" : 24,
+         "name" : "Java",
+         "percentage" : 0
+      },
+      {
+         "color" : "#A97BFF",
+         "loc" : 16,
+         "name" : "Kotlin",
+         "percentage" : 0
+      },
+      {
+         "color" : "#438eff",
+         "loc" : 5,
+         "name" : "Objective-C",
+         "percentage" : 0
+      },
+      {
+         "color" : "#c6538c",
+         "loc" : 0,
+         "name" : "SCSS",
+         "percentage" : 0
+      },
+      {
+         "color" : "#384d54",
+         "loc" : 0,
+         "name" : "Just",
+         "percentage" : 0
+      },
+      {
+         "color" : "#384d54",
+         "loc" : 0,
+         "name" : "Dockerfile",
+         "percentage" : 0
       }
-    ]
-  }
+   ],
+   "lines_of_code" : {
+      "net_lines" : 810922,
+      "total_additions" : 1688692,
+      "total_deletions" : 877770
+   },
+   "monthly_history" : [
+      {
+         "commits" : 0,
+         "label" : "Jun '26",
+         "languages" : [
+            {
+               "color" : "#dea584",
+               "loc" : 1158770,
+               "name" : "Rust",
+               "percentage" : 68.7
+            },
+            {
+               "color" : "#555555",
+               "loc" : 128576,
+               "name" : "C",
+               "percentage" : 7.6
+            },
+            {
+               "color" : "#3178c6",
+               "loc" : 112470,
+               "name" : "TypeScript",
+               "percentage" : 6.7
+            },
+            {
+               "color" : "#6E4C13",
+               "loc" : 63958,
+               "name" : "Assembly",
+               "percentage" : 3.8
+            },
+            {
+               "color" : "#3572A5",
+               "loc" : 56685,
+               "name" : "Python",
+               "percentage" : 3.4
+            }
+         ],
+         "lines_of_code" : {
+            "net_lines" : 0,
+            "total_additions" : 0,
+            "total_deletions" : 0
+         },
+         "month" : 6,
+         "period" : {
+            "from" : "2026-06-01T00:00:00Z",
+            "to" : "2026-06-30T23:59:59Z"
+         },
+         "pull_requests" : {
+            "closed_unmerged" : 0,
+            "merge_rate_percentage" : 97.4,
+            "merged" : 0,
+            "open" : 0,
+            "total" : 0
+         },
+         "repositories" : {
+            "org" : 3,
+            "private" : 1,
+            "public" : 4,
+            "total" : 5
+         },
+         "streaks_and_consistency" : {
+            "active_days_count" : 0,
+            "activity_rate_percentage" : 0,
+            "busiest_day" : {
+               "count" : 0,
+               "date" : ""
+            },
+            "current_streak_days" : 0,
+            "longest_streak_days" : 0,
+            "total_days_in_period" : 0
+         }
+      },
+      {
+         "commits" : 0,
+         "label" : "Jul '26",
+         "languages" : [
+            {
+               "color" : "#dea584",
+               "loc" : 1158770,
+               "name" : "Rust",
+               "percentage" : 68.7
+            },
+            {
+               "color" : "#555555",
+               "loc" : 128576,
+               "name" : "C",
+               "percentage" : 7.6
+            },
+            {
+               "color" : "#3178c6",
+               "loc" : 112470,
+               "name" : "TypeScript",
+               "percentage" : 6.7
+            },
+            {
+               "color" : "#6E4C13",
+               "loc" : 63958,
+               "name" : "Assembly",
+               "percentage" : 3.8
+            },
+            {
+               "color" : "#3572A5",
+               "loc" : 56685,
+               "name" : "Python",
+               "percentage" : 3.4
+            }
+         ],
+         "lines_of_code" : {
+            "net_lines" : 0,
+            "total_additions" : 0,
+            "total_deletions" : 0
+         },
+         "month" : 7,
+         "period" : {
+            "from" : "2026-07-01T00:00:00Z",
+            "to" : "2026-07-31T23:59:59Z"
+         },
+         "pull_requests" : {
+            "closed_unmerged" : 0,
+            "merge_rate_percentage" : 97.4,
+            "merged" : 0,
+            "open" : 0,
+            "total" : 0
+         },
+         "repositories" : {
+            "org" : 3,
+            "private" : 1,
+            "public" : 4,
+            "total" : 5
+         },
+         "streaks_and_consistency" : {
+            "active_days_count" : 0,
+            "activity_rate_percentage" : 0,
+            "busiest_day" : {
+               "count" : 0,
+               "date" : ""
+            },
+            "current_streak_days" : 0,
+            "longest_streak_days" : 0,
+            "total_days_in_period" : 0
+         }
+      },
+      {
+         "commits" : 0,
+         "label" : "Aug '26",
+         "languages" : [
+            {
+               "color" : "#dea584",
+               "loc" : 1158770,
+               "name" : "Rust",
+               "percentage" : 68.7
+            },
+            {
+               "color" : "#555555",
+               "loc" : 128576,
+               "name" : "C",
+               "percentage" : 7.6
+            },
+            {
+               "color" : "#3178c6",
+               "loc" : 112470,
+               "name" : "TypeScript",
+               "percentage" : 6.7
+            },
+            {
+               "color" : "#6E4C13",
+               "loc" : 63958,
+               "name" : "Assembly",
+               "percentage" : 3.8
+            },
+            {
+               "color" : "#3572A5",
+               "loc" : 56685,
+               "name" : "Python",
+               "percentage" : 3.4
+            }
+         ],
+         "lines_of_code" : {
+            "net_lines" : 0,
+            "total_additions" : 0,
+            "total_deletions" : 0
+         },
+         "month" : 8,
+         "period" : {
+            "from" : "2026-08-01T00:00:00Z",
+            "to" : "2026-08-31T23:59:59Z"
+         },
+         "pull_requests" : {
+            "closed_unmerged" : 0,
+            "merge_rate_percentage" : 97.4,
+            "merged" : 0,
+            "open" : 0,
+            "total" : 0
+         },
+         "repositories" : {
+            "org" : 3,
+            "private" : 1,
+            "public" : 4,
+            "total" : 5
+         },
+         "streaks_and_consistency" : {
+            "active_days_count" : 0,
+            "activity_rate_percentage" : 0,
+            "busiest_day" : {
+               "count" : 0,
+               "date" : ""
+            },
+            "current_streak_days" : 0,
+            "longest_streak_days" : 0,
+            "total_days_in_period" : 0
+         }
+      },
+      {
+         "commits" : 0,
+         "label" : "Sep '26",
+         "languages" : [
+            {
+               "color" : "#dea584",
+               "loc" : 1158770,
+               "name" : "Rust",
+               "percentage" : 68.7
+            },
+            {
+               "color" : "#555555",
+               "loc" : 128576,
+               "name" : "C",
+               "percentage" : 7.6
+            },
+            {
+               "color" : "#3178c6",
+               "loc" : 112470,
+               "name" : "TypeScript",
+               "percentage" : 6.7
+            },
+            {
+               "color" : "#6E4C13",
+               "loc" : 63958,
+               "name" : "Assembly",
+               "percentage" : 3.8
+            },
+            {
+               "color" : "#3572A5",
+               "loc" : 56685,
+               "name" : "Python",
+               "percentage" : 3.4
+            }
+         ],
+         "lines_of_code" : {
+            "net_lines" : 0,
+            "total_additions" : 0,
+            "total_deletions" : 0
+         },
+         "month" : 9,
+         "period" : {
+            "from" : "2026-09-01T00:00:00Z",
+            "to" : "2026-09-30T23:59:59Z"
+         },
+         "pull_requests" : {
+            "closed_unmerged" : 0,
+            "merge_rate_percentage" : 97.4,
+            "merged" : 0,
+            "open" : 0,
+            "total" : 0
+         },
+         "repositories" : {
+            "org" : 3,
+            "private" : 1,
+            "public" : 4,
+            "total" : 5
+         },
+         "streaks_and_consistency" : {
+            "active_days_count" : 0,
+            "activity_rate_percentage" : 0,
+            "busiest_day" : {
+               "count" : 0,
+               "date" : ""
+            },
+            "current_streak_days" : 0,
+            "longest_streak_days" : 0,
+            "total_days_in_period" : 0
+         }
+      },
+      {
+         "commits" : 0,
+         "label" : "Oct '26",
+         "languages" : [
+            {
+               "color" : "#dea584",
+               "loc" : 1158770,
+               "name" : "Rust",
+               "percentage" : 68.7
+            },
+            {
+               "color" : "#555555",
+               "loc" : 128576,
+               "name" : "C",
+               "percentage" : 7.6
+            },
+            {
+               "color" : "#3178c6",
+               "loc" : 112470,
+               "name" : "TypeScript",
+               "percentage" : 6.7
+            },
+            {
+               "color" : "#6E4C13",
+               "loc" : 63958,
+               "name" : "Assembly",
+               "percentage" : 3.8
+            },
+            {
+               "color" : "#3572A5",
+               "loc" : 56685,
+               "name" : "Python",
+               "percentage" : 3.4
+            }
+         ],
+         "lines_of_code" : {
+            "net_lines" : 0,
+            "total_additions" : 0,
+            "total_deletions" : 0
+         },
+         "month" : 10,
+         "period" : {
+            "from" : "2026-10-01T00:00:00Z",
+            "to" : "2026-10-31T23:59:59Z"
+         },
+         "pull_requests" : {
+            "closed_unmerged" : 0,
+            "merge_rate_percentage" : 97.4,
+            "merged" : 0,
+            "open" : 0,
+            "total" : 0
+         },
+         "repositories" : {
+            "org" : 3,
+            "private" : 1,
+            "public" : 4,
+            "total" : 5
+         },
+         "streaks_and_consistency" : {
+            "active_days_count" : 0,
+            "activity_rate_percentage" : 0,
+            "busiest_day" : {
+               "count" : 0,
+               "date" : ""
+            },
+            "current_streak_days" : 0,
+            "longest_streak_days" : 0,
+            "total_days_in_period" : 0
+         }
+      },
+      {
+         "commits" : 0,
+         "label" : "Nov '26",
+         "languages" : [
+            {
+               "color" : "#dea584",
+               "loc" : 1158770,
+               "name" : "Rust",
+               "percentage" : 68.7
+            },
+            {
+               "color" : "#555555",
+               "loc" : 128576,
+               "name" : "C",
+               "percentage" : 7.6
+            },
+            {
+               "color" : "#3178c6",
+               "loc" : 112470,
+               "name" : "TypeScript",
+               "percentage" : 6.7
+            },
+            {
+               "color" : "#6E4C13",
+               "loc" : 63958,
+               "name" : "Assembly",
+               "percentage" : 3.8
+            },
+            {
+               "color" : "#3572A5",
+               "loc" : 56685,
+               "name" : "Python",
+               "percentage" : 3.4
+            }
+         ],
+         "lines_of_code" : {
+            "net_lines" : 0,
+            "total_additions" : 0,
+            "total_deletions" : 0
+         },
+         "month" : 11,
+         "period" : {
+            "from" : "2026-11-01T00:00:00Z",
+            "to" : "2026-11-22T09:48:59.372Z"
+         },
+         "pull_requests" : {
+            "closed_unmerged" : 0,
+            "merge_rate_percentage" : 97.4,
+            "merged" : 0,
+            "open" : 0,
+            "total" : 0
+         },
+         "repositories" : {
+            "org" : 3,
+            "private" : 1,
+            "public" : 4,
+            "total" : 5
+         },
+         "streaks_and_consistency" : {
+            "active_days_count" : 0,
+            "activity_rate_percentage" : 0,
+            "busiest_day" : {
+               "count" : 0,
+               "date" : ""
+            },
+            "current_streak_days" : 0,
+            "longest_streak_days" : 0,
+            "total_days_in_period" : 0
+         }
+      }
+   ],
+   "period" : {
+      "from" : "2021-01-01T00:00:00Z",
+      "to" : "2026-11-22T09:48:59.372Z"
+   },
+   "pull_requests" : {
+      "closed_unmerged" : 6,
+      "merge_rate_percentage" : 97.4,
+      "merged" : 228,
+      "open" : 0,
+      "total" : 234
+   },
+   "releases" : [
+      {
+         "published_at" : "2026-11-20T14:52:47Z",
+         "repo" : "adityamotale/shyena",
+         "tag_name" : "v0.0.102",
+         "title" : "v0.0.102",
+         "url" : "https://github.com/adityamotale/shyena/releases/tag/v0.0.102"
+      },
+      {
+         "published_at" : "2026-11-16T08:59:59Z",
+         "repo" : "adityamotale/adityamotale",
+         "tag_name" : "v0.3.10",
+         "title" : "Release of v0.3.10",
+         "url" : "https://github.com/adityamotale/adityamotale/releases/tag/v0.3.10"
+      },
+      {
+         "published_at" : "2026-11-08T18:07:46Z",
+         "repo" : "pid7-org/turbofox",
+         "tag_name" : "v0.0.301",
+         "title" : "Release v0.0.301",
+         "url" : "https://github.com/pid7-org/turbofox/releases/tag/v0.0.301"
+      },
+      {
+         "published_at" : "2025-04-27T13:34:24Z",
+         "repo" : "adityamotale/asm_db",
+         "tag_name" : "v0.0.1",
+         "title" : "Release v0.0.1",
+         "url" : "https://github.com/adityamotale/asm_db/releases/tag/v0.0.1"
+      },
+      {
+         "published_at" : "2025-04-18T19:41:39Z",
+         "repo" : "adityamotale/raven",
+         "tag_name" : "v0.0.1",
+         "title" : "Release v0.0.1",
+         "url" : "https://github.com/adityamotale/raven/releases/tag/v0.0.1"
+      },
+      {
+         "published_at" : "2024-04-08T12:29:01Z",
+         "repo" : "adityamotale/paw",
+         "tag_name" : "v-0.0.4",
+         "title" : "v-0.0.4",
+         "url" : "https://github.com/adityamotale/paw/releases/tag/v-0.0.4"
+      },
+      {
+         "published_at" : "2024-02-06T14:40:29Z",
+         "repo" : "adityamotale/bharat_city_connect",
+         "tag_name" : "v-0.1.0",
+         "title" : "v-0.1.0",
+         "url" : "https://github.com/adityamotale/bharat_city_connect/releases/tag/v-0.1.0"
+      }
+   ],
+   "repositories" : {
+      "forks" : 0,
+      "org" : 0,
+      "private" : 11,
+      "public" : 17,
+      "total" : 28,
+      "total_forks" : 4,
+      "total_owned" : 28,
+      "total_stars" : 5
+   },
+   "repositories_contributed_to" : [
+      {
+         "additions" : 114874,
+         "commits" : 924,
+         "deletions" : 94695,
+         "description" : "An embedded, memory-mapped key-value engine providing lock-free concurrency & explicit sync barriers",
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 481291,
+               "color" : "#dea584",
+               "name" : "Rust",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 101501,
+               "color" : "#3572A5",
+               "name" : "Python",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 20547,
+               "color" : "#89e051",
+               "name" : "Shell",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 3108,
+               "color" : "#844FBA",
+               "name" : "HCL",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : {
+            "published_at" : "2026-11-08T18:07:46Z",
+            "tag_name" : "v0.0.301",
+            "title" : "Release v0.0.301",
+            "url" : "https://github.com/pid7-org/turbofox/releases/tag/v0.0.301"
+         },
+         "net_lines" : 20179,
+         "primary_language" : {
+            "color" : "#dea584",
+            "name" : "Rust"
+         },
+         "pull_requests" : 1,
+         "repository" : "pid7-org/turbofox",
+         "reviews" : 0,
+         "tier" : "organization",
+         "total_contributions" : 925
+      },
+      {
+         "additions" : 72934,
+         "commits" : 571,
+         "deletions" : 44600,
+         "description" : "Core utilities for frozen codebases.",
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 681298,
+               "color" : "#dea584",
+               "name" : "Rust",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1554,
+               "color" : "#89e051",
+               "name" : "Shell",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 28334,
+         "primary_language" : {
+            "color" : "#dea584",
+            "name" : "Rust"
+         },
+         "pull_requests" : 43,
+         "repository" : "pid7-org/frozen-core",
+         "reviews" : 0,
+         "tier" : "organization",
+         "total_contributions" : 614
+      },
+      {
+         "additions" : 29964,
+         "commits" : 314,
+         "deletions" : 9019,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 269348,
+               "color" : "#dea584",
+               "name" : "Rust",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 122055,
+               "color" : "#f1e05a",
+               "name" : "JavaScript",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 56738,
+               "color" : "#3572A5",
+               "name" : "Python",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 48825,
+               "color" : "#89e051",
+               "name" : "Shell",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 5580,
+               "color" : "#844FBA",
+               "name" : "HCL",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1621,
+               "color" : "#555555",
+               "name" : "C",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 20945,
+         "primary_language" : {
+            "color" : "#dea584",
+            "name" : "Rust"
+         },
+         "pull_requests" : 0,
+         "repository" : "pid7-org/ashwa",
+         "reviews" : 0,
+         "tier" : "organization",
+         "total_contributions" : 314
+      },
+      {
+         "additions" : 15498,
+         "commits" : 215,
+         "deletions" : 15245,
+         "description" : "SIMD\u2122 powered PRNG lib.",
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : true,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 19,
+               "color" : "#dea584",
+               "name" : "Rust",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 253,
+         "primary_language" : {
+            "color" : "#dea584",
+            "name" : "Rust"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/ocelot",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 215
+      },
+      {
+         "additions" : 40944,
+         "commits" : 199,
+         "deletions" : 22645,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 195769,
+               "color" : "#3178c6",
+               "name" : "TypeScript",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 74530,
+               "color" : "#ff5a03",
+               "name" : "Astro",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 10277,
+               "color" : "#663399",
+               "name" : "CSS",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 208,
+               "color" : "#f1e05a",
+               "name" : "JavaScript",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 18299,
+         "primary_language" : {
+            "color" : "#3178c6",
+            "name" : "TypeScript"
+         },
+         "pull_requests" : 0,
+         "repository" : "pid7-org/website",
+         "reviews" : 0,
+         "tier" : "organization",
+         "total_contributions" : 199
+      },
+      {
+         "additions" : 48850,
+         "commits" : 156,
+         "deletions" : 21641,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : true,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 103119,
+               "color" : "#3178c6",
+               "name" : "TypeScript",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 9336,
+               "color" : "#ff5a03",
+               "name" : "Astro",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 2404,
+               "color" : "#f1e05a",
+               "name" : "JavaScript",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1961,
+               "color" : "#663399",
+               "name" : "CSS",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 27209,
+         "primary_language" : {
+            "color" : "#3178c6",
+            "name" : "TypeScript"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/thehraav",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 156
+      },
+      {
+         "additions" : 655445,
+         "commits" : 131,
+         "deletions" : 630488,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 239365,
+               "color" : "#dea584",
+               "name" : "Rust",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 7982,
+               "color" : "#3572A5",
+               "name" : "Python",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1140,
+               "color" : "#7e7eff",
+               "name" : "Nix",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 222,
+               "color" : "#89e051",
+               "name" : "Shell",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 24957,
+         "primary_language" : {
+            "color" : "#dea584",
+            "name" : "Rust"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/anvaya",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 131
+      },
+      {
+         "additions" : 21907,
+         "commits" : 129,
+         "deletions" : 7034,
+         "description" : "\u015ayena is a Keyboard-first launcher and transient PowerShell automation runtime for Windows",
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 176381,
+               "color" : "#dea584",
+               "name" : "Rust",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 46539,
+               "color" : "#012456",
+               "name" : "PowerShell",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : {
+            "published_at" : "2026-11-20T14:52:47Z",
+            "tag_name" : "v0.0.102",
+            "title" : "v0.0.102",
+            "url" : "https://github.com/adityamotale/shyena/releases/tag/v0.0.102"
+         },
+         "net_lines" : 14873,
+         "primary_language" : {
+            "color" : "#dea584",
+            "name" : "Rust"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/shyena",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 129
+      },
+      {
+         "additions" : 25729,
+         "commits" : 97,
+         "deletions" : 3828,
+         "description" : "Portfolio website",
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 154720,
+               "color" : "#3178c6",
+               "name" : "TypeScript",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 85105,
+               "color" : "#ff5a03",
+               "name" : "Astro",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 19553,
+               "color" : "#f1e05a",
+               "name" : "JavaScript",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 7556,
+               "color" : "#663399",
+               "name" : "CSS",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1401,
+               "color" : "#89e051",
+               "name" : "Shell",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : {
+            "published_at" : "2026-11-16T08:59:59Z",
+            "tag_name" : "v0.3.10",
+            "title" : "Release of v0.3.10",
+            "url" : "https://github.com/adityamotale/adityamotale/releases/tag/v0.3.10"
+         },
+         "net_lines" : 21901,
+         "primary_language" : {
+            "color" : "#3178c6",
+            "name" : "TypeScript"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/adityamotale",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 97
+      },
+      {
+         "additions" : 10500,
+         "commits" : 87,
+         "deletions" : 3192,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 115400,
+               "color" : "#6E4C13",
+               "name" : "Assembly",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 38797,
+               "color" : "#f34b7d",
+               "name" : "C++",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 8161,
+               "color" : "#555555",
+               "name" : "C",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 3109,
+               "color" : "#427819",
+               "name" : "Makefile",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 887,
+               "color" : "#89e051",
+               "name" : "Shell",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 127,
+               "color" : "#7e7eff",
+               "name" : "Nix",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 7308,
+         "primary_language" : {
+            "color" : "#6E4C13",
+            "name" : "Assembly"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/asm_tcp",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 87
+      },
+      {
+         "additions" : 378094,
+         "commits" : 71,
+         "deletions" : 1690,
+         "description" : "A collection of projects and experiments in low-level and systems engineering.",
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 37736,
+               "color" : "#dea584",
+               "name" : "Rust",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 6362,
+               "color" : "#6E4C13",
+               "name" : "Assembly",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1886,
+               "color" : "#555555",
+               "name" : "C",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 328,
+               "color" : "#7e7eff",
+               "name" : "Nix",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 376404,
+         "primary_language" : {
+            "color" : "#dea584",
+            "name" : "Rust"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/L3",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 71
+      },
+      {
+         "additions" : 2011,
+         "commits" : 43,
+         "deletions" : 402,
+         "description" : "An in memory key value store written in pure x86 64-bit assembly",
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : true,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 21823,
+               "color" : "#6E4C13",
+               "name" : "Assembly",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 8239,
+               "color" : "#555555",
+               "name" : "C",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 3031,
+               "color" : "#89e051",
+               "name" : "Shell",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 269,
+               "color" : "#427819",
+               "name" : "Makefile",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 128,
+               "color" : "#7e7eff",
+               "name" : "Nix",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : {
+            "published_at" : "2025-04-27T13:34:24Z",
+            "tag_name" : "v0.0.1",
+            "title" : "Release v0.0.1",
+            "url" : "https://github.com/adityamotale/asm_db/releases/tag/v0.0.1"
+         },
+         "net_lines" : 1609,
+         "primary_language" : {
+            "color" : "#6E4C13",
+            "name" : "Assembly"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/asm_db",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 43
+      },
+      {
+         "additions" : 2951,
+         "commits" : 41,
+         "deletions" : 1410,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 6354,
+               "color" : "#012456",
+               "name" : "PowerShell",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1406,
+               "color" : "#7e7eff",
+               "name" : "Nix",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 1541,
+         "primary_language" : {
+            "color" : "#012456",
+            "name" : "PowerShell"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/dotfiles",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 41
+      },
+      {
+         "additions" : 2060,
+         "commits" : 40,
+         "deletions" : 827,
+         "description" : "Full text search engine to search supercars",
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 14653,
+               "color" : "#e34c26",
+               "name" : "HTML",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 13113,
+               "color" : "#3572A5",
+               "name" : "Python",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 1233,
+         "primary_language" : {
+            "color" : "#e34c26",
+            "name" : "HTML"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/turboz",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 40
+      },
+      {
+         "additions" : 1881,
+         "commits" : 38,
+         "deletions" : 416,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 14665,
+               "color" : "#dea584",
+               "name" : "Rust",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 493,
+               "color" : "#7e7eff",
+               "name" : "Nix",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 1465,
+         "primary_language" : {
+            "color" : "#dea584",
+            "name" : "Rust"
+         },
+         "pull_requests" : 1,
+         "repository" : "pid7-org/turbo_crc",
+         "reviews" : 0,
+         "tier" : "organization",
+         "total_contributions" : 39
+      },
+      {
+         "additions" : 1567,
+         "commits" : 33,
+         "deletions" : 362,
+         "description" : "Crunch numbers with the intelligence of the namesake.",
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 16656,
+               "color" : "#6E4C13",
+               "name" : "Assembly",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 3689,
+               "color" : "#555555",
+               "name" : "C",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 2445,
+               "color" : "#89e051",
+               "name" : "Shell",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 822,
+               "color" : "#427819",
+               "name" : "Makefile",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 150,
+               "color" : "#7e7eff",
+               "name" : "Nix",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : {
+            "published_at" : "2025-04-18T19:41:39Z",
+            "tag_name" : "v0.0.1",
+            "title" : "Release v0.0.1",
+            "url" : "https://github.com/adityamotale/raven/releases/tag/v0.0.1"
+         },
+         "net_lines" : 1205,
+         "primary_language" : {
+            "color" : "#6E4C13",
+            "name" : "Assembly"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/raven",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 33
+      },
+      {
+         "additions" : 951,
+         "commits" : 30,
+         "deletions" : 232,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 5212,
+               "color" : "#3A4E3A",
+               "name" : "Cuda",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 2491,
+               "color" : "#6E4C13",
+               "name" : "Assembly",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1533,
+               "color" : "#427819",
+               "name" : "Makefile",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1466,
+               "color" : "#555555",
+               "name" : "C",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1336,
+               "color" : "#b2b7f8",
+               "name" : "Verilog",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 719,
+         "primary_language" : {
+            "color" : "#3A4E3A",
+            "name" : "Cuda"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/byte_lab",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 30
+      },
+      {
+         "additions" : 31622,
+         "commits" : 29,
+         "deletions" : 603,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : true,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 18142,
+               "color" : "#f1e05a",
+               "name" : "JavaScript",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1723,
+               "color" : "#e34c26",
+               "name" : "HTML",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 407,
+               "color" : "#663399",
+               "name" : "CSS",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 31019,
+         "primary_language" : {
+            "color" : "#f1e05a",
+            "name" : "JavaScript"
+         },
+         "pull_requests" : 0,
+         "repository" : "atharvaborlepwar/classicline",
+         "reviews" : 0,
+         "tier" : "organization",
+         "total_contributions" : 29
+      },
+      {
+         "additions" : 402,
+         "commits" : 26,
+         "deletions" : 13,
+         "description" : "Learning x86 Assembly w/ Intel Syntax",
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : true,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 5539,
+               "color" : "#6E4C13",
+               "name" : "Assembly",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 142,
+               "color" : "#555555",
+               "name" : "C",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 141,
+               "color" : "#7e7eff",
+               "name" : "Nix",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 389,
+         "primary_language" : {
+            "color" : "#6E4C13",
+            "name" : "Assembly"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/asm_tuts",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 26
+      },
+      {
+         "additions" : 5009,
+         "commits" : 23,
+         "deletions" : 3263,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 41427,
+               "color" : "#3572A5",
+               "name" : "Python",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 1746,
+         "primary_language" : {
+            "color" : "#3572A5",
+            "name" : "Python"
+         },
+         "pull_requests" : 0,
+         "repository" : "histral/news_scrapers",
+         "reviews" : 0,
+         "tier" : "organization",
+         "total_contributions" : 23
+      },
+      {
+         "additions" : 2029,
+         "commits" : 23,
+         "deletions" : 57,
+         "description" : "Content for Histral",
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : true,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 3786,
+               "color" : "#e34c26",
+               "name" : "HTML",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 1972,
+         "primary_language" : {
+            "color" : "#e34c26",
+            "name" : "HTML"
+         },
+         "pull_requests" : 0,
+         "repository" : "histral/content",
+         "reviews" : 0,
+         "tier" : "organization",
+         "total_contributions" : 23
+      },
+      {
+         "additions" : 116121,
+         "commits" : 20,
+         "deletions" : 3,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : true,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 5868685,
+               "color" : "#555555",
+               "name" : "C",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 166968,
+               "color" : "#ec915c",
+               "name" : "Zig",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 34184,
+               "color" : "#a270ba",
+               "name" : "Julia",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 29640,
+               "color" : "#dea584",
+               "name" : "Rust",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 19800,
+               "color" : "#427819",
+               "name" : "Makefile",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 116118,
+         "primary_language" : {
+            "color" : "#555555",
+            "name" : "C"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/exercism",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 20
+      },
+      {
+         "additions" : 32409,
+         "commits" : 18,
+         "deletions" : 5271,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : true,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 56992,
+               "color" : "#ff3e00",
+               "name" : "Svelte",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 37394,
+               "color" : "#3178c6",
+               "name" : "TypeScript",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 2903,
+               "color" : "#663399",
+               "name" : "CSS",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1611,
+               "color" : "#f1e05a",
+               "name" : "JavaScript",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 331,
+               "color" : "#e34c26",
+               "name" : "HTML",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 27138,
+         "primary_language" : {
+            "color" : "#ff3e00",
+            "name" : "Svelte"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/ssmm_erp",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 18
+      },
+      {
+         "additions" : 1089,
+         "commits" : 18,
+         "deletions" : 799,
+         "description" : "A low-latency, SIMD-oriented, non-cryptographic hasher, optimized for short buffers",
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : true,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 493,
+               "color" : "#7e7eff",
+               "name" : "Nix",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 419,
+               "color" : "#dea584",
+               "name" : "Rust",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 290,
+         "primary_language" : {
+            "color" : "#7e7eff",
+            "name" : "Nix"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/dohl",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 18
+      },
+      {
+         "additions" : 1060,
+         "commits" : 18,
+         "deletions" : 726,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 3891,
+               "color" : "#012456",
+               "name" : "PowerShell",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 334,
+         "primary_language" : {
+            "color" : "#012456",
+            "name" : "PowerShell"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/powershell_scripts",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 18
+      },
+      {
+         "additions" : 29840,
+         "commits" : 17,
+         "deletions" : 5586,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : true,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 34868,
+               "color" : "#ff3e00",
+               "name" : "Svelte",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 23327,
+               "color" : "#3178c6",
+               "name" : "TypeScript",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1611,
+               "color" : "#f1e05a",
+               "name" : "JavaScript",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1172,
+               "color" : "#663399",
+               "name" : "CSS",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 554,
+               "color" : "#e34c26",
+               "name" : "HTML",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 24254,
+         "primary_language" : {
+            "color" : "#ff3e00",
+            "name" : "Svelte"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/csn-tickets",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 17
+      },
+      {
+         "additions" : 3605,
+         "commits" : 17,
+         "deletions" : 1915,
+         "description" : "Benvenuto nel Vuoto",
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 25688,
+               "color" : "#dea584",
+               "name" : "Rust",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 791,
+               "color" : "#7e7eff",
+               "name" : "Nix",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 184,
+               "color" : "#89e051",
+               "name" : "Shell",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 1690,
+         "primary_language" : {
+            "color" : "#dea584",
+            "name" : "Rust"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/vuoto",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 17
+      },
+      {
+         "additions" : 1026,
+         "commits" : 16,
+         "deletions" : 33,
+         "description" : "A self-paced set of exercises to master python",
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 28277,
+               "color" : "#3572A5",
+               "name" : "Python",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 993,
+         "primary_language" : {
+            "color" : "#3572A5",
+            "name" : "Python"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/python_exercises",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 16
+      },
+      {
+         "additions" : 1026,
+         "commits" : 16,
+         "deletions" : 33,
+         "description" : "A self-paced set of exercises to master python",
+         "is_archived" : false,
+         "is_fork" : true,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 29572,
+               "color" : "#3572A5",
+               "name" : "Python",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 993,
+         "primary_language" : {
+            "color" : "#3572A5",
+            "name" : "Python"
+         },
+         "pull_requests" : 0,
+         "repository" : "ranveer-rajput/python_exercises",
+         "reviews" : 0,
+         "tier" : "organization",
+         "total_contributions" : 16
+      },
+      {
+         "additions" : 1094,
+         "commits" : 12,
+         "deletions" : 60,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 24901,
+               "color" : "#6E4C13",
+               "name" : "Assembly",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 1034,
+         "primary_language" : {
+            "color" : "#6E4C13",
+            "name" : "Assembly"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/gui_asm",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 12
+      },
+      {
+         "additions" : 2293,
+         "commits" : 11,
+         "deletions" : 274,
+         "description" : "A web app that shows curated & trending movies, web-series and  TV shows. Made with \u2764\ufe0f by parag  and help of @react-js ",
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : true,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 13563,
+               "color" : "#f1e05a",
+               "name" : "JavaScript",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 2243,
+               "color" : "#e34c26",
+               "name" : "HTML",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 375,
+               "color" : "#663399",
+               "name" : "CSS",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 2019,
+         "primary_language" : {
+            "color" : "#f1e05a",
+            "name" : "JavaScript"
+         },
+         "pull_requests" : 0,
+         "repository" : "parag1902/onfootage",
+         "reviews" : 0,
+         "tier" : "organization",
+         "total_contributions" : 11
+      },
+      {
+         "additions" : 2763,
+         "commits" : 10,
+         "deletions" : 317,
+         "description" : "Content for the courses of 1Code",
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : true,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 5525,
+               "color" : "#3572A5",
+               "name" : "Python",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 2446,
+         "primary_language" : {
+            "color" : "#3572A5",
+            "name" : "Python"
+         },
+         "pull_requests" : 0,
+         "repository" : "1code-dev/content_old",
+         "reviews" : 0,
+         "tier" : "organization",
+         "total_contributions" : 10
+      },
+      {
+         "additions" : 1000,
+         "commits" : 10,
+         "deletions" : 128,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 16976,
+               "color" : "#3572A5",
+               "name" : "Python",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 872,
+         "primary_language" : {
+            "color" : "#3572A5",
+            "name" : "Python"
+         },
+         "pull_requests" : 0,
+         "repository" : "histral/histral_core",
+         "reviews" : 0,
+         "tier" : "organization",
+         "total_contributions" : 10
+      },
+      {
+         "additions" : 1759,
+         "commits" : 9,
+         "deletions" : 38,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 7162,
+               "color" : "#3572A5",
+               "name" : "Python",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 1721,
+         "primary_language" : {
+            "color" : "#3572A5",
+            "name" : "Python"
+         },
+         "pull_requests" : 0,
+         "repository" : "histral/news_summaries",
+         "reviews" : 0,
+         "tier" : "organization",
+         "total_contributions" : 9
+      },
+      {
+         "additions" : 278,
+         "commits" : 8,
+         "deletions" : 16,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 1293,
+               "color" : "#6E4C13",
+               "name" : "Assembly",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 712,
+               "color" : "#89e051",
+               "name" : "Shell",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 685,
+               "color" : "#7e7eff",
+               "name" : "Nix",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 262,
+         "primary_language" : {
+            "color" : "#6E4C13",
+            "name" : "Assembly"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/oscill8",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 8
+      },
+      {
+         "additions" : 253,
+         "commits" : 8,
+         "deletions" : 33,
+         "description" : "Calculate value of \u03c0 till a specified range using ASM x86.",
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 3164,
+               "color" : "#6E4C13",
+               "name" : "Assembly",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 307,
+               "color" : "#89e051",
+               "name" : "Shell",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 150,
+               "color" : "#7e7eff",
+               "name" : "Nix",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 220,
+         "primary_language" : {
+            "color" : "#6E4C13",
+            "name" : "Assembly"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/pi_ninja",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 8
+      },
+      {
+         "additions" : 298,
+         "commits" : 7,
+         "deletions" : 11,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : true,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 4524,
+               "color" : "#6E4C13",
+               "name" : "Assembly",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 287,
+         "primary_language" : {
+            "color" : "#6E4C13",
+            "name" : "Assembly"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/asm_dev",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 7
+      },
+      {
+         "additions" : 173,
+         "commits" : 7,
+         "deletions" : 39,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : true,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 2343,
+               "color" : "#555555",
+               "name" : "C",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 150,
+               "color" : "#7e7eff",
+               "name" : "Nix",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 75,
+               "color" : "#6E4C13",
+               "name" : "Assembly",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 134,
+         "primary_language" : {
+            "color" : "#555555",
+            "name" : "C"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/wyrm",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 7
+      },
+      {
+         "additions" : 727,
+         "commits" : 5,
+         "deletions" : 2,
+         "description" : "kak is a durable append-only log engine optimized for sequential writes, re-playable event streams, and low-overhead IO for efficient storage.",
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : true,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 466,
+               "color" : "#7e7eff",
+               "name" : "Nix",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 210,
+               "color" : "#dea584",
+               "name" : "Rust",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 725,
+         "primary_language" : {
+            "color" : "#7e7eff",
+            "name" : "Nix"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/kak",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 5
+      },
+      {
+         "additions" : 515,
+         "commits" : 5,
+         "deletions" : 27,
+         "description" : "Hash Table in rust from scratch with djb2 algorithm",
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 6936,
+               "color" : "#dea584",
+               "name" : "Rust",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 488,
+         "primary_language" : {
+            "color" : "#dea584",
+            "name" : "Rust"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/hash_table",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 5
+      },
+      {
+         "additions" : 158,
+         "commits" : 5,
+         "deletions" : 12,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 3877,
+               "color" : "#ec915c",
+               "name" : "Zig",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 146,
+         "primary_language" : {
+            "color" : "#ec915c",
+            "name" : "Zig"
+         },
+         "pull_requests" : 0,
+         "repository" : "adityamotale/zig_dev",
+         "reviews" : 0,
+         "tier" : "personal",
+         "total_contributions" : 5
+      },
+      {
+         "additions" : 57,
+         "commits" : 2,
+         "deletions" : 72,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 10826,
+               "color" : "#f1e05a",
+               "name" : "JavaScript",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1112,
+               "color" : "#e34c26",
+               "name" : "HTML",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 959,
+               "color" : "#663399",
+               "name" : "CSS",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : -15,
+         "primary_language" : {
+            "color" : "#f1e05a",
+            "name" : "JavaScript"
+         },
+         "pull_requests" : 2,
+         "repository" : "aishwaryasuradkar/AtLeave",
+         "reviews" : 0,
+         "tier" : "external_oss",
+         "total_contributions" : 4
+      },
+      {
+         "additions" : 21,
+         "commits" : 2,
+         "deletions" : 3,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 22753,
+               "color" : "#3178c6",
+               "name" : "TypeScript",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1088,
+               "color" : "#663399",
+               "name" : "CSS",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 83,
+               "color" : "#f1e05a",
+               "name" : "JavaScript",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 18,
+         "primary_language" : {
+            "color" : "#3178c6",
+            "name" : "TypeScript"
+         },
+         "pull_requests" : 2,
+         "repository" : "infoxiao/museum-chart-crimes",
+         "reviews" : 0,
+         "tier" : "external_oss",
+         "total_contributions" : 4
+      },
+      {
+         "additions" : 575,
+         "commits" : 3,
+         "deletions" : 682,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : true,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 8498,
+               "color" : "#3178c6",
+               "name" : "TypeScript",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 665,
+               "color" : "#f1e05a",
+               "name" : "JavaScript",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : -107,
+         "primary_language" : {
+            "color" : "#3178c6",
+            "name" : "TypeScript"
+         },
+         "pull_requests" : 0,
+         "repository" : "parag1902/atleave",
+         "reviews" : 0,
+         "tier" : "organization",
+         "total_contributions" : 3
+      },
+      {
+         "additions" : 469,
+         "commits" : 3,
+         "deletions" : 28,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 11048,
+               "color" : "#3572A5",
+               "name" : "Python",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 441,
+         "primary_language" : {
+            "color" : "#3572A5",
+            "name" : "Python"
+         },
+         "pull_requests" : 0,
+         "repository" : "ranveer-rajput/python_exercises_old",
+         "reviews" : 0,
+         "tier" : "organization",
+         "total_contributions" : 3
+      },
+      {
+         "additions" : 52,
+         "commits" : 2,
+         "deletions" : 0,
+         "description" : "Starting code for Space Game Project made in 1Code's Python Level 0 Course",
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 1053,
+               "color" : "#3572A5",
+               "name" : "Python",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 52,
+         "primary_language" : {
+            "color" : "#3572A5",
+            "name" : "Python"
+         },
+         "pull_requests" : 0,
+         "repository" : "1code-dev/kickass-space-shooter",
+         "reviews" : 0,
+         "tier" : "organization",
+         "total_contributions" : 2
+      },
+      {
+         "additions" : 1,
+         "commits" : 1,
+         "deletions" : 0,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 68902,
+               "color" : "#3572A5",
+               "name" : "Python",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 68419,
+               "color" : "#dea584",
+               "name" : "Rust",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 50320,
+               "color" : "#e34c26",
+               "name" : "HTML",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 19459,
+               "color" : "#663399",
+               "name" : "CSS",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 9971,
+               "color" : "#c6538c",
+               "name" : "SCSS",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 4370,
+               "color" : "#89e051",
+               "name" : "Shell",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 2918,
+               "color" : "#384d54",
+               "name" : "Just",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1380,
+               "color" : "#f1e05a",
+               "name" : "JavaScript",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1163,
+               "color" : "#384d54",
+               "name" : "Dockerfile",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 1,
+         "primary_language" : {
+            "color" : "#3572A5",
+            "name" : "Python"
+         },
+         "pull_requests" : 1,
+         "repository" : "rust-lang/this-week-in-rust",
+         "reviews" : 0,
+         "tier" : "external_oss",
+         "total_contributions" : 2
+      },
+      {
+         "additions" : 14273,
+         "commits" : 1,
+         "deletions" : 0,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : true,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 350553,
+               "color" : "#00B4AB",
+               "name" : "Dart",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 24386,
+               "color" : "#f34b7d",
+               "name" : "C++",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 18898,
+               "color" : "#DA3434",
+               "name" : "CMake",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1847,
+               "color" : "#e34c26",
+               "name" : "HTML",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1425,
+               "color" : "#555555",
+               "name" : "C",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1414,
+               "color" : "#701516",
+               "name" : "Ruby",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 689,
+               "color" : "#F05138",
+               "name" : "Swift",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 670,
+               "color" : "#b07219",
+               "name" : "Java",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 127,
+               "color" : "#A97BFF",
+               "name" : "Kotlin",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 38,
+               "color" : "#438eff",
+               "name" : "Objective-C",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 14273,
+         "primary_language" : {
+            "color" : "#00B4AB",
+            "name" : "Dart"
+         },
+         "pull_requests" : 0,
+         "repository" : "trustopay/trustopay_app_old_1",
+         "reviews" : 0,
+         "tier" : "organization",
+         "total_contributions" : 1
+      },
+      {
+         "additions" : 5580,
+         "commits" : 1,
+         "deletions" : 0,
+         "description" : "Histral Core Web App",
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : true,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 1208,
+               "color" : "#f1e05a",
+               "name" : "JavaScript",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 848,
+               "color" : "#3178c6",
+               "name" : "TypeScript",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 329,
+               "color" : "#e34c26",
+               "name" : "HTML",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 121,
+               "color" : "#ff3e00",
+               "name" : "Svelte",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 5580,
+         "primary_language" : {
+            "color" : "#f1e05a",
+            "name" : "JavaScript"
+         },
+         "pull_requests" : 0,
+         "repository" : "histral/core_wa",
+         "reviews" : 0,
+         "tier" : "organization",
+         "total_contributions" : 1
+      },
+      {
+         "additions" : 4955,
+         "commits" : 1,
+         "deletions" : 0,
+         "description" : "Mobile app for Trustopay build with @Flutter",
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : true,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 23771,
+               "color" : "#f34b7d",
+               "name" : "C++",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 19436,
+               "color" : "#DA3434",
+               "name" : "CMake",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 6032,
+               "color" : "#00B4AB",
+               "name" : "Dart",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1853,
+               "color" : "#e34c26",
+               "name" : "HTML",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1728,
+               "color" : "#F05138",
+               "name" : "Swift",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1425,
+               "color" : "#555555",
+               "name" : "C",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 126,
+               "color" : "#A97BFF",
+               "name" : "Kotlin",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 38,
+               "color" : "#438eff",
+               "name" : "Objective-C",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 4955,
+         "primary_language" : {
+            "color" : "#f34b7d",
+            "name" : "C++"
+         },
+         "pull_requests" : 0,
+         "repository" : "trustopay/trustopay_app",
+         "reviews" : 0,
+         "tier" : "organization",
+         "total_contributions" : 1
+      },
+      {
+         "additions" : 0,
+         "commits" : 0,
+         "deletions" : 0,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [],
+         "latest_release" : null,
+         "net_lines" : 0,
+         "primary_language" : null,
+         "pull_requests" : 1,
+         "repository" : "ranveer-rajput/shoes-website",
+         "reviews" : 0,
+         "tier" : "organization",
+         "total_contributions" : 1
+      },
+      {
+         "additions" : 0,
+         "commits" : 0,
+         "deletions" : 0,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [],
+         "latest_release" : null,
+         "net_lines" : 0,
+         "primary_language" : null,
+         "pull_requests" : 1,
+         "repository" : "jonataslaw/getx",
+         "reviews" : 0,
+         "tier" : "external_oss",
+         "total_contributions" : 1
+      },
+      {
+         "additions" : 0,
+         "commits" : 0,
+         "deletions" : 0,
+         "description" : null,
+         "is_archived" : false,
+         "is_fork" : false,
+         "is_private" : false,
+         "issues" : 0,
+         "languages" : [
+            {
+               "bytes" : 1912,
+               "color" : "#f1e05a",
+               "name" : "JavaScript",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 1721,
+               "color" : "#e34c26",
+               "name" : "HTML",
+               "percentage" : 0
+            },
+            {
+               "bytes" : 930,
+               "color" : "#663399",
+               "name" : "CSS",
+               "percentage" : 0
+            }
+         ],
+         "latest_release" : null,
+         "net_lines" : 0,
+         "primary_language" : {
+            "color" : "#f1e05a",
+            "name" : "JavaScript"
+         },
+         "pull_requests" : 0,
+         "repository" : "ranveer-rajput/word_counter",
+         "reviews" : 1,
+         "tier" : "organization",
+         "total_contributions" : 1
+      }
+   ],
+   "streaks_and_consistency" : {
+      "active_days_count" : 0,
+      "activity_rate_percentage" : 0,
+      "busiest_day" : {
+         "count" : 0,
+         "date" : ""
+      },
+      "current_streak_days" : 0,
+      "longest_streak_days" : 0,
+      "total_days_in_period" : 0
+   },
+   "user" : {
+      "login" : "adityamotale",
+      "name" : "Aditya"
+   },
+   "weekly_summary" : {
+      "commits" : 0,
+      "languages" : [
+         {
+            "color" : "#dea584",
+            "loc" : 1158770,
+            "name" : "Rust",
+            "percentage" : 68.7
+         },
+         {
+            "color" : "#555555",
+            "loc" : 128576,
+            "name" : "C",
+            "percentage" : 7.6
+         },
+         {
+            "color" : "#3178c6",
+            "loc" : 112470,
+            "name" : "TypeScript",
+            "percentage" : 6.7
+         }
+      ],
+      "lines_of_code" : {
+         "net_lines" : 0,
+         "total_additions" : 0,
+         "total_deletions" : 0
+      },
+      "period" : {
+         "from" : "2026-11-15T00:00:00Z",
+         "to" : "2026-11-21T23:59:59Z"
+      },
+      "pull_requests" : {
+         "closed_unmerged" : 0,
+         "merge_rate_percentage" : 0,
+         "merged" : 0,
+         "open" : 0,
+         "total" : 0
+      },
+      "repositories" : {
+         "org" : 2,
+         "private" : 0,
+         "public" : 2,
+         "total" : 3
+      },
+      "streaks_and_consistency" : {
+         "active_days_count" : 0,
+         "activity_rate_percentage" : 0,
+         "busiest_day" : {
+            "count" : 0,
+            "date" : ""
+         },
+         "current_streak_days" : 0,
+         "longest_streak_days" : 0,
+         "total_days_in_period" : 0
+      }
+   }
 }

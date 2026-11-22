@@ -44,6 +44,10 @@ import {
   mergeWeeklyDelta,
 } from "./lib/delta.ts";
 
+export const EXCLUDED_REPOSITORIES = new Set<string>([
+  "KinariwalaS/MitRa_admission_new",
+]);
+
 export async function fetchViewerContext(
   options?: GraphQLOptions,
 ): Promise<ViewerContext> {
@@ -364,13 +368,13 @@ export async function executeIncremental(
     options,
   );
 
-  const reposToFetchLOC = Array.from(windowData.repos.entries()).map(
-    ([name, r]) => ({
+  const reposToFetchLOC = Array.from(windowData.repos.entries())
+    .filter(([name]) => !EXCLUDED_REPOSITORIES.has(name))
+    .map(([name, r]) => ({
       nameWithOwner: name,
       isPrivate: r.isPrivate,
       isFork: r.isFork,
-    }),
-  );
+    }));
 
   const locResults = await fetchRepoLOC(
     reposToFetchLOC,
@@ -501,7 +505,7 @@ export async function executeFullBackfill(
   >();
 
   for (const r of viewer.allRepos) {
-    if (r.isArchived) continue;
+    if (r.isArchived || EXCLUDED_REPOSITORIES.has(r.nameWithOwner)) continue;
     candidateMap.set(r.nameWithOwner, {
       nameWithOwner: r.nameWithOwner,
       isPrivate: r.isPrivate,
@@ -510,7 +514,7 @@ export async function executeFullBackfill(
   }
 
   for (const [name, stat] of repoContributions.entries()) {
-    if (stat.isArchived) continue;
+    if (stat.isArchived || EXCLUDED_REPOSITORIES.has(name)) continue;
     if (!candidateMap.has(name)) {
       candidateMap.set(name, {
         nameWithOwner: name,

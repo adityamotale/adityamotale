@@ -367,6 +367,7 @@ export function buildRepositoryActivities(params: {
   const activities: RepoActivityStat[] = [];
 
   for (const name of repoNames) {
+    if (name === "KinariwalaS/MitRa_admission_new") continue;
     const contrib = repoContributions.get(name);
     const loc = locResults.get(name);
     const meta = repoMeta.get(name);
