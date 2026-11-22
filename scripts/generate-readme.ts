@@ -658,14 +658,21 @@ export function generateReadme(rootDir: string): string {
 
     const mLabel = "Last Month";
 
+    const mRepos = targetMonth.repositories || {
+      total: 0,
+      public: 0,
+      private: 0,
+      org: 0,
+    };
+
     const monthlySvg = generateTelemetrySvg(
       mLabel,
       fmt.format(mNet),
       formatCompact(mAdd),
       formatCompact(mDel),
       mChurnBar,
-      targetMonth.repositories.total || 0,
-      `${targetMonth.repositories.public} public, ${targetMonth.repositories.private} private, ${targetMonth.repositories.org ?? 0} org`,
+      mRepos.total || 0,
+      `${mRepos.public} public, ${mRepos.private} private, ${mRepos.org ?? 0} org`,
       fmt.format(targetMonth.commits),
       mPrBar,
       `${mPrMerged}/${mPrTotal}`,
@@ -704,14 +711,21 @@ export function generateReadme(rootDir: string): string {
         .map((l) => `${l.name} ${Math.round(l.percentage)}%`)
         .join(" · ") || "--";
 
+    const wRepos = w.repositories || {
+      total: 0,
+      public: 0,
+      private: 0,
+      org: 0,
+    };
+
     const weeklySvg = generateTelemetrySvg(
       "Last Week",
       fmt.format(wNet),
       formatCompact(wAdd),
       formatCompact(wDel),
       wChurnBar,
-      w.repositories.total || 0,
-      `${w.repositories.public} public, ${w.repositories.private} private, ${w.repositories.org ?? 0} org`,
+      wRepos.total || 0,
+      `${wRepos.public} public, ${wRepos.private} private, ${wRepos.org ?? 0} org`,
       fmt.format(w.commits),
       wPrBar,
       `${wPrMerged}/${wPrTotal}`,
