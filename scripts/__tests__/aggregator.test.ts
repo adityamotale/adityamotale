@@ -235,6 +235,42 @@ describe("calculateLanguages", () => {
     assert.deepEqual(calculateLanguages([], "adityamotale"), []);
     assert.deepEqual(calculateLanguages([emptyRepo], "adityamotale"), []);
   });
+
+  it("excludes archived repositories from language calculations", () => {
+    const repos: ViewerRepoNode[] = [
+      {
+        nameWithOwner: "adityamotale/active-repo",
+        name: "active-repo",
+        isPrivate: false,
+        isFork: false,
+        isArchived: false,
+        stargazerCount: 0,
+        forkCount: 0,
+        owner: { login: "adityamotale" },
+        languages: {
+          edges: [{ size: 1000, node: { name: "Rust", color: "#dea584" } }],
+        },
+      },
+      {
+        nameWithOwner: "adityamotale/archived-repo",
+        name: "archived-repo",
+        isPrivate: false,
+        isFork: false,
+        isArchived: true,
+        stargazerCount: 0,
+        forkCount: 0,
+        owner: { login: "adityamotale" },
+        languages: {
+          edges: [{ size: 5000, node: { name: "Go", color: "#00ADD8" } }],
+        },
+      },
+    ];
+
+    const result = calculateLanguages(repos, "adityamotale");
+    assert.equal(result.length, 1);
+    assert.equal(result[0].name, "Rust");
+    assert.equal(result[0].percentage, 100);
+  });
 });
 
 describe("calculateRepositorySummary", () => {
@@ -286,6 +322,36 @@ describe("calculateRepositorySummary", () => {
     assert.equal(result.forks, 1);
     assert.equal(result.total_stars, 6);
     assert.equal(result.total_forks, 5);
+  });
+
+  it("excludes archived repositories from repository summary", () => {
+    const repos: ViewerRepoNode[] = [
+      {
+        nameWithOwner: "adityamotale/active",
+        name: "active",
+        isPrivate: false,
+        isFork: false,
+        isArchived: false,
+        stargazerCount: 10,
+        forkCount: 2,
+        owner: { login: "adityamotale" },
+      },
+      {
+        nameWithOwner: "adityamotale/archived",
+        name: "archived",
+        isPrivate: false,
+        isFork: false,
+        isArchived: true,
+        stargazerCount: 50,
+        forkCount: 10,
+        owner: { login: "adityamotale" },
+      },
+    ];
+
+    const result = calculateRepositorySummary(repos, "adityamotale");
+    assert.equal(result.total_owned, 1);
+    assert.equal(result.public, 1);
+    assert.equal(result.total_stars, 10);
   });
 });
 
@@ -510,5 +576,53 @@ describe("buildRepositoryActivities", () => {
     assert.equal(result[0].additions, 30);
     assert.equal(result[0].deletions, 120);
     assert.equal(result[0].tier, "personal");
+  });
+
+  it("excludes archived repositories from repository activities", () => {
+    const repoContributions = new Map([
+      [
+        "user/active-repo",
+        {
+          commits: 5,
+          issues: 0,
+          pullRequests: 0,
+          reviews: 0,
+          isPrivate: false,
+          isArchived: false,
+        },
+      ],
+      [
+        "user/archived-repo",
+        {
+          commits: 15,
+          issues: 2,
+          pullRequests: 1,
+          reviews: 0,
+          isPrivate: false,
+          isArchived: true,
+        },
+      ],
+    ]);
+
+    const result = buildRepositoryActivities({
+      repoContributions,
+      locResults: new Map(),
+      viewerRepos: [
+        {
+          nameWithOwner: "user/archived-repo",
+          name: "archived-repo",
+          isPrivate: false,
+          isFork: false,
+          isArchived: true,
+          stargazerCount: 0,
+          forkCount: 0,
+          owner: { login: "user" },
+        },
+      ],
+      username: "user",
+    });
+
+    assert.equal(result.length, 1);
+    assert.equal(result[0].repository, "user/active-repo");
   });
 });

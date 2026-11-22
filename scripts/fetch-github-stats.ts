@@ -53,6 +53,10 @@ export interface RepoActivityStat {
   net_lines: number;
   total_contributions: number;
   languages?: LanguageItem[];
+  latest_release?: {
+    tag_name: string;
+    published_at: string;
+  } | null;
 }
 
 export interface StreaksAndConsistency {
@@ -152,6 +156,7 @@ export interface ViewerRepoNode {
   name: string;
   isPrivate: boolean;
   isFork: boolean;
+  isArchived?: boolean;
   description?: string | null;
   stargazerCount: number;
   forkCount: number;
@@ -166,6 +171,10 @@ export interface ViewerRepoNode {
       };
     }>;
   };
+  latestRelease?: {
+    tagName: string;
+    publishedAt: string;
+  } | null;
 }
 
 export interface ViewerContext {
@@ -181,6 +190,7 @@ export interface RepoContribDelta {
   pullRequests: number;
   reviews: number;
   isPrivate: boolean;
+  isArchived?: boolean;
 }
 
 export interface WindowContributions {
@@ -201,6 +211,7 @@ export interface RepoLocStat {
   additions: number;
   deletions: number;
   commit_count: number;
+  languages?: Array<{ name: string; color: string | null; size: number }>;
 }
 
 export interface GraphQLOptions {
@@ -389,6 +400,7 @@ export function calculateLanguages(
   >();
 
   for (const repo of repos) {
+    if (repo.isArchived) continue;
     if (!includeAll && username && repo.owner.login !== username) continue;
     if (!repo.languages?.edges) continue;
 
@@ -492,6 +504,7 @@ export function calculateRepositorySummary(
   let totalForks = 0;
 
   for (const repo of repos) {
+    if (repo.isArchived) continue;
     if (repo.owner.login !== username) continue;
 
     if (repo.isPrivate) privateCount++;
@@ -583,6 +596,7 @@ export function buildRepositoryActivities(params: {
   const repoNames = new Set([
     ...repoContributions.keys(),
     ...locResults.keys(),
+    ...viewerRepos.map((r) => r.nameWithOwner),
   ]);
 
   const repoMeta = new Map(
@@ -591,7 +605,21 @@ export function buildRepositoryActivities(params: {
       {
         isPrivate: r.isPrivate,
         isFork: r.isFork,
+        isArchived: r.isArchived,
         description: r.description ?? null,
+        languages:
+          r.languages?.edges?.map((e) => ({
+            name: e.node.name,
+            color: e.node.color ?? null,
+            bytes: e.size,
+            percentage: 0,
+          })) ?? null,
+        latestRelease: r.latestRelease
+          ? {
+              tag_name: r.latestRelease.tagName,
+              published_at: r.latestRelease.publishedAt,
+            }
+          : null,
       },
     ]),
   );
@@ -602,6 +630,9 @@ export function buildRepositoryActivities(params: {
     const contrib = repoContributions.get(name);
     const loc = locResults.get(name);
     const meta = repoMeta.get(name);
+
+    const isArchived = meta?.isArchived ?? contrib?.isArchived ?? false;
+    if (isArchived) continue;
 
     const isPrivate =
       meta?.isPrivate ?? contrib?.isPrivate ?? loc?.is_private ?? false;
@@ -619,6 +650,16 @@ export function buildRepositoryActivities(params: {
 
     const tier = classifyRepoTier(name, username, affiliatedOrgs);
 
+    const langs =
+      loc?.languages?.map((l) => ({
+        name: l.name,
+        color: l.color,
+        bytes: l.size,
+        percentage: 0,
+      })) ||
+      meta?.languages ||
+      undefined;
+
     if (totalContrib > 0 || additions > 0 || deletions > 0) {
       activities.push({
         repository: name,
@@ -634,6 +675,8 @@ export function buildRepositoryActivities(params: {
         deletions,
         net_lines: additions - deletions,
         total_contributions: totalContrib,
+        languages: langs,
+        latest_release: meta?.latestRelease ?? null,
       });
     }
   }
@@ -661,6 +704,7 @@ const GET_VIEWER_REPOS_QUERY = `
           name
           isPrivate
           isFork
+          isArchived
           description
           stargazerCount
           forkCount
@@ -674,6 +718,10 @@ const GET_VIEWER_REPOS_QUERY = `
                 color
               }
             }
+          }
+          latestRelease {
+            tagName
+            publishedAt
           }
         }
         pageInfo {
@@ -690,6 +738,15 @@ const GET_REPO_COMMIT_LOC_QUERY = `
     repository(owner: $owner, name: $name) {
       isPrivate
       isFork
+      languages(first: 20, orderBy: { field: SIZE, direction: DESC }) {
+        edges {
+          size
+          node {
+            name
+            color
+          }
+        }
+      }
       defaultBranchRef {
         target {
           ... on Commit {
@@ -733,6 +790,7 @@ const GET_CONTRIBUTIONS_QUERY = `
           repository {
             nameWithOwner
             isPrivate
+            isArchived
             description
             isFork
           }
@@ -742,6 +800,7 @@ const GET_CONTRIBUTIONS_QUERY = `
           repository {
             nameWithOwner
             isPrivate
+            isArchived
             description
             isFork
           }
@@ -751,6 +810,7 @@ const GET_CONTRIBUTIONS_QUERY = `
           repository {
             nameWithOwner
             isPrivate
+            isArchived
             description
             isFork
           }
@@ -760,6 +820,7 @@ const GET_CONTRIBUTIONS_QUERY = `
           repository {
             nameWithOwner
             isPrivate
+            isArchived
             description
             isFork
           }
@@ -786,6 +847,7 @@ const GET_PRS_QUERY = `
             nameWithOwner
             isPrivate
             isFork
+            isArchived
             description
           }
         }
@@ -858,7 +920,11 @@ export async function fetchContributionsWindow(
 
   const repoContributions = new Map<string, RepoContribDelta>();
 
-  const getOrCreate = (name: string, isPrivate: boolean): RepoContribDelta => {
+  const getOrCreate = (
+    name: string,
+    isPrivate: boolean,
+    isArchived = false,
+  ): RepoContribDelta => {
     if (!repoContributions.has(name)) {
       repoContributions.set(name, {
         commits: 0,
@@ -866,6 +932,7 @@ export async function fetchContributionsWindow(
         pullRequests: 0,
         reviews: 0,
         isPrivate,
+        isArchived,
       });
     }
     return repoContributions.get(name)!;
@@ -877,6 +944,7 @@ export async function fetchContributionsWindow(
       const entry = getOrCreate(
         item.repository.nameWithOwner,
         Boolean(item.repository.isPrivate),
+        Boolean(item.repository.isArchived),
       );
       (entry[field] as number) += item.contributions?.totalCount || 0;
     }
@@ -920,6 +988,11 @@ export async function fetchRepoLOC(
         let commitCount = 0;
         let cursor: string | null = null;
         let hasNextPage = true;
+        let repoLanguages: Array<{
+          name: string;
+          color: string | null;
+          size: number;
+        }> = [];
 
         try {
           while (hasNextPage) {
@@ -935,6 +1008,17 @@ export async function fetchRepoLOC(
               },
               options,
             );
+
+            if (
+              data.repository?.languages?.edges &&
+              repoLanguages.length === 0
+            ) {
+              repoLanguages = data.repository.languages.edges.map((e: any) => ({
+                name: e.node.name,
+                color: e.node.color ?? null,
+                size: e.size ?? 0,
+              }));
+            }
 
             const history = data.repository?.defaultBranchRef?.target?.history;
             if (!history?.nodes) break;
@@ -957,6 +1041,7 @@ export async function fetchRepoLOC(
               additions,
               deletions,
               commit_count: commitCount,
+              languages: repoLanguages,
             });
           }
         } catch {}
@@ -977,6 +1062,7 @@ export async function fetchPullRequests(
     nameWithOwner: string;
     isPrivate: boolean;
     isFork: boolean;
+    isArchived: boolean;
     description: string | null;
   }>;
 }> {
@@ -996,6 +1082,7 @@ export async function fetchPullRequests(
       nameWithOwner: string;
       isPrivate: boolean;
       isFork: boolean;
+      isArchived: boolean;
       description: string | null;
     }
   >();
@@ -1020,6 +1107,7 @@ export async function fetchPullRequests(
           nameWithOwner: pr.repository.nameWithOwner,
           isPrivate: Boolean(pr.repository.isPrivate),
           isFork: Boolean(pr.repository.isFork),
+          isArchived: Boolean(pr.repository.isArchived),
           description: pr.repository.description ?? null,
         });
       }
@@ -1150,6 +1238,11 @@ export async function executeIncremental(
 
   for (const name of windowData.repoContributions.keys()) {
     const meta = viewer.repositories.find((r) => r.nameWithOwner === name);
+    const isArchived =
+      meta?.isArchived ??
+      windowData.repoContributions.get(name)?.isArchived ??
+      false;
+    if (isArchived) continue;
     candidateMap.set(name, {
       nameWithOwner: name,
       isPrivate:
@@ -1160,7 +1253,19 @@ export async function executeIncremental(
     });
   }
 
+  for (const r of viewer.repositories) {
+    if (r.isArchived) continue;
+    if (!candidateMap.has(r.nameWithOwner)) {
+      candidateMap.set(r.nameWithOwner, {
+        nameWithOwner: r.nameWithOwner,
+        isPrivate: r.isPrivate,
+        isFork: r.isFork,
+      });
+    }
+  }
+
   for (const r of prResult.discoveredRepos) {
+    if (r.isArchived) continue;
     if (!candidateMap.has(r.nameWithOwner)) {
       candidateMap.set(r.nameWithOwner, {
         nameWithOwner: r.nameWithOwner,
@@ -1211,6 +1316,13 @@ export async function executeIncremental(
         entry.description =
           viewer.repositories.find((r) => r.nameWithOwner === name)
             ?.description ?? null;
+      }
+      const vRepo = viewer.repositories.find((r) => r.nameWithOwner === name);
+      if (vRepo?.latestRelease) {
+        entry.latest_release = {
+          tag_name: vRepo.latestRelease.tagName,
+          published_at: vRepo.latestRelease.publishedAt,
+        };
       }
     } else {
       repoMap.set(name, {
@@ -1291,6 +1403,40 @@ export async function executeIncremental(
 
   const categories = calculateCategoryMetrics(activities);
 
+  const repoLanguageMap = new Map<
+    string,
+    Array<{ name: string; color: string | null; size: number }>
+  >();
+
+  for (const r of viewer.repositories) {
+    if (r.languages?.edges) {
+      repoLanguageMap.set(
+        r.nameWithOwner,
+        r.languages.edges.map((e) => ({
+          name: e.node.name,
+          color: e.node.color,
+          size: e.size,
+        })),
+      );
+    }
+  }
+
+  for (const [name, loc] of locResults.entries()) {
+    if (
+      loc.languages &&
+      loc.languages.length > 0 &&
+      !repoLanguageMap.has(name)
+    ) {
+      repoLanguageMap.set(name, loc.languages);
+    }
+  }
+
+  const weightedLangs = calculateWeightedLanguages(activities, repoLanguageMap);
+  const finalLanguages =
+    weightedLangs.length > 0
+      ? weightedLangs
+      : calculateLanguages(viewer.repositories, viewer.login, true);
+
   return {
     metadata: {
       username: viewer.login,
@@ -1334,7 +1480,7 @@ export async function executeIncremental(
           ? parseFloat(((mergedPRs / totalPRs) * 100).toFixed(2))
           : 0,
     },
-    languages: calculateLanguages(viewer.repositories, viewer.login),
+    languages: finalLanguages,
     repositories_contributed_to: activities,
     daily_contributions: daily,
     weekly_summary: weeklySummary,
@@ -1401,6 +1547,7 @@ export async function executeFullBackfill(
   >();
 
   for (const r of viewer.repositories) {
+    if (r.isArchived) continue;
     candidateMap.set(r.nameWithOwner, {
       nameWithOwner: r.nameWithOwner,
       isPrivate: r.isPrivate,
@@ -1409,6 +1556,7 @@ export async function executeFullBackfill(
   }
 
   for (const [name, stat] of repoContribs.entries()) {
+    if (stat.isArchived) continue;
     if (!candidateMap.has(name)) {
       candidateMap.set(name, {
         nameWithOwner: name,
@@ -1419,6 +1567,7 @@ export async function executeFullBackfill(
   }
 
   for (const r of prResult.discoveredRepos) {
+    if (r.isArchived) continue;
     if (!candidateMap.has(r.nameWithOwner)) {
       candidateMap.set(r.nameWithOwner, {
         nameWithOwner: r.nameWithOwner,
@@ -1456,6 +1605,40 @@ export async function executeFullBackfill(
 
   const categories = calculateCategoryMetrics(activities);
 
+  const repoLanguageMap = new Map<
+    string,
+    Array<{ name: string; color: string | null; size: number }>
+  >();
+
+  for (const r of viewer.repositories) {
+    if (r.languages?.edges) {
+      repoLanguageMap.set(
+        r.nameWithOwner,
+        r.languages.edges.map((e) => ({
+          name: e.node.name,
+          color: e.node.color,
+          size: e.size,
+        })),
+      );
+    }
+  }
+
+  for (const [name, loc] of locResults.entries()) {
+    if (
+      loc.languages &&
+      loc.languages.length > 0 &&
+      !repoLanguageMap.has(name)
+    ) {
+      repoLanguageMap.set(name, loc.languages);
+    }
+  }
+
+  const weightedLangs = calculateWeightedLanguages(activities, repoLanguageMap);
+  const finalLanguages =
+    weightedLangs.length > 0
+      ? weightedLangs
+      : calculateLanguages(viewer.repositories, viewer.login, true);
+
   return {
     metadata: {
       username: viewer.login,
@@ -1480,7 +1663,7 @@ export async function executeFullBackfill(
     },
     streaks_and_consistency: calculateStreaks(mergedDaily, dateRange),
     pull_requests: prResult.summary,
-    languages: calculateLanguages(viewer.repositories, viewer.login),
+    languages: finalLanguages,
     repositories_contributed_to: activities,
     daily_contributions: mergedDaily,
     weekly_summary: existing?.weekly_summary,
