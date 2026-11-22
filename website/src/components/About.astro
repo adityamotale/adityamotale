@@ -5,285 +5,101 @@
   id="tui-about"
   class="w-full font-mono text-[11px] sm:text-xs select-none leading-relaxed"
 >
-  <div class="w-full flex flex-col text-rp-subtle font-mono">
-    {/* Top border: +--[ sys.about ]-----------------------...---+ */}
-    <div class="w-full flex items-center overflow-hidden text-rp-muted">
-      <span class="shrink-0 select-none">+--[&nbsp;</span>
-      <span class="shrink-0 text-[var(--color-accent)] font-semibold select-none">
-        sys.about
+  <div class="w-full flex flex-col font-mono">
+    {/* Section Header: > ABOUT ─── */}
+    <div class="w-full flex items-center overflow-hidden mb-2">
+      <span class="text-[var(--color-accent)] font-semibold shrink-0">
+        &gt;&nbsp;
       </span>
-      <span class="shrink-0 select-none">&nbsp;]--</span>
-      <span class="flex-1 overflow-hidden select-none whitespace-nowrap text-rp-muted/60">
-        ---------------------------------------------------------------------------------------------------------------------------------------------
+      <span class="font-bold tracking-wider text-rp-text uppercase shrink-0">
+        ABOUT
       </span>
-      <span class="shrink-0 select-none">+</span>
+      <span class="ml-2 flex-1 border-b border-rp-muted/20"></span>
     </div>
 
-    {/* Spacer top row */}
-    <div class="w-full flex items-center justify-between px-2 sm:px-3 text-rp-muted/40">
-      <span class="select-none">|</span>
-      <span class="select-none">|</span>
+    {/* Section comment */}
+    <div class="text-[11px] text-rp-muted/70 pl-3">
+      <span>// bio</span>
     </div>
 
-    {/* Desktop Lines (sm and up) */}
-    <div class="hidden sm:flex w-full items-center justify-between px-3">
-      <div class="flex items-center gap-2 min-w-0">
-        <span class="text-rp-muted select-none">|</span>
-        <span class="text-rp-subtle select-text truncate">
-          An engineer by choice. It bugs me how slow and messy most software is,
-          so I build
-        </span>
-      </div>
-      <span class="text-rp-muted select-none">|</span>
+    {/* Bio Content */}
+    <div class="pl-3 py-1 text-rp-subtle leading-relaxed select-text">
+      <p>
+        An engineer by choice. It bugs me how slow and messy most software is,
+        so I build things the way they should work: fast, without the bloat, and
+        knowing what's actually going on underneath. Some weeks that's a storage
+        engine or SIMD search, other times a Sanskrit parser, a weird tool, or a
+        full product I wanted for myself. I don't stick to one lane; I just
+        figure out how the engine works and ship.
+      </p>
     </div>
 
-    <div class="hidden sm:flex w-full items-center justify-between px-3">
-      <div class="flex items-center gap-2 min-w-0">
-        <span class="text-rp-muted select-none">|</span>
-        <span class="text-rp-subtle select-text truncate">
-          things the way they should work, fast, without the bloat, and knowing
-          what's actually
-        </span>
-      </div>
-      <span class="text-rp-muted select-none">|</span>
-    </div>
+    {/* Links */}
+    <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5 pl-3 pt-2 text-rp-subtle select-none">
+      <a
+        href="https://github.com/adityamotale"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-1.5 hover:text-[var(--color-accent)] transition-colors underline decoration-dotted decoration-rp-muted/50 underline-offset-3"
+      >
+        <svg
+          class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+        </svg>
+        <span>github</span>
+      </a>
 
-    <div class="hidden sm:flex w-full items-center justify-between px-3">
-      <div class="flex items-center gap-2 min-w-0">
-        <span class="text-rp-muted select-none">|</span>
-        <span class="text-rp-subtle select-text truncate">
-          going on underneath. Some weeks that's a storage engine or SIMD
-          search, other times a
-        </span>
-      </div>
-      <span class="text-rp-muted select-none">|</span>
-    </div>
+      <span class="text-rp-muted/30 select-none">/</span>
 
-    <div class="hidden sm:flex w-full items-center justify-between px-3">
-      <div class="flex items-center gap-2 min-w-0">
-        <span class="text-rp-muted select-none">|</span>
-        <span class="text-rp-subtle select-text truncate">
-          Sanskrit parser, a weird tool, or a full product I wanted for myself.
-          I don't stick to
-        </span>
-      </div>
-      <span class="text-rp-muted select-none">|</span>
-    </div>
+      <a
+        href="https://x.com/arctic_byte"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-1.5 hover:text-[var(--color-accent)] transition-colors underline decoration-dotted decoration-rp-muted/50 underline-offset-3"
+      >
+        <svg
+          class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+        </svg>
+        <span>twitter</span>
+      </a>
 
-    <div class="hidden sm:flex w-full items-center justify-between px-3">
-      <div class="flex items-center gap-2 min-w-0">
-        <span class="text-rp-muted select-none">|</span>
-        <span class="text-rp-subtle select-text truncate">
-          one lane. I just figure out how the engine works and ship.
-        </span>
-      </div>
-      <span class="text-rp-muted select-none">|</span>
-    </div>
+      <span class="text-rp-muted/30 select-none">/</span>
 
-    {/* Mobile Lines (mobile only) */}
-    <div class="flex sm:hidden w-full items-center justify-between px-2">
-      <div class="flex items-center gap-2 min-w-0">
-        <span class="text-rp-muted select-none">|</span>
-        <span class="text-rp-subtle select-text truncate">
-          An engineer by choice. It bugs me how
-        </span>
-      </div>
-      <span class="text-rp-muted select-none">|</span>
-    </div>
-
-    <div class="flex sm:hidden w-full items-center justify-between px-2">
-      <div class="flex items-center gap-2 min-w-0">
-        <span class="text-rp-muted select-none">|</span>
-        <span class="text-rp-subtle select-text truncate">
-          slow and messy most software is, so I
-        </span>
-      </div>
-      <span class="text-rp-muted select-none">|</span>
-    </div>
-
-    <div class="flex sm:hidden w-full items-center justify-between px-2">
-      <div class="flex items-center gap-2 min-w-0">
-        <span class="text-rp-muted select-none">|</span>
-        <span class="text-rp-subtle select-text truncate">
-          build things the way they should work,
-        </span>
-      </div>
-      <span class="text-rp-muted select-none">|</span>
-    </div>
-
-    <div class="flex sm:hidden w-full items-center justify-between px-2">
-      <div class="flex items-center gap-2 min-w-0">
-        <span class="text-rp-muted select-none">|</span>
-        <span class="text-rp-subtle select-text truncate">
-          fast, without the bloat, and knowing
-        </span>
-      </div>
-      <span class="text-rp-muted select-none">|</span>
-    </div>
-
-    <div class="flex sm:hidden w-full items-center justify-between px-2">
-      <div class="flex items-center gap-2 min-w-0">
-        <span class="text-rp-muted select-none">|</span>
-        <span class="text-rp-subtle select-text truncate">
-          what's actually going on underneath.
-        </span>
-      </div>
-      <span class="text-rp-muted select-none">|</span>
-    </div>
-
-    <div class="flex sm:hidden w-full items-center justify-between px-2">
-      <div class="flex items-center gap-2 min-w-0">
-        <span class="text-rp-muted select-none">|</span>
-        <span class="text-rp-subtle select-text truncate">
-          Some weeks that's a storage engine or
-        </span>
-      </div>
-      <span class="text-rp-muted select-none">|</span>
-    </div>
-
-    <div class="flex sm:hidden w-full items-center justify-between px-2">
-      <div class="flex items-center gap-2 min-w-0">
-        <span class="text-rp-muted select-none">|</span>
-        <span class="text-rp-subtle select-text truncate">
-          SIMD search, other times a Sanskrit
-        </span>
-      </div>
-      <span class="text-rp-muted select-none">|</span>
-    </div>
-
-    <div class="flex sm:hidden w-full items-center justify-between px-2">
-      <div class="flex items-center gap-2 min-w-0">
-        <span class="text-rp-muted select-none">|</span>
-        <span class="text-rp-subtle select-text truncate">
-          parser, a weird tool, or a product
-        </span>
-      </div>
-      <span class="text-rp-muted select-none">|</span>
-    </div>
-
-    <div class="flex sm:hidden w-full items-center justify-between px-2">
-      <div class="flex items-center gap-2 min-w-0">
-        <span class="text-rp-muted select-none">|</span>
-        <span class="text-rp-subtle select-text truncate">
-          I wanted for myself. I don't stick
-        </span>
-      </div>
-      <span class="text-rp-muted select-none">|</span>
-    </div>
-
-    <div class="flex sm:hidden w-full items-center justify-between px-2">
-      <div class="flex items-center gap-2 min-w-0">
-        <span class="text-rp-muted select-none">|</span>
-        <span class="text-rp-subtle select-text truncate">
-          to one lane. I just figure out how
-        </span>
-      </div>
-      <span class="text-rp-muted select-none">|</span>
-    </div>
-
-    <div class="flex sm:hidden w-full items-center justify-between px-2">
-      <div class="flex items-center gap-2 min-w-0">
-        <span class="text-rp-muted select-none">|</span>
-        <span class="text-rp-subtle select-text truncate">
-          the engine works and ship.
-        </span>
-      </div>
-      <span class="text-rp-muted select-none">|</span>
-    </div>
-
-    {/* Empty spacer row */}
-    <div class="w-full flex items-center justify-between px-2 sm:px-3 text-rp-muted/40">
-      <span class="select-none">|</span>
-      <span class="select-none">|</span>
-    </div>
-
-    {/* Links Row */}
-    <div class="w-full flex items-center justify-between px-2 sm:px-3">
-      <div class="flex items-center gap-2 min-w-0">
-        <span class="text-rp-muted select-none">|</span>
-        <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5 select-none">
-          <a
-            href="https://github.com/adityamotale"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-1.5 text-rp-subtle hover:text-[var(--color-accent)] transition-colors underline decoration-dotted decoration-rp-muted/50 underline-offset-3"
-          >
-            <svg
-              class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-            </svg>
-            <span>github</span>
-          </a>
-
-          <span class="text-rp-muted/30 select-none">/</span>
-
-          <a
-            href="https://x.com/arctic_byte"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-1.5 text-rp-subtle hover:text-[var(--color-accent)] transition-colors underline decoration-dotted decoration-rp-muted/50 underline-offset-3"
-          >
-            <svg
-              class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
-            </svg>
-            <span>twitter</span>
-          </a>
-
-          <span class="text-rp-muted/30 select-none">/</span>
-
-          <a
-            href="https://www.linkedin.com/in/aditya-motale"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-1.5 text-rp-subtle hover:text-[var(--color-accent)] transition-colors underline decoration-dotted decoration-rp-muted/50 underline-offset-3"
-          >
-            <svg
-              class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-              <rect x="2" y="9" width="4" height="12"></rect>
-              <circle cx="4" cy="4" r="2"></circle>
-            </svg>
-            <span>linkedin</span>
-          </a>
-        </div>
-      </div>
-      <span class="text-rp-muted select-none">|</span>
-    </div>
-
-    {/* Spacer bottom row */}
-    <div class="w-full flex items-center justify-between px-2 sm:px-3 text-rp-muted/40">
-      <span class="select-none">|</span>
-      <span class="select-none">|</span>
-    </div>
-
-    {/* Bottom border: +---------------------------------------------------------+ */}
-    <div class="w-full flex items-center overflow-hidden text-rp-muted">
-      <span class="shrink-0 select-none">+</span>
-      <span class="flex-1 overflow-hidden select-none whitespace-nowrap text-rp-muted/60">
-        ---------------------------------------------------------------------------------------------------------------------------------------------
-      </span>
-      <span class="shrink-0 select-none">+</span>
+      <a
+        href="https://www.linkedin.com/in/aditya-motale"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-1.5 hover:text-[var(--color-accent)] transition-colors underline decoration-dotted decoration-rp-muted/50 underline-offset-3"
+      >
+        <svg
+          class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+          <rect x="2" y="9" width="4" height="12"></rect>
+          <circle cx="4" cy="4" r="2"></circle>
+        </svg>
+        <span>linkedin</span>
+      </a>
     </div>
   </div>
 </section>
