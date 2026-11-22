@@ -43,7 +43,12 @@ const addRatio = totalChurn > 0 ? (weeklyAdditions / totalChurn) * 100 : 0;
 const churnBar = getAsciiBar(addRatio, 16);
 
 const weeklyCommits = weeklyData.commits;
-const weeklyRepos = weeklyData.repositories;
+const weeklyRepos = weeklyData.repositories || {
+  total: 0,
+  public: 0,
+  private: 0,
+  org: 0,
+};
 const weeklyPrs = weeklyData.pull_requests;
 const prBar = getAsciiBar(weeklyPrs.merge_rate_percentage, 16);
 

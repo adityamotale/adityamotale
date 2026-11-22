@@ -45,7 +45,12 @@ const addRatio = totalChurn > 0 ? (monthlyAdditions / totalChurn) * 100 : 0;
 const churnBar = getAsciiBar(addRatio, 16);
 
 const monthlyCommits = targetMonth.commits;
-const monthlyRepos = targetMonth.repositories;
+const monthlyRepos = targetMonth.repositories || {
+  total: 0,
+  public: 0,
+  private: 0,
+  org: 0,
+};
 const monthlyPrs = targetMonth.pull_requests;
 const prBar = getAsciiBar(monthlyPrs.merge_rate_percentage, 16);
 
