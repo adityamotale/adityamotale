@@ -1,6 +1,6 @@
-import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { isTransientGraphQLError } from "../lib/graphql.ts";
+import { describe, it } from "node:test";
+import { isTransientGraphQLError } from "../fetch-github-stats.ts";
 
 describe("isTransientGraphQLError", () => {
   it("identifies GitHub internal and transient GraphQL errors", () => {

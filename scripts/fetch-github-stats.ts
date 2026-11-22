@@ -1,28 +1,1050 @@
+import { execFile, execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import {
-  buildRepositoryActivities,
-  calculateLanguages,
-  calculateRepositorySummary,
-  calculateStreaks,
-} from "./lib/aggregator.ts";
-import {
-  fetchContributionsWindow,
-  fetchPullRequests,
-  fetchRepoLOC,
-  fetchViewerContext,
-  type RepoContribDelta,
-  type ViewerContext,
-} from "./lib/collector.ts";
-import { getSundayToSaturdayWindow } from "./lib/date.ts";
-import type {
-  ContributionBreakdown,
-  DateRange,
-  GitHubStatsOutput,
-  RepoActivityStat,
-} from "./lib/types.ts";
+import { promisify } from "node:util";
 
-function parseCliArgs(): {
+const execFileAsync = promisify(execFile);
+
+export type RepoTier = "personal" | "organization" | "external_oss";
+
+export interface DateRange {
+  from: string;
+  to: string;
+}
+
+export interface LanguageStat {
+  name: string;
+  color: string | null;
+  bytes: number;
+  percentage: number;
+}
+
+export interface LanguageItem {
+  name: string;
+  color?: string | null;
+  bytes?: number;
+  percentage: number;
+}
+
+export interface CategoryMetrics {
+  repositories_count: number;
+  commits: number;
+  pull_requests: number;
+  issues: number;
+  reviews: number;
+  additions: number;
+  deletions: number;
+  net_lines: number;
+  total_contributions: number;
+}
+
+export interface RepoActivityStat {
+  repository: string;
+  tier: RepoTier;
+  is_private: boolean;
+  is_fork: boolean;
+  description?: string | null;
+  commits: number;
+  pull_requests: number;
+  issues: number;
+  reviews: number;
+  additions: number;
+  deletions: number;
+  net_lines: number;
+  total_contributions: number;
+  languages?: LanguageItem[];
+}
+
+export interface StreaksAndConsistency {
+  longest_streak_days: number;
+  current_streak_days: number;
+  active_days_count: number;
+  total_days_in_period: number;
+  activity_rate_percentage: number;
+  busiest_day: {
+    date: string;
+    count: number;
+  };
+}
+
+export interface PullRequestSummary {
+  total: number;
+  merged: number;
+  open: number;
+  closed_unmerged: number;
+  merge_rate_percentage: number;
+}
+
+export interface RepositorySummary {
+  total_owned: number;
+  public: number;
+  private: number;
+  forks: number;
+  total_stars: number;
+  total_forks: number;
+}
+
+export interface ContributionBreakdown {
+  total: number;
+  commits: number;
+  pull_requests: number;
+  issues: number;
+  reviews: number;
+  public: number;
+  private: number;
+}
+
+export interface PeriodMetrics {
+  period: DateRange;
+  lines_of_code: {
+    total_additions: number;
+    total_deletions: number;
+    net_lines: number;
+  };
+  commits: number;
+  pull_requests: PullRequestSummary;
+  streaks_and_consistency: StreaksAndConsistency;
+  repositories: {
+    total: number;
+    public: number;
+    private: number;
+    org: number;
+  };
+  languages?: LanguageItem[];
+}
+
+export interface MonthlyStatItem extends PeriodMetrics {
+  label: string;
+  year: number;
+  month: number;
+  top_stack?: string[];
+}
+
+export interface GitHubStatsOutput {
+  metadata: {
+    username: string;
+    generated_at: string;
+    period: DateRange;
+  };
+  lines_of_code: {
+    total_additions: number;
+    total_deletions: number;
+    net_lines: number;
+  };
+  categories: {
+    personal: CategoryMetrics;
+    organization: CategoryMetrics;
+    external_oss: CategoryMetrics;
+  };
+  repositories: RepositorySummary;
+  contributions: ContributionBreakdown;
+  streaks_and_consistency: StreaksAndConsistency;
+  pull_requests: PullRequestSummary;
+  languages: LanguageStat[];
+  repositories_contributed_to: RepoActivityStat[];
+  daily_contributions: Record<string, number>;
+  weekly_summary?: PeriodMetrics;
+  monthly_history?: MonthlyStatItem[];
+}
+
+export interface ViewerRepoNode {
+  nameWithOwner: string;
+  name: string;
+  isPrivate: boolean;
+  isFork: boolean;
+  description?: string | null;
+  stargazerCount: number;
+  forkCount: number;
+  owner: { login: string };
+  defaultBranchRef?: { name: string } | null;
+  languages?: {
+    edges: Array<{
+      size: number;
+      node: {
+        name: string;
+        color: string | null;
+      };
+    }>;
+  };
+}
+
+export interface ViewerContext {
+  login: string;
+  id: string;
+  organizations: Set<string>;
+  repositories: ViewerRepoNode[];
+}
+
+export interface RepoContribDelta {
+  commits: number;
+  issues: number;
+  pullRequests: number;
+  reviews: number;
+  isPrivate: boolean;
+}
+
+export interface WindowContributions {
+  totalContributions: number;
+  commits: number;
+  issues: number;
+  pullRequests: number;
+  reviews: number;
+  restricted: number;
+  daily: Record<string, number>;
+  repoContributions: Map<string, RepoContribDelta>;
+}
+
+export interface RepoLocStat {
+  repository: string;
+  is_private: boolean;
+  is_fork: boolean;
+  additions: number;
+  deletions: number;
+  commit_count: number;
+}
+
+export interface GraphQLOptions {
+  token?: string;
+  maxRetries?: number;
+  retryDelayMs?: number;
+}
+
+export function isTransientGraphQLError(message: string): boolean {
+  return /HTTP (403|429|499|500|502|503|504)|Something went wrong while executing your query|rate limit|secondary rate limit|was submitted too quickly|abuse detection|ETIMEDOUT|ECONNRESET|ECONNREFUSED|ENOTFOUND|EAI_AGAIN|socket hang up|timed out|timeout|fetch failed|Service Unavailable|Gateway Timeout|Bad Gateway|Internal Server Error/i.test(
+    message,
+  );
+}
+
+export function getGitHubToken(): string {
+  const envToken =
+    process.env.GH_TOKEN?.trim() || process.env.GITHUB_TOKEN?.trim();
+  if (envToken) return envToken;
+
+  try {
+    const cliToken = execFileSync("gh", ["auth", "token"], {
+      encoding: "utf-8",
+    }).trim();
+    if (cliToken) return cliToken;
+  } catch {}
+
+  throw new Error(
+    'Missing GitHub token: Set GH_TOKEN or authenticate via "gh auth login"',
+  );
+}
+
+export async function runGraphQLAsync<T>(
+  query: string,
+  variables: Record<string, unknown> = {},
+  options?: GraphQLOptions,
+): Promise<T> {
+  const token = options?.token || getGitHubToken();
+  const cliArgs = ["api", "graphql", "-f", `query=${query}`];
+
+  for (const [key, val] of Object.entries(variables)) {
+    if (val !== undefined && val !== null) {
+      cliArgs.push("-F", `${key}=${val}`);
+    }
+  }
+
+  const maxRetries = options?.maxRetries ?? 0x04;
+  let delayMs = options?.retryDelayMs ?? 1500;
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const { stdout } = await execFileAsync("gh", cliArgs, {
+        encoding: "utf-8",
+        env: { ...process.env, GH_TOKEN: token },
+        maxBuffer: 0x32 * 1024 * 1024,
+      });
+
+      const parsed = JSON.parse(stdout);
+      if (parsed.errors?.length) {
+        throw new Error(
+          `GraphQL errors: ${parsed.errors.map((e: { message: string }) => e.message).join("; ")}`,
+        );
+      }
+
+      if (!parsed.data) {
+        throw new Error('GraphQL response missing "data" payload.');
+      }
+
+      return parsed.data as T;
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      const isTransient = isTransientGraphQLError(message);
+
+      if (isTransient && attempt < maxRetries) {
+        console.warn(
+          `[GraphQL Retry] Attempt ${attempt}/${maxRetries} failed: ${message.slice(0, 120)}... Retrying in ${delayMs}ms...`,
+        );
+        await new Promise((resolve) => setTimeout(resolve, delayMs));
+        delayMs *= 2;
+        continue;
+      }
+
+      const sanitizedMsg = token
+        ? message.replaceAll(token, "[REDACTED]")
+        : message;
+      throw new Error(`GraphQL request failed: ${sanitizedMsg}`);
+    }
+  }
+
+  throw new Error("GraphQL request failed after retries.");
+}
+
+export function getSundayToSaturdayWindow(now = new Date()): DateRange {
+  const dayOfWeek = now.getUTCDay();
+  const daysSinceSaturday = (dayOfWeek + 1) % 7 || 7;
+
+  const lastSaturday = new Date(
+    Date.UTC(
+      now.getUTCFullYear(),
+      now.getUTCMonth(),
+      now.getUTCDate() - daysSinceSaturday,
+    ),
+  );
+  const prevSunday = new Date(
+    Date.UTC(
+      lastSaturday.getUTCFullYear(),
+      lastSaturday.getUTCMonth(),
+      lastSaturday.getUTCDate() - 6,
+    ),
+  );
+
+  return {
+    from: `${prevSunday.toISOString().slice(0, 10)}T00:00:00Z`,
+    to: `${lastSaturday.toISOString().slice(0, 10)}T23:59:59Z`,
+  };
+}
+
+export function classifyRepoTier(
+  nameWithOwner: string,
+  username: string,
+  affiliatedOrgs: Set<string> = new Set(),
+): RepoTier {
+  const [owner] = nameWithOwner.split("/");
+  if (!owner) return "external_oss";
+
+  const ownerLower = owner.toLowerCase();
+  const userLower = username.toLowerCase();
+
+  if (userLower && ownerLower === userLower) {
+    return "personal";
+  }
+
+  if (affiliatedOrgs.has(ownerLower)) {
+    return "organization";
+  }
+
+  return "external_oss";
+}
+
+export function calculateCategoryMetrics(activities: RepoActivityStat[]): {
+  personal: CategoryMetrics;
+  organization: CategoryMetrics;
+  external_oss: CategoryMetrics;
+} {
+  const createEmpty = (): CategoryMetrics => ({
+    repositories_count: 0,
+    commits: 0,
+    pull_requests: 0,
+    issues: 0,
+    reviews: 0,
+    additions: 0,
+    deletions: 0,
+    net_lines: 0,
+    total_contributions: 0,
+  });
+
+  const res = {
+    personal: createEmpty(),
+    organization: createEmpty(),
+    external_oss: createEmpty(),
+  };
+
+  for (const r of activities) {
+    const bucket = res[r.tier] || res.external_oss;
+    bucket.repositories_count++;
+    bucket.commits += r.commits;
+    bucket.pull_requests += r.pull_requests;
+    bucket.issues += r.issues;
+    bucket.reviews += r.reviews;
+    bucket.additions += r.additions;
+    bucket.deletions += r.deletions;
+    bucket.net_lines += r.net_lines;
+    bucket.total_contributions += r.total_contributions;
+  }
+
+  return res;
+}
+
+export function calculateLanguages(
+  repos: ViewerRepoNode[],
+  username?: string,
+  includeAll = false,
+): LanguageStat[] {
+  const languageMap = new Map<
+    string,
+    { name: string; color: string | null; bytes: number }
+  >();
+
+  for (const repo of repos) {
+    if (!includeAll && username && repo.owner.login !== username) continue;
+    if (!repo.languages?.edges) continue;
+
+    for (const { size, node } of repo.languages.edges) {
+      const entry = languageMap.get(node.name) ?? {
+        name: node.name,
+        color: node.color,
+        bytes: 0,
+      };
+      entry.bytes += size || 0;
+      if (node.color && !entry.color) entry.color = node.color;
+      languageMap.set(node.name, entry);
+    }
+  }
+
+  const totalBytes = Array.from(languageMap.values()).reduce(
+    (sum, item) => sum + item.bytes,
+    0,
+  );
+
+  return Array.from(languageMap.values())
+    .map((item) => ({
+      name: item.name,
+      color: item.color,
+      bytes: item.bytes,
+      percentage:
+        totalBytes > 0
+          ? parseFloat(((item.bytes / totalBytes) * 100).toFixed(2))
+          : 0,
+    }))
+    .sort((a, b) => b.bytes - a.bytes);
+}
+
+export function calculateWeightedLanguages(
+  activities: RepoActivityStat[],
+  repoLanguageMap?: Map<
+    string,
+    Array<{ name: string; color: string | null; size: number }>
+  >,
+): LanguageStat[] {
+  const languageMap = new Map<
+    string,
+    { name: string; color: string | null; score: number }
+  >();
+  let totalScore = 0;
+
+  for (const repo of activities) {
+    const langs =
+      repoLanguageMap?.get(repo.repository) ||
+      (repo.languages || []).map((l) => ({
+        name: l.name,
+        color: l.color || null,
+        size: l.bytes || Math.round(l.percentage * 100),
+      }));
+
+    if (!langs.length) continue;
+
+    const repoWeight =
+      repo.additions > 0
+        ? repo.additions
+        : repo.commits * 0x32 || repo.total_contributions * 0x19;
+    if (repoWeight <= 0) continue;
+
+    const totalRepoBytes = langs.reduce((sum, l) => sum + (l.size || 0), 0);
+    if (totalRepoBytes > 0) {
+      for (const l of langs) {
+        const share = (l.size / totalRepoBytes) * repoWeight;
+        totalScore += share;
+        const entry = languageMap.get(l.name) ?? {
+          name: l.name,
+          color: l.color || null,
+          score: 0,
+        };
+        entry.score += share;
+        if (l.color && !entry.color) entry.color = l.color;
+        languageMap.set(l.name, entry);
+      }
+    }
+  }
+
+  if (totalScore === 0) return [];
+
+  return Array.from(languageMap.values())
+    .map((item) => ({
+      name: item.name,
+      color: item.color,
+      bytes: Math.round(item.score),
+      percentage: parseFloat(((item.score / totalScore) * 100).toFixed(2)),
+    }))
+    .sort((a, b) => b.bytes - a.bytes);
+}
+
+export function calculateRepositorySummary(
+  repos: ViewerRepoNode[],
+  username: string,
+): RepositorySummary {
+  let publicCount = 0;
+  let privateCount = 0;
+  let forkCount = 0;
+  let totalStars = 0;
+  let totalForks = 0;
+
+  for (const repo of repos) {
+    if (repo.owner.login !== username) continue;
+
+    if (repo.isPrivate) privateCount++;
+    else publicCount++;
+
+    if (repo.isFork) forkCount++;
+
+    totalStars += repo.stargazerCount || 0;
+    totalForks += repo.forkCount || 0;
+  }
+
+  return {
+    total_owned: publicCount + privateCount,
+    public: publicCount,
+    private: privateCount,
+    forks: forkCount,
+    total_stars: totalStars,
+    total_forks: totalForks,
+  };
+}
+
+export function calculateStreaks(
+  dailyContributions: Record<string, number>,
+  dateRange: DateRange,
+): StreaksAndConsistency {
+  const fromDate = dateRange.from.slice(0, 10);
+  const toDate = dateRange.to.slice(0, 10);
+
+  const entries = Object.entries(dailyContributions)
+    .filter(([date]) => date >= fromDate && date <= toDate)
+    .sort(([a], [b]) => a.localeCompare(b));
+
+  let longestStreak = 0;
+  let tempStreak = 0;
+  let activeDaysCount = 0;
+  let busiestDay = { date: "", count: 0 };
+
+  for (const [date, count] of entries) {
+    if (count > 0) {
+      activeDaysCount++;
+      tempStreak++;
+      if (tempStreak > longestStreak) longestStreak = tempStreak;
+    } else {
+      tempStreak = 0;
+    }
+
+    if (count > busiestDay.count) {
+      busiestDay = { date, count };
+    }
+  }
+
+  let currentStreak = 0;
+  for (let i = entries.length - 1; i >= 0; i--) {
+    if (entries[i][1] > 0) currentStreak++;
+    else break;
+  }
+
+  const totalDaysInPeriod = entries.length;
+  const activityRate =
+    totalDaysInPeriod > 0
+      ? parseFloat(((activeDaysCount / totalDaysInPeriod) * 100).toFixed(2))
+      : 0;
+
+  return {
+    longest_streak_days: longestStreak,
+    current_streak_days: currentStreak,
+    active_days_count: activeDaysCount,
+    total_days_in_period: totalDaysInPeriod,
+    activity_rate_percentage: activityRate,
+    busiest_day: busiestDay,
+  };
+}
+
+export function buildRepositoryActivities(params: {
+  repoContributions: Map<string, RepoContribDelta>;
+  locResults: Map<string, RepoLocStat>;
+  viewerRepos: ViewerRepoNode[];
+  username?: string;
+  affiliatedOrgs?: Set<string>;
+}): RepoActivityStat[] {
+  const {
+    repoContributions,
+    locResults,
+    viewerRepos,
+    username = "",
+    affiliatedOrgs = new Set<string>(),
+  } = params;
+
+  const repoNames = new Set([
+    ...repoContributions.keys(),
+    ...locResults.keys(),
+  ]);
+
+  const repoMeta = new Map(
+    viewerRepos.map((r) => [
+      r.nameWithOwner,
+      {
+        isPrivate: r.isPrivate,
+        isFork: r.isFork,
+        description: r.description ?? null,
+      },
+    ]),
+  );
+
+  const activities: RepoActivityStat[] = [];
+
+  for (const name of repoNames) {
+    const contrib = repoContributions.get(name);
+    const loc = locResults.get(name);
+    const meta = repoMeta.get(name);
+
+    const isPrivate =
+      meta?.isPrivate ?? contrib?.isPrivate ?? loc?.is_private ?? false;
+    const isFork = meta?.isFork ?? loc?.is_fork ?? false;
+    const description = meta?.description ?? null;
+    const commits = Math.max(contrib?.commits ?? 0, loc?.commit_count ?? 0);
+    const additions = loc?.additions ?? 0;
+    const deletions = loc?.deletions ?? 0;
+    const issues = contrib?.issues ?? 0;
+    const pullRequests = contrib?.pullRequests ?? 0;
+    const reviews = contrib?.reviews ?? 0;
+    const totalContrib = contrib
+      ? commits + issues + pullRequests + reviews
+      : commits;
+
+    const tier = classifyRepoTier(name, username, affiliatedOrgs);
+
+    if (totalContrib > 0 || additions > 0 || deletions > 0) {
+      activities.push({
+        repository: name,
+        tier,
+        is_private: isPrivate,
+        is_fork: isFork,
+        description,
+        commits,
+        pull_requests: pullRequests,
+        issues,
+        reviews,
+        additions,
+        deletions,
+        net_lines: additions - deletions,
+        total_contributions: totalContrib,
+      });
+    }
+  }
+
+  return activities.sort(
+    (a, b) =>
+      b.total_contributions - a.total_contributions ||
+      b.additions - a.additions,
+  );
+}
+
+const GET_VIEWER_REPOS_QUERY = `
+  query getViewerRepos($cursor: String) {
+    viewer {
+      login
+      id
+      organizations(first: 50) {
+        nodes {
+          login
+        }
+      }
+      allRepos: repositories(affiliations: [OWNER, COLLABORATOR, ORGANIZATION_MEMBER], first: 100, after: $cursor) {
+        nodes {
+          nameWithOwner
+          name
+          isPrivate
+          isFork
+          description
+          stargazerCount
+          forkCount
+          owner { login }
+          defaultBranchRef { name }
+          languages(first: 20, orderBy: { field: SIZE, direction: DESC }) {
+            edges {
+              size
+              node {
+                name
+                color
+              }
+            }
+          }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  }
+`;
+
+const GET_REPO_COMMIT_LOC_QUERY = `
+  query getRepoCommitLOC($owner: String!, $name: String!, $authorId: ID!, $since: GitTimestamp!, $until: GitTimestamp!, $cursor: String) {
+    repository(owner: $owner, name: $name) {
+      isPrivate
+      isFork
+      defaultBranchRef {
+        target {
+          ... on Commit {
+            history(first: 100, author: { id: $authorId }, since: $since, until: $until, after: $cursor) {
+              pageInfo {
+                hasNextPage
+                endCursor
+              }
+              nodes {
+                oid
+                additions
+                deletions
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+const GET_CONTRIBUTIONS_QUERY = `
+  query getContributions($from: DateTime!, $to: DateTime!) {
+    viewer {
+      contributionsCollection(from: $from, to: $to) {
+        totalCommitContributions
+        totalIssueContributions
+        totalPullRequestContributions
+        totalPullRequestReviewContributions
+        restrictedContributionsCount
+        contributionCalendar {
+          totalContributions
+          weeks {
+            contributionDays {
+              date
+              contributionCount
+            }
+          }
+        }
+        commitContributionsByRepository(maxRepositories: 100) {
+          repository {
+            nameWithOwner
+            isPrivate
+            description
+            isFork
+          }
+          contributions { totalCount }
+        }
+        issueContributionsByRepository(maxRepositories: 100) {
+          repository {
+            nameWithOwner
+            isPrivate
+            description
+            isFork
+          }
+          contributions { totalCount }
+        }
+        pullRequestContributionsByRepository(maxRepositories: 100) {
+          repository {
+            nameWithOwner
+            isPrivate
+            description
+            isFork
+          }
+          contributions { totalCount }
+        }
+        pullRequestReviewContributionsByRepository(maxRepositories: 100) {
+          repository {
+            nameWithOwner
+            isPrivate
+            description
+            isFork
+          }
+          contributions { totalCount }
+        }
+      }
+    }
+  }
+`;
+
+const GET_PRS_QUERY = `
+  query getPRs($searchQuery: String!, $cursor: String) {
+    search(query: $searchQuery, type: ISSUE, first: 100, after: $cursor) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      nodes {
+        ... on PullRequest {
+          title
+          state
+          merged
+          repository {
+            nameWithOwner
+            isPrivate
+            isFork
+            description
+          }
+        }
+      }
+    }
+  }
+`;
+
+export async function fetchViewerContext(
+  options?: GraphQLOptions,
+): Promise<ViewerContext> {
+  const repositories: ViewerRepoNode[] = [];
+  const organizations = new Set<string>();
+  let cursor: string | null = null;
+  let hasNextPage = true;
+  let login = "";
+  let id = "";
+
+  while (hasNextPage) {
+    const data: any = await runGraphQLAsync(
+      GET_VIEWER_REPOS_QUERY,
+      { cursor },
+      options,
+    );
+    const viewer = data.viewer;
+    if (!viewer) break;
+
+    login = viewer.login;
+    id = viewer.id;
+
+    for (const org of viewer.organizations?.nodes || []) {
+      if (org?.login) organizations.add(org.login.toLowerCase());
+    }
+
+    for (const node of viewer.allRepos?.nodes || []) {
+      repositories.push(node);
+      if (node.owner?.login && node.owner.login !== login) {
+        organizations.add(node.owner.login.toLowerCase());
+      }
+    }
+
+    hasNextPage = viewer.allRepos?.pageInfo?.hasNextPage;
+    cursor = viewer.allRepos?.pageInfo?.endCursor;
+  }
+
+  return { login, id, organizations, repositories };
+}
+
+export async function fetchContributionsWindow(
+  fromISO: string,
+  toISO: string,
+  options?: GraphQLOptions,
+): Promise<WindowContributions> {
+  const data: any = await runGraphQLAsync(
+    GET_CONTRIBUTIONS_QUERY,
+    { from: fromISO, to: toISO },
+    options,
+  );
+  const cc = data.viewer?.contributionsCollection;
+  if (!cc) {
+    throw new Error(`Failed to fetch contributions for ${fromISO} - ${toISO}`);
+  }
+
+  const daily: Record<string, number> = {};
+  for (const week of cc.contributionCalendar?.weeks || []) {
+    for (const day of week.contributionDays || []) {
+      daily[day.date] = day.contributionCount;
+    }
+  }
+
+  const repoContributions = new Map<string, RepoContribDelta>();
+
+  const getOrCreate = (name: string, isPrivate: boolean): RepoContribDelta => {
+    if (!repoContributions.has(name)) {
+      repoContributions.set(name, {
+        commits: 0,
+        issues: 0,
+        pullRequests: 0,
+        reviews: 0,
+        isPrivate,
+      });
+    }
+    return repoContributions.get(name)!;
+  };
+
+  const tally = (items: any[], field: keyof RepoContribDelta) => {
+    for (const item of items || []) {
+      if (!item?.repository?.nameWithOwner) continue;
+      const entry = getOrCreate(
+        item.repository.nameWithOwner,
+        Boolean(item.repository.isPrivate),
+      );
+      (entry[field] as number) += item.contributions?.totalCount || 0;
+    }
+  };
+
+  tally(cc.commitContributionsByRepository, "commits");
+  tally(cc.issueContributionsByRepository, "issues");
+  tally(cc.pullRequestContributionsByRepository, "pullRequests");
+  tally(cc.pullRequestReviewContributionsByRepository, "reviews");
+
+  return {
+    totalContributions: cc.contributionCalendar?.totalContributions || 0,
+    commits: cc.totalCommitContributions || 0,
+    issues: cc.totalIssueContributions || 0,
+    pullRequests: cc.totalPullRequestContributions || 0,
+    reviews: cc.totalPullRequestReviewContributions || 0,
+    restricted: cc.restrictedContributionsCount || 0,
+    daily,
+    repoContributions,
+  };
+}
+
+export async function fetchRepoLOC(
+  viewerId: string,
+  repos: Array<{ nameWithOwner: string; isPrivate: boolean; isFork: boolean }>,
+  dateRange: DateRange,
+  concurrency = 0x05,
+  options?: GraphQLOptions,
+): Promise<Map<string, RepoLocStat>> {
+  const results = new Map<string, RepoLocStat>();
+
+  for (let i = 0; i < repos.length; i += concurrency) {
+    const chunk = repos.slice(i, i + concurrency);
+    await Promise.all(
+      chunk.map(async ({ nameWithOwner, isPrivate, isFork }) => {
+        const [owner, name] = nameWithOwner.split("/");
+        if (!owner || !name) return;
+
+        let additions = 0;
+        let deletions = 0;
+        let commitCount = 0;
+        let cursor: string | null = null;
+        let hasNextPage = true;
+
+        try {
+          while (hasNextPage) {
+            const data: any = await runGraphQLAsync(
+              GET_REPO_COMMIT_LOC_QUERY,
+              {
+                owner,
+                name,
+                authorId: viewerId,
+                since: dateRange.from,
+                until: dateRange.to,
+                cursor,
+              },
+              options,
+            );
+
+            const history = data.repository?.defaultBranchRef?.target?.history;
+            if (!history?.nodes) break;
+
+            for (const commit of history.nodes) {
+              commitCount++;
+              additions += commit.additions || 0;
+              deletions += commit.deletions || 0;
+            }
+
+            hasNextPage = history.pageInfo?.hasNextPage;
+            cursor = history.pageInfo?.endCursor;
+          }
+
+          if (commitCount > 0 || additions > 0 || deletions > 0) {
+            results.set(nameWithOwner, {
+              repository: nameWithOwner,
+              is_private: isPrivate,
+              is_fork: isFork,
+              additions,
+              deletions,
+              commit_count: commitCount,
+            });
+          }
+        } catch {}
+      }),
+    );
+  }
+
+  return results;
+}
+
+export async function fetchPullRequests(
+  username: string,
+  dateRange: DateRange,
+  options?: GraphQLOptions,
+): Promise<{
+  summary: PullRequestSummary;
+  discoveredRepos: Array<{
+    nameWithOwner: string;
+    isPrivate: boolean;
+    isFork: boolean;
+    description: string | null;
+  }>;
+}> {
+  const fromDate = dateRange.from.slice(0, 10);
+  const toDate = dateRange.to.slice(0, 10);
+  const searchQuery = `author:${username} type:pr created:${fromDate}..${toDate}`;
+
+  let total = 0;
+  let merged = 0;
+  let open = 0;
+  let closedUnmerged = 0;
+  let cursor: string | null = null;
+  let hasNextPage = true;
+  const discoveredReposMap = new Map<
+    string,
+    {
+      nameWithOwner: string;
+      isPrivate: boolean;
+      isFork: boolean;
+      description: string | null;
+    }
+  >();
+
+  while (hasNextPage) {
+    const data: any = await runGraphQLAsync(
+      GET_PRS_QUERY,
+      { searchQuery, cursor },
+      options,
+    );
+    const search = data.search;
+    if (!search?.nodes) break;
+
+    for (const pr of search.nodes) {
+      total++;
+      if (pr.merged) merged++;
+      else if (pr.state === "OPEN") open++;
+      else closedUnmerged++;
+
+      if (pr.repository?.nameWithOwner) {
+        discoveredReposMap.set(pr.repository.nameWithOwner, {
+          nameWithOwner: pr.repository.nameWithOwner,
+          isPrivate: Boolean(pr.repository.isPrivate),
+          isFork: Boolean(pr.repository.isFork),
+          description: pr.repository.description ?? null,
+        });
+      }
+    }
+
+    hasNextPage = search.pageInfo?.hasNextPage;
+    cursor = search.pageInfo?.endCursor;
+  }
+
+  const mergeRate =
+    total > 0 ? parseFloat(((merged / total) * 100).toFixed(2)) : 0;
+
+  return {
+    summary: {
+      total,
+      merged,
+      open,
+      closed_unmerged: closedUnmerged,
+      merge_rate_percentage: mergeRate,
+    },
+    discoveredRepos: Array.from(discoveredReposMap.values()),
+  };
+}
+
+export function parseCliArgs(): {
   dateRange: DateRange;
   isIncremental: boolean;
   dataDir: string;
@@ -103,99 +1125,7 @@ function parseCliArgs(): {
   };
 }
 
-function printReport(stats: GitHubStatsOutput, mode: string): void {
-  console.log("\n======================================================");
-  console.log(`        GITHUB ACTIVITY & STATS REPORT [${mode.toUpperCase()}]`);
-  console.log("======================================================");
-  console.log(`User:         ${stats.metadata.username}`);
-  console.log(
-    `Period:       ${stats.metadata.period.from} → ${stats.metadata.period.to}`,
-  );
-  console.log(`Generated:    ${stats.metadata.generated_at}`);
-  console.log("------------------------------------------------------");
-
-  console.log("📊 1. LINES OF CODE (ALL REPOSITORIES)");
-  console.log(
-    `  - Total Additions: +${stats.lines_of_code.total_additions.toLocaleString()} lines`,
-  );
-  console.log(
-    `  - Total Deletions: -${stats.lines_of_code.total_deletions.toLocaleString()} lines`,
-  );
-  console.log(
-    `  - Net Code Change:  ${stats.lines_of_code.net_lines.toLocaleString()} lines`,
-  );
-
-  console.log("\n💻 2. TOP 5 LANGUAGES");
-  for (const lang of stats.languages.slice(0, 5)) {
-    const bar = "█".repeat(Math.round(lang.percentage / 5));
-    console.log(
-      `  - ${lang.name.padEnd(14)} ${lang.percentage.toFixed(2).padStart(6)}% [${bar}] (${(lang.bytes / 1024).toFixed(1)} KB)`,
-    );
-  }
-
-  console.log("\n📦 3. REPOSITORIES OWNED");
-  console.log(
-    `  - Total Owned:     ${stats.repositories.total_owned} (Public: ${stats.repositories.public}, Private: ${stats.repositories.private}, Forks: ${stats.repositories.forks})`,
-  );
-  console.log(`  - Total Stars:     ⭐ ${stats.repositories.total_stars}`);
-  console.log(`  - Total Forks:     🍴 ${stats.repositories.total_forks}`);
-
-  console.log("\n🔥 4. TOTAL CONTRIBUTIONS");
-  console.log(
-    `  - Grand Total:     ${stats.contributions.total.toLocaleString()}`,
-  );
-  console.log(
-    `  - Public / Private:${stats.contributions.public.toLocaleString()} public | ${stats.contributions.private.toLocaleString()} private (${((stats.contributions.private / (stats.contributions.total || 1)) * 100).toFixed(1)}%)`,
-  );
-  console.log(
-    `  - Breakdown:       ${stats.contributions.commits.toLocaleString()} commits, ${stats.contributions.pull_requests.toLocaleString()} PRs, ${stats.contributions.issues.toLocaleString()} issues, ${stats.contributions.reviews.toLocaleString()} reviews`,
-  );
-
-  console.log("\n🚀 5. TOP REPOSITORIES");
-  console.log(
-    `  - Distinct Repos:  ${stats.repositories_contributed_to.length} repositories`,
-  );
-  for (const repo of stats.repositories_contributed_to.slice(0, 8)) {
-    const tag = repo.is_private
-      ? "[Private]"
-      : repo.is_fork
-        ? "[Fork]"
-        : "[Public]";
-    console.log(
-      `    • ${repo.repository.padEnd(32)} ${tag.padEnd(10)} +${repo.additions.toLocaleString()}/-${repo.deletions.toLocaleString()} LOC | ${repo.total_contributions} contribs (${repo.commits}c, ${repo.pull_requests}pr)`,
-    );
-  }
-
-  console.log("\n📈 6. STREAKS & CONSISTENCY");
-  console.log(
-    `  - Longest Streak:  ${stats.streaks_and_consistency.longest_streak_days} days`,
-  );
-  console.log(
-    `  - Current Streak:  ${stats.streaks_and_consistency.current_streak_days} days`,
-  );
-  console.log(
-    `  - Active Days:     ${stats.streaks_and_consistency.active_days_count} / ${stats.streaks_and_consistency.total_days_in_period} days (${stats.streaks_and_consistency.activity_rate_percentage}%)`,
-  );
-  if (stats.streaks_and_consistency.busiest_day.date) {
-    console.log(
-      `  - Busiest Day:     ${stats.streaks_and_consistency.busiest_day.date} (${stats.streaks_and_consistency.busiest_day.count} contributions)`,
-    );
-  }
-
-  console.log("\n🔄 7. PULL REQUESTS");
-  console.log(`  - Total Opened:    ${stats.pull_requests.total}`);
-  console.log(
-    `  - Merged:          ${stats.pull_requests.merged} (${stats.pull_requests.merge_rate_percentage}% merge rate)`,
-  );
-  console.log(`  - Open:            ${stats.pull_requests.open}`);
-  console.log(`  - Closed (no merge):${stats.pull_requests.closed_unmerged}`);
-
-  console.log("\n💾 DATA FILE SAVED");
-  console.log(`  ✔ data/github-stats.json`);
-  console.log("======================================================\n");
-}
-
-async function executeIncremental(
+export async function executeIncremental(
   existing: GitHubStatsOutput,
   window: DateRange,
   viewer: ViewerContext,
@@ -205,6 +1135,7 @@ async function executeIncremental(
   );
 
   const windowData = await fetchContributionsWindow(window.from, window.to);
+  const prResult = await fetchPullRequests(viewer.login, window);
 
   const daily = { ...existing.daily_contributions, ...windowData.daily };
   const grandTotal = Object.values(daily).reduce(
@@ -212,20 +1143,38 @@ async function executeIncremental(
     0,
   );
 
-  const activeNames = Array.from(windowData.repoContributions.keys());
-  const candidateRepos = activeNames.map((name) => {
+  const candidateMap = new Map<
+    string,
+    { nameWithOwner: string; isPrivate: boolean; isFork: boolean }
+  >();
+
+  for (const name of windowData.repoContributions.keys()) {
     const meta = viewer.repositories.find((r) => r.nameWithOwner === name);
-    return {
+    candidateMap.set(name, {
       nameWithOwner: name,
       isPrivate:
         meta?.isPrivate ??
         windowData.repoContributions.get(name)?.isPrivate ??
         false,
       isFork: meta?.isFork ?? false,
-    };
-  });
+    });
+  }
 
-  const locResults = await fetchRepoLOC(viewer.id, candidateRepos, window);
+  for (const r of prResult.discoveredRepos) {
+    if (!candidateMap.has(r.nameWithOwner)) {
+      candidateMap.set(r.nameWithOwner, {
+        nameWithOwner: r.nameWithOwner,
+        isPrivate: r.isPrivate,
+        isFork: r.isFork,
+      });
+    }
+  }
+
+  const locResults = await fetchRepoLOC(
+    viewer.id,
+    Array.from(candidateMap.values()),
+    window,
+  );
 
   let newAdditions = 0;
   let newDeletions = 0;
@@ -234,7 +1183,7 @@ async function executeIncremental(
     newDeletions += loc.deletions;
   }
 
-  const repoMap = new Map(
+  const repoMap = new Map<string, RepoActivityStat>(
     existing.repositories_contributed_to.map((r) => [r.repository, { ...r }]),
   );
 
@@ -245,6 +1194,7 @@ async function executeIncremental(
     const commitCount = Math.max(stat.commits, loc?.commit_count ?? 0);
     const contribCount =
       commitCount + stat.issues + stat.pullRequests + stat.reviews;
+    const tier = classifyRepoTier(name, viewer.login, viewer.organizations);
 
     if (repoMap.has(name)) {
       const entry = repoMap.get(name)!;
@@ -256,6 +1206,7 @@ async function executeIncremental(
       entry.deletions += dels;
       entry.net_lines = entry.additions - entry.deletions;
       entry.total_contributions += contribCount;
+      entry.tier = tier;
       if (!entry.description) {
         entry.description =
           viewer.repositories.find((r) => r.nameWithOwner === name)
@@ -264,9 +1215,12 @@ async function executeIncremental(
     } else {
       repoMap.set(name, {
         repository: name,
+        tier,
         is_private: stat.isPrivate,
         is_fork:
-          candidateRepos.find((r) => r.nameWithOwner === name)?.isFork ?? false,
+          candidateMap.get(name)?.isFork ??
+          viewer.repositories.find((r) => r.nameWithOwner === name)?.isFork ??
+          false,
         description:
           viewer.repositories.find((r) => r.nameWithOwner === name)
             ?.description ?? null,
@@ -282,7 +1236,7 @@ async function executeIncremental(
     }
   }
 
-  const windowPRs = await fetchPullRequests(viewer.login, window);
+  const windowPRs = prResult.summary;
   const totalPRs = existing.pull_requests.total + windowPRs.total;
   const mergedPRs = existing.pull_requests.merged + windowPRs.merged;
 
@@ -303,7 +1257,7 @@ async function executeIncremental(
     }
   }
 
-  const weeklySummary = {
+  const weeklySummary: PeriodMetrics = {
     period: window,
     lines_of_code: {
       total_additions: newAdditions,
@@ -329,6 +1283,14 @@ async function executeIncremental(
         : existing.metadata.period.to,
   };
 
+  const activities = Array.from(repoMap.values()).sort(
+    (a, b) =>
+      b.total_contributions - a.total_contributions ||
+      b.additions - a.additions,
+  );
+
+  const categories = calculateCategoryMetrics(activities);
+
   return {
     metadata: {
       username: viewer.login,
@@ -343,7 +1305,7 @@ async function executeIncremental(
         newAdditions -
         (existing.lines_of_code.total_deletions + newDeletions),
     },
-    languages: calculateLanguages(viewer.repositories, viewer.login),
+    categories,
     repositories: calculateRepositorySummary(viewer.repositories, viewer.login),
     contributions: {
       commits: existing.contributions.commits + windowData.commits,
@@ -372,20 +1334,18 @@ async function executeIncremental(
           ? parseFloat(((mergedPRs / totalPRs) * 100).toFixed(2))
           : 0,
     },
-    repositories_contributed_to: Array.from(repoMap.values()).sort(
-      (a, b) =>
-        b.total_contributions - a.total_contributions ||
-        b.additions - a.additions,
-    ),
+    languages: calculateLanguages(viewer.repositories, viewer.login),
+    repositories_contributed_to: activities,
     daily_contributions: daily,
     weekly_summary: weeklySummary,
     monthly_history: existing.monthly_history,
   };
 }
 
-async function executeFullBackfill(
+export async function executeFullBackfill(
   dateRange: DateRange,
   viewer: ViewerContext,
+  existing?: GitHubStatsOutput,
 ): Promise<GitHubStatsOutput> {
   console.log(
     `Executing full historical backfill: ${dateRange.from} → ${dateRange.to}`,
@@ -433,10 +1393,13 @@ async function executeFullBackfill(
     }
   }
 
+  const prResult = await fetchPullRequests(viewer.login, dateRange);
+
   const candidateMap = new Map<
     string,
     { nameWithOwner: string; isPrivate: boolean; isFork: boolean }
   >();
+
   for (const r of viewer.repositories) {
     candidateMap.set(r.nameWithOwner, {
       nameWithOwner: r.nameWithOwner,
@@ -444,12 +1407,23 @@ async function executeFullBackfill(
       isFork: r.isFork,
     });
   }
+
   for (const [name, stat] of repoContribs.entries()) {
     if (!candidateMap.has(name)) {
       candidateMap.set(name, {
         nameWithOwner: name,
         isPrivate: stat.isPrivate,
         isFork: false,
+      });
+    }
+  }
+
+  for (const r of prResult.discoveredRepos) {
+    if (!candidateMap.has(r.nameWithOwner)) {
+      candidateMap.set(r.nameWithOwner, {
+        nameWithOwner: r.nameWithOwner,
+        isPrivate: r.isPrivate,
+        isFork: r.isFork,
       });
     }
   }
@@ -467,11 +1441,20 @@ async function executeFullBackfill(
     totalDeletions += loc.deletions;
   }
 
-  const prSummary = await fetchPullRequests(viewer.login, dateRange);
   const grandTotal = Object.values(mergedDaily).reduce(
     (sum, count) => sum + count,
     0,
   );
+
+  const activities = buildRepositoryActivities({
+    repoContributions: repoContribs,
+    locResults,
+    viewerRepos: viewer.repositories,
+    username: viewer.login,
+    affiliatedOrgs: viewer.organizations,
+  });
+
+  const categories = calculateCategoryMetrics(activities);
 
   return {
     metadata: {
@@ -484,7 +1467,7 @@ async function executeFullBackfill(
       total_deletions: totalDeletions,
       net_lines: totalAdditions - totalDeletions,
     },
-    languages: calculateLanguages(viewer.repositories, viewer.login),
+    categories,
     repositories: calculateRepositorySummary(viewer.repositories, viewer.login),
     contributions: {
       total: grandTotal,
@@ -496,17 +1479,107 @@ async function executeFullBackfill(
       private: restricted,
     },
     streaks_and_consistency: calculateStreaks(mergedDaily, dateRange),
-    pull_requests: prSummary,
-    repositories_contributed_to: buildRepositoryActivities({
-      repoContributions: repoContribs,
-      locResults,
-      viewerRepos: viewer.repositories,
-    }),
+    pull_requests: prResult.summary,
+    languages: calculateLanguages(viewer.repositories, viewer.login),
+    repositories_contributed_to: activities,
     daily_contributions: mergedDaily,
+    weekly_summary: existing?.weekly_summary,
+    monthly_history: existing?.monthly_history,
   };
 }
 
-async function main() {
+export function printReport(stats: GitHubStatsOutput, mode: string): void {
+  console.log("\n======================================================");
+  console.log(`        GITHUB ACTIVITY & STATS REPORT [${mode.toUpperCase()}]`);
+  console.log("======================================================");
+  console.log(`User:         ${stats.metadata.username}`);
+  console.log(
+    `Period:       ${stats.metadata.period.from} → ${stats.metadata.period.to}`,
+  );
+  console.log(`Generated:    ${stats.metadata.generated_at}`);
+  console.log("------------------------------------------------------");
+
+  console.log("📊 1. LINES OF CODE (ALL REPOSITORIES)");
+  console.log(
+    `  - Total Additions: +${stats.lines_of_code.total_additions.toLocaleString()} lines`,
+  );
+  console.log(
+    `  - Total Deletions: -${stats.lines_of_code.total_deletions.toLocaleString()} lines`,
+  );
+  console.log(
+    `  - Net Code Change:  ${stats.lines_of_code.net_lines.toLocaleString()} lines`,
+  );
+
+  if (stats.categories) {
+    console.log("\n🏷️ 2. CONTRIBUTION TIERS");
+    console.log(
+      `  - Personal:        ${stats.categories.personal.repositories_count} repos | ${stats.categories.personal.total_contributions} contribs (+${stats.categories.personal.additions}/-${stats.categories.personal.deletions} LOC)`,
+    );
+    console.log(
+      `  - Organization:    ${stats.categories.organization.repositories_count} repos | ${stats.categories.organization.total_contributions} contribs (+${stats.categories.organization.additions}/-${stats.categories.organization.deletions} LOC)`,
+    );
+    console.log(
+      `  - External OSS:    ${stats.categories.external_oss.repositories_count} repos | ${stats.categories.external_oss.total_contributions} contribs (+${stats.categories.external_oss.additions}/-${stats.categories.external_oss.deletions} LOC)`,
+    );
+  }
+
+  console.log("\n💻 3. TOP 5 LANGUAGES");
+  for (const lang of stats.languages.slice(0, 5)) {
+    const bar = "█".repeat(Math.round(lang.percentage / 5));
+    console.log(
+      `  - ${lang.name.padEnd(14)} ${lang.percentage.toFixed(2).padStart(6)}% [${bar}] (${(lang.bytes / 1024).toFixed(1)} KB)`,
+    );
+  }
+
+  console.log("\n📦 4. REPOSITORIES OWNED");
+  console.log(
+    `  - Total Owned:     ${stats.repositories.total_owned} (Public: ${stats.repositories.public}, Private: ${stats.repositories.private}, Forks: ${stats.repositories.forks})`,
+  );
+  console.log(`  - Total Stars:     ⭐ ${stats.repositories.total_stars}`);
+  console.log(`  - Total Forks:     🍴 ${stats.repositories.total_forks}`);
+
+  console.log("\n🔥 5. TOTAL CONTRIBUTIONS");
+  console.log(
+    `  - Grand Total:     ${stats.contributions.total.toLocaleString()}`,
+  );
+  console.log(
+    `  - Breakdown:       ${stats.contributions.commits.toLocaleString()} commits, ${stats.contributions.pull_requests.toLocaleString()} PRs, ${stats.contributions.issues.toLocaleString()} issues, ${stats.contributions.reviews.toLocaleString()} reviews`,
+  );
+
+  console.log("\n🚀 6. TOP REPOSITORIES");
+  console.log(
+    `  - Distinct Repos:  ${stats.repositories_contributed_to.length} repositories`,
+  );
+  for (const repo of stats.repositories_contributed_to.slice(0, 8)) {
+    const tag = `[${repo.tier}]`;
+    console.log(
+      `    • ${repo.repository.padEnd(32)} ${tag.padEnd(16)} +${repo.additions.toLocaleString()}/-${repo.deletions.toLocaleString()} LOC | ${repo.total_contributions} contribs (${repo.commits}c, ${repo.pull_requests}pr)`,
+    );
+  }
+
+  console.log("\n📈 7. STREAKS & CONSISTENCY");
+  console.log(
+    `  - Longest Streak:  ${stats.streaks_and_consistency.longest_streak_days} days`,
+  );
+  console.log(
+    `  - Current Streak:  ${stats.streaks_and_consistency.current_streak_days} days`,
+  );
+  console.log(
+    `  - Active Days:     ${stats.streaks_and_consistency.active_days_count} / ${stats.streaks_and_consistency.total_days_in_period} days (${stats.streaks_and_consistency.activity_rate_percentage}%)`,
+  );
+
+  console.log("\n🔄 8. PULL REQUESTS");
+  console.log(`  - Total Opened:    ${stats.pull_requests.total}`);
+  console.log(
+    `  - Merged:          ${stats.pull_requests.merged} (${stats.pull_requests.merge_rate_percentage}% merge rate)`,
+  );
+
+  console.log("\n💾 DATA FILE SAVED");
+  console.log(`  ✔ data/github-stats.json`);
+  console.log("======================================================\n");
+}
+
+export async function main() {
   const { dateRange, isIncremental, dataDir } = parseCliArgs();
   const filePath = path.join(dataDir, "github-stats.json");
 
@@ -514,14 +1587,15 @@ async function main() {
   let stats: GitHubStatsOutput;
   let mode: string;
 
-  if (isIncremental && existsSync(filePath)) {
-    const existing = JSON.parse(
-      readFileSync(filePath, "utf-8"),
-    ) as GitHubStatsOutput;
+  const existing = existsSync(filePath)
+    ? (JSON.parse(readFileSync(filePath, "utf-8")) as GitHubStatsOutput)
+    : undefined;
+
+  if (isIncremental && existing) {
     stats = await executeIncremental(existing, dateRange, viewer);
     mode = "Incremental (Sunday → Saturday)";
   } else {
-    stats = await executeFullBackfill(dateRange, viewer);
+    stats = await executeFullBackfill(dateRange, viewer, existing);
     mode = "Full Historical (2021 → Date)";
   }
 
@@ -531,10 +1605,12 @@ async function main() {
   printReport(stats, mode);
 }
 
-main().catch((err) => {
-  console.error(
-    "\n[FATAL ERROR]",
-    err instanceof Error ? err.stack || err.message : err,
-  );
-  process.exit(1);
-});
+if (process.argv[1] === import.meta.filename) {
+  main().catch((err) => {
+    console.error(
+      "\n[FATAL ERROR]",
+      err instanceof Error ? err.stack || err.message : err,
+    );
+    process.exit(1);
+  });
+}

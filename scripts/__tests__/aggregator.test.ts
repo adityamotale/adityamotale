@@ -1,12 +1,167 @@
-import { describe, it } from "node:test";
 import assert from "node:assert/strict";
+import { describe, it } from "node:test";
 import {
   buildRepositoryActivities,
+  calculateCategoryMetrics,
   calculateLanguages,
   calculateRepositorySummary,
   calculateStreaks,
-} from "../lib/aggregator.ts";
-import type { ViewerRepoNode } from "../lib/collector.ts";
+  calculateWeightedLanguages,
+  classifyRepoTier,
+  type RepoActivityStat,
+  type ViewerRepoNode,
+} from "../fetch-github-stats.ts";
+
+describe("classifyRepoTier", () => {
+  const orgs = new Set(["pid7-org", "cloud-native"]);
+
+  it("classifies personal repos accurately", () => {
+    assert.equal(
+      classifyRepoTier("adityamotale/adityamotale", "adityamotale", orgs),
+      "personal",
+    );
+    assert.equal(
+      classifyRepoTier("adityamotale/ocelot", "adityamotale", orgs),
+      "personal",
+    );
+  });
+
+  it("classifies organization repos accurately", () => {
+    assert.equal(
+      classifyRepoTier("pid7-org/turbofox", "adityamotale", orgs),
+      "organization",
+    );
+    assert.equal(
+      classifyRepoTier("cloud-native/specs", "adityamotale", orgs),
+      "organization",
+    );
+  });
+
+  it("classifies third-party / upstream repos as external_oss", () => {
+    assert.equal(
+      classifyRepoTier("torvalds/linux", "adityamotale", orgs),
+      "external_oss",
+    );
+    assert.equal(
+      classifyRepoTier("rust-lang/rust", "adityamotale", orgs),
+      "external_oss",
+    );
+  });
+});
+
+describe("calculateCategoryMetrics", () => {
+  it("aggregates contributions, commits, PRs, and LOC by tier", () => {
+    const activities: RepoActivityStat[] = [
+      {
+        repository: "adityamotale/repo1",
+        tier: "personal",
+        is_private: false,
+        is_fork: false,
+        commits: 10,
+        pull_requests: 2,
+        issues: 1,
+        reviews: 0,
+        additions: 150,
+        deletions: 50,
+        net_lines: 100,
+        total_contributions: 13,
+      },
+      {
+        repository: "pid7-org/turbofox",
+        tier: "organization",
+        is_private: false,
+        is_fork: false,
+        commits: 25,
+        pull_requests: 5,
+        issues: 2,
+        reviews: 4,
+        additions: 500,
+        deletions: 100,
+        net_lines: 400,
+        total_contributions: 36,
+      },
+      {
+        repository: "upstream/project",
+        tier: "external_oss",
+        is_private: false,
+        is_fork: true,
+        commits: 2,
+        pull_requests: 1,
+        issues: 0,
+        reviews: 0,
+        additions: 20,
+        deletions: 5,
+        net_lines: 15,
+        total_contributions: 3,
+      },
+    ];
+
+    const metrics = calculateCategoryMetrics(activities);
+
+    assert.equal(metrics.personal.repositories_count, 1);
+    assert.equal(metrics.personal.commits, 10);
+    assert.equal(metrics.personal.additions, 150);
+    assert.equal(metrics.personal.net_lines, 100);
+    assert.equal(metrics.personal.total_contributions, 13);
+
+    assert.equal(metrics.organization.repositories_count, 1);
+    assert.equal(metrics.organization.commits, 25);
+    assert.equal(metrics.organization.total_contributions, 36);
+    assert.equal(metrics.organization.net_lines, 400);
+
+    assert.equal(metrics.external_oss.repositories_count, 1);
+    assert.equal(metrics.external_oss.commits, 2);
+    assert.equal(metrics.external_oss.total_contributions, 3);
+  });
+});
+
+describe("calculateWeightedLanguages", () => {
+  it("weights language distribution by contribution LOC across repos", () => {
+    const activities: RepoActivityStat[] = [
+      {
+        repository: "user/c-project",
+        tier: "personal",
+        is_private: false,
+        is_fork: false,
+        commits: 10,
+        pull_requests: 0,
+        issues: 0,
+        reviews: 0,
+        additions: 1000,
+        deletions: 200,
+        net_lines: 800,
+        total_contributions: 10,
+      },
+      {
+        repository: "org/rust-core",
+        tier: "organization",
+        is_private: false,
+        is_fork: false,
+        commits: 20,
+        pull_requests: 2,
+        issues: 0,
+        reviews: 0,
+        additions: 3000,
+        deletions: 500,
+        net_lines: 2500,
+        total_contributions: 22,
+      },
+    ];
+
+    const repoLanguageMap = new Map([
+      ["user/c-project", [{ name: "C", color: "#555555", size: 1000 }]],
+      ["org/rust-core", [{ name: "Rust", color: "#dea584", size: 3000 }]],
+    ]);
+
+    const result = calculateWeightedLanguages(activities, repoLanguageMap);
+
+    assert.equal(result.length, 2);
+    assert.equal(result[0].name, "Rust");
+    assert.equal(result[0].percentage, 75);
+    assert.equal(result[1].name, "C");
+    assert.equal(result[1].percentage, 25);
+  });
+});
 
 describe("calculateLanguages", () => {
   it("aggregates bytes, calculates percentages, and sorts descending for owned repos", () => {
@@ -212,7 +367,7 @@ describe("calculateStreaks", () => {
 });
 
 describe("buildRepositoryActivities", () => {
-  it("unifies contributions and LOC records into non-duplicated items", () => {
+  it("unifies contributions and LOC records into non-duplicated items with tier classification", () => {
     const repoContributions = new Map([
       [
         "user/repo-a",
@@ -225,7 +380,7 @@ describe("buildRepositoryActivities", () => {
         },
       ],
       [
-        "user/repo-b",
+        "org/repo-b",
         { commits: 5, issues: 0, pullRequests: 0, reviews: 1, isPrivate: true },
       ],
     ]);
@@ -243,9 +398,9 @@ describe("buildRepositoryActivities", () => {
         },
       ],
       [
-        "user/repo-c",
+        "external/repo-c",
         {
-          repository: "user/repo-c",
+          repository: "external/repo-c",
           is_private: false,
           is_fork: true,
           additions: 50,
@@ -266,22 +421,22 @@ describe("buildRepositoryActivities", () => {
         owner: { login: "user" },
       },
       {
-        nameWithOwner: "user/repo-b",
+        nameWithOwner: "org/repo-b",
         name: "repo-b",
         isPrivate: true,
         isFork: false,
         stargazerCount: 0,
         forkCount: 0,
-        owner: { login: "user" },
+        owner: { login: "org" },
       },
       {
-        nameWithOwner: "user/repo-c",
+        nameWithOwner: "external/repo-c",
         name: "repo-c",
         isPrivate: false,
         isFork: true,
         stargazerCount: 0,
         forkCount: 0,
-        owner: { login: "user" },
+        owner: { login: "external" },
       },
     ];
 
@@ -289,11 +444,14 @@ describe("buildRepositoryActivities", () => {
       repoContributions,
       locResults,
       viewerRepos,
+      username: "user",
+      affiliatedOrgs: new Set(["org"]),
     });
 
     assert.equal(result.length, 3);
 
     const repoA = result.find((r) => r.repository === "user/repo-a")!;
+    assert.equal(repoA.tier, "personal");
     assert.equal(repoA.commits, 10);
     assert.equal(repoA.issues, 2);
     assert.equal(repoA.pull_requests, 1);
@@ -303,14 +461,16 @@ describe("buildRepositoryActivities", () => {
     assert.equal(repoA.total_contributions, 13);
     assert.equal(repoA.is_private, false);
 
-    const repoB = result.find((r) => r.repository === "user/repo-b")!;
+    const repoB = result.find((r) => r.repository === "org/repo-b")!;
+    assert.equal(repoB.tier, "organization");
     assert.equal(repoB.commits, 5);
     assert.equal(repoB.additions, 0);
     assert.equal(repoB.deletions, 0);
     assert.equal(repoB.total_contributions, 6);
     assert.equal(repoB.is_private, true);
 
-    const repoC = result.find((r) => r.repository === "user/repo-c")!;
+    const repoC = result.find((r) => r.repository === "external/repo-c")!;
+    assert.equal(repoC.tier, "external_oss");
     assert.equal(repoC.commits, 2);
     assert.equal(repoC.additions, 50);
     assert.equal(repoC.deletions, 10);
@@ -319,8 +479,8 @@ describe("buildRepositoryActivities", () => {
     assert.equal(repoC.is_fork, true);
 
     assert.equal(result[0].repository, "user/repo-a");
-    assert.equal(result[1].repository, "user/repo-b");
-    assert.equal(result[2].repository, "user/repo-c");
+    assert.equal(result[1].repository, "org/repo-b");
+    assert.equal(result[2].repository, "external/repo-c");
   });
 
   it("correctly calculates negative net lines when deletions exceed additions", () => {
@@ -342,11 +502,13 @@ describe("buildRepositoryActivities", () => {
       repoContributions: new Map(),
       locResults,
       viewerRepos: [],
+      username: "user",
     });
 
     assert.equal(result.length, 1);
     assert.equal(result[0].net_lines, -90);
     assert.equal(result[0].additions, 30);
     assert.equal(result[0].deletions, 120);
+    assert.equal(result[0].tier, "personal");
   });
 });

@@ -1,6 +1,6 @@
-import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { getSundayToSaturdayWindow } from "../lib/date.ts";
+import { describe, it } from "node:test";
+import { getSundayToSaturdayWindow } from "../fetch-github-stats.ts";
 
 describe("getSundayToSaturdayWindow", () => {
   it("calculates preceding Sunday to Saturday when run on Monday", () => {
