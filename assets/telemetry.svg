@@ -35,31 +35,31 @@
     <line x1="91.5" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
 
     <text x="0" y="38">
-      <tspan class="muted">&amp;</tspan> <tspan class="subtle">loc:</tspan>     <tspan class="text" font-weight="600">1,574,850</tspan> <tspan class="muted text-xs">(+3.2M / -1.6M)</tspan>
+      <tspan class="muted">&amp;</tspan> <tspan class="subtle">loc:</tspan>     <tspan class="text" font-weight="600">821,998</tspan> <tspan class="muted text-xs">(+1.9M / -1.1M)</tspan>
     </text>
     <text x="340" y="38">
       <tspan class="muted">+</tspan> <tspan class="subtle">prs:</tspan>     <tspan class="muted">[</tspan><tspan class="foam">###############</tspan><tspan class="bar-empty">.</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">97.4%</tspan>
     </text>
 
     <text x="0" y="58">
-      <tspan class="muted">%</tspan> <tspan class="subtle">churn:</tspan>   <tspan class="muted">[</tspan><tspan class="pine">##########</tspan><tspan class="bar-empty">......</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">66.3%</tspan>
+      <tspan class="muted">%</tspan> <tspan class="subtle">churn:</tspan>   <tspan class="muted">[</tspan><tspan class="pine">##########</tspan><tspan class="bar-empty">......</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">63.7%</tspan>
     </text>
     <text x="340" y="58">
-      <tspan class="muted">@</tspan> <tspan class="subtle">active:</tspan>  <tspan class="muted">[</tspan><tspan class="gold">#######</tspan><tspan class="bar-empty">.........</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">48.2%</tspan>
+      <tspan class="muted">@</tspan> <tspan class="subtle">active:</tspan>  <tspan class="muted">[</tspan><tspan class="gold"></tspan><tspan class="bar-empty">................</tspan><tspan class="muted">]</tspan> <tspan class="text" font-weight="600">0.0%</tspan>
     </text>
 
     <text x="0" y="78">
-      <tspan class="muted">#</tspan> <tspan class="subtle">repos:</tspan>   <tspan class="text" font-weight="600">111</tspan> <tspan class="muted text-xs">(29 public, 32 private, 50 org)</tspan>
+      <tspan class="muted">#</tspan> <tspan class="subtle">repos:</tspan>   <tspan class="text" font-weight="600">54</tspan> <tspan class="muted text-xs">(17 public, 11 private, 26 org)</tspan>
     </text>
     <text x="340" y="78">
-      <tspan class="muted">^</tspan> <tspan class="subtle">streak:</tspan>  <tspan class="text" font-weight="600">112 days</tspan> <tspan class="muted text-xs">(1037 active)</tspan>
+      <tspan class="muted">^</tspan> <tspan class="subtle">streak:</tspan>  <tspan class="text" font-weight="600">0 days</tspan> <tspan class="muted text-xs">(0 active)</tspan>
     </text>
 
     <text x="0" y="98">
-      <tspan class="muted">*</tspan> <tspan class="subtle">commits:</tspan> <tspan class="text" font-weight="600">4,965</tspan>
+      <tspan class="muted">*</tspan> <tspan class="subtle">commits:</tspan> <tspan class="text" font-weight="600">3,490</tspan>
     </text>
     <text x="340" y="98">
-      <tspan class="muted">$</tspan> <tspan class="subtle">stack:</tspan>   <tspan class="text" font-weight="600">C 49% · JavaScript 17% · Dart 13%</tspan>
+      <tspan class="muted">$</tspan> <tspan class="subtle">stack:</tspan>   <tspan class="text" font-weight="600">Rust 61% · Makefile 8% · C 7%</tspan>
     </text>
   </g>
 </svg>
