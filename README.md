@@ -7,9 +7,9 @@
 ![Projects](./assets/projects-header.svg)
 [![turbofox](./assets/project-0.svg)](https://github.com/pid7-org/turbofox)
 [![frozen-core](./assets/project-1.svg)](https://github.com/pid7-org/frozen-core)
-[![ashwa](./assets/project-2.svg)](https://github.com/pid7-org/ashwa)
-[![kosa](./assets/project-3.svg)](https://github.com/pid7-org/kosa)
-[![anvaya](./assets/project-4.svg)](https://github.com/adityamotale/anvaya)
+[![shyena](./assets/project-2.svg)](https://github.com/adityamotale/shyena)
+[![adityamotale](./assets/project-3.svg)](https://github.com/adityamotale/adityamotale)
+[![L3](./assets/project-4.svg)](https://github.com/adityamotale/L3)
 
 ![Writing](./assets/writing-header.svg)
 [![There's More to Performance Than Big-O](./assets/writing-0.svg)](https://adii.fyi/blogs/theres-more-to-performance-than-big-o)
