@@ -261,15 +261,8 @@ export async function generateResumePdf() {
   page.drawText('major:', { x: eduCol1, y, size: 7.5, font, color: cSubtle });
   page.drawText('Computer Science & Engineering', { x: eduCol1 + 48, y, size: 7.5, font, color: cText });
 
-  page.drawText('status:', { x: eduCol2, y, size: 7.5, font, color: cSubtle });
-  page.drawText('Graduated', { x: eduCol2 + 48, y, size: 7.5, font, color: cText });
-  y -= 14;
-
-  page.drawText('inst:', { x: eduCol1, y, size: 7.5, font, color: cSubtle });
-  page.drawText('Marathwada Inst. of Technology', { x: eduCol1 + 48, y, size: 7.5, font, color: cText });
-
-  page.drawText('place:', { x: eduCol2, y, size: 7.5, font, color: cSubtle });
-  page.drawText('CPSN, Maharashtra, Bharat', { x: eduCol2 + 48, y, size: 7.5, font, color: cText });
+  page.drawText('inst:', { x: eduCol2, y, size: 7.5, font, color: cSubtle });
+  page.drawText('Marathwada Inst. of Technology', { x: eduCol2 + 48, y, size: 7.5, font, color: cText });
 
   drawSectionHeader('Experience');
 
