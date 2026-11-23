@@ -1,80 +1,65 @@
 ---
 import stats from '../../../data/github-stats.json';
 
-const languages = stats.languages || [];
-const topLanguages =
-  languages
-    .slice(0, 3)
-    .map((l) => `${l.name} ${Math.round(l.percentage)}%`)
-    .join(' · ') || '--';
-
-const locData = stats.lines_of_code || {
-  total_additions: 0,
-  total_deletions: 0,
-  net_lines: 0,
-};
-const netLoc = locData.net_lines ?? 0;
-const totalAdd = locData.total_additions ?? 0;
-const totalDel = locData.total_deletions ?? 0;
-const totalChurn = totalAdd + totalDel;
-const churnRatio = totalChurn > 0 ? (totalAdd / totalChurn) * 100 : 0;
-
 const formatCompact = (num: number) => {
   const abs = Math.abs(num);
-  if (abs >= 1_000_000) return `${(num / 1_000_000).toFixed(1)}M`;
+  if (abs >= 1_000_000) return `${(num / 1_000_000).toFixed(2)}M`;
   if (abs >= 1_000) return `${(num / 1_000).toFixed(1)}k`;
   return `${num}`;
 };
 
-const netLocFormatted = formatCompact(netLoc);
-const additionsFormatted = formatCompact(totalAdd);
-const deletionsFormatted = formatCompact(totalDel);
+// Scope distribution
+const orgCommits = stats.categories?.organization?.commits ?? 2218;
+const personalCommits = stats.categories?.personal?.commits ?? 1550;
+const ossContribs = stats.categories?.external_oss?.total_contributions ?? 0x0b;
+const totalScope = orgCommits + personalCommits + ossContribs || 1;
+const orgPct = Math.round((orgCommits / totalScope) * 100);
+const personalPct = Math.round((personalCommits / totalScope) * 100);
 
-const totalCommits =
-  stats.repositories_contributed_to?.reduce(
-    (sum, r) => sum + (r.commits || 0),
-    0
-  ) ||
-  stats.contributions?.commits ||
-  0;
-const commitsFormatted = totalCommits.toLocaleString();
-
+// PR pipeline
 const prData = stats.pull_requests || {
-  total: 0,
-  merged: 0,
-  merge_rate_percentage: 0,
+  total: 234,
+  merged: 228,
+  merge_rate_percentage: 97.4,
 };
-const prMergeRate = prData.merge_rate_percentage ?? 0;
+const prMergeRate = (prData.merge_rate_percentage ?? 97.4).toFixed(1);
+const prMerged = prData.merged ?? 228;
 
-const repos = stats.repositories || { total: 0, public: 0, private: 0 };
-const reposContributed =
-  stats.repositories_contributed_to?.length || repos.total || 0;
-const reposPublic = repos.public ?? 0;
-const reposPrivate = repos.private ?? 0;
-const reposOrg = Math.max(0, reposContributed - (reposPublic + reposPrivate));
+// Languages
+const languages = stats.languages || [];
+const getLangPct = (name: string, fallback: number) => {
+  const found = languages.find((l) => l.name === name);
+  return found ? Math.round(found.percentage) : fallback;
+};
+const rustPct = getLangPct('Rust', 68);
+const cPct = getLangPct('C', 7);
+const tsPct = getLangPct('TypeScript', 8);
+const asmPct = getLangPct('Assembly', 4);
 
+// Churn
+const loc = stats.lines_of_code || {
+  total_additions: 1748252,
+  total_deletions: 926304,
+};
+const addFormatted = formatCompact(loc.total_additions);
+const delFormatted = formatCompact(loc.total_deletions);
+const addDelRatio = (loc.total_additions / (loc.total_deletions || 1)).toFixed(
+  2
+);
+
+// Streak
 const streaks = stats.streaks_and_consistency || {
-  current_streak_days: 0,
-  longest_streak_days: 0,
-  activity_rate_percentage: 0,
+  current_streak_days: 11,
+  longest_streak_days: 112,
 };
-const currentStreak = streaks.current_streak_days ?? 0;
-const longestStreak = streaks.longest_streak_days ?? 0;
-const activeRate = streaks.activity_rate_percentage ?? 0;
+const currentStreak = streaks.current_streak_days ?? 11;
+const longestStreak = streaks.longest_streak_days ?? 112;
 
-const createMeter = (percent: number, total = 12) => {
-  const safePct = Math.max(0, Math.min(100, percent));
-  const filled = Math.min(total, Math.floor((safePct / 100) * total));
-  const empty = total - filled;
-  return {
-    fill: '█'.repeat(filled),
-    empty: '░'.repeat(empty),
-    pctFormatted: `${safePct.toFixed(1)}%`,
-  };
-};
-
-const prMeter = createMeter(prMergeRate, 12);
-const activeMeter = createMeter(activeRate, 12);
+// Repositories
+const reposContributed =
+  stats.repositories_contributed_to?.length || stats.repositories?.total || 53;
+const reposPublic = stats.repositories?.public ?? 17;
+const reposPrivate = stats.repositories?.private ?? 11;
 ---
 
 <section
@@ -93,106 +78,146 @@ const activeMeter = createMeter(activeRate, 12);
       <span class="ml-2 flex-1 border-b border-rp-muted/20"></span>
     </div>
 
-    {/* Section comments */}
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 text-[11px] text-rp-muted/70 pl-3">
-      <span>// counts</span>
-      <span class="hidden sm:inline">// activity</span>
+    {/* Section comment */}
+    <div class="text-[11px] text-rp-muted/70 pl-3 mb-1">
+      <span>// metrics</span>
     </div>
 
-    {/* Row 1: loc & prs */}
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 pl-3 py-0.5">
-      <div class="flex items-center gap-1.5 whitespace-nowrap overflow-hidden">
-        <span class="text-rp-subtle w-16 shrink-0">loc</span>
-        <span class="text-rp-muted/60 shrink-0">:</span>
-        <span class="text-rp-text font-semibold shrink-0">
-          +{netLocFormatted}
-        </span>
-        <span class="text-[10px] text-rp-muted/80 truncate">
-          (+{additionsFormatted} / -{deletionsFormatted})
-        </span>
-      </div>
-      <div class="flex items-center gap-1.5 whitespace-nowrap overflow-hidden mt-0.5 sm:mt-0">
-        <span class="text-rp-subtle w-14 shrink-0">prs</span>
-        <span class="text-rp-muted/60 shrink-0">:</span>
-        <span class="text-rp-muted/80 shrink-0">[</span>
-        <span class="text-rp-foam tracking-tighter shrink-0">
-          {prMeter.fill}
-        </span>
-        <span class="text-rp-muted/30 tracking-tighter shrink-0">
-          {prMeter.empty}
-        </span>
-        <span class="text-rp-muted/80 shrink-0">]</span>
-        <span class="text-rp-text font-semibold shrink-0">
-          {prMeter.pctFormatted}
-        </span>
-      </div>
-    </div>
+    {/* Symmetrical 3x2 Telemetry Grid with Icons */}
+    <div class="pl-3 py-1 space-y-1.5 text-rp-subtle">
+      {/* Row 1: Pipeline & Scope */}
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-1.5">
+        <div class="flex items-center gap-2 min-w-0">
+          <svg
+            class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="18" cy="18" r="3"></circle>
+            <circle cx="6" cy="6" r="3"></circle>
+            <path d="M13 6h3a2 2 0 0 1 2 2v7"></path>
+            <line x1="6" y1="9" x2="6" y2="21"></line>
+          </svg>
+          <span class="text-rp-subtle w-14 shrink-0 select-none">prs:</span>
+          <span class="text-rp-text font-medium">
+            {prMergeRate}% merge rate
+          </span>
+          <span class="text-rp-muted text-[11px]">({prMerged} merged)</span>
+        </div>
 
-    {/* Row 2: commits & active */}
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 pl-3 py-0.5">
-      <div class="flex items-center gap-1.5 whitespace-nowrap overflow-hidden">
-        <span class="text-rp-subtle w-16 shrink-0">commits</span>
-        <span class="text-rp-muted/60 shrink-0">:</span>
-        <span class="text-rp-text font-semibold shrink-0">
-          {commitsFormatted}
-        </span>
-        <span class="text-[10px] text-rp-muted/80 truncate">(pub + org)</span>
+        <div class="flex items-center gap-2 min-w-0">
+          <svg
+            class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <span class="text-rp-subtle w-14 shrink-0 select-none">scope:</span>
+          <span class="text-rp-text font-medium">{orgPct}% org</span>
+          <span class="text-rp-muted">·</span>
+          <span>{personalPct}% personal</span>
+        </div>
       </div>
-      <div class="flex items-center gap-1.5 whitespace-nowrap overflow-hidden mt-0.5 sm:mt-0">
-        <span class="text-rp-subtle w-14 shrink-0">active</span>
-        <span class="text-rp-muted/60 shrink-0">:</span>
-        <span class="text-rp-muted/80 shrink-0">[</span>
-        <span class="text-rp-gold tracking-tighter shrink-0">
-          {activeMeter.fill}
-        </span>
-        <span class="text-rp-muted/30 tracking-tighter shrink-0">
-          {activeMeter.empty}
-        </span>
-        <span class="text-rp-muted/80 shrink-0">]</span>
-        <span class="text-rp-text font-semibold shrink-0">
-          {activeMeter.pctFormatted}
-        </span>
-      </div>
-    </div>
 
-    {/* Row 3: repos & streak */}
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 pl-3 py-0.5">
-      <div class="flex items-center gap-1.5 whitespace-nowrap overflow-hidden">
-        <span class="text-rp-subtle w-16 shrink-0">repos</span>
-        <span class="text-rp-muted/60 shrink-0">:</span>
-        <span class="text-rp-text font-semibold shrink-0">
-          {reposContributed}
-        </span>
-        <span class="text-[10px] text-rp-muted/80 truncate">
-          ({reposPublic} pub · {reposPrivate} pri · {reposOrg} org)
-        </span>
-      </div>
-      <div class="flex items-center gap-1.5 whitespace-nowrap overflow-hidden mt-0.5 sm:mt-0">
-        <span class="text-rp-subtle w-14 shrink-0">streak</span>
-        <span class="text-rp-muted/60 shrink-0">:</span>
-        <span class="text-rp-text font-semibold shrink-0">
-          {currentStreak}d
-        </span>
-        <span class="text-[10px] text-rp-muted/80 truncate">
-          current ({longestStreak}d max)
-        </span>
-      </div>
-    </div>
+      {/* Row 2: Churn & Streak */}
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-1.5">
+        <div class="flex items-center gap-2 min-w-0">
+          <svg
+            class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+          <span class="text-rp-subtle w-14 shrink-0 select-none">churn:</span>
+          <span class="text-rp-text font-medium">{addDelRatio}:1 ratio</span>
+          <span class="text-rp-muted text-[11px]">
+            (+{addFormatted} / -{delFormatted})
+          </span>
+        </div>
 
-    {/* Row 4: stack & churn */}
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 pl-3 py-0.5">
-      <div class="flex items-center gap-1.5 whitespace-nowrap overflow-hidden">
-        <span class="text-rp-subtle w-16 shrink-0">stack</span>
-        <span class="text-rp-muted/60 shrink-0">:</span>
-        <span class="text-rp-text font-semibold truncate">{topLanguages}</span>
+        <div class="flex items-center gap-2 min-w-0">
+          <svg
+            class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+          <span class="text-rp-subtle w-14 shrink-0 select-none">streak:</span>
+          <span class="text-rp-text font-medium">{currentStreak}d current</span>
+          <span class="text-rp-muted text-[11px]">({longestStreak}d max)</span>
+        </div>
       </div>
-      <div class="flex items-center gap-1.5 whitespace-nowrap overflow-hidden mt-0.5 sm:mt-0">
-        <span class="text-rp-subtle w-14 shrink-0">churn</span>
-        <span class="text-rp-muted/60 shrink-0">:</span>
-        <span class="text-rp-text font-semibold shrink-0">
-          {churnRatio.toFixed(1)}%
-        </span>
-        <span class="text-[10px] text-rp-muted/80 truncate">net retention</span>
+
+      {/* Row 3: Stack & Repositories */}
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-1.5">
+        <div class="flex items-center gap-2 min-w-0">
+          <svg
+            class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+          <span class="text-rp-subtle w-14 shrink-0 select-none">stack:</span>
+          <span class="text-rp-text font-medium">Rust {rustPct}%</span>
+          <span class="text-rp-muted">·</span>
+          <span class="truncate">
+            TS {tsPct}% · C {cPct}% · Asm {asmPct}%
+          </span>
+        </div>
+
+        <div class="flex items-center gap-2 min-w-0">
+          <svg
+            class="w-3.5 h-3.5 text-rp-muted shrink-0 select-none"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span class="text-rp-subtle w-14 shrink-0 select-none">repos:</span>
+          <span class="text-rp-text font-medium">
+            {reposContributed} tracked
+          </span>
+          <span class="text-rp-muted text-[11px]">
+            ({reposPublic} pub · {reposPrivate} pri)
+          </span>
+        </div>
       </div>
     </div>
   </div>
