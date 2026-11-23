@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 255" width="100%" height="255" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" width="100%" height="420" fill="none">
   <style>
     
   .mono {
@@ -34,40 +34,64 @@
     <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">EXPERIENCE</text>
     <line x1="102" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
 
-    <text x="0" y="38" class="text" font-weight="600">[ OSS Contributions ]</text>
+    <text x="0" y="38" class="text" font-weight="600">[ Systems Engineering · pid7-org ]</text>
     <text x="680" y="38" text-anchor="end" class="muted">Sep 2024 — Present</text>
     <text x="0" y="56">
-      <tspan class="subtle">  role:</tspan>   <tspan class="text" font-weight="600">Core Maintainer &amp; Systems Developer</tspan>
+      <tspan class="subtle">  role:</tspan>   <tspan class="text" font-weight="600">Core Contributor · Systems Architecture &amp; Implementation</tspan>
     </text>
     <text x="0" y="74">
       <tspan class="subtle">  repos:</tspan>  <tspan class="text" font-weight="600">turbofox · frozen-core · ashwa · website</tspan>
     </text>
     <text x="0" y="92">
-      <tspan class="subtle">  stack:</tspan>  <tspan class="text">Rust · SIMD · Embedded Storage · Systems Programming</tspan>
+      <tspan class="subtle">  stack:</tspan>  <tspan class="text">Core: Rust · SIMD | Concurrency: Lock-Free | Storage: Memory-Mapped I/O</tspan>
     </text>
     <text x="0" y="110">
-      <tspan class="subtle">  impact:</tspan> <tspan class="text">Building hardware-accelerated algorithms, embedded KV stores &amp; storage engines</tspan>
+      <tspan class="subtle">  impact:</tspan> <tspan class="text">Shipped a lock-free concurrent KV engine with memory-mapped</tspan>
+    </text>
+    <text x="0" y="128">
+      <tspan class="text">          I/O and explicit sync barriers; production SIMD paths prioritize</tspan>
+    </text>
+    <text x="0" y="146">
+      <tspan class="text">          deterministic latency and memory efficiency</tspan>
     </text>
 
-    <text x="0" y="136" class="text" font-weight="600">[ Freelance &amp; Contract · Web &amp; Tooling ]</text>
-    <text x="680" y="136" text-anchor="end" class="muted">Jul 2024 — Present</text>
-    <text x="0" y="154">
-      <tspan class="subtle">  role:</tspan>   <tspan class="text" font-weight="600">Web &amp; Tooling Developer</tspan> <tspan class="muted">(Multiple Clients)</tspan>
+    <text x="0" y="174" class="text" font-weight="600">[ Freelance &amp; Contract · Web &amp; Tooling ]</text>
+    <text x="680" y="174" text-anchor="end" class="muted">Jul 2024 — Present</text>
+    <text x="0" y="192">
+      <tspan class="subtle">  role:</tspan>   <tspan class="text" font-weight="600">Full-Stack Developer &amp; Tooling Engineer · 3 Clients</tspan>
     </text>
-    <text x="0" y="172">
-      <tspan class="subtle">  stack:</tspan>  <tspan class="text">Astro · React · TypeScript · Microservices · VS Code API</tspan>
+    <text x="0" y="210">
+      <tspan class="subtle">  stack:</tspan>  <tspan class="text">Frontend: Astro · TypeScript | Backend: Microservices | Tooling: VS Code API</tspan>
     </text>
-    <text x="0" y="190">
-      <tspan class="subtle">  impact:</tspan> <tspan class="text">Shipped startup landing pages, SMTP microservices &amp; event ticket booking</tspan>
+    <text x="0" y="228">
+      <tspan class="subtle">  impact:</tspan> <tspan class="text">Delivered a transactional email service and event-ticketing</tspan>
+    </text>
+    <text x="0" y="246">
+      <tspan class="text">          platform end to end; built VS Code extensions for internal</tspan>
+    </text>
+    <text x="0" y="264">
+      <tspan class="text">          developer workflows across client projects</tspan>
     </text>
 
-    <text x="0" y="216" class="text" font-weight="600">[ Internships · Mobile Engineering ]</text>
-    <text x="680" y="216" text-anchor="end" class="muted">Nov 2021 — Apr 2024 (9 mos total)</text>
-    <text x="0" y="234">
+    <text x="0" y="292" class="text" font-weight="600">[ Internships · Mobile Engineering ]</text>
+    <text x="680" y="292" text-anchor="end" class="muted">Nov 2021 — Apr 2024 · 9 mos</text>
+    <text x="0" y="310">
+      <tspan class="subtle">  role:</tspan>   <tspan class="text" font-weight="600">Flutter Developer · 3 Organizations</tspan>
+    </text>
+    <text x="0" y="328">
       <tspan class="subtle">  orgs:</tspan>   <tspan class="text">kraftbase (1 mo) · Rojgary (5 mos) · FOLKDevelopers (3 mos)</tspan>
     </text>
-    <text x="0" y="252">
-      <tspan class="subtle">  impact:</tspan> <tspan class="text">Built MVP mobile apps for clients from scratch, refactored &amp; enhanced reliability</tspan>
+    <text x="0" y="346">
+      <tspan class="subtle">  stack:</tspan>  <tspan class="text">Mobile: Flutter · Dart | Architecture: State Management | APIs: REST</tspan>
+    </text>
+    <text x="0" y="364">
+      <tspan class="subtle">  impact:</tspan> <tspan class="text">Led Flutter delivery across three organizations; built MVPs,</tspan>
+    </text>
+    <text x="0" y="382">
+      <tspan class="text">          refactored production apps, and delivered features during</tspan>
+    </text>
+    <text x="0" y="400">
+      <tspan class="text">          active release cycles</tspan>
     </text>
   </g>
 </svg>
