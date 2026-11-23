@@ -1,0 +1,121 @@
+---
+import stats from '../../../data/github-stats.json';
+
+const latestRelease = stats.releases?.[0];
+const repoName = latestRelease?.repo || '';
+const repoShortName = repoName.split('/')[1] || repoName;
+const tagName = latestRelease?.tag_name || '';
+const releaseUrl = latestRelease?.url || '';
+const publishedAt = latestRelease?.published_at;
+
+const repoInfo = stats.repositories_contributed_to?.find(
+  (r) => r.repository === repoName
+);
+const description = repoInfo?.description;
+
+const formatDate = (isoStr?: string) => {
+  if (!isoStr) return '';
+  const d = new Date(isoStr);
+  if (isNaN(d.getTime())) return '';
+  const months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+  return `${months[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
+};
+
+const formattedDate = formatDate(publishedAt);
+const bannerUrl = repoName
+  ? `https://raw.githubusercontent.com/${repoName}/main/assets/banner.png`
+  : '';
+---
+
+{latestRelease && (
+  <div
+    id="tui-latest-release"
+    class="w-full font-mono text-[11px] sm:text-xs select-none leading-relaxed"
+  >
+    <div class="w-full flex flex-col font-mono">
+      {/* Section Header: > LATEST RELEASE ─── */}
+      <div class="w-full flex items-center overflow-hidden mb-2">
+        <span class="text-[var(--color-accent)] font-semibold shrink-0">
+          &gt;&nbsp;
+        </span>
+        <span class="font-bold tracking-wider text-rp-text uppercase shrink-0">
+          LATEST RELEASE
+        </span>
+        <span class="ml-2 flex-1 border-b border-rp-muted/20" />
+      </div>
+
+      {/* Section comment */}
+      <div class="text-[11px] text-rp-muted/70 pl-3">
+        <span>// {repoName}</span>
+      </div>
+
+      {/* Content Container */}
+      <div class="pl-3 pt-2 pb-1 flex flex-col space-y-2.5 min-w-0">
+        {/* 4:1 Banner Image Container */}
+        <div
+          class="w-full max-w-full overflow-hidden rounded border border-rp-muted/20 bg-rp-surface/40 aspect-[4/1]"
+          style="aspect-ratio: 4 / 1;"
+        >
+          <img
+            src={bannerUrl}
+            alt={`${repoShortName} release banner`}
+            loading="lazy"
+            class="w-full h-full object-cover block"
+            style="aspect-ratio: 4 / 1;"
+            onerror="if (!this.dataset.retried) { this.dataset.retried = '1'; this.src = this.src.replace('/main/', '/master/'); } else { this.parentElement.style.display = 'none'; }"
+          />
+        </div>
+
+        {/* Metadata Row */}
+        <div class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 pt-1 min-w-0">
+          <div class="flex items-center gap-2 min-w-0">
+            <span class="font-bold text-rp-text truncate">{repoShortName}</span>
+            <span class="text-rp-muted text-[10px] sm:text-[11px] px-1.5 py-0.5 rounded bg-rp-surface border border-rp-muted/20 shrink-0">
+              {tagName}
+            </span>
+          </div>
+          {formattedDate && (
+            <span class="text-rp-muted text-[11px] shrink-0 font-mono">
+              {formattedDate}
+            </span>
+          )}
+        </div>
+
+        {/* Description */}
+        {description && (
+          <p class="text-rp-subtle text-[11px] sm:text-xs leading-relaxed select-text break-words">
+            {description}
+          </p>
+        )}
+
+        {/* Release Action Link */}
+        {releaseUrl && (
+          <div class="pt-0.5 select-none">
+            <a
+              href={releaseUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1.5 text-rp-subtle hover:text-[var(--color-accent)] transition-colors underline decoration-dotted decoration-rp-muted/50 underline-offset-3"
+            >
+              <span>view release</span>
+              <span class="text-[10px]">&nearr;</span>
+            </a>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+)}
