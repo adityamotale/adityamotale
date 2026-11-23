@@ -148,11 +148,11 @@ const activeDaysFormatted = activeDays.toLocaleString();
       <!-- Center Responsive ASCII Soliton Wave -->
       <div
         id="hud-ascii-container"
-        class="hidden md:flex flex-1 min-w-0 items-center justify-center px-2 lg:px-4 overflow-hidden"
+        class="hidden md:flex flex-1 min-w-0 items-center justify-center mx-2 lg:mx-4 overflow-hidden"
       >
         <span
           id="hud-ascii-bar"
-          class="inline-flex items-center font-mono text-xs select-none tracking-wider whitespace-nowrap overflow-hidden leading-none opacity-85"
+          class="inline-flex items-center font-mono text-xs select-none tracking-wider whitespace-nowrap leading-none opacity-85"
           aria-hidden="true"
         ></span>
       </div>
@@ -333,21 +333,25 @@ const activeDaysFormatted = activeDays.toLocaleString();
   let isStuck = false;
 
   function measureCharWidth(): number {
+    const container = document.getElementById('hud-ascii-container');
     const span = document.createElement('span');
     span.style.cssText =
       'position:absolute;visibility:hidden;white-space:nowrap;display:inline-block;';
     span.className = 'text-xs font-mono select-none tracking-wider';
-    span.textContent = '██████████';
-    document.body.appendChild(span);
-    const w = span.getBoundingClientRect().width / 10;
-    document.body.removeChild(span);
-    return w > 0 ? w : 7.2;
+    span.textContent = '····················';
+    (container || document.body).appendChild(span);
+    const w = span.getBoundingClientRect().width / 20;
+    (container || document.body).removeChild(span);
+    return w > 0 ? w : 7.6;
   }
 
   function getAvailableChars(): number {
     const container = document.getElementById('hud-ascii-container');
     if (!container) return 24;
-    const w = container.getBoundingClientRect().width;
+    const cs = window.getComputedStyle(container);
+    const pad =
+      parseFloat(cs.paddingLeft || '0') + parseFloat(cs.paddingRight || '0');
+    const w = container.clientWidth - pad - 16;
     if (w <= 0) return 0;
     if (charWidth <= 0) charWidth = measureCharWidth();
     return Math.max(0, Math.floor(w / charWidth));
@@ -593,6 +597,13 @@ const activeDaysFormatted = activeDays.toLocaleString();
         charWidth = 0;
         renderAscii(false);
       }).observe(container);
+    }
+
+    if ('fonts' in document) {
+      document.fonts.ready.then(() => {
+        charWidth = 0;
+        renderAscii(false);
+      });
     }
 
     checkSticky();
