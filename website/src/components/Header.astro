@@ -9,7 +9,7 @@ const locData = stats.lines_of_code || { net_lines: 821948 };
 const formatCompact = (num: number) => {
   const abs = Math.abs(num);
   if (abs >= 1_000_000) return `${(num / 1_000_000).toFixed(2)}M`;
-  if (abs >= 1_000) return `${(num / 1_000).toFixed(0)}k`;
+  if (abs >= 1_000) return `${(num / 1_000).toFixed(1)}k`;
   return `${num}`;
 };
 
@@ -18,6 +18,8 @@ const rustLocFormatted = rustLang ? formatCompact(rustLang.loc) : '1.18M';
 
 const totalCommits = stats.contributions?.commits || 3580;
 const commitsFormatted = totalCommits.toLocaleString();
+const commitsCompact =
+  totalCommits >= 1000 ? `~${formatCompact(totalCommits)}` : `${totalCommits}`;
 
 const activeDays = stats.streaks_and_consistency?.active_days_count || 1036;
 const activeDaysFormatted = activeDays.toLocaleString();
@@ -36,7 +38,7 @@ const activeDaysFormatted = activeDays.toLocaleString();
       </span>
     </a>
 
-    <div class="flex items-center gap-2 shrink-0 text-xs font-mono">
+    <div class="flex items-center gap-1.5 sm:gap-2 shrink-0 text-xs font-mono">
       <!-- Accent Selector Button -->
       <button
         id="hud-accent-btn"
@@ -45,7 +47,9 @@ const activeDaysFormatted = activeDays.toLocaleString();
         title="Cycle accent color (or press 'a')"
         aria-label="Cycle Accent Color"
       >
-        <span class="text-rp-muted mr-1.5 select-none">[a]</span>
+        <span class="text-rp-muted mr-1 sm:mr-1.5 select-none hidden sm:inline">
+          [a]
+        </span>
         <span
           id="hud-accent-dot"
           class="w-1.5 h-1.5 rounded-full inline-block mr-1.5 ring-1 ring-rp-highlight-med transition-colors"
@@ -64,7 +68,9 @@ const activeDaysFormatted = activeDays.toLocaleString();
         title="Toggle theme (or press 't')"
         aria-label="Toggle Theme"
       >
-        <span class="text-rp-muted mr-1.5 select-none">[t]</span>
+        <span class="text-rp-muted mr-1 sm:mr-1.5 select-none hidden sm:inline">
+          [t]
+        </span>
         <span class="text-[11px] text-[var(--color-accent)] font-semibold leading-none mr-1 select-none transition-colors duration-200">
           ◐
         </span>
@@ -78,10 +84,10 @@ const activeDaysFormatted = activeDays.toLocaleString();
         id="hud-resume-btn"
         href="/adityamotale.pdf"
         download="adityamotale.pdf"
-        class="border border-rp-highlight-med bg-rp-surface/60 backdrop-blur-xs px-2.5 py-1 text-rp-subtle transition-colors hover:text-rp-text hover:border-rp-highlight-high flex items-center justify-center select-none font-mono text-xs rounded-sm"
+        class="border border-rp-highlight-med bg-rp-surface/60 backdrop-blur-xs px-2 sm:px-2.5 py-0.5 sm:py-1 text-rp-subtle transition-colors hover:text-rp-text hover:border-rp-highlight-high flex items-center justify-center select-none font-mono text-xs rounded-sm"
         title="Download resume (or press 'r')"
       >
-        <span class="text-rp-muted mr-1.5 select-none">⤓</span>
+        <span class="text-rp-muted mr-1 sm:mr-1.5 select-none">⤓</span>
         <span>resume</span>
       </a>
     </div>
@@ -116,21 +122,20 @@ const activeDaysFormatted = activeDays.toLocaleString();
         <!-- Live Pulse LED -->
         <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] inline-block animate-pulse shrink-0 transition-colors duration-200"></span>
 
-        <!-- Unstuck metric -->
-        <span class="hud-unstuck-only text-rp-text font-medium whitespace-nowrap">
-          rust {rustPct}% · {rustLocFormatted} loc
-        </span>
-
-        <!-- Stuck metric -->
-        <span class="hud-stuck-only hidden text-rp-text font-medium whitespace-nowrap">
-          +{netLocFormatted} loc
+        <!-- Telemetry Metrics -->
+        <span class="text-rp-text font-medium whitespace-nowrap">
+          rust {rustPct}%
+          <span class="hidden sm:inline"> · {rustLocFormatted} loc</span>
+          <span class="hud-stuck-only hud-stuck-hide-mobile text-rp-subtle items-center">
+            &nbsp;· +{netLocFormatted} net
+          </span>
         </span>
       </div>
 
-      <!-- Center Responsive ASCII Soliton Wave & Reading Meter -->
+      <!-- Center Responsive ASCII Soliton Wave -->
       <div
         id="hud-ascii-container"
-        class="hidden md:flex flex-1 min-w-0 items-center justify-center px-4 overflow-hidden"
+        class="hidden md:flex flex-1 min-w-0 items-center justify-center px-2 lg:px-4 overflow-hidden"
       >
         <span
           id="hud-ascii-bar"
@@ -140,31 +145,43 @@ const activeDaysFormatted = activeDays.toLocaleString();
       </div>
 
       <!-- Right HUD Block -->
-      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+      <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
         <!-- Unstuck Telemetry Stats -->
         <div class="hud-unstuck-only flex items-center gap-1.5 sm:gap-2 text-rp-subtle whitespace-nowrap">
           <span class="text-rp-text font-medium">
-            {commitsFormatted} commits
+            <span class="hidden sm:inline">{commitsFormatted}</span>
+            <span class="inline sm:hidden">{commitsCompact}</span> commits
           </span>
-          <span class="text-rp-muted select-none">·</span>
-          <span>{activeDaysFormatted}d active</span>
+          <span class="text-rp-muted select-none hidden sm:inline">·</span>
+          <span class="hidden sm:inline">{activeDaysFormatted}d active</span>
         </div>
 
-        <!-- Stuck Compact Action Controls -->
-        <div class="hud-stuck-only hidden items-center gap-2 sm:gap-2.5">
+        <!-- Stuck Telemetry Stats & Action Controls -->
+        <div class="hud-stuck-only hidden items-center gap-1.5 sm:gap-2.5">
+          <div class="hud-stuck-hide-mobile items-center gap-1.5 sm:gap-2 text-rp-subtle whitespace-nowrap">
+            <span class="text-rp-text font-medium">
+              {commitsFormatted} commits
+            </span>
+            <span class="text-rp-muted select-none hidden md:inline">·</span>
+            <span class="hidden md:inline">{activeDaysFormatted}d active</span>
+          </div>
+          <span class="text-rp-muted select-none hud-stuck-hide-mobile">·</span>
           <button
             id="hud-stuck-accent-btn"
             type="button"
             class="inline-flex items-center gap-1 text-rp-subtle hover:text-[var(--color-accent)] transition-colors cursor-pointer focus:outline-none"
             title="Cycle accent color (or press 'a')"
           >
-            <span class="text-rp-muted">[a]</span>
+            <span class="text-rp-muted hidden sm:inline">[a]</span>
             <span
               id="hud-stuck-accent-dot"
               class="w-1.5 h-1.5 rounded-full shrink-0 ring-1 ring-rp-highlight-med transition-colors"
               style="background-color: var(--color-accent);"
             ></span>
-            <span id="hud-stuck-accent-label" class="text-rp-text font-medium">
+            <span
+              id="hud-stuck-accent-label"
+              class="text-rp-text font-medium inline sm:hidden lg:inline"
+            >
               rose
             </span>
           </button>
@@ -175,23 +192,30 @@ const activeDaysFormatted = activeDays.toLocaleString();
             class="inline-flex items-center gap-1 text-rp-subtle hover:text-[var(--color-accent)] transition-colors cursor-pointer focus:outline-none"
             title="Toggle theme (or press 't')"
           >
-            <span class="text-rp-muted">[t]</span>
+            <span class="text-rp-muted hidden sm:inline">[t]</span>
             <span class="text-[11px] text-[var(--color-accent)] font-semibold leading-none select-none transition-colors duration-200">
               ◐
             </span>
-            <span id="hud-stuck-theme-label" class="text-rp-text font-medium">
+            <span
+              id="hud-stuck-theme-label"
+              class="text-rp-text font-medium inline sm:hidden lg:inline"
+            >
               moon
             </span>
           </button>
           <span class="text-rp-muted select-none">·</span>
           <a
+            id="hud-stuck-resume-btn"
             href="/adityamotale.pdf"
             download="adityamotale.pdf"
             class="inline-flex items-center gap-1 text-rp-subtle hover:text-[var(--color-accent)] transition-colors cursor-pointer"
             title="Download resume (or press 'r')"
           >
             <span class="text-rp-muted">⤓</span>
-            <span class="text-rp-text font-medium">pdf</span>
+            <span class="text-rp-text font-medium hidden sm:inline">
+              resume
+            </span>
+            <span class="text-rp-text font-medium inline sm:hidden">pdf</span>
           </a>
         </div>
       </div>
@@ -214,9 +238,10 @@ const activeDaysFormatted = activeDays.toLocaleString();
     right: 0;
     width: 100%;
     max-width: 100vw;
+    box-sizing: border-box;
     z-index: 50;
-    padding-left: max(1rem, calc((100vw - 48rem) / 2 + 1rem));
-    padding-right: max(1rem, calc((100vw - 48rem) / 2 + 1rem));
+    padding-left: 1rem;
+    padding-right: 1rem;
     padding-top: 0.45rem;
     padding-bottom: 0.45rem;
     background-color: color-mix(in srgb, var(--rp-base) 88%, transparent);
@@ -225,6 +250,20 @@ const activeDaysFormatted = activeDays.toLocaleString();
     border-bottom: 1px solid
       color-mix(in srgb, var(--rp-highlight-med) 50%, transparent);
     animation: 0.16s cubic-bezier(0.16, 1, 0.3, 1) hudSlideDown;
+  }
+
+  @media (min-width: 640px) {
+    #header-hud[data-stuck='true'] {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    #header-hud[data-stuck='true'] {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
   }
 
   @keyframes hudSlideDown {
@@ -236,12 +275,22 @@ const activeDaysFormatted = activeDays.toLocaleString();
     }
   }
 
-  #header-hud[data-stuck='true'] .hud-stuck-only {
-    display: inline-flex !important;
+  #header-hud[data-stuck='false'] .hud-stuck-only {
+    display: none !important;
   }
 
   #header-hud[data-stuck='true'] .hud-unstuck-only {
     display: none !important;
+  }
+
+  #header-hud[data-stuck='true'] .hud-stuck-only {
+    display: inline-flex !important;
+  }
+
+  @media (max-width: 639px) {
+    #header-hud[data-stuck='true'] .hud-stuck-hide-mobile {
+      display: none !important;
+    }
   }
 </style>
 
@@ -287,8 +336,8 @@ const activeDaysFormatted = activeDays.toLocaleString();
     const center = (numChars - 1) / 2;
     const maxRadius = Math.max(center - 1, 1);
 
-    // Period of full back-and-forth oscillation
-    const period = 52;
+    // Period of full back-and-forth oscillation; constant across states
+    const period = 96;
     const phase = (tick % period) / period;
     // cos goes from 1 (far edges) to -1 (overshoot across center) and back
     const offset = maxRadius * Math.cos(phase * 2 * Math.PI);
@@ -365,27 +414,7 @@ const activeDaysFormatted = activeDays.toLocaleString();
     return html;
   }
 
-  function renderReadingMeter(numChars: number): string {
-    const scrollY = window.scrollY || window.pageYOffset;
-    const docHeight =
-      document.documentElement.scrollHeight - window.innerHeight;
-    const pct =
-      docHeight > 0
-        ? Math.min(100, Math.max(0, Math.round((scrollY / docHeight) * 100)))
-        : 0;
-
-    const label = `${pct}%`;
-    const availForBar = Math.max(4, numChars - label.length - 8);
-    const filledCount = Math.round((pct / 100) * availForBar);
-    const emptyCount = Math.max(0, availForBar - filledCount);
-
-    const filledStr = '▓'.repeat(filledCount);
-    const emptyStr = '░'.repeat(emptyCount);
-
-    return `<span class="text-rp-muted select-none">── [</span> <span class="text-[var(--color-accent)] font-medium tracking-tight">${filledStr}</span><span class="text-rp-muted/40 tracking-tight">${emptyStr}</span> <span class="text-rp-text font-medium ml-1.5 mr-0.5">${label}</span> <span class="text-rp-muted select-none">] ──</span>`;
-  }
-
-  function updateAsciiDisplay() {
+  function renderAscii(advance = false) {
     const bar = document.getElementById('hud-ascii-bar');
     if (!bar) return;
     const chars = getAvailableChars();
@@ -394,18 +423,20 @@ const activeDaysFormatted = activeDays.toLocaleString();
       return;
     }
 
-    if (isStuck) {
-      bar.innerHTML = renderReadingMeter(chars);
-    } else {
-      bar.innerHTML = renderSolitonWave(chars, solitonTick);
+    bar.innerHTML = renderSolitonWave(chars, solitonTick);
+    if (advance) {
       solitonTick = (solitonTick + 1) % 10000;
     }
   }
 
+  function tickSoliton() {
+    renderAscii(true);
+  }
+
   function startSoliton() {
     if (solitonInterval === null) {
-      updateAsciiDisplay();
-      solitonInterval = window.setInterval(updateAsciiDisplay, 50);
+      renderAscii(false);
+      solitonInterval = window.setInterval(tickSoliton, 70);
     }
   }
 
@@ -470,7 +501,7 @@ const activeDaysFormatted = activeDays.toLocaleString();
       if (dot) dot.style.backgroundColor = 'var(--color-accent)';
     }
 
-    updateAsciiDisplay();
+    renderAscii(false);
   }
 
   function setStuckState(stuck: boolean) {
@@ -480,23 +511,12 @@ const activeDaysFormatted = activeDays.toLocaleString();
     const wrap = document.getElementById('header-sticky-wrap');
     if (hud) hud.setAttribute('data-stuck', stuck ? 'true' : 'false');
     if (wrap) wrap.setAttribute('data-stuck', stuck ? 'true' : 'false');
-
-    if (isStuck) {
-      stopSoliton();
-      updateAsciiDisplay();
-    } else {
-      updateAsciiDisplay();
-      startSoliton();
-    }
   }
 
   function checkSticky() {
     const sentinel = document.getElementById('header-sentinel');
     const stuck = sentinel ? sentinel.getBoundingClientRect().top <= 0 : false;
     setStuckState(stuck);
-    if (isStuck) {
-      updateAsciiDisplay();
-    }
   }
 
   function initHeader() {
@@ -545,14 +565,12 @@ const activeDaysFormatted = activeDays.toLocaleString();
     if (container && 'ResizeObserver' in window) {
       new ResizeObserver(() => {
         charWidth = 0;
-        updateAsciiDisplay();
+        renderAscii(false);
       }).observe(container);
     }
 
     checkSticky();
-    if (!isStuck) {
-      startSoliton();
-    }
+    startSoliton();
   }
 
   initHeader();
@@ -562,7 +580,7 @@ const activeDaysFormatted = activeDays.toLocaleString();
     'resize',
     () => {
       charWidth = 0;
-      updateAsciiDisplay();
+      renderAscii(false);
     },
     { passive: true }
   );
@@ -572,7 +590,7 @@ const activeDaysFormatted = activeDays.toLocaleString();
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       stopSoliton();
-    } else if (!isStuck) {
+    } else {
       startSoliton();
     }
   });
@@ -599,9 +617,13 @@ const activeDaysFormatted = activeDays.toLocaleString();
         document.getElementById('hud-stuck-theme-btn');
       btn?.click();
     } else if (e.key === 'r' || e.key === 'R') {
-      const resumeLink = document.getElementById(
-        'hud-resume-btn'
-      ) as HTMLAnchorElement | null;
+      const resumeLink =
+        (document.getElementById(
+          'hud-resume-btn'
+        ) as HTMLAnchorElement | null) ||
+        (document.getElementById(
+          'hud-stuck-resume-btn'
+        ) as HTMLAnchorElement | null);
       resumeLink?.click();
     }
   });
