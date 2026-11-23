@@ -133,6 +133,13 @@ export interface PeriodMetrics {
   languages?: LanguageStat[];
 }
 
+export interface YearlyContributionItem {
+  year: number;
+  total: number;
+  weeks: number[];
+  days: number[];
+}
+
 export interface MonthlyStatItem extends PeriodMetrics {
   label: string;
   month: number;
@@ -156,6 +163,7 @@ export interface GitHubStatsOutput {
   releases?: ReleaseItem[];
   monthly_history?: MonthlyStatItem[];
   weekly_summary?: PeriodMetrics;
+  yearly_contributions?: YearlyContributionItem[];
 }
 
 export interface ViewerRepoNode {

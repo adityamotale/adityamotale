@@ -20,6 +20,7 @@ import type {
   ViewerContext,
   ViewerRepoNode,
   WindowContributions,
+  YearlyContributionItem,
 } from "./lib/types.ts";
 import { runGraphQLAsync } from "./lib/gh-client.ts";
 import {
@@ -467,6 +468,8 @@ export async function executeFullBackfill(
   let totalIssues = 0;
   let totalReviews = 0;
 
+  const yearlyContributions: YearlyContributionItem[] = [];
+
   for (let year = startYear; year <= currentYear; year++) {
     const from =
       year === startYear ? dateRange.from : `${year}-01-01T00:00:00Z`;
@@ -480,6 +483,33 @@ export async function executeFullBackfill(
     totalReviews += yearData.totalReviews;
 
     Object.assign(mergedDaily, yearData.daily);
+
+    const isLeap = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+    const numDays = isLeap ? 366 : 365;
+    const days: number[] = [];
+    const weeks: number[] = [];
+    let runningTotal = 0;
+
+    for (let d = 0; d < numDays; d++) {
+      const cur = new Date(Date.UTC(year, 0, 1 + d));
+      if (year === currentYear && cur > now) {
+        break;
+      }
+      const dateStr = cur.toISOString().slice(0, 10);
+      const count = yearData.daily[dateStr] || 0;
+      runningTotal += count;
+      days.push(runningTotal);
+      if (d % 7 === 0 || d === numDays - 1) {
+        weeks.push(runningTotal);
+      }
+    }
+
+    yearlyContributions.push({
+      year,
+      total: runningTotal,
+      weeks,
+      days,
+    });
 
     for (const [name, delta] of yearData.repos.entries()) {
       const entry = repoContributions.get(name) ?? {
@@ -699,6 +729,7 @@ export async function executeFullBackfill(
       streaks_and_consistency: weeklyStreaks,
       languages: languages.slice(0, 3),
     },
+    yearly_contributions: yearlyContributions,
   };
 }
 
@@ -734,7 +765,9 @@ export function printReport(stats: GitHubStatsOutput, mode: string): void {
 
 export async function main() {
   const cliArgs = parseCliArgs();
-  const rootDir = process.cwd();
+  const rootDir = process.cwd().endsWith("scripts")
+    ? path.resolve(process.cwd(), "..")
+    : process.cwd();
   const dataDir = path.join(rootDir, "data");
   const statsFilePath =
     cliArgs.outputFile || path.join(dataDir, "github-stats.json");
