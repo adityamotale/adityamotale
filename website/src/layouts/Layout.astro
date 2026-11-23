@@ -195,6 +195,17 @@ const jsonLd =
         );
         document.documentElement.classList.add(`theme-${theme}`);
         document.documentElement.setAttribute('data-theme', theme);
+
+        const accents = ['rose', 'gold', 'love', 'pine', 'foam', 'iris'];
+        const storedAccent =
+          typeof localStorage !== 'undefined'
+            ? localStorage.getItem('accent')
+            : null;
+        const accent =
+          storedAccent && accents.includes(storedAccent)
+            ? storedAccent
+            : 'rose';
+        document.documentElement.setAttribute('data-accent', accent);
       })();
     </script>
   </head>

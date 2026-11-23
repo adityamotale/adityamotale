@@ -1,27 +1,608 @@
 ---
-import ThemeSelector from './ThemeSelector.astro';
+import stats from '../../../data/github-stats.json';
+
+const languages = stats.languages || [];
+const rustLang = languages.find((l) => l.name === 'Rust');
+const rustPct = rustLang ? rustLang.percentage.toFixed(1) : '67.5';
+
+const locData = stats.lines_of_code || { net_lines: 821948 };
+const formatCompact = (num: number) => {
+  const abs = Math.abs(num);
+  if (abs >= 1_000_000) return `${(num / 1_000_000).toFixed(2)}M`;
+  if (abs >= 1_000) return `${(num / 1_000).toFixed(0)}k`;
+  return `${num}`;
+};
+
+const netLocFormatted = formatCompact(locData.net_lines ?? 821948);
+const rustLocFormatted = rustLang ? formatCompact(rustLang.loc) : '1.18M';
+
+const totalCommits = stats.contributions?.commits || 3580;
+const commitsFormatted = totalCommits.toLocaleString();
+
+const activeDays = stats.streaks_and_consistency?.active_days_count || 1036;
+const activeDaysFormatted = activeDays.toLocaleString();
 ---
 
-<header class="w-full flex items-center justify-between min-w-0 select-none font-mono">
-  <a
-    href="/"
-    class="block hover:opacity-90 transition-opacity w-fit max-w-full select-none"
-  >
-    <span class="font-serif italic text-3xl sm:text-4xl text-[var(--color-accent)] leading-none">
-      aditya
-    </span>
-  </a>
-
-  <div class="flex items-center gap-2 shrink-0 text-xs">
-    <ThemeSelector />
+<header class="w-full font-mono select-none">
+  <!-- Top Identity & Main Controls Line -->
+  <div class="flex items-center justify-between min-w-0">
     <a
-      href="/adityamotale.pdf"
-      download="adityamotale.pdf"
-      class="border border-rp-highlight-med bg-rp-surface/60 backdrop-blur-xs px-2.5 py-1 text-rp-subtle transition-colors hover:text-rp-text hover:border-rp-highlight-high flex items-center justify-center select-none font-mono text-xs rounded-sm"
-      title="View and download resume"
+      href="/"
+      class="block hover:opacity-90 transition-opacity w-fit max-w-full select-none"
+      aria-label="Aditya Motale Home"
     >
-      <span class="text-rp-muted mr-1.5 select-none">⤓</span>
-      resume
+      <span class="font-serif italic text-3xl sm:text-4xl text-[var(--color-accent)] leading-none transition-colors duration-200">
+        aditya
+      </span>
     </a>
+
+    <div class="flex items-center gap-2 shrink-0 text-xs font-mono">
+      <!-- Accent Selector Button -->
+      <button
+        id="hud-accent-btn"
+        type="button"
+        class="group border border-rp-highlight-med bg-rp-surface/60 backdrop-blur-xs px-2 sm:px-2.5 py-0.5 sm:py-1 text-rp-subtle transition-colors hover:text-rp-text hover:border-rp-highlight-high cursor-pointer flex items-center justify-center select-none font-mono text-xs rounded-sm focus:outline-none"
+        title="Cycle accent color (or press 'a')"
+        aria-label="Cycle Accent Color"
+      >
+        <span class="text-rp-muted mr-1.5 select-none">[a]</span>
+        <span
+          id="hud-accent-dot"
+          class="w-1.5 h-1.5 rounded-full inline-block mr-1.5 ring-1 ring-rp-highlight-med transition-colors"
+          style="background-color: var(--color-accent);"
+        ></span>
+        <span id="hud-accent-label" class="font-mono text-xs text-rp-text">
+          rose
+        </span>
+      </button>
+
+      <!-- Theme Selector Button -->
+      <button
+        id="hud-theme-btn"
+        type="button"
+        class="group border border-rp-highlight-med bg-rp-surface/60 backdrop-blur-xs px-2 sm:px-2.5 py-0.5 sm:py-1 text-rp-subtle transition-colors hover:text-rp-text hover:border-rp-highlight-high cursor-pointer flex items-center justify-center select-none font-mono text-xs rounded-sm focus:outline-none"
+        title="Toggle theme (or press 't')"
+        aria-label="Toggle Theme"
+      >
+        <span class="text-rp-muted mr-1.5 select-none">[t]</span>
+        <span class="text-[11px] text-[var(--color-accent)] font-semibold leading-none mr-1 select-none transition-colors duration-200">
+          ◐
+        </span>
+        <span id="hud-theme-label" class="font-mono text-xs text-rp-text">
+          moon
+        </span>
+      </button>
+
+      <!-- Resume Button -->
+      <a
+        id="hud-resume-btn"
+        href="/adityamotale.pdf"
+        download="adityamotale.pdf"
+        class="border border-rp-highlight-med bg-rp-surface/60 backdrop-blur-xs px-2.5 py-1 text-rp-subtle transition-colors hover:text-rp-text hover:border-rp-highlight-high flex items-center justify-center select-none font-mono text-xs rounded-sm"
+        title="Download resume (or press 'r')"
+      >
+        <span class="text-rp-muted mr-1.5 select-none">⤓</span>
+        <span>resume</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Sticky Sentinel for IntersectionObserver -->
+  <div
+    id="header-sentinel"
+    class="w-full h-px pointer-events-none opacity-0 -mb-px"
+  ></div>
+
+  <!-- Telemetry HUD Wrapper -->
+  <div
+    id="header-sticky-wrap"
+    class="mt-2.5 sm:mt-3 h-[28px] w-full max-w-full"
+  >
+    <div
+      id="header-hud"
+      data-stuck="false"
+      class="flex flex-nowrap items-center justify-between text-xs font-mono w-full text-rp-subtle py-1 select-none"
+    >
+      <!-- Left HUD Block -->
+      <div class="flex items-center gap-2 shrink-0 min-w-0">
+        <!-- Stuck-only brand mark -->
+        <a
+          href="/"
+          class="hud-stuck-only hidden font-serif italic text-base sm:text-lg text-[var(--color-accent)] leading-none hover:opacity-85 mr-1 transition-colors duration-200"
+        >
+          aditya
+        </a>
+
+        <!-- Live Pulse LED -->
+        <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] inline-block animate-pulse shrink-0 transition-colors duration-200"></span>
+
+        <!-- Unstuck metric -->
+        <span class="hud-unstuck-only text-rp-text font-medium whitespace-nowrap">
+          rust {rustPct}% · {rustLocFormatted} loc
+        </span>
+
+        <!-- Stuck metric -->
+        <span class="hud-stuck-only hidden text-rp-text font-medium whitespace-nowrap">
+          +{netLocFormatted} loc
+        </span>
+      </div>
+
+      <!-- Center Responsive ASCII Soliton Wave & Reading Meter -->
+      <div
+        id="hud-ascii-container"
+        class="hidden md:flex flex-1 min-w-0 items-center justify-center px-4 overflow-hidden"
+      >
+        <span
+          id="hud-ascii-bar"
+          class="inline-flex items-center font-mono text-xs select-none tracking-wider whitespace-nowrap overflow-hidden leading-none opacity-85"
+          aria-hidden="true"
+        ></span>
+      </div>
+
+      <!-- Right HUD Block -->
+      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+        <!-- Unstuck Telemetry Stats -->
+        <div class="hud-unstuck-only flex items-center gap-1.5 sm:gap-2 text-rp-subtle whitespace-nowrap">
+          <span class="text-rp-text font-medium">
+            {commitsFormatted} commits
+          </span>
+          <span class="text-rp-muted select-none">·</span>
+          <span>{activeDaysFormatted}d active</span>
+        </div>
+
+        <!-- Stuck Compact Action Controls -->
+        <div class="hud-stuck-only hidden items-center gap-2 sm:gap-2.5">
+          <button
+            id="hud-stuck-accent-btn"
+            type="button"
+            class="inline-flex items-center gap-1 text-rp-subtle hover:text-[var(--color-accent)] transition-colors cursor-pointer focus:outline-none"
+            title="Cycle accent color (or press 'a')"
+          >
+            <span class="text-rp-muted">[a]</span>
+            <span
+              id="hud-stuck-accent-dot"
+              class="w-1.5 h-1.5 rounded-full shrink-0 ring-1 ring-rp-highlight-med transition-colors"
+              style="background-color: var(--color-accent);"
+            ></span>
+            <span id="hud-stuck-accent-label" class="text-rp-text font-medium">
+              rose
+            </span>
+          </button>
+          <span class="text-rp-muted select-none">·</span>
+          <button
+            id="hud-stuck-theme-btn"
+            type="button"
+            class="inline-flex items-center gap-1 text-rp-subtle hover:text-[var(--color-accent)] transition-colors cursor-pointer focus:outline-none"
+            title="Toggle theme (or press 't')"
+          >
+            <span class="text-rp-muted">[t]</span>
+            <span class="text-[11px] text-[var(--color-accent)] font-semibold leading-none select-none transition-colors duration-200">
+              ◐
+            </span>
+            <span id="hud-stuck-theme-label" class="text-rp-text font-medium">
+              moon
+            </span>
+          </button>
+          <span class="text-rp-muted select-none">·</span>
+          <a
+            href="/adityamotale.pdf"
+            download="adityamotale.pdf"
+            class="inline-flex items-center gap-1 text-rp-subtle hover:text-[var(--color-accent)] transition-colors cursor-pointer"
+            title="Download resume (or press 'r')"
+          >
+            <span class="text-rp-muted">⤓</span>
+            <span class="text-rp-text font-medium">pdf</span>
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </header>
+
+<style>
+  #header-hud {
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      padding 0.2s ease;
+  }
+
+  #header-hud[data-stuck='true'] {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100vw;
+    z-index: 50;
+    padding-left: max(1rem, calc((100vw - 48rem) / 2 + 1rem));
+    padding-right: max(1rem, calc((100vw - 48rem) / 2 + 1rem));
+    padding-top: 0.45rem;
+    padding-bottom: 0.45rem;
+    background-color: color-mix(in srgb, var(--rp-base) 88%, transparent);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--rp-highlight-med) 50%, transparent);
+    animation: 0.16s cubic-bezier(0.16, 1, 0.3, 1) hudSlideDown;
+  }
+
+  @keyframes hudSlideDown {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  #header-hud[data-stuck='true'] .hud-stuck-only {
+    display: inline-flex !important;
+  }
+
+  #header-hud[data-stuck='true'] .hud-unstuck-only {
+    display: none !important;
+  }
+</style>
+
+<script>
+  const accents = ['rose', 'gold', 'love', 'pine', 'foam', 'iris'] as const;
+  type AccentName = (typeof accents)[number];
+
+  const themes = ['moon', 'dawn'] as const;
+  type ThemeName = (typeof themes)[number];
+
+  let solitonInterval: number | null = null;
+  let solitonTick = 0;
+  let charWidth = 0;
+  let isStuck = false;
+
+  function measureCharWidth(): number {
+    const span = document.createElement('span');
+    span.style.cssText =
+      'position:absolute;visibility:hidden;white-space:nowrap;display:inline-block;';
+    span.className = 'text-xs font-mono select-none tracking-wider';
+    span.textContent = '██████████';
+    document.body.appendChild(span);
+    const w = span.getBoundingClientRect().width / 10;
+    document.body.removeChild(span);
+    return w > 0 ? w : 7.2;
+  }
+
+  function getAvailableChars(): number {
+    const container = document.getElementById('hud-ascii-container');
+    if (!container) return 24;
+    const w = container.getBoundingClientRect().width;
+    if (w <= 0) return 0;
+    if (charWidth <= 0) charWidth = measureCharWidth();
+    return Math.max(0, Math.floor(w / charWidth));
+  }
+
+  /**
+   * Concept A: Symmetric Soliton Wave Collisions
+   * Two wave pulses counter-propagate from opposing edges toward the center,
+   * pass through each other with constructive interference, and bounce back.
+   */
+  function renderSolitonWave(numChars: number, tick: number): string {
+    const center = (numChars - 1) / 2;
+    const maxRadius = Math.max(center - 1, 1);
+
+    // Period of full back-and-forth oscillation
+    const period = 52;
+    const phase = (tick % period) / period;
+    // cos goes from 1 (far edges) to -1 (overshoot across center) and back
+    const offset = maxRadius * Math.cos(phase * 2 * Math.PI);
+
+    // Leftward and rightward traveling pulse centers
+    const p1 = center - offset;
+    const p2 = center + offset;
+
+    // Moving inward vs outward velocity
+    const velocity = Math.sin(phase * 2 * Math.PI);
+    const isMovingInward = velocity > 0;
+    const isNearCollision = Math.abs(offset) < 1.6;
+
+    let html = '';
+    let currentClass = '';
+    let currentRun = '';
+
+    for (let i = 0; i < numChars; i++) {
+      const d1 = Math.abs(i - p1);
+      const d2 = Math.abs(i - p2);
+
+      // Gaussian-like compact exponential bell shape
+      const a1 = Math.exp(-(d1 * d1) / 4.2);
+      const a2 = Math.exp(-(d2 * d2) / 4.2);
+      const totalAmp = a1 + a2;
+
+      let char = '·';
+      let cls = 'text-rp-subtle opacity-25';
+
+      if (isNearCollision && Math.abs(i - center) < 0.8) {
+        // Core collision burst glyph
+        char = '█';
+        cls = 'text-[var(--color-accent)] opacity-100 font-bold';
+      } else if (totalAmp >= 1.3) {
+        char = '█';
+        cls = 'text-[var(--color-accent)] opacity-100 font-bold';
+      } else if (totalAmp >= 0.85) {
+        char = '▓';
+        cls = 'text-[var(--color-accent)] opacity-95 font-medium';
+      } else if (totalAmp >= 0.5) {
+        char = '▒';
+        cls = 'text-[var(--color-accent)] opacity-80';
+      } else if (totalAmp >= 0.25) {
+        char = '░';
+        cls = 'text-rp-text opacity-60';
+      } else if (totalAmp >= 0.1) {
+        // Leading directional chevron or soft wake
+        if (Math.abs(d1 - 1.6) < 0.5) {
+          char = isMovingInward ? '›' : '‹';
+          cls = 'text-[var(--color-accent)] opacity-60';
+        } else if (Math.abs(d2 - 1.6) < 0.5) {
+          char = isMovingInward ? '‹' : '›';
+          cls = 'text-[var(--color-accent)] opacity-60';
+        } else {
+          char = '~';
+          cls = 'text-rp-muted opacity-40';
+        }
+      }
+
+      if (cls === currentClass) {
+        currentRun += char;
+      } else {
+        if (currentRun) {
+          html += `<span class="${currentClass}">${currentRun}</span>`;
+        }
+        currentClass = cls;
+        currentRun = char;
+      }
+    }
+
+    if (currentRun) {
+      html += `<span class="${currentClass}">${currentRun}</span>`;
+    }
+    return html;
+  }
+
+  function renderReadingMeter(numChars: number): string {
+    const scrollY = window.scrollY || window.pageYOffset;
+    const docHeight =
+      document.documentElement.scrollHeight - window.innerHeight;
+    const pct =
+      docHeight > 0
+        ? Math.min(100, Math.max(0, Math.round((scrollY / docHeight) * 100)))
+        : 0;
+
+    const label = `${pct}%`;
+    const availForBar = Math.max(4, numChars - label.length - 8);
+    const filledCount = Math.round((pct / 100) * availForBar);
+    const emptyCount = Math.max(0, availForBar - filledCount);
+
+    const filledStr = '▓'.repeat(filledCount);
+    const emptyStr = '░'.repeat(emptyCount);
+
+    return `<span class="text-rp-muted select-none">── [</span> <span class="text-[var(--color-accent)] font-medium tracking-tight">${filledStr}</span><span class="text-rp-muted/40 tracking-tight">${emptyStr}</span> <span class="text-rp-text font-medium ml-1.5 mr-0.5">${label}</span> <span class="text-rp-muted select-none">] ──</span>`;
+  }
+
+  function updateAsciiDisplay() {
+    const bar = document.getElementById('hud-ascii-bar');
+    if (!bar) return;
+    const chars = getAvailableChars();
+    if (chars < 6) {
+      bar.innerHTML = '';
+      return;
+    }
+
+    if (isStuck) {
+      bar.innerHTML = renderReadingMeter(chars);
+    } else {
+      bar.innerHTML = renderSolitonWave(chars, solitonTick);
+      solitonTick = (solitonTick + 1) % 10000;
+    }
+  }
+
+  function startSoliton() {
+    if (solitonInterval === null) {
+      updateAsciiDisplay();
+      solitonInterval = window.setInterval(updateAsciiDisplay, 50);
+    }
+  }
+
+  function stopSoliton() {
+    if (solitonInterval !== null) {
+      clearInterval(solitonInterval);
+      solitonInterval = null;
+    }
+  }
+
+  function getActiveTheme(): ThemeName {
+    const stored = localStorage.getItem('theme') as ThemeName | null;
+    if (stored && themes.includes(stored)) return stored;
+    return window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'moon'
+      : 'dawn';
+  }
+
+  function applyTheme(theme: ThemeName, persist = false) {
+    document.documentElement.classList.remove(
+      'theme-moon',
+      'theme-dawn',
+      'theme-default'
+    );
+    document.documentElement.classList.add(`theme-${theme}`);
+    document.documentElement.setAttribute('data-theme', theme);
+    if (persist) localStorage.setItem('theme', theme);
+
+    const labels = [
+      document.getElementById('hud-theme-label'),
+      document.getElementById('hud-stuck-theme-label'),
+    ];
+    for (const el of labels) {
+      if (el) el.textContent = theme;
+    }
+  }
+
+  function getActiveAccent(): AccentName {
+    const stored = localStorage.getItem('accent') as AccentName | null;
+    if (stored && accents.includes(stored)) return stored;
+    return 'rose';
+  }
+
+  function applyAccent(accent: AccentName, persist = false) {
+    document.documentElement.setAttribute('data-accent', accent);
+    if (persist) localStorage.setItem('accent', accent);
+
+    const labels = [
+      document.getElementById('hud-accent-label'),
+      document.getElementById('hud-stuck-accent-label'),
+    ];
+    for (const el of labels) {
+      if (el) el.textContent = accent;
+    }
+
+    const dots = [
+      document.getElementById('hud-accent-dot'),
+      document.getElementById('hud-stuck-accent-dot'),
+    ];
+    for (const dot of dots) {
+      if (dot) dot.style.backgroundColor = 'var(--color-accent)';
+    }
+
+    updateAsciiDisplay();
+  }
+
+  function setStuckState(stuck: boolean) {
+    if (isStuck === stuck) return;
+    isStuck = stuck;
+    const hud = document.getElementById('header-hud');
+    const wrap = document.getElementById('header-sticky-wrap');
+    if (hud) hud.setAttribute('data-stuck', stuck ? 'true' : 'false');
+    if (wrap) wrap.setAttribute('data-stuck', stuck ? 'true' : 'false');
+
+    if (isStuck) {
+      stopSoliton();
+      updateAsciiDisplay();
+    } else {
+      updateAsciiDisplay();
+      startSoliton();
+    }
+  }
+
+  function checkSticky() {
+    const sentinel = document.getElementById('header-sentinel');
+    const stuck = sentinel ? sentinel.getBoundingClientRect().top <= 0 : false;
+    setStuckState(stuck);
+    if (isStuck) {
+      updateAsciiDisplay();
+    }
+  }
+
+  function initHeader() {
+    stopSoliton();
+
+    applyTheme(getActiveTheme(), false);
+    applyAccent(getActiveAccent(), false);
+
+    const accentBtns = [
+      document.getElementById('hud-accent-btn'),
+      document.getElementById('hud-stuck-accent-btn'),
+    ];
+    for (const btn of accentBtns) {
+      btn?.addEventListener('click', () => {
+        const cur = getActiveAccent();
+        const next = accents[(accents.indexOf(cur) + 1) % accents.length];
+        applyAccent(next, true);
+      });
+    }
+
+    const themeBtns = [
+      document.getElementById('hud-theme-btn'),
+      document.getElementById('hud-stuck-theme-btn'),
+    ];
+    for (const btn of themeBtns) {
+      btn?.addEventListener('click', () => {
+        const cur = getActiveTheme();
+        const next = themes[(themes.indexOf(cur) + 1) % themes.length];
+        applyTheme(next, true);
+      });
+    }
+
+    const sentinel = document.getElementById('header-sentinel');
+    if (sentinel && 'IntersectionObserver' in window) {
+      new IntersectionObserver(
+        ([entry]) => {
+          setStuckState(
+            !entry.isIntersecting && entry.boundingClientRect.top <= 0
+          );
+        },
+        { threshold: [0, 1] }
+      ).observe(sentinel);
+    }
+
+    const container = document.getElementById('hud-ascii-container');
+    if (container && 'ResizeObserver' in window) {
+      new ResizeObserver(() => {
+        charWidth = 0;
+        updateAsciiDisplay();
+      }).observe(container);
+    }
+
+    checkSticky();
+    if (!isStuck) {
+      startSoliton();
+    }
+  }
+
+  initHeader();
+
+  window.addEventListener('scroll', checkSticky, { passive: true });
+  window.addEventListener(
+    'resize',
+    () => {
+      charWidth = 0;
+      updateAsciiDisplay();
+    },
+    { passive: true }
+  );
+
+  document.addEventListener('astro:after-swap', initHeader);
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopSoliton();
+    } else if (!isStuck) {
+      startSoliton();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    const target = e.target as HTMLElement | null;
+    if (
+      target &&
+      (target.tagName === 'INPUT' ||
+        target.tagName === 'TEXTAREA' ||
+        target.isContentEditable)
+    ) {
+      return;
+    }
+
+    if (e.key === 'a' || e.key === 'A') {
+      const btn =
+        document.getElementById('hud-accent-btn') ||
+        document.getElementById('hud-stuck-accent-btn');
+      btn?.click();
+    } else if (e.key === 't' || e.key === 'T') {
+      const btn =
+        document.getElementById('hud-theme-btn') ||
+        document.getElementById('hud-stuck-theme-btn');
+      btn?.click();
+    } else if (e.key === 'r' || e.key === 'R') {
+      const resumeLink = document.getElementById(
+        'hud-resume-btn'
+      ) as HTMLAnchorElement | null;
+      resumeLink?.click();
+    }
+  });
+</script>
