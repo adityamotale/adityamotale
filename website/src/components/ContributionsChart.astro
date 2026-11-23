@@ -1,0 +1,399 @@
+---
+import stats from '../../../data/github-stats.json';
+
+interface YearSeries {
+  year: number;
+  total: number;
+  weeks?: number[];
+  days?: number[];
+}
+
+const currentYear = new Date().getFullYear();
+const yearlyData: YearSeries[] = (stats as any).yearly_contributions || [];
+
+// Dimensions & Padding
+const width = 680;
+const height = 190;
+const padLeft = 30;
+const padRight = 36;
+const padTop = 16;
+const padBottom = 22;
+const plotW = width - padLeft - padRight;
+const plotH = height - padTop - padBottom;
+
+// Scale ceiling rounded to clean intervals
+const rawMax = Math.max(...yearlyData.map((y) => y.total), 100);
+const step = rawMax > 2000 ? 1000 : rawMax > 1000 ? 500 : 250;
+const yMax = Math.ceil(rawMax / step) * step;
+const gridValues: number[] = [];
+for (let v = step; v <= yMax; v += step) {
+  gridValues.push(v);
+}
+
+// Month markers
+const monthTicks = [
+  { label: 'JAN', day: 0, major: true },
+  { label: 'FEB', day: 31, major: false },
+  { label: 'MAR', day: 59, major: true },
+  { label: 'APR', day: 90, major: false },
+  { label: 'MAY', day: 120, major: true },
+  { label: 'JUN', day: 151, major: false },
+  { label: 'JUL', day: 181, major: true },
+  { label: 'AUG', day: 212, major: false },
+  { label: 'SEP', day: 243, major: true },
+  { label: 'OCT', day: 273, major: false },
+  { label: 'NOV', day: 304, major: true },
+  { label: 'DEC', day: 334, major: false },
+];
+
+// Generate smooth monotonic cubic Bezier path from points
+const generateSmoothPath = (points: number[]) => {
+  if (!points || points.length === 0) return '';
+  const n = points.length;
+  const divisor = 365;
+
+  // Subsample every ~5 days if dense for smooth curvature
+  const sampled: Array<{ x: number; y: number }> = [];
+  const stride = Math.max(1, Math.floor(n / 60));
+  for (let i = 0; i < n; i += stride) {
+    sampled.push({
+      x: +(padLeft + (i / divisor) * plotW).toFixed(1),
+      y: +(padTop + plotH - (points[i] / yMax) * plotH).toFixed(1),
+    });
+  }
+  // Ensure final point is preserved
+  if (n > 1) {
+    sampled.push({
+      x: +(padLeft + ((n - 1) / divisor) * plotW).toFixed(1),
+      y: +(padTop + plotH - (points[n - 1] / yMax) * plotH).toFixed(1),
+    });
+  }
+
+  if (sampled.length === 1) return `M ${sampled[0].x} ${sampled[0].y}`;
+
+  let d = `M ${sampled[0].x} ${sampled[0].y}`;
+  for (let i = 0; i < sampled.length - 1; i++) {
+    const p0 = sampled[i];
+    const p1 = sampled[i + 1];
+    const dx = p1.x - p0.x;
+    const cp1x = +(p0.x + dx * 0.5).toFixed(1);
+    const cp2x = +(p0.x + dx * 0.5).toFixed(1);
+    d += ` C ${cp1x} ${p0.y}, ${cp2x} ${p1.y}, ${p1.x} ${p1.y}`;
+  }
+  return d;
+};
+
+const formatCompact = (num: number) => {
+  if (num >= 1000) return `${(num / 1000).toFixed(num % 1000 === 0 ? 0 : 1)}k`;
+  return `${num}`;
+};
+
+const getYearOpacity = (yr: number) => {
+  if (yr === currentYear) return 1.0;
+  const years = yearlyData.filter((y) => y.year !== currentYear);
+  const idx = years.findIndex((y) => y.year === yr);
+  if (idx === -1) return 0.25;
+  return +(0.2 + (idx / Math.max(years.length - 1, 1)) * 0.35).toFixed(2);
+};
+---
+
+<section
+  id="section-contributions"
+  class="w-full font-mono text-[11px] sm:text-xs select-none leading-relaxed"
+>
+  <div class="w-full flex flex-col font-mono">
+    {/* Section Header: > CONTRIBUTIONS ─── */}
+    <div class="w-full flex items-center overflow-hidden mb-2">
+      <span class="text-[var(--color-accent)] font-semibold shrink-0">
+        &gt;&nbsp;
+      </span>
+      <span class="font-bold tracking-wider text-rp-text uppercase shrink-0">
+        CONTRIBUTIONS
+      </span>
+      <span class="ml-2 flex-1 border-b border-rp-muted/20"></span>
+    </div>
+
+    {/* Section Comment & Dynamic Readout */}
+    <div class="text-[11px] text-rp-muted/70 pl-3 mb-1 flex items-center justify-between">
+      <span id="contrib-hud">// yearly activity</span>
+      <span class="text-[10px] text-rp-muted/40 font-mono hidden sm:inline">
+        annual velocity &middot; cumulative
+      </span>
+    </div>
+
+    {/* Plotted Graph Canvas */}
+    <div class="pl-3 py-1 w-full">
+      <svg
+        id="contrib-svg"
+        viewBox={`0 0 ${width} ${height}`}
+        class="w-full h-auto overflow-visible select-none cursor-crosshair"
+        data-yearly={JSON.stringify(yearlyData)}
+      >
+        {/* Horizontal Guidelines & Y-Axis Labels */}
+        {gridValues.map((val) => {
+          const y = padTop + plotH - (val / yMax) * plotH;
+          return (
+            <g class="text-rp-muted/15">
+              <line
+                x1={padLeft}
+                y1={y}
+                x2={padLeft + plotW}
+                y2={y}
+                stroke="currentColor"
+                stroke-dasharray="2 4"
+                stroke-width="0.75"
+              />
+              <text
+                x={padLeft - 5}
+                y={y + 3}
+                text-anchor="end"
+                class="text-[8px] fill-rp-muted/40 font-mono"
+              >
+                {formatCompact(val)}
+              </text>
+            </g>
+          );
+        })}
+
+        {/* Base X Axis */}
+        <line
+          x1={padLeft}
+          y1={padTop + plotH}
+          x2={padLeft + plotW}
+          y2={padTop + plotH}
+          stroke="currentColor"
+          stroke-width="0.75"
+          class="text-rp-muted/25"
+        />
+
+        {/* Month Ticks & Labels */}
+        {monthTicks.map((m) => {
+          const x = padLeft + (m.day / 365) * plotW;
+          return (
+            <g class="text-rp-muted/30">
+              <line
+                x1={x}
+                y1={padTop + plotH}
+                x2={x}
+                y2={padTop + plotH + (m.major ? 3 : 2)}
+                stroke="currentColor"
+                stroke-width="0.75"
+              />
+              <text
+                x={x}
+                y={height - 5}
+                text-anchor="middle"
+                class={`text-[8px] fill-rp-muted/40 font-mono tracking-tighter ${
+                  m.major ? '' : 'hidden sm:inline'
+                }`}
+              >
+                {m.label}
+              </text>
+            </g>
+          );
+        })}
+
+        {/* Historical Years Plot Lines (Subtle Monochrome Curves) */}
+        {yearlyData
+          .filter((y) => y.year !== currentYear)
+          .map((series) => {
+            const pts = series.days || series.weeks || [];
+            const pathD = generateSmoothPath(pts);
+            const opacity = getYearOpacity(series.year);
+            const lastIdx = pts.length - 1;
+            const lastY = +(
+              padTop +
+              plotH -
+              (pts[lastIdx] / yMax) * plotH
+            ).toFixed(1);
+            const lastX = +(padLeft + plotW).toFixed(1);
+
+            return (
+              <g
+                class="contrib-series-group transition-opacity duration-150"
+                data-year={series.year}
+              >
+                <path
+                  d={pathD}
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.15"
+                  stroke-opacity={opacity}
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="contrib-line text-rp-muted transition-[stroke-opacity,stroke-width] duration-150"
+                  data-base-opacity={opacity}
+                />
+                {/* Direct Line-End Label on Right Margin */}
+                <text
+                  x={lastX + 5}
+                  y={lastY + 3}
+                  class="text-[8.5px] fill-rp-muted/50 font-mono select-none transition-all duration-150"
+                >
+                  '{String(series.year).slice(2)}
+                </text>
+              </g>
+            );
+          })}
+
+        {/* Current Year Line (Single Accent Color Highlight) */}
+        {(() => {
+          const cur = yearlyData.find((y) => y.year === currentYear);
+          if (!cur) return null;
+          const pts = cur.days || cur.weeks || [];
+          if (pts.length === 0) return null;
+          const pathD = generateSmoothPath(pts);
+          const lastIdx = pts.length - 1;
+          const lastX = +(padLeft + (lastIdx / 365) * plotW).toFixed(1);
+          const lastY = +(
+            padTop +
+            plotH -
+            (pts[lastIdx] / yMax) * plotH
+          ).toFixed(1);
+
+          return (
+            <g class="contrib-series-group" data-year={currentYear}>
+              <path
+                d={pathD}
+                fill="none"
+                stroke="var(--color-accent)"
+                stroke-width="1.85"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="contrib-line transition-all duration-150"
+                data-base-opacity="1"
+              />
+              {/* Terminal Tip Dot */}
+              <circle
+                cx={lastX}
+                cy={lastY}
+                r="2.5"
+                fill="var(--color-accent)"
+              />
+              {/* Direct Tip Label */}
+              <text
+                x={lastX + 5}
+                y={lastY - 3}
+                class="text-[9px] fill-[var(--color-accent)] font-semibold font-mono select-none"
+              >
+                '{String(currentYear).slice(2)}
+              </text>
+            </g>
+          );
+        })()}
+
+        {/* Interactive Crosshair Tracking Guide */}
+        <line
+          id="contrib-crosshair"
+          x1={padLeft}
+          y1={padTop}
+          x2={padLeft}
+          y2={padTop + plotH}
+          stroke="var(--color-accent)"
+          stroke-width="0.85"
+          stroke-dasharray="2 2"
+          opacity="0"
+          pointer-events="none"
+        />
+      </svg>
+    </div>
+  </div>
+</section>
+
+<script>
+  const svg = document.getElementById('contrib-svg');
+  const crosshair = document.getElementById('contrib-crosshair');
+  const hud = document.getElementById('contrib-hud');
+  const groups = document.querySelectorAll('.contrib-series-group');
+
+  let yearlyData: Array<{ year: number; total: number; days?: number[] }> = [];
+  try {
+    yearlyData = JSON.parse(svg?.getAttribute('data-yearly') || '[]');
+  } catch {}
+
+  if (svg && crosshair && hud) {
+    const padLeft = 30;
+    const padRight = 36;
+    const width = 680;
+    const plotW = width - padLeft - padRight;
+
+    svg.addEventListener('mousemove', (e) => {
+      const rect = svg.getBoundingClientRect();
+      const mouseX = ((e.clientX - rect.left) / rect.width) * width;
+
+      if (mouseX >= padLeft && mouseX <= padLeft + plotW) {
+        crosshair.setAttribute('x1', mouseX.toFixed(1));
+        crosshair.setAttribute('x2', mouseX.toFixed(1));
+        crosshair.setAttribute('opacity', '0.7');
+
+        const dayRatio = (mouseX - padLeft) / plotW;
+        const dayIdx = Math.min(364, Math.max(0, Math.floor(dayRatio * 365)));
+        const approxDate = new Date(Date.UTC(2024, 0, dayIdx + 1));
+        const monthName = approxDate.toLocaleString('en-US', {
+          month: 'short',
+          timeZone: 'UTC',
+        });
+        const dayOfMonth = approxDate.getUTCDate();
+
+        // Extract values across recent years
+        const y26 = yearlyData.find((y) => y.year === 2026)?.days?.[dayIdx];
+        const y25 = yearlyData.find((y) => y.year === 2025)?.days?.[dayIdx];
+        const y24 = yearlyData.find((y) => y.year === 2024)?.days?.[dayIdx];
+
+        let readout = `// ${monthName} ${dayOfMonth} (day ${dayIdx + 1})`;
+        if (y26 !== undefined) readout += ` · '26: ${y26.toLocaleString()}`;
+        if (y25 !== undefined) readout += ` · '25: ${y25.toLocaleString()}`;
+        if (y24 !== undefined) readout += ` · '24: ${y24.toLocaleString()}`;
+
+        hud.textContent = readout;
+      } else {
+        crosshair.setAttribute('opacity', '0');
+        hud.textContent = '// yearly activity';
+      }
+    });
+
+    svg.addEventListener('mouseleave', () => {
+      crosshair.setAttribute('opacity', '0');
+      hud.textContent = '// yearly activity';
+      groups.forEach((g) => {
+        const line = g.querySelector('.contrib-line');
+        const text = g.querySelector('text');
+        const base = line?.getAttribute('data-base-opacity') || '0.25';
+        line?.setAttribute('stroke-opacity', base);
+        if (text && !g.getAttribute('data-year')?.endsWith('2026')) {
+          text.setAttribute(
+            'class',
+            'text-[8.5px] fill-rp-muted/50 font-mono select-none transition-all duration-150'
+          );
+        }
+      });
+    });
+
+    // Hover highlighting per series
+    groups.forEach((group) => {
+      group.addEventListener('mouseenter', () => {
+        const targetYear = group.getAttribute('data-year');
+        groups.forEach((g) => {
+          const isTarget = g.getAttribute('data-year') === targetYear;
+          const line = g.querySelector('.contrib-line');
+          const text = g.querySelector('text');
+          if (isTarget) {
+            line?.setAttribute('stroke-opacity', '1');
+            line?.setAttribute('stroke-width', '2.2');
+            text?.setAttribute(
+              'class',
+              'text-[9.5px] fill-rp-text font-bold font-mono select-none'
+            );
+          } else {
+            line?.setAttribute('stroke-opacity', '0.08');
+            line?.setAttribute('stroke-width', '0.8');
+            text?.setAttribute(
+              'class',
+              'text-[8.5px] fill-rp-muted/20 font-mono select-none'
+            );
+          }
+        });
+      });
+    });
+  }
+</script>
