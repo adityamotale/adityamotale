@@ -3,23 +3,37 @@
 
 <footer class="w-full font-mono text-xs text-rp-muted select-none mt-14 sm:mt-20 space-y-4 sm:space-y-6">
   <!-- Eyeline reading buffer note -->
-  <p class="text-center font-mono text-xs text-rp-muted/60 select-none tracking-wide">
+  <p class="text-center font-mono text-[11px] sm:text-xs text-rp-muted/60 select-none tracking-wide px-2">
     [padded at the bottom to maintain a consistent reading eyeline]
   </p>
 
   <!-- Single-Line Wire -->
-  <div class="pt-6 border-t border-rp-highlight-med/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
-    <!-- Left: Author Brand -->
-    <a
-      href="/"
-      class="font-serif italic text-base text-[var(--color-accent)] hover:opacity-85 transition-opacity leading-none shrink-0"
-      aria-label="Aditya Motale Home"
-    >
-      aditya
-    </a>
+  <div class="pt-5 sm:pt-6 border-t border-rp-highlight-med/30 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
+    <!-- Top row on mobile, contents on desktop -->
+    <div class="flex items-center justify-between sm:contents">
+      <!-- Author Brand -->
+      <a
+        href="/"
+        class="font-serif italic text-base text-[var(--color-accent)] hover:opacity-85 transition-opacity leading-none shrink-0"
+        aria-label="Aditya Motale Home"
+      >
+        aditya
+      </a>
+
+      <!-- Return-to-Top (Mobile) -->
+      <button
+        id="footer-eof-btn-mobile"
+        type="button"
+        class="footer-eof-btn sm:hidden text-[11px] font-mono text-rp-muted/60 hover:text-[var(--color-accent)] transition-colors cursor-pointer select-none focus:outline-none shrink-0"
+        title="Return to top"
+        aria-label="Return to top"
+      >
+        [eof]
+      </button>
+    </div>
 
     <!-- Center: Links Cluster -->
-    <div class="flex flex-wrap items-center gap-x-2.5 sm:gap-x-3 gap-y-1.5 text-xs text-rp-subtle">
+    <div class="flex flex-wrap items-center gap-x-2 sm:gap-x-3 gap-y-1.5 text-[11px] sm:text-xs text-rp-subtle">
       <a
         href="https://github.com/adityamotale"
         target="_blank"
@@ -64,11 +78,11 @@
       </a>
     </div>
 
-    <!-- Right: EOF Marker & Return-to-Top -->
+    <!-- Right: Return-to-Top (Desktop) -->
     <button
       id="footer-eof-btn"
       type="button"
-      class="text-[11px] font-mono text-rp-muted/60 hover:text-[var(--color-accent)] transition-colors cursor-pointer select-none focus:outline-none shrink-0 self-end sm:self-auto"
+      class="footer-eof-btn hidden sm:inline-block text-[11px] font-mono text-rp-muted/60 hover:text-[var(--color-accent)] transition-colors cursor-pointer select-none focus:outline-none shrink-0"
       title="Return to top"
       aria-label="Return to top"
     >
@@ -79,9 +93,11 @@
 
 <script>
   function initFooter() {
-    const eofBtn = document.getElementById('footer-eof-btn');
-    eofBtn?.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    const eofBtns = document.querySelectorAll('.footer-eof-btn');
+    eofBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
     });
   }
 
