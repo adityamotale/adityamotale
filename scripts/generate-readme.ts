@@ -346,7 +346,7 @@ function generateWritingRowSvg(title: string, dateStr: string): string {
 }
 
 function generateEducationSvg(): string {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 95" width="100%" height="95" fill="none">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 75" width="100%" height="75" fill="none">
   <style>
     ${SVG_STYLE}
   </style>
@@ -366,14 +366,7 @@ function generateEducationSvg(): string {
       <tspan class="subtle">major:</tspan>   <tspan class="text" font-weight="600">Computer Science &amp; Engineering</tspan>
     </text>
     <text x="340" y="58">
-      <tspan class="subtle">status:</tspan>  <tspan class="text" font-weight="600">Graduated</tspan>
-    </text>
-
-    <text x="0" y="78">
       <tspan class="subtle">inst:</tspan>    <tspan class="text" font-weight="600">Marathwada Inst. of Technology</tspan>
-    </text>
-    <text x="340" y="78">
-      <tspan class="subtle">place:</tspan>   <tspan class="text" font-weight="600">CPSN, Maharashtra, Bharat</tspan>
     </text>
   </g>
 </svg>`;
