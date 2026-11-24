@@ -2,17 +2,18 @@ name: Activity
 
 on:
   schedule:
-    - cron: '0 2 * * 1' # 0200 UTC every Monday
+    - cron: '30 2 * * *' # 08:00 AM IST (02:30 UTC) every day
   workflow_dispatch:
     inputs:
       mode:
         description: 'Fetch mode'
         type: choice
         options:
+          - last-7-days
           - last-week
           - custom-range
           - full-backfill
-        default: last-week
+        default: last-7-days
       days:
         description: 'Days to fetch (if custom-range selected)'
         required: false
@@ -25,16 +26,12 @@ on:
         description: 'End date (YYYY-MM-DD, if custom-range selected)'
         required: false
         default: ''
-      force_release:
-        description: 'Force version bump and release even if stats have not changed'
-        type: boolean
-        default: false
 
 permissions:
   contents: write
 
 jobs:
-  update-stats:
+  update-activity:
     runs-on: ubuntu-latest
 
     steps:
@@ -58,13 +55,20 @@ jobs:
       - name: Install dependencies (scripts)
         run: npm --prefix scripts ci
 
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Run GitHub activity & stats collector
         env:
           GH_TOKEN: ${{ secrets.GH_STATS_TOKEN || secrets.GITHUB_TOKEN }}
         run: |
           ARGS=()
 
-          if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ inputs.mode }}" = "last-week" ]; then
+          if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ inputs.mode }}" = "last-7-days" ]; then
+            ARGS+=(--days 7)
+          elif [ "${{ inputs.mode }}" = "last-week" ]; then
             ARGS+=(--last-week)
           elif [ "${{ inputs.mode }}" = "full-backfill" ]; then
             ARGS+=(--full-backfill)
@@ -73,16 +77,41 @@ jobs:
           elif [ -n "${{ inputs.days }}" ]; then
             ARGS+=(--days "${{ inputs.days }}")
           else
-            ARGS+=(--last-week)
+            ARGS+=(--days 7)
           fi
 
           echo "Running: node scripts/fetch-github-stats.ts ${ARGS[*]}"
           node scripts/fetch-github-stats.ts "${ARGS[@]}"
 
-      - name: Bump version, update changelog & trigger release tag
+      - name: Commit stats data
         run: |
-          EXTRA_ARGS=()
-          if [ "${{ inputs.force_release }}" = "true" ]; then
-            EXTRA_ARGS+=(--force)
+          git add data/
+          if git diff --staged --quiet; then
+            echo "No data changes to commit"
+          else
+            git commit -m "(data) update github activity stats [skip ci]"
+            git push origin HEAD:${{ github.ref_name }}
           fi
-          node scripts/bump-version.ts "${EXTRA_ARGS[@]}"
+
+      - name: Run update README script
+        run: node scripts/generate-readme.ts
+
+      - name: Commit README and assets
+        run: |
+          git add README.md assets/icons/
+          if git diff --staged --quiet; then
+            echo "No README or asset changes to commit"
+          else
+            git commit -m "(readme) update readme and activity metrics [skip ci]"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
+
+      - name: Build static site
+        run: npm --prefix website run build
+
+      - name: Deploy to Cloudflare Pages
+        if: env.CLOUDFLARE_API_TOKEN != ''
+        run: npx wrangler pages deploy website/dist --project-name=adii --branch=master
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
