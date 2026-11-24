@@ -11,10 +11,6 @@ interface ArticleMeta {
 interface Props {
   title?: string;
   description?: string;
-  image?: string;
-  imageAlt?: string;
-  imageWidth?: number;
-  imageHeight?: number;
   type?: 'website' | 'article';
   publishedTime?: string;
   modifiedTime?: string;
@@ -26,10 +22,6 @@ interface Props {
 const {
   title = 'aditya ~ an engineer by choice',
   description = 'an engineer by choice',
-  image = '/og-image.png',
-  imageAlt,
-  imageWidth = 1200,
-  imageHeight = 630,
   type = 'website',
   publishedTime = Astro.props.article?.publishedTime,
   modifiedTime = Astro.props.article?.modifiedTime,
@@ -39,15 +31,6 @@ const {
 
 const siteUrl = Astro.site || Astro.url.origin || 'https://adii.fyi';
 const canonicalURL = new URL(Astro.url.pathname, siteUrl);
-const socialImageURL = new URL(image, siteUrl);
-
-const resolvedImageAlt = imageAlt || title;
-const imageType =
-  image.endsWith('.jpg') || image.endsWith('.jpeg')
-    ? 'image/jpeg'
-    : image.endsWith('.svg')
-      ? 'image/svg+xml'
-      : 'image/png';
 
 const jsonLd =
   type === 'article'
@@ -57,7 +40,6 @@ const jsonLd =
         headline: title,
         description: description,
         url: canonicalURL.toString(),
-        image: socialImageURL.toString(),
         datePublished: publishedTime,
         dateModified: modifiedTime || publishedTime,
         author: {
@@ -141,12 +123,6 @@ const jsonLd =
     <meta property="og:site_name" content="aditya" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={socialImageURL} />
-    <meta property="og:image:secure_url" content={socialImageURL} />
-    <meta property="og:image:width" content={String(imageWidth)} />
-    <meta property="og:image:height" content={String(imageHeight)} />
-    <meta property="og:image:type" content={imageType} />
-    <meta property="og:image:alt" content={resolvedImageAlt} />
     <meta property="og:locale" content="en_US" />
     {publishedTime && (
       <meta property="article:published_time" content={publishedTime} />
@@ -159,14 +135,12 @@ const jsonLd =
       <meta property="article:tag" content={tag} />
     ))}
 
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@arctic_byte" />
     <meta name="twitter:creator" content="@arctic_byte" />
     <meta name="twitter:url" content={canonicalURL} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={socialImageURL} />
-    <meta name="twitter:image:alt" content={resolvedImageAlt} />
 
     <script
       type="application/ld+json"
