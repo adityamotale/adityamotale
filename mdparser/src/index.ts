@@ -506,7 +506,7 @@ export function processCallouts(content: string): string {
       const typeLower = type.toLowerCase();
 
       return `<div class="callout callout-${typeLower} my-4 sm:my-6 p-3.5 sm:p-4 rounded-r-lg border-l-4 border-[var(--color-accent)] bg-[var(--color-accent)]/5 space-y-1.5">
-      <div class="callout-header font-serif italic text-xs sm:text-sm font-semibold text-[var(--color-accent)] select-none">
+      <div class="callout-header font-serif italic text-xs sm:text-sm font-semibold text-[var(--color-accent)]">
         ${typeLower}
       </div>
       <div class="callout-body font-mono text-xs sm:text-sm leading-relaxed text-rp-text break-words">
