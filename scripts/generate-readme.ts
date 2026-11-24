@@ -53,6 +53,21 @@ interface MetricSummary {
   label?: string;
 }
 
+interface ReleaseItem {
+  repo: string;
+  tag_name: string;
+  title?: string;
+  published_at?: string;
+  url?: string;
+}
+
+interface YearlyContribution {
+  year: number;
+  total: number;
+  days?: number[];
+  weeks?: number[];
+}
+
 interface GithubStats {
   metadata?: Record<string, unknown>;
   lines_of_code: {
@@ -93,8 +108,10 @@ interface GithubStats {
   };
   repositories_contributed_to?: RepoStat[];
   languages?: LanguageStat[];
+  releases?: ReleaseItem[];
   weekly_summary?: MetricSummary;
   monthly_history?: MetricSummary[];
+  yearly_contributions?: YearlyContribution[];
 }
 
 const fmt = new Intl.NumberFormat("en-US");
@@ -158,6 +175,27 @@ function formatBlogDate(dateStr: string): string {
     }
   }
   return dateStr;
+}
+
+function formatReleaseDate(isoStr?: string): string {
+  if (!isoStr) return "";
+  const d = new Date(isoStr);
+  if (isNaN(d.getTime())) return "";
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  return `${months[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
 }
 
 function parseDateToTimestamp(dStr: string): number {
@@ -234,6 +272,8 @@ const SVG_STYLE = `
     font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   }
   .accent { fill: #d7827e; font-weight: 600; }
+  .accent-stroke { stroke: #d7827e; }
+  .accent-fill { fill: #d7827e; }
   .text { fill: #575279; font-weight: 500; }
   .subtle { fill: #797593; font-weight: 400; }
   .muted { fill: #9893a5; font-weight: 400; }
@@ -246,6 +286,8 @@ const SVG_STYLE = `
 
   @media (prefers-color-scheme: dark) {
     .accent { fill: #ea9a97; }
+    .accent-stroke { stroke: #ea9a97; }
+    .accent-fill { fill: #ea9a97; }
     .text { fill: #e0def4; }
     .subtle { fill: #908caa; }
     .muted { fill: #6e6a86; }
@@ -258,46 +300,85 @@ const SVG_STYLE = `
   }
 `;
 
-function generateHeaderSvg(): string {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 75" width="100%" height="75" fill="none">
+function generateHeaderSvg(
+  rustPct = "68",
+  rustLoc = "1.2M",
+  commits = "3,580",
+  activeDays = "1,036",
+): string {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 82" width="100%" height="82" fill="none">
   <style>
     ${SVG_STYLE}
   </style>
   <g class="mono">
     <text x="0" y="18" class="accent" font-size="12.5" font-weight="600" xml:space="preserve">▄▀█ █▀▄ █ ▀█▀ █▄█ ▄▀█   █▀▄▀█ █▀█ ▀█▀ ▄▀█ █   █▀▀</text>
     <text x="0" y="34" class="accent" font-size="12.5" font-weight="600" xml:space="preserve">█▀█ █▄▀ █  █   █  █▀█   █ ▀ █ █▄█  █  █▀█ █▄▄ ██▄</text>
-    <text x="0" y="60" class="subtle" font-size="11.5">hello, my name is Aditya — an engineer by choice</text>
+    <text x="0" y="58" class="subtle" font-size="11.5">hello, my name is Aditya — an engineer by choice</text>
+    <text x="0" y="74" class="muted" font-size="11">// rust ${rustPct}% · ${rustLoc} loc · ${commits} commits · ${activeDays}d active</text>
+  </g>
+</svg>`;
+}
+
+function generateLatestReleaseSvg(
+  repoName: string,
+  tagName: string,
+  formattedDate: string,
+  description: string,
+): string {
+  const repoShort = repoName.split("/")[1] || repoName;
+  const descSafe = escapeXml(
+    description.length > 95 ? `${description.slice(0, 92)}...` : description,
+  );
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 86" width="100%" height="86" fill="none">
+  <style>
+    ${SVG_STYLE}
+  </style>
+  <g class="mono" font-size="11.5">
+    <text x="0" y="14" class="accent" font-size="12">&gt;</text>
+    <text x="12" y="14" class="text" font-weight="700" letter-spacing="0.06em">LATEST RELEASE</text>
+    <line x1="125" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
+    <text x="12" y="30" class="muted" font-size="11">// ${escapeXml(repoName)}</text>
+
+    <text x="12" y="52">
+      <tspan class="text" font-weight="600">${escapeXml(repoShort)}</tspan>
+      <tspan class="muted"> [ </tspan><tspan class="gold" font-weight="600">${escapeXml(tagName)}</tspan><tspan class="muted"> ]</tspan>
+    </text>
+    <text x="680" y="52" text-anchor="end" class="muted">${escapeXml(formattedDate)}</text>
+
+    <text x="12" y="72" class="subtle">${descSafe}</text>
   </g>
 </svg>`;
 }
 
 function generateAboutSvg(): string {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 95" width="100%" height="95" fill="none">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 115" width="100%" height="115" fill="none">
   <style>
     ${SVG_STYLE}
   </style>
   <g class="mono" font-size="11.5">
     <text x="0" y="14" class="accent" font-size="12">&gt;</text>
-    <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">ABOUT</text>
+    <text x="12" y="14" class="text" font-weight="700" letter-spacing="0.06em">ABOUT</text>
     <line x1="65" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
+    <text x="12" y="30" class="muted" font-size="11">// bio</text>
 
-    <text x="0" y="36" class="subtle">Engineer by choice. Passionate about systems programming, database architecture,</text>
-    <text x="0" y="54" class="subtle">and low-latency design. I learn fast, love hand-crafting reliable codebases,</text>
-    <text x="0" y="72" class="subtle">and obsess over micro-optimizations. Right now, I&apos;m building embedded storage</text>
-    <text x="0" y="90" class="subtle">engines and speeding up mundane routines using SIMD.</text>
+    <text x="12" y="50" class="subtle">An engineer by choice. It bugs me how slow and messy most software is,</text>
+    <text x="12" y="68" class="subtle">so I build things the way they should work: fast, without the bloat, and</text>
+    <text x="12" y="86" class="subtle">knowing what&apos;s actually going on underneath. I don&apos;t stick to one lane;</text>
+    <text x="12" y="104" class="subtle">I just figure out how the engine works and ship.</text>
   </g>
 </svg>`;
 }
 
 function generateProjectsHeaderSvg(): string {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 24" width="100%" height="24" fill="none">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 36" width="100%" height="36" fill="none">
   <style>
     ${SVG_STYLE}
   </style>
   <g class="mono" font-size="11.5">
     <text x="0" y="14" class="accent" font-size="12">&gt;</text>
-    <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">PROJECTS</text>
+    <text x="12" y="14" class="text" font-weight="700" letter-spacing="0.06em">PROJECTS</text>
     <line x1="85" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
+    <text x="12" y="30" class="muted" font-size="11">// selected work</text>
   </g>
 </svg>`;
 }
@@ -317,14 +398,17 @@ function generateProjectRowSvg(name: string, description: string): string {
 }
 
 function generateWritingHeaderSvg(): string {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 24" width="100%" height="24" fill="none">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 36" width="100%" height="36" fill="none">
   <style>
     ${SVG_STYLE}
   </style>
   <g class="mono" font-size="11.5">
     <text x="0" y="14" class="accent" font-size="12">&gt;</text>
-    <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">WRITING</text>
-    <line x1="75" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
+    <text x="12" y="14" class="text" font-weight="700" letter-spacing="0.06em">WRITING</text>
+    <line x1="75" y1="10" x2="590" y2="10" class="header-line" stroke-width="1" />
+    <text x="600" y="14" class="subtle" font-size="11">[view all]</text>
+    <line x1="665" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
+    <text x="12" y="30" class="muted" font-size="11">// recent posts</text>
   </g>
 </svg>`;
 }
@@ -346,26 +430,27 @@ function generateWritingRowSvg(title: string, dateStr: string): string {
 }
 
 function generateEducationSvg(): string {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 75" width="100%" height="75" fill="none">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 95" width="100%" height="95" fill="none">
   <style>
     ${SVG_STYLE}
   </style>
   <g class="mono" font-size="11.5">
     <text x="0" y="14" class="accent" font-size="12">&gt;</text>
-    <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">EDUCATION</text>
+    <text x="12" y="14" class="text" font-weight="700" letter-spacing="0.06em">EDUCATION</text>
     <line x1="92" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
+    <text x="12" y="30" class="muted" font-size="11">// degree &amp; background</text>
 
-    <text x="0" y="38">
+    <text x="12" y="54">
       <tspan class="subtle">degree:</tspan>  <tspan class="text" font-weight="600">B.Tech</tspan> <tspan class="muted">(CSE)</tspan>
     </text>
-    <text x="340" y="38">
+    <text x="340" y="54">
       <tspan class="subtle">period:</tspan>  <tspan class="text" font-weight="600">Jun 2020 – Jun 2024</tspan> <tspan class="muted">(4 yrs)</tspan>
     </text>
 
-    <text x="0" y="58">
+    <text x="12" y="74">
       <tspan class="subtle">major:</tspan>   <tspan class="text" font-weight="600">Computer Science &amp; Engineering</tspan>
     </text>
-    <text x="340" y="58">
+    <text x="340" y="74">
       <tspan class="subtle">inst:</tspan>    <tspan class="text" font-weight="600">Marathwada Inst. of Technology</tspan>
     </text>
   </g>
@@ -375,72 +460,73 @@ function generateEducationSvg(): string {
 function generateExperienceSvg(pid7Repos: { name: string }[]): string {
   const repoNames = pid7Repos.map((r) => r.name).join(" · ");
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" width="100%" height="420" fill="none">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 440" width="100%" height="440" fill="none">
   <style>
     ${SVG_STYLE}
   </style>
   <g class="mono" font-size="11.5">
     <text x="0" y="14" class="accent" font-size="12">&gt;</text>
-    <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">EXPERIENCE</text>
+    <text x="12" y="14" class="text" font-weight="700" letter-spacing="0.06em">EXPERIENCE</text>
     <line x1="102" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
+    <text x="12" y="30" class="muted" font-size="11">// 2021 → mobile · 2024 → web &amp; tooling · now → systems</text>
 
-    <text x="0" y="38" class="text" font-weight="600">[ Systems Engineering · pid7-org ]</text>
-    <text x="680" y="38" text-anchor="end" class="muted">Sep 2024 — Present</text>
-    <text x="0" y="56">
+    <text x="0" y="56" class="text" font-weight="600">[ Systems Engineering · pid7-org ]</text>
+    <text x="680" y="56" text-anchor="end" class="muted">Sep 2024 — Present</text>
+    <text x="0" y="74">
       <tspan class="subtle">  role:</tspan>   <tspan class="text" font-weight="600">Core Contributor · Systems Architecture &amp; Implementation</tspan>
     </text>
-    <text x="0" y="74">
+    <text x="0" y="92">
       <tspan class="subtle">  repos:</tspan>  <tspan class="text" font-weight="600">${escapeXml(repoNames)}</tspan>
     </text>
-    <text x="0" y="92">
+    <text x="0" y="110">
       <tspan class="subtle">  stack:</tspan>  <tspan class="text">Core: Rust · SIMD | Concurrency: Lock-Free | Storage: Memory-Mapped I/O</tspan>
     </text>
-    <text x="0" y="110">
+    <text x="0" y="128">
       <tspan class="subtle">  impact:</tspan> <tspan class="text">Shipped a lock-free concurrent KV engine with memory-mapped</tspan>
     </text>
-    <text x="0" y="128">
+    <text x="0" y="146">
       <tspan class="text">          I/O and explicit sync barriers; production SIMD paths prioritize</tspan>
     </text>
-    <text x="0" y="146">
+    <text x="0" y="164">
       <tspan class="text">          deterministic latency and memory efficiency</tspan>
     </text>
 
-    <text x="0" y="174" class="text" font-weight="600">[ Freelance &amp; Contract · Web &amp; Tooling ]</text>
-    <text x="680" y="174" text-anchor="end" class="muted">Jul 2024 — Present</text>
-    <text x="0" y="192">
+    <text x="0" y="194" class="text" font-weight="600">[ Freelance &amp; Contract · Web &amp; Tooling ]</text>
+    <text x="680" y="194" text-anchor="end" class="muted">Jul 2024 — Present</text>
+    <text x="0" y="212">
       <tspan class="subtle">  role:</tspan>   <tspan class="text" font-weight="600">Full-Stack Developer &amp; Tooling Engineer · 3 Clients</tspan>
     </text>
-    <text x="0" y="210">
+    <text x="0" y="230">
       <tspan class="subtle">  stack:</tspan>  <tspan class="text">Frontend: Astro · TypeScript | Backend: Microservices | Tooling: VS Code API</tspan>
     </text>
-    <text x="0" y="228">
+    <text x="0" y="248">
       <tspan class="subtle">  impact:</tspan> <tspan class="text">Delivered a transactional email service and event-ticketing</tspan>
     </text>
-    <text x="0" y="246">
+    <text x="0" y="266">
       <tspan class="text">          platform end to end; built VS Code extensions for internal</tspan>
     </text>
-    <text x="0" y="264">
+    <text x="0" y="284">
       <tspan class="text">          developer workflows across client projects</tspan>
     </text>
 
-    <text x="0" y="292" class="text" font-weight="600">[ Internships · Mobile Engineering ]</text>
-    <text x="680" y="292" text-anchor="end" class="muted">Nov 2021 — Apr 2024 · 9 mos</text>
-    <text x="0" y="310">
+    <text x="0" y="314" class="text" font-weight="600">[ Internships · Mobile Engineering ]</text>
+    <text x="680" y="314" text-anchor="end" class="muted">Nov 2021 — Apr 2024 · 9 mos</text>
+    <text x="0" y="332">
       <tspan class="subtle">  role:</tspan>   <tspan class="text" font-weight="600">Flutter Developer · 3 Organizations</tspan>
     </text>
-    <text x="0" y="328">
+    <text x="0" y="350">
       <tspan class="subtle">  orgs:</tspan>   <tspan class="text">kraftbase (1 mo) · Rojgary (5 mos) · FOLKDevelopers (3 mos)</tspan>
     </text>
-    <text x="0" y="346">
+    <text x="0" y="368">
       <tspan class="subtle">  stack:</tspan>  <tspan class="text">Mobile: Flutter · Dart | Architecture: State Management | APIs: REST</tspan>
     </text>
-    <text x="0" y="364">
+    <text x="0" y="386">
       <tspan class="subtle">  impact:</tspan> <tspan class="text">Led Flutter delivery across three organizations; built MVPs,</tspan>
     </text>
-    <text x="0" y="382">
+    <text x="0" y="404">
       <tspan class="text">          refactored production apps, and delivered features during</tspan>
     </text>
-    <text x="0" y="400">
+    <text x="0" y="422">
       <tspan class="text">          active release cycles</tspan>
     </text>
   </g>
@@ -463,7 +549,7 @@ function generateTelemetrySvg(
   churnBar: { filled: string; empty: string; pctFormatted: string },
 ): string {
   const lineStart = 24 + title.length * 7.5;
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 135" width="100%" height="135" fill="none">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 128" width="100%" height="128" fill="none">
   <style>
     ${SVG_STYLE}
   </style>
@@ -471,41 +557,197 @@ function generateTelemetrySvg(
     <text x="0" y="14" class="accent" font-size="12">&gt;</text>
     <text x="12" y="14" class="text" font-weight="700" letter-spacing="0.06em">${escapeXml(title.toUpperCase())}</text>
     <line x1="${lineStart}" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
-
-    <text x="14" y="38" class="muted" font-size="11">// counts</text>
-    <text x="340" y="38" class="muted" font-size="11">// activity</text>
+    <text x="12" y="30" class="muted" font-size="11">// metrics</text>
 
     <!-- Row 1: loc & prs -->
-    <text x="14" y="58">
+    <text x="12" y="52">
       <tspan class="subtle">loc</tspan><tspan class="muted">     : </tspan><tspan class="text" font-weight="600">${escapeXml(netLoc)}</tspan> <tspan class="muted text-xs">(+${escapeXml(additions)} / -${escapeXml(deletions)})</tspan>
     </text>
-    <text x="340" y="58">
+    <text x="340" y="52">
       <tspan class="subtle">prs</tspan><tspan class="muted">    : [</tspan><tspan class="foam">${escapeXml(prBar.filled)}</tspan><tspan class="bar-empty">${escapeXml(prBar.empty)}</tspan><tspan class="muted">] </tspan><tspan class="text" font-weight="600">${escapeXml(prBar.pctFormatted)}</tspan>
     </text>
 
     <!-- Row 2: commits & active -->
-    <text x="14" y="78">
+    <text x="12" y="72">
       <tspan class="subtle">commits</tspan><tspan class="muted"> : </tspan><tspan class="text" font-weight="600">${escapeXml(commits)}</tspan> <tspan class="muted text-xs">(pub + org)</tspan>
     </text>
-    <text x="340" y="78">
+    <text x="340" y="72">
       <tspan class="subtle">active</tspan><tspan class="muted"> : [</tspan><tspan class="gold">${escapeXml(activeBar.filled)}</tspan><tspan class="bar-empty">${escapeXml(activeBar.empty)}</tspan><tspan class="muted">] </tspan><tspan class="text" font-weight="600">${escapeXml(activeBar.pctFormatted)}</tspan>
     </text>
 
     <!-- Row 3: repos & streak -->
-    <text x="14" y="98">
+    <text x="12" y="92">
       <tspan class="subtle">repos</tspan><tspan class="muted">   : </tspan><tspan class="text" font-weight="600">${escapeXml(String(reposTotal))}</tspan> <tspan class="muted text-xs">(${escapeXml(reposDetail)})</tspan>
     </text>
-    <text x="340" y="98">
+    <text x="340" y="92">
       <tspan class="subtle">streak</tspan><tspan class="muted"> : </tspan><tspan class="text" font-weight="600">${escapeXml(String(streakDays))}d</tspan> <tspan class="muted text-xs">current (${escapeXml(String(maxStreakDays))}d max)</tspan>
     </text>
 
     <!-- Row 4: stack & churn -->
-    <text x="14" y="118">
+    <text x="12" y="112">
       <tspan class="subtle">stack</tspan><tspan class="muted">   : </tspan><tspan class="text" font-weight="600">${escapeXml(stack)}</tspan>
     </text>
-    <text x="340" y="118">
+    <text x="340" y="112">
       <tspan class="subtle">churn</tspan><tspan class="muted">  : </tspan><tspan class="text" font-weight="600">${escapeXml(churnBar.pctFormatted)}</tspan> <tspan class="muted text-xs">net retention</tspan>
     </text>
+  </g>
+</svg>`;
+}
+
+function generateContributionsSvg(yearlyData: YearlyContribution[]): string {
+  const currentYear = new Date().getFullYear();
+  const width = 680;
+  const height = 230;
+  const padLeft = 32;
+  const padRight = 36;
+  const padTop = 48;
+  const padBottom = 22;
+  const plotW = width - padLeft - padRight;
+  const plotH = height - padTop - padBottom;
+
+  const rawMax = Math.max(...yearlyData.map((y) => y.total), 100);
+  const step = rawMax > 2000 ? 1000 : rawMax > 1000 ? 500 : 250;
+  const yMax = Math.ceil(rawMax / step) * step;
+
+  const gridValues: number[] = [];
+  for (let v = step; v <= yMax; v += step) {
+    gridValues.push(v);
+  }
+
+  const monthTicks = [
+    { label: "JAN", day: 0 },
+    { label: "FEB", day: 31 },
+    { label: "MAR", day: 59 },
+    { label: "APR", day: 90 },
+    { label: "MAY", day: 120 },
+    { label: "JUN", day: 151 },
+    { label: "JUL", day: 181 },
+    { label: "AUG", day: 212 },
+    { label: "SEP", day: 243 },
+    { label: "OCT", day: 273 },
+    { label: "NOV", day: 304 },
+    { label: "DEC", day: 334 },
+  ];
+
+  const generateSmoothPath = (points: number[]) => {
+    if (!points || points.length === 0) return "";
+    const n = points.length;
+    const divisor = 365;
+
+    const sampled: Array<{ x: number; y: number }> = [];
+    const stride = Math.max(1, Math.floor(n / 60));
+    for (let i = 0; i < n; i += stride) {
+      sampled.push({
+        x: +(padLeft + (i / divisor) * plotW).toFixed(1),
+        y: +(padTop + plotH - (points[i] / yMax) * plotH).toFixed(1),
+      });
+    }
+    if (n > 1) {
+      sampled.push({
+        x: +(padLeft + ((n - 1) / divisor) * plotW).toFixed(1),
+        y: +(padTop + plotH - (points[n - 1] / yMax) * plotH).toFixed(1),
+      });
+    }
+
+    if (sampled.length === 1) return `M ${sampled[0].x} ${sampled[0].y}`;
+
+    let d = `M ${sampled[0].x} ${sampled[0].y}`;
+    for (let i = 0; i < sampled.length - 1; i++) {
+      const p0 = sampled[i];
+      const p1 = sampled[i + 1];
+      const dx = p1.x - p0.x;
+      const cp1x = +(p0.x + dx * 0.5).toFixed(1);
+      const cp2x = +(p0.x + dx * 0.5).toFixed(1);
+      d += ` C ${cp1x} ${p0.y}, ${cp2x} ${p1.y}, ${p1.x} ${p1.y}`;
+    }
+    return d;
+  };
+
+  const getYearOpacity = (yr: number) => {
+    if (yr === currentYear) return 1.0;
+    const years = yearlyData.filter((y) => y.year !== currentYear);
+    const idx = years.findIndex((y) => y.year === yr);
+    if (idx === -1) return 0.25;
+    return +(0.2 + (idx / Math.max(years.length - 1, 1)) * 0.35).toFixed(2);
+  };
+
+  const cur = yearlyData.find((y) => y.year === currentYear);
+  const curPts = cur?.days || cur?.weeks || [];
+  const curPath = curPts.length > 0 ? generateSmoothPath(curPts) : "";
+  const curLastIdx = curPts.length - 1;
+  const curLastX = +(padLeft + (curLastIdx / 365) * plotW).toFixed(1);
+  const curLastY = +(
+    padTop +
+    plotH -
+    (curPts[curLastIdx] / yMax) * plotH
+  ).toFixed(1);
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 ${height}" width="100%" height="${height}" fill="none">
+  <style>
+    ${SVG_STYLE}
+  </style>
+  <g class="mono" font-size="11.5">
+    <text x="0" y="14" class="accent" font-size="12">&gt;</text>
+    <text x="12" y="14" class="text" font-weight="700" letter-spacing="0.06em">CONTRIBUTIONS</text>
+    <line x1="120" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
+    <text x="12" y="30" class="muted" font-size="11">// yearly activity · annual velocity &amp; cumulative</text>
+
+    <!-- Guidelines -->
+    ${gridValues
+      .map((val) => {
+        const y = +(padTop + plotH - (val / yMax) * plotH).toFixed(1);
+        return `<line x1="${padLeft}" y1="${y}" x2="${padLeft + plotW}" y2="${y}" stroke="#dfdad9" stroke-dasharray="2 4" stroke-width="0.75" class="header-line" /><text x="${padLeft - 5}" y="${y + 3}" text-anchor="end" class="muted" font-size="8">${formatCompact(val)}</text>`;
+      })
+      .join("\n    ")}
+
+    <!-- Base axis -->
+    <line x1="${padLeft}" y1="${padTop + plotH}" x2="${padLeft + plotW}" y2="${padTop + plotH}" stroke="#dfdad9" stroke-width="0.75" class="header-line" />
+
+    <!-- Months -->
+    ${monthTicks
+      .map((m) => {
+        const x = +(padLeft + (m.day / 365) * plotW).toFixed(1);
+        return `<line x1="${x}" y1="${padTop + plotH}" x2="${x}" y2="${padTop + plotH + 3}" stroke="#dfdad9" stroke-width="0.75" class="header-line" /><text x="${x}" y="${height - 6}" text-anchor="middle" class="muted" font-size="8">${m.label}</text>`;
+      })
+      .join("\n    ")}
+
+    <!-- Historical curves -->
+    ${yearlyData
+      .filter((y) => y.year !== currentYear)
+      .map((series) => {
+        const pts = series.days || series.weeks || [];
+        if (pts.length === 0) return "";
+        const pathD = generateSmoothPath(pts);
+        const opacity = getYearOpacity(series.year);
+        const lastIdx = pts.length - 1;
+        const lastY = +(padTop + plotH - (pts[lastIdx] / yMax) * plotH).toFixed(
+          1,
+        );
+        const lastX = +(padLeft + plotW).toFixed(1);
+        return `<g><path d="${pathD}" fill="none" stroke="#797593" stroke-width="1.15" stroke-opacity="${opacity}" stroke-linecap="round" stroke-linejoin="round" /><text x="${lastX + 5}" y="${lastY + 3}" class="muted" font-size="8.5">&apos;${String(series.year).slice(2)}</text></g>`;
+      })
+      .join("\n    ")}
+
+    <!-- Current year curve -->
+    ${
+      curPath
+        ? `<g><path d="${curPath}" fill="none" class="accent-stroke" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" /><circle cx="${curLastX}" cy="${curLastY}" r="2.5" class="accent-fill" /><text x="${curLastX + 5}" y="${curLastY - 3}" class="accent" font-size="9" font-weight="600">&apos;${String(currentYear).slice(2)}</text></g>`
+        : ""
+    }
+  </g>
+</svg>`;
+}
+
+function generateFooterSvg(): string {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 36" width="100%" height="36" fill="none">
+  <style>
+    ${SVG_STYLE}
+  </style>
+  <g class="mono" font-size="11.5">
+    <line x1="0" y1="8" x2="680" y2="8" class="header-line" stroke-width="1" />
+    <text x="0" y="26" class="accent" font-weight="600">aditya</text>
+    <text x="60" y="26" class="muted">[eof]</text>
+    <text x="680" y="26" text-anchor="end" class="subtle">github · x · linkedin · adii.fyi</text>
   </g>
 </svg>`;
 }
@@ -522,12 +764,6 @@ export function generateReadme(rootDir: string): string {
   }
 
   const stats: GithubStats = JSON.parse(readFileSync(statsPath, "utf-8"));
-
-  const websitePkgPath = path.join(rootDir, "website", "package.json");
-  const websitePkg = existsSync(websitePkgPath)
-    ? JSON.parse(readFileSync(websitePkgPath, "utf-8"))
-    : { version: "0.2.0" };
-  const releaseTag = `v${websitePkg.version || "0.2.0"}`;
 
   const projects = (stats.repositories_contributed_to || [])
     .filter(
@@ -590,11 +826,51 @@ export function generateReadme(rootDir: string): string {
       .map((l) => `${l.name} ${Math.round(l.percentage)}%`)
       .join(" · ") || "--";
 
+  const rustLang = (stats.languages || []).find((l) => l.name === "Rust");
+  const rustPct = rustLang ? rustLang.percentage.toFixed(0) : "68";
+  const rustLocFormatted = rustLang ? formatCompact(rustLang.loc || 0) : "1.2M";
+  const netLocFormatted = formatCompact(netLines);
+  const commitsCompact =
+    totalCommits >= 1000
+      ? formatCompact(totalCommits)
+      : totalCommits.toString();
+  const activeDaysFormatted =
+    stats.streaks_and_consistency.active_days_count?.toLocaleString() ||
+    "1,036";
+
   writeFileSync(
     path.join(assetsDir, "header.svg"),
-    generateHeaderSvg(),
+    generateHeaderSvg(
+      rustPct,
+      rustLocFormatted,
+      commitsCompact,
+      activeDaysFormatted,
+    ),
     "utf-8",
   );
+
+  const latestRelease = stats.releases?.[0];
+  if (latestRelease) {
+    const repoInfo = stats.repositories_contributed_to?.find(
+      (r) => r.repository === latestRelease.repo,
+    );
+    const releaseDesc =
+      repoInfo?.description ||
+      latestRelease.title ||
+      "Latest repository release";
+    const formattedReleaseDate = formatReleaseDate(latestRelease.published_at);
+    writeFileSync(
+      path.join(assetsDir, "latest-release.svg"),
+      generateLatestReleaseSvg(
+        latestRelease.repo,
+        latestRelease.tag_name,
+        formattedReleaseDate,
+        releaseDesc,
+      ),
+      "utf-8",
+    );
+  }
+
   writeFileSync(path.join(assetsDir, "about.svg"), generateAboutSvg(), "utf-8");
   writeFileSync(
     path.join(assetsDir, "education.svg"),
@@ -649,6 +925,15 @@ export function generateReadme(rootDir: string): string {
     churnBar,
   );
   writeFileSync(path.join(assetsDir, "telemetry.svg"), telemetrySvg, "utf-8");
+
+  const yearlyData = stats.yearly_contributions || [];
+  if (yearlyData.length > 0) {
+    writeFileSync(
+      path.join(assetsDir, "contributions.svg"),
+      generateContributionsSvg(yearlyData),
+      "utf-8",
+    );
+  }
 
   const monthlyList = stats.monthly_history || [];
   const targetMonth = monthlyList[monthlyList.length - 1];
@@ -759,6 +1044,12 @@ export function generateReadme(rootDir: string): string {
     hasWeekly = true;
   }
 
+  writeFileSync(
+    path.join(assetsDir, "footer.svg"),
+    generateFooterSvg(),
+    "utf-8",
+  );
+
   const badges = [
     `[![Website](https://img.shields.io/badge/website-adii.fyi-286983?style=flat-square&logo=googlechrome&logoColor=faf4ed&labelColor=575279)](https://adii.fyi)`,
     `[![Resume](https://img.shields.io/badge/resume-adityamotale.pdf-d7827e?style=flat-square&logo=googledocs&logoColor=faf4ed&labelColor=575279)](https://adii.fyi/adityamotale.pdf)`,
@@ -789,25 +1080,34 @@ export function generateReadme(rootDir: string): string {
         ].join("\n")
       : `![Writing](./assets/writing-header.svg)`;
 
-  const sections = [
-    badges,
-    `![Aditya](./assets/header.svg)`,
-    `![About](./assets/about.svg)`,
-    projectItems,
-    writingItems,
-    `![Experience](./assets/experience.svg)`,
-    `![Telemetry](./assets/telemetry.svg)`,
-  ];
+  const sections = [badges, `![Aditya](./assets/header.svg)`];
 
-  if (hasMonthly) {
-    sections.push(`![Last Month](./assets/monthly.svg)`);
+  if (latestRelease) {
+    const releaseUrl =
+      latestRelease.url ||
+      `https://github.com/${latestRelease.repo}/releases/tag/${latestRelease.tag_name}`;
+    sections.push(
+      `[![Latest Release: ${latestRelease.repo}](./assets/latest-release.svg)](${releaseUrl})`,
+    );
   }
 
-  if (hasWeekly) {
-    sections.push(`![Last Week](./assets/weekly.svg)`);
+  sections.push(`![About](./assets/about.svg)`);
+  sections.push(projectItems);
+  sections.push(writingItems);
+  sections.push(`![Experience](./assets/experience.svg)`);
+  sections.push(`![Telemetry](./assets/telemetry.svg)`);
+
+  if (yearlyData.length > 0) {
+    sections.push(`![Contributions](./assets/contributions.svg)`);
+  } else if (hasMonthly) {
+    sections.push(`![Last Month](./assets/monthly.svg)`);
+    if (hasWeekly) {
+      sections.push(`![Last Week](./assets/weekly.svg)`);
+    }
   }
 
   sections.push(`![Education](./assets/education.svg)`);
+  sections.push(`![Footer](./assets/footer.svg)`);
 
   return sections.join("\n\n") + "\n";
 }
