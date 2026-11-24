@@ -12,8 +12,8 @@
     <g>
       <svg x="0" y="41" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>
       <text x="22" y="52" class="subtle" font-size="10">Lines of Code</text>
-      <text x="22" y="68" class="text" font-size="12" font-weight="600">697,167 net</text>
-      <text x="22" y="82" class="muted" font-size="10">(+1.6M / -900.3k)</text>
+      <text x="22" y="68" class="text" font-size="12" font-weight="600">709,867 net</text>
+      <text x="22" y="82" class="muted" font-size="10">(+1.6M / -935.0k)</text>
     </g>
     <g>
       <svg x="340" y="41" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3" /><circle cx="6" cy="6" r="3" /><path d="M13 6h3a2 2 0 0 1 2 2v7" /><line x1="6" y1="9" x2="6" y2="21" /></svg>
@@ -24,7 +24,7 @@
     <g>
       <svg x="0" y="89" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4" /><line x1="1.05" y1="12" x2="7" y2="12" /><line x1="17.05" y1="12" x2="22.95" y2="12" /></svg>
       <text x="22" y="100" class="subtle" font-size="10">Commits</text>
-      <text x="22" y="116" class="text" font-size="12" font-weight="600">3,515</text>
+      <text x="22" y="116" class="text" font-size="12" font-weight="600">3,742</text>
       <text x="22" y="130" class="muted" font-size="10">(pub + org)</text>
     </g>
     <g>
@@ -42,7 +42,7 @@
     <g>
       <svg x="340" y="137" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>
       <text x="362" y="148" class="subtle" font-size="10">Scope Distribution</text>
-      <text x="362" y="164" class="text" font-size="12" font-weight="600">62% org · 38% personal</text>
+      <text x="362" y="164" class="text" font-size="12" font-weight="600">59% org · 41% personal</text>
       
     </g>
   </g>

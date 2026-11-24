@@ -591,21 +591,23 @@ function wrapSvgText(
 async function fetchBannerDataUri(
   url: string,
   fetchImpl: typeof fetch,
-): Promise<string> {
-  const response = await fetchImpl(url, {
-    signal: AbortSignal.timeout(10_000),
-  });
-  if (!response.ok) {
-    throw new Error(
-      `Failed to fetch release banner (${response.status}): ${url}`,
-    );
+): Promise<string | null> {
+  try {
+    const response = await fetchImpl(url, {
+      signal: AbortSignal.timeout(10_000),
+    });
+    if (!response.ok) {
+      return null;
+    }
+    const contentType = response.headers.get("content-type") || "";
+    if (!contentType.includes("image/png")) {
+      return null;
+    }
+    const bytes = Buffer.from(await response.arrayBuffer());
+    return `data:image/png;base64,${bytes.toString("base64")}`;
+  } catch {
+    return null;
   }
-  const contentType = response.headers.get("content-type") || "";
-  if (!contentType.includes("image/png")) {
-    throw new Error(`Unexpected release banner content type: ${contentType}`);
-  }
-  const bytes = Buffer.from(await response.arrayBuffer());
-  return `data:image/png;base64,${bytes.toString("base64")}`;
 }
 
 function generateReleaseSvg(
@@ -936,7 +938,12 @@ export async function generateReadme(
     );
   }
 
-  const latestRelease = stats.releases?.[0];
+  const latestRelease = (stats.releases || []).find((rel) => {
+    const info = stats.repositories_contributed_to?.find(
+      (r) => r.repository === rel.repo,
+    );
+    return info?.has_banner || BANNER_REPOS.has(rel.repo);
+  });
   let latestReleaseBlock = "";
   if (latestRelease) {
     const repoInfo = stats.repositories_contributed_to?.find(
@@ -955,27 +962,29 @@ export async function generateReadme(
       `https://github.com/${latestRelease.repo}/releases/tag/${latestRelease.tag_name}`;
 
     const bannerDataUri = await fetchBannerDataUri(releaseBannerUrl, fetchImpl);
-    if (writeAssets) {
-      writeFileSync(
-        path.join(assetsDir, "latest-release.svg"),
-        generateReleaseSvg(
-          releaseRepoShort,
-          latestRelease.tag_name,
-          formattedReleaseDate,
-          releaseDesc,
-          bannerDataUri,
-        ),
-        "utf-8",
+    if (bannerDataUri) {
+      if (writeAssets) {
+        writeFileSync(
+          path.join(assetsDir, "latest-release.svg"),
+          generateReleaseSvg(
+            releaseRepoShort,
+            latestRelease.tag_name,
+            formattedReleaseDate,
+            releaseDesc,
+            bannerDataUri,
+          ),
+          "utf-8",
+        );
+      }
+
+      const cardAlt = escapeXml(
+        `${releaseRepoShort} ${latestRelease.tag_name} release`,
       );
-    }
 
-    const cardAlt = escapeXml(
-      `${releaseRepoShort} ${latestRelease.tag_name} release`,
-    );
-
-    latestReleaseBlock = `<a id="latest-release"></a>
+      latestReleaseBlock = `<a id="latest-release"></a>
 
 <a href="${releaseUrl}"><img src="./assets/latest-release.svg" width="100%" alt="${cardAlt}" /></a>`;
+    }
   }
 
   let projectsBlock = "";
@@ -985,15 +994,17 @@ export async function generateReadme(
       project.bannerUrl,
       fetchImpl,
     );
-    if (writeAssets) {
-      writeFileSync(
-        path.join(assetsDir, "top-project.svg"),
-        generateTopProjectSvg(project, bannerDataUri),
-        "utf-8",
-      );
+    if (bannerDataUri) {
+      if (writeAssets) {
+        writeFileSync(
+          path.join(assetsDir, "top-project.svg"),
+          generateTopProjectSvg(project, bannerDataUri),
+          "utf-8",
+        );
+      }
+      const alt = escapeXml(`${project.name} top project`);
+      projectsBlock = `<a href="${project.url}"><img src="./assets/top-project.svg" width="100%" alt="${alt}" /></a>`;
     }
-    const alt = escapeXml(`${project.name} top project`);
-    projectsBlock = `<a href="${project.url}"><img src="./assets/top-project.svg" width="100%" alt="${alt}" /></a>`;
   }
 
   const localWriting: WritingEntry[] = blogPosts.map((post) => ({

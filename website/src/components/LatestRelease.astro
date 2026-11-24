@@ -1,7 +1,19 @@
 ---
 import stats from '../../../data/github-stats.json';
 
-const latestRelease = stats.releases?.[0];
+const BANNER_REPOS = new Set([
+  'pid7-org/turbofox',
+  'pid7-org/ashwa',
+  'adityamotale/shyena',
+  'pid7-org/turbo_crc',
+]);
+
+const latestRelease = (stats.releases || []).find((rel) => {
+  const info = stats.repositories_contributed_to?.find(
+    (r) => r.repository === rel.repo
+  );
+  return (info as any)?.has_banner || BANNER_REPOS.has(rel.repo);
+});
 const repoName = latestRelease?.repo || '';
 const repoShortName = repoName.split('/')[1] || repoName;
 const tagName = latestRelease?.tag_name || '';
