@@ -265,8 +265,6 @@ const SVG_ICONS: Record<string, string> = {
   twitter: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="#d7827e"><style>@media (prefers-color-scheme: dark) { * { fill: #ea9a97 !important; } }</style><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>`,
   linkedin: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></svg>`,
   globe: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>`,
-  "file-text": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /></svg>`,
-  rss: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><path d="M4 11a9 9 0 0 1 9 9" /><path d="M4 4a16 16 0 0 1 16 16" /><circle cx="5" cy="19" r="1" fill="#d7827e" /></svg>`,
   "external-link": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>`,
   "book-open": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></svg>`,
   activity: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>`,
@@ -664,6 +662,42 @@ function generateWordmarkSvg(fontDataUri: string): string {
 </svg>`;
 }
 
+function generateFooterNameSvg(fontDataUri: string): string {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 40" width="110" height="40" fill="none">
+  <title>aditya</title>
+  <style>
+    @font-face {
+      font-family: 'Instrument Serif';
+      font-style: italic;
+      font-weight: 400;
+      src: url("${fontDataUri}") format('woff2');
+    }
+    text {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 34px;
+      fill: #d7827e;
+    }
+  </style>
+  <text x="0" y="30">aditya</text>
+</svg>`;
+}
+
+function generateFooterSiteSvg(): string {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 24" width="90" height="24" fill="none">
+  <title>adii.fyi</title>
+  <style>
+    text {
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 13px;
+      fill: #9893a5;
+    }
+  </style>
+  <text x="90" y="17" text-anchor="end">adii.fyi</text>
+</svg>`;
+}
+
 interface TelemetryMetric {
   icon: string;
   label: string;
@@ -742,6 +776,16 @@ export async function generateReadme(
   writeFileSync(
     path.join(assetsDir, "header.svg"),
     generateWordmarkSvg(fontDataUri),
+    "utf-8",
+  );
+  writeFileSync(
+    path.join(assetsDir, "footer-name.svg"),
+    generateFooterNameSvg(fontDataUri),
+    "utf-8",
+  );
+  writeFileSync(
+    path.join(assetsDir, "footer-site.svg"),
+    generateFooterSiteSvg(),
     "utf-8",
   );
 
@@ -996,16 +1040,19 @@ ${
 
   const footerBlock = `---
 
-<p align="center">
-  <a href="https://adii.fyi"><b>aditya</b></a> &nbsp;&#183;&nbsp;
-  <img src="./assets/icons/github.svg" width="13" height="13" align="absmiddle" /> <a href="https://github.com/adityamotale">github</a> &nbsp;&#183;&nbsp;
-  <img src="./assets/icons/twitter.svg" width="13" height="13" align="absmiddle" /> <a href="https://x.com/arctic_byte">twitter</a> &nbsp;&#183;&nbsp;
-  <img src="./assets/icons/linkedin.svg" width="13" height="13" align="absmiddle" /> <a href="https://www.linkedin.com/in/aditya-motale">linkedin</a> &nbsp;&#183;&nbsp;
-  <img src="./assets/icons/file-text.svg" width="13" height="13" align="absmiddle" /> <a href="https://adii.fyi/adityamotale.pdf">resume</a> &nbsp;&#183;&nbsp;
-  <img src="./assets/icons/globe.svg" width="13" height="13" align="absmiddle" /> <a href="https://adii.fyi">website</a> &nbsp;&#183;&nbsp;
-  <img src="./assets/icons/rss.svg" width="13" height="13" align="absmiddle" /> <a href="https://adii.fyi/rss.xml">rss</a> &nbsp;&#183;&nbsp;
-  <a href="#top"><code>[eof]</code></a>
-</p>`;
+<table width="100%">
+  <tr>
+    <td width="40%" align="left" valign="middle"><a href="https://adii.fyi"><img src="./assets/footer-name.svg" width="110" height="40" alt="aditya" /></a></td>
+    <td width="20%" align="center" valign="middle">
+      <a href="https://x.com/arctic_byte"><img src="./assets/icons/twitter.svg" width="15" height="15" alt="x" /></a>
+      &nbsp;&nbsp;
+      <a href="https://www.linkedin.com/in/aditya-motale"><img src="./assets/icons/linkedin.svg" width="15" height="15" alt="linkedin" /></a>
+      &nbsp;&nbsp;
+      <a href="https://adii.fyi"><img src="./assets/icons/globe.svg" width="15" height="15" alt="website" /></a>
+    </td>
+    <td width="40%" align="right" valign="middle"><a href="https://adii.fyi"><img src="./assets/footer-site.svg" width="90" height="24" alt="adii.fyi" /></a></td>
+  </tr>
+</table>`;
 
   const sections = [headerBlock];
 

@@ -28,13 +28,16 @@
 
 ---
 
-<p align="center">
-  <a href="https://adii.fyi"><b>aditya</b></a> &nbsp;&#183;&nbsp;
-  <img src="./assets/icons/github.svg" width="13" height="13" align="absmiddle" /> <a href="https://github.com/adityamotale">github</a> &nbsp;&#183;&nbsp;
-  <img src="./assets/icons/twitter.svg" width="13" height="13" align="absmiddle" /> <a href="https://x.com/arctic_byte">twitter</a> &nbsp;&#183;&nbsp;
-  <img src="./assets/icons/linkedin.svg" width="13" height="13" align="absmiddle" /> <a href="https://www.linkedin.com/in/aditya-motale">linkedin</a> &nbsp;&#183;&nbsp;
-  <img src="./assets/icons/file-text.svg" width="13" height="13" align="absmiddle" /> <a href="https://adii.fyi/adityamotale.pdf">resume</a> &nbsp;&#183;&nbsp;
-  <img src="./assets/icons/globe.svg" width="13" height="13" align="absmiddle" /> <a href="https://adii.fyi">website</a> &nbsp;&#183;&nbsp;
-  <img src="./assets/icons/rss.svg" width="13" height="13" align="absmiddle" /> <a href="https://adii.fyi/rss.xml">rss</a> &nbsp;&#183;&nbsp;
-  <a href="#top"><code>[eof]</code></a>
-</p>
+<table width="100%">
+  <tr>
+    <td width="40%" align="left" valign="middle"><a href="https://adii.fyi"><img src="./assets/footer-name.svg" width="110" height="40" alt="aditya" /></a></td>
+    <td width="20%" align="center" valign="middle">
+      <a href="https://x.com/arctic_byte"><img src="./assets/icons/twitter.svg" width="15" height="15" alt="x" /></a>
+      &nbsp;&nbsp;
+      <a href="https://www.linkedin.com/in/aditya-motale"><img src="./assets/icons/linkedin.svg" width="15" height="15" alt="linkedin" /></a>
+      &nbsp;&nbsp;
+      <a href="https://adii.fyi"><img src="./assets/icons/globe.svg" width="15" height="15" alt="website" /></a>
+    </td>
+    <td width="40%" align="right" valign="middle"><a href="https://adii.fyi"><img src="./assets/footer-site.svg" width="90" height="24" alt="adii.fyi" /></a></td>
+  </tr>
+</table>

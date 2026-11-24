@@ -162,12 +162,9 @@ describe("readme generator", () => {
 
     const iconsDir = path.join(rootDir, "assets", "icons");
     const requiredIcons = [
-      "github.svg",
       "twitter.svg",
       "linkedin.svg",
       "globe.svg",
-      "file-text.svg",
-      "rss.svg",
       "external-link.svg",
       "book-open.svg",
     ];
@@ -183,6 +180,7 @@ describe("readme generator", () => {
       );
     }
     for (const icon of [
+      "github.svg",
       "layers.svg",
       "activity.svg",
       "git-pull-request.svg",
@@ -206,9 +204,10 @@ describe("readme generator", () => {
       "README should link to blog post",
     );
 
-    assert.ok(
-      !readme.includes("<table"),
-      "README should not use HTML tables for its sections",
+    assert.equal(
+      readme.split("<table").length - 1,
+      1,
+      "Only the footer should use a table",
     );
     assert.ok(
       !readme.includes("~ PROJECTS") && !readme.includes('id="projects"'),
@@ -343,14 +342,45 @@ describe("readme generator", () => {
       "README should not contain the ASCII language chart",
     );
 
-    // Social footer verification
+    // Footer verification
+    const footer = readme.slice(readme.lastIndexOf("---"));
+    for (const expected of [
+      '<a href="https://adii.fyi"><img src="./assets/footer-name.svg" width="110" height="40"',
+      '<a href="https://x.com/arctic_byte"><img src="./assets/icons/twitter.svg" width="15" height="15"',
+      '<a href="https://www.linkedin.com/in/aditya-motale"><img src="./assets/icons/linkedin.svg" width="15" height="15"',
+      '<a href="https://adii.fyi"><img src="./assets/icons/globe.svg" width="15" height="15"',
+      '<a href="https://adii.fyi"><img src="./assets/footer-site.svg" width="90" height="24"',
+    ]) {
+      assert.ok(footer.includes(expected), `Footer should include ${expected}`);
+    }
     assert.ok(
-      readme.includes("https://adii.fyi/rss.xml"),
-      "Footer should include RSS feed link",
+      footer.includes('<table width="100%">') &&
+        footer.includes('width="40%" align="left"') &&
+        footer.includes('width="20%" align="center"') &&
+        footer.includes('width="40%" align="right"'),
+      "Footer should span full width with left, center, and right cells",
     );
     assert.ok(
-      readme.includes("[eof]"),
-      "Footer should include return-to-top [eof] button",
+      !footer.includes("[eof]") && !footer.includes("rss.xml"),
+      "Footer should contain only the name, site, and icon links",
+    );
+    const footerName = readFileSync(
+      path.join(rootDir, "assets", "footer-name.svg"),
+      "utf-8",
+    );
+    assert.ok(
+      footerName.includes("aditya") &&
+        footerName.includes("data:font/woff2;base64,") &&
+        footerName.includes("#d7827e"),
+      "Footer name should reuse the italic serif wordmark",
+    );
+    const footerSite = readFileSync(
+      path.join(rootDir, "assets", "footer-site.svg"),
+      "utf-8",
+    );
+    assert.ok(
+      footerSite.includes("adii.fyi") && footerSite.includes("#9893a5"),
+      "Footer site should be muted monospace text",
     );
 
     const topIdx = readme.indexOf('id="top"');
