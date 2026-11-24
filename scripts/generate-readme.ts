@@ -795,7 +795,6 @@ export function generateReadme(rootDir: string): string {
     `![About](./assets/about.svg)`,
     projectItems,
     writingItems,
-    `![Education](./assets/education.svg)`,
     `![Experience](./assets/experience.svg)`,
     `![Telemetry](./assets/telemetry.svg)`,
   ];
@@ -807,6 +806,8 @@ export function generateReadme(rootDir: string): string {
   if (hasWeekly) {
     sections.push(`![Last Week](./assets/weekly.svg)`);
   }
+
+  sections.push(`![Education](./assets/education.svg)`);
 
   return sections.join("\n\n") + "\n";
 }

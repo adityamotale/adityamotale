@@ -102,5 +102,23 @@ describe("readme generator", () => {
       ),
       "README should link to blog post",
     );
+
+    const headerIdx = readme.indexOf("./assets/header.svg");
+    const aboutIdx = readme.indexOf("./assets/about.svg");
+    const projectsIdx = readme.indexOf("./assets/projects-header.svg");
+    const writingIdx = readme.indexOf("./assets/writing-header.svg");
+    const experienceIdx = readme.indexOf("./assets/experience.svg");
+    const telemetryIdx = readme.indexOf("./assets/telemetry.svg");
+    const educationIdx = readme.indexOf("./assets/education.svg");
+
+    assert.ok(headerIdx < aboutIdx, "Header must precede About");
+    assert.ok(aboutIdx < projectsIdx, "About must precede Projects");
+    assert.ok(projectsIdx < writingIdx, "Projects must precede Writing");
+    assert.ok(writingIdx < experienceIdx, "Writing must precede Experience");
+    assert.ok(
+      experienceIdx < telemetryIdx,
+      "Experience must precede Telemetry",
+    );
+    assert.ok(telemetryIdx < educationIdx, "Telemetry must precede Education");
   });
 });
