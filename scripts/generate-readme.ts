@@ -620,14 +620,22 @@ export function generateReadme(rootDir: string): string {
       latestRelease.url ||
       `https://github.com/${latestRelease.repo}/releases/tag/${latestRelease.tag_name}`;
 
-    latestReleaseBlock = `## <a id="latest-release"></a>> LATEST RELEASE
-
-<sub>// ${latestRelease.repo}</sub>
+    latestReleaseBlock = `## <a id="latest-release"></a>~ LATEST RELEASE
 
 <a href="${releaseUrl}"><img src="${releaseBannerUrl}" width="100%" alt="${releaseRepoShort} release banner" /></a>
 
-<img src="./assets/icons/tag.svg" width="14" height="14" align="absmiddle" /> <b><a href="${releaseUrl}">${releaseRepoShort}</a></b> <code>${latestRelease.tag_name}</code> &middot; <img src="./assets/icons/calendar.svg" width="14" height="14" align="absmiddle" /> <sub>${formattedReleaseDate}</sub><br />
-${releaseDesc}`;
+<table width="100%">
+  <tr>
+    <td width="70%">
+      <img src="./assets/icons/tag.svg" width="14" height="14" align="absmiddle" /> <b><a href="${releaseUrl}">${releaseRepoShort}</a></b> <code>${latestRelease.tag_name}</code><br />
+      ${releaseDesc}
+    </td>
+    <td width="30%" align="right" valign="top">
+      <img src="./assets/icons/calendar.svg" width="14" height="14" align="absmiddle" /> <sub>${formattedReleaseDate}</sub><br />
+      <sub><a href="${releaseUrl}">release notes &rarr;</a></sub>
+    </td>
+  </tr>
+</table>`;
   }
 
   const projectGridRows: string[] = [];
@@ -684,13 +692,9 @@ ${badges}
 \`\`\`text
 ▄▀█ █▀▄ █ ▀█▀ █▄█ ▄▀█
 █▀█ █▄▀ █  █   █  █▀█
-\`\`\`
+\`\`\``;
 
-<a href="#latest-release">latest release</a> &middot; <a href="#about">about</a> &middot; <a href="#projects">projects</a> &middot; <a href="#writing">writing</a> &middot; <a href="#experience">experience</a> &middot; <a href="#telemetry">telemetry</a> &middot; <a href="#languages">languages</a> &middot; <a href="#education">education</a>`;
-
-  const aboutBlock = `## <a id="about"></a>> ABOUT
-
-<sub>// bio</sub>
+  const aboutBlock = `## <a id="about"></a>~ ABOUT
 
 An engineer by choice. It bugs me how slow and messy most software is, so I build things the way they should work: fast, without the bloat, and knowing what's actually going on underneath. Some weeks that's a storage engine or SIMD search, other times a Sanskrit parser, a weird tool, or a full product I wanted for myself. I don't stick to one lane; I just figure out how the engine works and ship.
 
@@ -699,57 +703,47 @@ An engineer by choice. It bugs me how slow and messy most software is, so I buil
 <img src="./assets/icons/linkedin.svg" width="14" height="14" align="absmiddle" /> <a href="https://www.linkedin.com/in/aditya-motale">linkedin</a> &nbsp;/&nbsp;
 <img src="./assets/icons/file-text.svg" width="14" height="14" align="absmiddle" /> <a href="https://adii.fyi/adityamotale.pdf">resume</a>`;
 
-  const projectsBlock = `## <a id="projects"></a>> PROJECTS
-
-<sub>// featured projects across orgs & personal</sub>
+  const projectsBlock = `## <a id="projects"></a>~ PROJECTS
 
 ${projectTable}`;
 
-  const writingBlock = `## <a id="writing"></a>> WRITING
+  const writingBlock = `## <a id="writing"></a>~ WRITING
 
-<sub>// recent posts &middot; <img src="./assets/icons/external-link.svg" width="12" height="12" align="absmiddle" /> <a href="https://adii.fyi/blog">view all</a></sub>
+${writingItems}
 
-${writingItems}`;
+<p>
+  <img src="./assets/icons/external-link.svg" width="12" height="12" align="absmiddle" /> <sub><a href="https://adii.fyi/blog">view all posts &rarr;</a></sub>
+</p>`;
 
-  const experienceBlock = `## <a id="experience"></a>> EXPERIENCE
+  const experienceBlock = `## <a id="experience"></a>~ EXPERIENCE
 
-<sub>// 2021 → mobile · 2024 → web & tooling · now → systems</sub>
-
-<details open>
-<summary><img src="./assets/icons/briefcase.svg" width="14" height="14" align="absmiddle" /> <b>Systems Engineering &middot; pid7-org</b> <sub>(Sep 2024 &mdash; Present)</sub></summary>
-<br />
+<p>
+  <img src="./assets/icons/briefcase.svg" width="14" height="14" align="absmiddle" /> <b>Systems Engineering &middot; pid7-org</b> <sub>(Sep 2024 &mdash; Present)</sub>
+</p>
 
 - **role:** Core Contributor &middot; Systems Architecture & Implementation
 - **repos:** ${repoNames}
 - **stack:** Core: Rust &middot; SIMD | Concurrency: Lock-Free | Storage: Memory-Mapped I/O
 - **impact:** Shipped a lock-free concurrent KV engine with memory-mapped I/O and explicit sync barriers; production SIMD paths prioritize deterministic latency and memory efficiency
 
-</details>
-
-<details open>
-<summary><img src="./assets/icons/briefcase.svg" width="14" height="14" align="absmiddle" /> <b>Freelance & Contract &middot; Web & Tooling</b> <sub>(Jul 2024 &mdash; Present)</sub></summary>
-<br />
+<p>
+  <img src="./assets/icons/briefcase.svg" width="14" height="14" align="absmiddle" /> <b>Freelance & Contract &middot; Web & Tooling</b> <sub>(Jul 2024 &mdash; Present)</sub>
+</p>
 
 - **role:** Full-Stack Developer & Tooling Engineer &middot; 3 Clients
 - **stack:** Frontend: Astro &middot; TypeScript | Backend: Microservices | Tooling: VS Code API
 - **impact:** Delivered a transactional email service and event-ticketing platform end to end; built VS Code extensions for internal developer workflows across client projects
 
-</details>
-
-<details open>
-<summary><img src="./assets/icons/briefcase.svg" width="14" height="14" align="absmiddle" /> <b>Internships &middot; Mobile Engineering</b> <sub>(Nov 2021 &mdash; Apr 2024 &middot; 9 mos)</sub></summary>
-<br />
+<p>
+  <img src="./assets/icons/briefcase.svg" width="14" height="14" align="absmiddle" /> <b>Internships &middot; Mobile Engineering</b> <sub>(Nov 2021 &mdash; Apr 2024 &middot; 9 mos)</sub>
+</p>
 
 - **role:** Flutter Developer &middot; 3 Organizations
 - **orgs:** kraftbase (1 mo) &middot; Rojgary (5 mos) &middot; FOLKDevelopers (3 mos)
 - **stack:** Mobile: Flutter &middot; Dart | Architecture: State Management | APIs: REST
-- **impact:** Led Flutter delivery across three organizations; built MVPs, refactored production apps, and delivered features during active release cycles
+- **impact:** Led Flutter delivery across three organizations; built MVPs, refactored production apps, and delivered features during active release cycles`;
 
-</details>`;
-
-  const telemetryBlock = `## <a id="telemetry"></a>> TELEMETRY
-
-<sub>// metrics</sub>
+  const telemetryBlock = `## <a id="telemetry"></a>~ TELEMETRY
 
 <table width="100%">
   <tr>
@@ -786,52 +780,77 @@ ${writingItems}`;
 
 ${yearlyData.length > 0 ? `<img src="./assets/contributions.svg" width="100%" alt="Contributions chart" />` : ""}`;
 
-  const languageAsciiChart = generateLanguageAsciiChart(stats.languages);
-  const languagesBlock = `## <a id="languages"></a>> LANGUAGES
+  const totalTrackedLoc = (stats.languages || []).reduce(
+    (sum, l) => sum + (l.loc || 0),
+    0,
+  );
+  const totalTrackedLangs = stats.languages?.length || 0;
+  const primaryLang = stats.languages?.[0];
+  const primaryLangName = primaryLang?.name || "Rust";
+  const primaryLangPct = primaryLang
+    ? primaryLang.percentage.toFixed(1)
+    : "72.6";
+  const primaryLangLoc = primaryLang
+    ? formatLocCompact(primaryLang.loc || 0)
+    : "1.16M";
 
-<sub>// distribution & loc</sub>
+  const languageAsciiChart = generateLanguageAsciiChart(stats.languages);
+  const languagesBlock = `## <a id="languages"></a>~ LANGUAGES
+
+<table width="100%">
+  <tr>
+    <td width="50%">
+      <img src="./assets/icons/code.svg" width="14" height="14" align="absmiddle" /> <b>Primary Language</b><br />
+      <code>${primaryLangName} ${primaryLangPct}%</code> <sub>(${primaryLangLoc} loc)</sub>
+    </td>
+    <td width="50%">
+      <img src="./assets/icons/layers.svg" width="14" height="14" align="absmiddle" /> <b>Codebase Volume</b><br />
+      <code>${formatLocCompact(totalTrackedLoc)} loc</code> <sub>(${totalTrackedLangs} languages tracked)</sub>
+    </td>
+  </tr>
+</table>
 
 \`\`\`text
 ${languageAsciiChart}
 \`\`\``;
 
-  const educationBlock = `## <a id="education"></a>> EDUCATION
-
-<sub>// degree & background</sub>
+  const educationBlock = `## <a id="education"></a>~ EDUCATION
 
 <table width="100%">
   <tr>
     <td width="50%">
-      <img src="./assets/icons/graduation-cap.svg" width="14" height="14" align="absmiddle" /> <b>degree:</b> B.Tech <sub>(CSE)</sub><br />
-      <img src="./assets/icons/calendar.svg" width="14" height="14" align="absmiddle" /> <b>period:</b> Jun 2020 &ndash; Jun 2024 <sub>(4 yrs)</sub>
+      <img src="./assets/icons/graduation-cap.svg" width="14" height="14" align="absmiddle" /> <b>Degree</b><br />
+      <code>B.Tech</code> <sub>(Computer Science &amp; Engineering)</sub>
     </td>
     <td width="50%">
-      <img src="./assets/icons/code.svg" width="14" height="14" align="absmiddle" /> <b>major:</b> Computer Science & Engineering<br />
-      <img src="./assets/icons/layers.svg" width="14" height="14" align="absmiddle" /> <b>inst:</b> Marathwada Inst. of Technology
+      <img src="./assets/icons/calendar.svg" width="14" height="14" align="absmiddle" /> <b>Period</b><br />
+      <code>2020 &ndash; 2024</code> <sub>(4 yrs)</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <img src="./assets/icons/code.svg" width="14" height="14" align="absmiddle" /> <b>Major</b><br />
+      <code>Computer Science</code> <sub>(Systems &amp; Software)</sub>
+    </td>
+    <td width="50%">
+      <img src="./assets/icons/layers.svg" width="14" height="14" align="absmiddle" /> <b>Institution</b><br />
+      <code>Marathwada Inst. of Technology</code>
     </td>
   </tr>
 </table>`;
 
   const footerBlock = `---
 
-<table width="100%">
-  <tr>
-    <td align="left">
-      <a href="#top"><b>aditya</b></a>
-    </td>
-    <td align="center">
-      <img src="./assets/icons/github.svg" width="13" height="13" align="absmiddle" /> <a href="https://github.com/adityamotale">github</a> &nbsp;&bull;&nbsp;
-      <img src="./assets/icons/twitter.svg" width="13" height="13" align="absmiddle" /> <a href="https://x.com/arctic_byte">twitter</a> &nbsp;&bull;&nbsp;
-      <img src="./assets/icons/linkedin.svg" width="13" height="13" align="absmiddle" /> <a href="https://www.linkedin.com/in/aditya-motale">linkedin</a> &nbsp;&bull;&nbsp;
-      <img src="./assets/icons/file-text.svg" width="13" height="13" align="absmiddle" /> <a href="https://adii.fyi/adityamotale.pdf">resume</a> &nbsp;&bull;&nbsp;
-      <img src="./assets/icons/globe.svg" width="13" height="13" align="absmiddle" /> <a href="https://adii.fyi">website</a> &nbsp;&bull;&nbsp;
-      <img src="./assets/icons/rss.svg" width="13" height="13" align="absmiddle" /> <a href="https://adii.fyi/rss.xml">rss</a>
-    </td>
-    <td align="right">
-      <a href="#top"><code>[eof]</code></a>
-    </td>
-  </tr>
-</table>`;
+<p align="center">
+  <a href="https://adii.fyi"><b>aditya</b></a> &nbsp;&middot;&nbsp;
+  <img src="./assets/icons/github.svg" width="13" height="13" align="absmiddle" /> <a href="https://github.com/adityamotale">github</a> &nbsp;&middot;&nbsp;
+  <img src="./assets/icons/twitter.svg" width="13" height="13" align="absmiddle" /> <a href="https://x.com/arctic_byte">twitter</a> &nbsp;&middot;&nbsp;
+  <img src="./assets/icons/linkedin.svg" width="13" height="13" align="absmiddle" /> <a href="https://www.linkedin.com/in/aditya-motale">linkedin</a> &nbsp;&middot;&nbsp;
+  <img src="./assets/icons/file-text.svg" width="13" height="13" align="absmiddle" /> <a href="https://adii.fyi/adityamotale.pdf">resume</a> &nbsp;&middot;&nbsp;
+  <img src="./assets/icons/globe.svg" width="13" height="13" align="absmiddle" /> <a href="https://adii.fyi">website</a> &nbsp;&middot;&nbsp;
+  <img src="./assets/icons/rss.svg" width="13" height="13" align="absmiddle" /> <a href="https://adii.fyi/rss.xml">rss</a> &nbsp;&middot;&nbsp;
+  <a href="#top"><code>[eof]</code></a>
+</p>`;
 
   const sections = [headerBlock];
 

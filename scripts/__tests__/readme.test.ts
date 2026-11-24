@@ -119,21 +119,6 @@ describe("readme generator", () => {
       "README should embed banner images from raw githubusercontent",
     );
 
-    // Operational navigation links
-    const navItems = [
-      'href="#latest-release"',
-      'href="#about"',
-      'href="#projects"',
-      'href="#writing"',
-      'href="#experience"',
-      'href="#telemetry"',
-      'href="#languages"',
-      'href="#education"',
-    ];
-    for (const nav of navItems) {
-      assert.ok(readme.includes(nav), `README should include nav link ${nav}`);
-    }
-
     // Section targets
     const sectionTargets = [
       'id="top"',
@@ -152,6 +137,31 @@ describe("readme generator", () => {
         `README should contain anchor ${target}`,
       );
     }
+
+    // Heading format verification (~ prefix, no > and no // comments)
+    assert.ok(
+      readme.includes('## <a id="about"></a>~ ABOUT'),
+      "README headings should use ~ prefix",
+    );
+    assert.ok(
+      !readme.includes("> ABOUT"),
+      "README headings should not use > symbol",
+    );
+    assert.ok(!readme.includes("// bio"), "README should not contain // bio");
+    assert.ok(
+      !readme.includes("// metrics"),
+      "README should not contain // metrics",
+    );
+
+    // Experience section should not have disclosure arrows (<details>/<summary>)
+    assert.ok(
+      !readme.includes("<details"),
+      "Experience section should not use <details>",
+    );
+    assert.ok(
+      !readme.includes("<summary"),
+      "Experience section should not use <summary>",
+    );
 
     // ASCII art verification
     assert.ok(
