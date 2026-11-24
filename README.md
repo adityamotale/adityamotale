@@ -14,8 +14,8 @@
 
 <a href="https://github.com/pid7-org/turbofox"><img src="./assets/top-project.svg" width="100%" alt="turbofox top project" /></a>
 
+<img src="./assets/writing-header.svg" width="100%" alt="Writing" />
 <a href="https://adii.fyi/blog/theres-more-to-performance-than-big-o"><img src="./assets/writing-0.svg" width="100%" alt="There&apos;s More to Performance Than Big-O" /></a>
-
 <a href="https://pid7.com/blog/searching-150gb-text-per-second"><img src="./assets/writing-1.svg" width="100%" alt="Searching through 150 GiB of Text per Second with SIMD" /></a>
 
 <img src="./assets/languages.svg" width="100%" alt="language distribution" />

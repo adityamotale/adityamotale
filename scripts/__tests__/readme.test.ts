@@ -241,11 +241,47 @@ describe("readme generator", () => {
         `Writing card ${i} should include title, date, and rose accent`,
       );
     }
+    const writingHeaderPath = path.join(
+      rootDir,
+      "assets",
+      "writing-header.svg",
+    );
+    assert.ok(existsSync(writingHeaderPath), "Writing header SVG should exist");
+    const writingHeader = readFileSync(writingHeaderPath, "utf-8");
+    assert.ok(
+      writingHeader.includes("WRITING") &&
+        writingHeader.includes("#d7827e") &&
+        writingHeader.includes("letter-spacing"),
+      "Writing header should match other section headings",
+    );
+    assert.ok(
+      readme.includes(
+        '<img src="./assets/writing-header.svg" width="100%" alt="Writing" />',
+      ),
+      "README should include the writing section heading",
+    );
+    const writingLines = readme
+      .split("\n")
+      .filter((line) => line.includes("./assets/writing-"));
+    assert.equal(
+      writingLines.length,
+      3,
+      "Writing should be one heading and two cards",
+    );
+    assert.ok(
+      readme.includes(
+        `<img src="./assets/writing-header.svg" width="100%" alt="Writing" />\n<a href="${writingEntries[0].url}">`,
+      ) &&
+        readme.includes(
+          `writing-0.svg" width="100%" alt="${writingEntries[0].title}" /></a>\n<a href="${writingEntries[1].url}">`,
+        ),
+      "Writing heading and cards should have no blank lines between them",
+    );
     assert.ok(
       !readme.includes("~ WRITING") &&
         !readme.includes('id="writing"') &&
         !readme.includes("view all posts"),
-      "Writing should contain only the article cards",
+      "Writing should contain only the section heading and article cards",
     );
 
     assert.ok(!readme.includes("<table"), "README should not use HTML tables");
