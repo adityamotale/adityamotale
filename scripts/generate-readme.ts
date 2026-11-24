@@ -260,11 +260,72 @@ function getBlogPosts(rootDir: string, limit = 5) {
   return posts.slice(0, limit);
 }
 
+interface WritingEntry {
+  title: string;
+  url: string;
+  dateStr: string;
+  timestamp: number;
+}
+
+async function fetchPid7Writing(
+  fetchImpl: typeof fetch,
+): Promise<WritingEntry[]> {
+  const sitemapRes = await fetchImpl("https://pid7.com/sitemap.xml", {
+    signal: AbortSignal.timeout(5000),
+  });
+  if (!sitemapRes.ok) {
+    throw new Error(`Failed to fetch pid7 sitemap (${sitemapRes.status})`);
+  }
+
+  const xml = await sitemapRes.text();
+  const blocks = xml.match(/<url>[\s\S]*?<\/url>/g) || [];
+  const entries = await Promise.all(
+    blocks
+      .filter((block) => block.includes("/blog/"))
+      .map(async (block) => {
+        const loc = block.match(/<loc>([^<]+)<\/loc>/)?.[1]?.trim();
+        if (!loc) return null;
+        const lastmod =
+          block.match(/<lastmod>([^<]+)<\/lastmod>/)?.[1]?.trim() || "";
+
+        const pageRes = await fetchImpl(loc, {
+          signal: AbortSignal.timeout(5000),
+        });
+        if (!pageRes.ok) {
+          throw new Error(
+            `Failed to fetch pid7 post (${pageRes.status}): ${loc}`,
+          );
+        }
+        const html = await pageRes.text();
+        const title =
+          html
+            .match(/<title[^>]*>([^<]+)<\/title>/i)?.[1]
+            ?.replace(/^pid7\s*[×\-–—|]\s*/i, "")
+            .trim() ||
+          loc.split("/").filter(Boolean).pop()?.replace(/[-_]/g, " ") ||
+          "Untitled";
+        const dateStr =
+          html.match(/["']datePublished["']\s*:\s*["']([^"']+)["']/i)?.[1] ||
+          html.match(
+            /<meta[^>]+property=["']article:published_time["'][^>]+content=["']([^"']+)["']/i,
+          )?.[1] ||
+          lastmod;
+
+        return {
+          title,
+          url: loc,
+          dateStr,
+          timestamp: parseDateToTimestamp(dateStr),
+        };
+      }),
+  );
+
+  return entries.filter((entry): entry is WritingEntry => entry !== null);
+}
+
 const SVG_ICONS: Record<string, string> = {
   globe: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>`,
   github: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" /></svg>`,
-  "external-link": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>`,
-  "book-open": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></svg>`,
   activity: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>`,
   "git-pull-request": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><circle cx="18" cy="18" r="3" /><circle cx="6" cy="6" r="3" /><path d="M13 6h3a2 2 0 0 1 2 2v7" /><line x1="6" y1="9" x2="6" y2="21" /></svg>`,
   "git-commit": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><circle cx="12" cy="12" r="4" /><line x1="1.05" y1="12" x2="7" y2="12" /><line x1="17.05" y1="12" x2="22.95" y2="12" /></svg>`,
@@ -638,6 +699,28 @@ function generateTopProjectSvg(
 </svg>`;
 }
 
+function generateWritingSvg(title: string, date: string): string {
+  const width = 680;
+  const titleText = escapeXml(wrapSvgText(title, 88, 1)[0] || "");
+  const dateText = escapeXml(date);
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} 40" width="${width}" height="40" fill="none">
+  <title>${titleText}</title>
+  <style>
+    .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    .muted { fill: #9893a5; }
+  </style>
+  <g class="mono">
+    <text x="0" y="24" fill="#d7827e" font-size="12" font-weight="600">${titleText}</text>
+    ${
+      dateText
+        ? `<text x="${width}" y="24" text-anchor="end" class="muted" font-size="11">${dateText}</text>`
+        : ""
+    }
+  </g>
+</svg>`;
+}
+
 function generateFooterSvg(fontDataUri: string): string {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 48" width="680" height="48" fill="none">
   <title>aditya — adii.fyi</title>
@@ -661,7 +744,6 @@ function generateFooterSvg(fontDataUri: string): string {
       fill: #9893a5;
     }
   </style>
-  <line x1="0" y1="0.5" x2="680" y2="0.5" stroke="#dfdad9" stroke-width="1" />
   <text x="0" y="34" class="name">aditya</text>
   <text x="680" y="33" text-anchor="end" class="site">adii.fyi</text>
 </svg>`;
@@ -898,12 +980,16 @@ export async function generateReadme(
     projectsBlock = `<a href="${project.url}"><img src="./assets/top-project.svg" width="100%" alt="${alt}" /></a>`;
   }
 
-  const writingItems = blogPosts
-    .map(
-      (post) =>
-        `- <img src="./assets/icons/book-open.svg" width="14" height="14" align="absmiddle" /> [**${post.title}**](https://adii.fyi/blogs/${post.slug}) &mdash; <sub>${formatBlogDate(post.created)}</sub>`,
-    )
-    .join("\n");
+  const localWriting: WritingEntry[] = blogPosts.map((post) => ({
+    title: post.title,
+    url: `https://adii.fyi/blog/${post.slug}`,
+    dateStr: post.created,
+    timestamp: post.timestamp,
+  }));
+  const externalWriting = await fetchPid7Writing(fetchImpl);
+  const writingEntries = [...localWriting, ...externalWriting]
+    .sort((a, b) => b.timestamp - a.timestamp)
+    .slice(0, 5);
 
   const badges = [
     `[![Website](https://img.shields.io/badge/website-adii.fyi-d7827e?style=flat-square&logo=googlechrome&logoColor=d7827e&labelColor=faf4ed)](https://adii.fyi)`,
@@ -921,13 +1007,22 @@ export async function generateReadme(
 
 ${badges}`;
 
-  const writingBlock = `## <a id="writing"></a>~ WRITING
-
-${writingItems}
-
-<p>
-  <img src="./assets/icons/external-link.svg" width="12" height="12" align="absmiddle" /> <sub><a href="https://adii.fyi/blog">view all posts &rarr;</a></sub>
-</p>`;
+  let writingBlock = "";
+  if (writingEntries.length > 0) {
+    writingBlock = writingEntries
+      .map((entry, i) => {
+        const formattedDate = formatBlogDate(entry.dateStr);
+        if (writeAssets) {
+          writeFileSync(
+            path.join(assetsDir, `writing-${i}.svg`),
+            generateWritingSvg(entry.title, formattedDate),
+            "utf-8",
+          );
+        }
+        return `<a href="${escapeXml(entry.url)}"><img src="./assets/writing-${i}.svg" width="100%" alt="${escapeXml(entry.title)}" /></a>`;
+      })
+      .join("\n\n");
+  }
 
   writeFileSync(
     path.join(assetsDir, "telemetry.svg"),

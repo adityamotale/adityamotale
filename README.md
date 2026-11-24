@@ -14,13 +14,9 @@
 
 <a href="https://github.com/pid7-org/turbofox"><img src="./assets/top-project.svg" width="100%" alt="turbofox top project" /></a>
 
-## <a id="writing"></a>~ WRITING
+<a href="https://adii.fyi/blog/theres-more-to-performance-than-big-o"><img src="./assets/writing-0.svg" width="100%" alt="There&apos;s More to Performance Than Big-O" /></a>
 
-- <img src="./assets/icons/book-open.svg" width="14" height="14" align="absmiddle" /> [**There's More to Performance Than Big-O**](https://adii.fyi/blogs/theres-more-to-performance-than-big-o) &mdash; <sub>Sep 15, 2026</sub>
-
-<p>
-  <img src="./assets/icons/external-link.svg" width="12" height="12" align="absmiddle" /> <sub><a href="https://adii.fyi/blog">view all posts &rarr;</a></sub>
-</p>
+<a href="https://pid7.com/blog/searching-150gb-text-per-second"><img src="./assets/writing-1.svg" width="100%" alt="Searching through 150 GiB of Text per Second with SIMD" /></a>
 
 <img src="./assets/languages.svg" width="100%" alt="language distribution" />
 

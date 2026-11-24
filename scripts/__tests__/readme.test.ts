@@ -7,11 +7,23 @@ import { generateReadme } from "../generate-readme.ts";
 describe("readme generator", () => {
   test("generates complete Markdown/HTML README with operational navs, responsive grid, inline icons, and social footer", async () => {
     const rootDir = path.resolve(import.meta.dirname, "../..");
-    const stubFetch: typeof fetch = async () =>
-      new Response(Buffer.from("banner"), {
+    const stubFetch: typeof fetch = async (input) => {
+      const url = String(input);
+      if (url.includes("pid7.com/sitemap.xml")) {
+        const xml = `<urlset><url><loc>https://pid7.com/blog/searching-150gb-text-per-second</loc><lastmod>02-09-2026</lastmod></url></urlset>`;
+        return new Response(xml, { status: 200 });
+      }
+      if (url.includes("pid7.com/blog/")) {
+        return new Response(
+          `<html><head><title>pid7 × Searching through 150 GiB of Text per Second with SIMD</title></head></html>`,
+          { status: 200 },
+        );
+      }
+      return new Response(Buffer.from("banner"), {
         status: 200,
         headers: { "content-type": "image/png" },
       });
+    };
     const readme = await generateReadme(rootDir, stubFetch, false);
 
     assert.ok(
@@ -161,7 +173,7 @@ describe("readme generator", () => {
     );
 
     const iconsDir = path.join(rootDir, "assets", "icons");
-    const requiredIcons = ["external-link.svg", "book-open.svg"];
+    const requiredIcons: string[] = [];
 
     for (const icon of requiredIcons) {
       assert.ok(
@@ -194,9 +206,46 @@ describe("readme generator", () => {
     );
     assert.ok(
       readme.includes(
-        "https://adii.fyi/blogs/theres-more-to-performance-than-big-o",
+        "https://adii.fyi/blog/theres-more-to-performance-than-big-o",
       ),
       "README should link to blog post",
+    );
+    const writingEntries = [
+      {
+        url: "https://adii.fyi/blog/theres-more-to-performance-than-big-o",
+        title: "There&apos;s More to Performance Than Big-O",
+        date: "Sep 15, 2026",
+      },
+      {
+        url: "https://pid7.com/blog/searching-150gb-text-per-second",
+        title: "Searching through 150 GiB of Text per Second with SIMD",
+        date: "Sep 2, 2026",
+      },
+    ];
+    for (let i = 0; i < writingEntries.length; i++) {
+      const entry = writingEntries[i];
+      assert.ok(
+        readme.includes(
+          `<a href="${entry.url}"><img src="./assets/writing-${i}.svg" width="100%"`,
+        ),
+        `Writing card ${i} should link to its post`,
+      );
+      const card = readFileSync(
+        path.join(rootDir, "assets", `writing-${i}.svg`),
+        "utf-8",
+      );
+      assert.ok(
+        card.includes(entry.title) &&
+          card.includes(entry.date) &&
+          card.includes("#d7827e"),
+        `Writing card ${i} should include title, date, and rose accent`,
+      );
+    }
+    assert.ok(
+      !readme.includes("~ WRITING") &&
+        !readme.includes('id="writing"') &&
+        !readme.includes("view all posts"),
+      "Writing should contain only the article cards",
     );
 
     assert.ok(!readme.includes("<table"), "README should not use HTML tables");
@@ -236,7 +285,6 @@ describe("readme generator", () => {
     const sectionTargets = [
       'id="top"',
       'id="latest-release"',
-      'id="writing"',
       'id="telemetry"',
     ];
     for (const target of sectionTargets) {
@@ -246,15 +294,6 @@ describe("readme generator", () => {
       );
     }
 
-    // Heading format verification (~ prefix, no > and no // comments)
-    assert.ok(
-      readme.includes('## <a id="writing"></a>~ WRITING'),
-      "README headings should use ~ prefix",
-    );
-    assert.ok(
-      !readme.includes("> WRITING"),
-      "README headings should not use > symbol",
-    );
     assert.ok(!readme.includes("// bio"), "README should not contain // bio");
     assert.ok(
       !readme.includes("// metrics"),
@@ -337,7 +376,6 @@ describe("readme generator", () => {
       "data:font/woff2;base64,",
       "#d7827e",
       "#9893a5",
-      "#dfdad9",
     ]) {
       assert.ok(
         footerSvg.includes(value),
@@ -353,7 +391,7 @@ describe("readme generator", () => {
     const releaseIdx = readme.indexOf('id="latest-release"');
     const telemetryIdx = readme.indexOf('id="telemetry"');
     const topProjectIdx = readme.indexOf("./assets/top-project.svg");
-    const writingIdx = readme.indexOf('id="writing"');
+    const writingIdx = readme.indexOf("./assets/writing-0.svg");
     const languagesIdx = readme.indexOf("./assets/languages.svg");
 
     assert.ok(topIdx < releaseIdx, "Top must precede Latest Release");
