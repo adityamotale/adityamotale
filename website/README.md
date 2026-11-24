@@ -5,7 +5,7 @@
 engineering ideas into reality
 
 > [!IMPORTANT]
-> The entire codebase is written and maintained by Antigravity CLI, while blog articles are authored by [Aditya Motale](https://github.com/adityamotale).
+> The entire codebase is written and maintained by Antigravity CLI, while blog articles are authored by [Aditya](https://github.com/adityamotale).
 
 ## Quickstart
 

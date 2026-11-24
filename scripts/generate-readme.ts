@@ -791,7 +791,7 @@ export function generateReadme(rootDir: string): string {
 
   const sections = [
     badges,
-    `![Aditya Motale](./assets/header.svg)`,
+    `![Aditya](./assets/header.svg)`,
     `![About](./assets/about.svg)`,
     projectItems,
     writingItems,

@@ -105,7 +105,7 @@ describe("mergeWeeklyDelta", () => {
     const existing: GitHubStatsOutput = {
       generated_at: "2026-09-12T00:00:00Z",
       period: { from: "2021-01-01T00:00:00Z", to: "2026-09-12T23:59:59Z" },
-      user: { login: "adityamotale", name: "Aditya Motale" },
+      user: { login: "adityamotale", name: "Aditya" },
       categories: {
         personal: {
           repositories_count: 1,

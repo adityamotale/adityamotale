@@ -31,7 +31,7 @@ ${categories ? `${categories}\n` : ''}    </item>`;
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>aditya motale ~ an engineer by choice</title>
+    <title>aditya ~ an engineer by choice</title>
     <description>an engineer by choice</description>
     <link>${baseUrl}/</link>
     <atom:link href="${baseUrl}/rss.xml" rel="self" type="application/rss+xml" />

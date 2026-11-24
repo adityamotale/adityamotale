@@ -24,7 +24,7 @@ interface Props {
 }
 
 const {
-  title = 'aditya motale ~ an engineer by choice',
+  title = 'aditya ~ an engineer by choice',
   description = 'an engineer by choice',
   image = '/og-image.png',
   imageAlt,
@@ -34,7 +34,7 @@ const {
   publishedTime = Astro.props.article?.publishedTime,
   modifiedTime = Astro.props.article?.modifiedTime,
   tags = Astro.props.article?.tags || [],
-  author = Astro.props.article?.author || 'Aditya Motale',
+  author = Astro.props.article?.author || 'Aditya',
 } = Astro.props;
 
 const siteUrl = Astro.site || Astro.url.origin || 'https://adii.fyi';
@@ -67,7 +67,7 @@ const jsonLd =
         },
         publisher: {
           '@type': 'Person',
-          name: 'Aditya Motale',
+          name: 'Aditya',
           url: siteUrl.toString(),
         },
         ...(tags.length > 0 ? { keywords: tags.join(', ') } : {}),
@@ -79,13 +79,13 @@ const jsonLd =
     : {
         '@context': 'https://schema.org',
         '@type': 'WebSite',
-        name: 'aditya motale',
+        name: 'aditya',
         url: canonicalURL.toString(),
         description: description,
         inLanguage: 'en-US',
         publisher: {
           '@type': 'Person',
-          name: 'Aditya Motale',
+          name: 'Aditya',
           url: siteUrl.toString(),
           sameAs: [
             'https://github.com/adityamotale',
@@ -114,7 +114,7 @@ const jsonLd =
     <link
       rel="alternate"
       type="application/rss+xml"
-      title="aditya motale ~ an engineer by choice"
+      title="aditya ~ an engineer by choice"
       href="/rss.xml"
     />
 
@@ -138,7 +138,7 @@ const jsonLd =
 
     <meta property="og:type" content={type} />
     <meta property="og:url" content={canonicalURL} />
-    <meta property="og:site_name" content="aditya motale" />
+    <meta property="og:site_name" content="aditya" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={socialImageURL} />
