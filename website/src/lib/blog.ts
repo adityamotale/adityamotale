@@ -195,7 +195,7 @@ export async function getRecentWriting(limit = 5): Promise<WritingItem[]> {
   const items: WritingItem[] = [
     ...localPosts.map((p) => ({
       title: p.frontmatter.title,
-      url: `/blogs/${p.frontmatter.slug}`,
+      url: `/blog/${p.frontmatter.slug}`,
       dateStr: p.frontmatter.created,
       timestamp: parseDateToTimestamp(p.frontmatter.created),
       isExternal: false,
@@ -205,6 +205,10 @@ export async function getRecentWriting(limit = 5): Promise<WritingItem[]> {
 
   items.sort((a, b) => b.timestamp - a.timestamp);
   return items.slice(0, limit);
+}
+
+export async function getAllWriting(): Promise<WritingItem[]> {
+  return getRecentWriting(Infinity);
 }
 
 export async function getBlogPostBySlug(

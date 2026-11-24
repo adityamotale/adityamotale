@@ -5,6 +5,8 @@ export default defineConfig({
   site: "https://adii.fyi",
   redirects: {
     '/resume': '/adityamotale.pdf',
+    '/blogs': '/blog',
+    '/blogs/[slug]': '/blog/[slug]',
   },
   vite: {
     plugins: [tailwindcss()],

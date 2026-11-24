@@ -10,7 +10,7 @@ const writingList = await getRecentWriting(5);
     class="w-full font-mono text-[11px] sm:text-xs select-none leading-relaxed"
   >
     <div class="w-full flex flex-col font-mono">
-      {/* Section Header: > WRITING ─── */}
+      {/* Section Header: > WRITING ────── [view all] ── */}
       <div class="w-full flex items-center overflow-hidden mb-2">
         <span class="text-[var(--color-accent)] font-semibold shrink-0">
           &gt;&nbsp;
@@ -18,7 +18,14 @@ const writingList = await getRecentWriting(5);
         <span class="font-bold tracking-wider text-rp-text uppercase shrink-0">
           WRITING
         </span>
-        <span class="ml-2 flex-1 border-b border-rp-muted/20" />
+        <span class="mx-2 flex-1 border-b border-rp-muted/20" />
+        <a
+          href="/blog"
+          class="shrink-0 text-rp-subtle hover:text-[var(--color-accent)] transition-colors text-[11px] font-mono lowercase"
+        >
+          [view all]
+        </a>
+        <span class="ml-2 w-3 sm:w-4 border-b border-rp-muted/20 shrink-0" />
       </div>
 
       {/* Section comment */}

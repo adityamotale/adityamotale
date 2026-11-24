@@ -30,7 +30,7 @@ export const GET: APIRoute = async ({ site }) => {
         post.frontmatter.lastUpdated || post.frontmatter.created
       );
       return `  <url>
-    <loc>${baseUrl}/blogs/${post.frontmatter.slug}</loc>
+    <loc>${baseUrl}/blog/${post.frontmatter.slug}</loc>
     <lastmod>${lastMod}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -45,6 +45,12 @@ export const GET: APIRoute = async ({ site }) => {
     <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>${baseUrl}/blog</loc>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
 ${blogEntries}
 </urlset>`.trim();

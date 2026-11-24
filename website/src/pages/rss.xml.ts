@@ -21,8 +21,8 @@ export const GET: APIRoute = async ({ site }) => {
       return `    <item>
       <title><![CDATA[${post.frontmatter.title}]]></title>
       <description><![CDATA[${desc}]]></description>
-      <link>${baseUrl}/blogs/${post.frontmatter.slug}</link>
-      <guid isPermaLink="true">${baseUrl}/blogs/${post.frontmatter.slug}</guid>
+      <link>${baseUrl}/blog/${post.frontmatter.slug}</link>
+      <guid isPermaLink="true">${baseUrl}/blog/${post.frontmatter.slug}</guid>
       <pubDate>${pubDate}</pubDate>
 ${categories ? `${categories}\n` : ''}    </item>`;
     })
