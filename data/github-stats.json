@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-23T18:14:30.664Z",
+  "generated_at": "2026-11-24T16:59:50.708Z",
   "period": {
     "from": "2021-01-01T00:00:00Z",
     "to": "2026-11-23T18:10:17.928Z"
@@ -11,14 +11,14 @@
   "categories": {
     "personal": {
       "repositories_count": 28,
-      "commits": 1322,
+      "commits": 1549,
       "pull_requests": 0,
       "issues": 0,
       "reviews": 0,
-      "additions": 1263351,
-      "deletions": 723392,
-      "net_lines": 539959,
-      "total_contributions": 1322
+      "additions": 1310756,
+      "deletions": 758097,
+      "net_lines": 552659,
+      "total_contributions": 1549
     },
     "organization": {
       "repositories_count": 21,
@@ -44,8 +44,8 @@
     }
   },
   "contributions": {
-    "total": 3577,
-    "commits": 3342,
+    "total": 3804,
+    "commits": 3569,
     "pull_requests": 234,
     "reviews": 1,
     "issues": 93,
@@ -53,9 +53,9 @@
     "private": 0
   },
   "lines_of_code": {
-    "total_additions": 1597432,
-    "total_deletions": 900265,
-    "net_lines": 697167
+    "total_additions": 1644837,
+    "total_deletions": 934970,
+    "net_lines": 709867
   },
   "repositories": {
     "total": 28,
@@ -89,32 +89,32 @@
     {
       "name": "Rust",
       "color": "#dea584",
-      "loc": 1159423,
-      "percentage": 72.6
+      "loc": 1170915,
+      "percentage": 71.2
     },
     {
       "name": "TypeScript",
       "color": "#3178c6",
-      "loc": 130341,
-      "percentage": 8.2
+      "loc": 151386,
+      "percentage": 9.2
     },
     {
       "name": "Assembly",
       "color": "#6E4C13",
       "loc": 63958,
-      "percentage": 4
+      "percentage": 3.9
     },
     {
       "name": "Python",
       "color": "#3572A5",
       "loc": 56685,
-      "percentage": 3.6
+      "percentage": 3.4
     },
     {
       "name": "JavaScript",
       "color": "#f1e05a",
-      "loc": 47614,
-      "percentage": 3
+      "loc": 51478,
+      "percentage": 3.1
     },
     {
       "name": "Svelte",
@@ -125,14 +125,14 @@
     {
       "name": "Astro",
       "color": "#ff5a03",
-      "loc": 23582,
-      "percentage": 1.5
+      "loc": 29251,
+      "percentage": 1.8
     },
     {
       "name": "C",
       "color": "#555555",
       "loc": 17211,
-      "percentage": 1.1
+      "percentage": 1
     },
     {
       "name": "Dart",
@@ -141,33 +141,33 @@
       "percentage": 0.8
     },
     {
+      "name": "PowerShell",
+      "color": "#012456",
+      "loc": 11014,
+      "percentage": 0.7
+    },
+    {
       "name": "HTML",
       "color": "#e34c26",
-      "loc": 8834,
+      "loc": 10198,
       "percentage": 0.6
     },
     {
       "name": "Shell",
       "color": "#89e051",
-      "loc": 8295,
-      "percentage": 0.5
-    },
-    {
-      "name": "PowerShell",
-      "color": "#012456",
-      "loc": 8050,
+      "loc": 8444,
       "percentage": 0.5
     },
     {
       "name": "Nix",
       "color": "#7e7eff",
-      "loc": 7601,
+      "loc": 7657,
       "percentage": 0.5
     },
     {
       "name": "CSS",
       "color": "#663399",
-      "loc": 5776,
+      "loc": 6578,
       "percentage": 0.4
     },
     {
@@ -180,7 +180,7 @@
       "name": "CMake",
       "color": "#DA3434",
       "loc": 2444,
-      "percentage": 0.2
+      "percentage": 0.1
     },
     {
       "name": "HCL",
@@ -409,6 +409,104 @@
       "latest_release": null
     },
     {
+      "repository": "adityamotale/shyena",
+      "tier": "personal",
+      "is_private": false,
+      "is_fork": false,
+      "is_archived": false,
+      "description": "Śyena is a Keyboard-first launcher and transient PowerShell automation runtime for Windows",
+      "commits": 246,
+      "pull_requests": 0,
+      "issues": 0,
+      "reviews": 0,
+      "additions": 34894,
+      "deletions": 13228,
+      "net_lines": 21666,
+      "total_contributions": 246,
+      "languages": [
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 176381,
+          "percentage": 0
+        },
+        {
+          "name": "PowerShell",
+          "color": "#012456",
+          "bytes": 46539,
+          "percentage": 0
+        }
+      ],
+      "primary_language": {
+        "name": "Rust",
+        "color": "#dea584"
+      },
+      "latest_release": {
+        "tag_name": "v0.0.102",
+        "title": "v0.0.102",
+        "published_at": "2026-11-20T14:52:47Z",
+        "url": "https://github.com/adityamotale/shyena/releases/tag/v0.0.102"
+      }
+    },
+    {
+      "repository": "adityamotale/adityamotale",
+      "tier": "personal",
+      "is_private": false,
+      "is_fork": false,
+      "is_archived": false,
+      "description": "Portfolio website",
+      "commits": 220,
+      "pull_requests": 0,
+      "issues": 0,
+      "reviews": 0,
+      "additions": 75965,
+      "deletions": 53357,
+      "net_lines": 22608,
+      "total_contributions": 220,
+      "languages": [
+        {
+          "name": "TypeScript",
+          "color": "#3178c6",
+          "bytes": 198126,
+          "percentage": 0
+        },
+        {
+          "name": "Astro",
+          "color": "#ff5a03",
+          "bytes": 53371,
+          "percentage": 0
+        },
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 19553,
+          "percentage": 0
+        },
+        {
+          "name": "CSS",
+          "color": "#663399",
+          "bytes": 7556,
+          "percentage": 0
+        },
+        {
+          "name": "Shell",
+          "color": "#89e051",
+          "bytes": 1401,
+          "percentage": 0
+        }
+      ],
+      "primary_language": {
+        "name": "TypeScript",
+        "color": "#3178c6"
+      },
+      "latest_release": {
+        "tag_name": "v0.4.0",
+        "title": "Release of v0.4.0",
+        "published_at": "2026-11-24T16:57:11Z",
+        "url": "https://github.com/adityamotale/adityamotale/releases/tag/v0.4.0"
+      }
+    },
+    {
       "repository": "adityamotale/ocelot",
       "tier": "personal",
       "is_private": true,
@@ -532,64 +630,6 @@
       "latest_release": null
     },
     {
-      "repository": "adityamotale/adityamotale",
-      "tier": "personal",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "Portfolio website",
-      "commits": 135,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 46223,
-      "deletions": 25586,
-      "net_lines": 20637,
-      "total_contributions": 135,
-      "languages": [
-        {
-          "name": "TypeScript",
-          "color": "#3178c6",
-          "bytes": 198126,
-          "percentage": 0
-        },
-        {
-          "name": "Astro",
-          "color": "#ff5a03",
-          "bytes": 53371,
-          "percentage": 0
-        },
-        {
-          "name": "JavaScript",
-          "color": "#f1e05a",
-          "bytes": 19553,
-          "percentage": 0
-        },
-        {
-          "name": "CSS",
-          "color": "#663399",
-          "bytes": 7556,
-          "percentage": 0
-        },
-        {
-          "name": "Shell",
-          "color": "#89e051",
-          "bytes": 1401,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "TypeScript",
-        "color": "#3178c6"
-      },
-      "latest_release": {
-        "tag_name": "v0.3.10",
-        "title": "Release of v0.3.10",
-        "published_at": "2026-11-16T08:59:59Z",
-        "url": "https://github.com/adityamotale/adityamotale/releases/tag/v0.3.10"
-      }
-    },
-    {
       "repository": "adityamotale/anvaya",
       "tier": "personal",
       "is_private": false,
@@ -635,46 +675,6 @@
         "color": "#dea584"
       },
       "latest_release": null
-    },
-    {
-      "repository": "adityamotale/shyena",
-      "tier": "personal",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": "Śyena is a Keyboard-first launcher and transient PowerShell automation runtime for Windows",
-      "commits": 129,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 21907,
-      "deletions": 7034,
-      "net_lines": 14873,
-      "total_contributions": 129,
-      "languages": [
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "bytes": 176381,
-          "percentage": 0
-        },
-        {
-          "name": "PowerShell",
-          "color": "#012456",
-          "bytes": 46539,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "Rust",
-        "color": "#dea584"
-      },
-      "latest_release": {
-        "tag_name": "v0.0.102",
-        "title": "v0.0.102",
-        "published_at": "2026-11-20T14:52:47Z",
-        "url": "https://github.com/adityamotale/shyena/releases/tag/v0.0.102"
-      }
     },
     {
       "repository": "adityamotale/asm_tcp",
@@ -783,6 +783,47 @@
       "latest_release": null
     },
     {
+      "repository": "adityamotale/setu",
+      "tier": "personal",
+      "is_private": false,
+      "is_fork": false,
+      "is_archived": false,
+      "description": null,
+      "commits": 48,
+      "pull_requests": 0,
+      "issues": 0,
+      "reviews": 0,
+      "additions": 8734,
+      "deletions": 1480,
+      "net_lines": 7254,
+      "total_contributions": 48,
+      "languages": [
+        {
+          "name": "JavaScript",
+          "color": "#f1e05a",
+          "bytes": 27963,
+          "percentage": 0
+        },
+        {
+          "name": "HTML",
+          "color": "#e34c26",
+          "bytes": 21327,
+          "percentage": 0
+        },
+        {
+          "name": "Rust",
+          "color": "#dea584",
+          "bytes": 19015,
+          "percentage": 0
+        }
+      ],
+      "primary_language": {
+        "name": "JavaScript",
+        "color": "#f1e05a"
+      },
+      "latest_release": null
+    },
+    {
       "repository": "adityamotale/asm_db",
       "tier": "personal",
       "is_private": true,
@@ -847,14 +888,14 @@
       "is_fork": false,
       "is_archived": false,
       "description": null,
-      "commits": 41,
+      "commits": 42,
       "pull_requests": 0,
       "issues": 0,
       "reviews": 0,
-      "additions": 2951,
+      "additions": 3260,
       "deletions": 1410,
-      "net_lines": 1541,
-      "total_contributions": 41,
+      "net_lines": 1850,
+      "total_contributions": 42,
       "languages": [
         {
           "name": "PowerShell",
@@ -1135,47 +1176,6 @@
       "primary_language": {
         "name": "Assembly",
         "color": "#6E4C13"
-      },
-      "latest_release": null
-    },
-    {
-      "repository": "adityamotale/setu",
-      "tier": "personal",
-      "is_private": false,
-      "is_fork": false,
-      "is_archived": false,
-      "description": null,
-      "commits": 24,
-      "pull_requests": 0,
-      "issues": 0,
-      "reviews": 0,
-      "additions": 4367,
-      "deletions": 740,
-      "net_lines": 3627,
-      "total_contributions": 24,
-      "languages": [
-        {
-          "name": "JavaScript",
-          "color": "#f1e05a",
-          "bytes": 27963,
-          "percentage": 0
-        },
-        {
-          "name": "HTML",
-          "color": "#e34c26",
-          "bytes": 21327,
-          "percentage": 0
-        },
-        {
-          "name": "Rust",
-          "color": "#dea584",
-          "bytes": 19015,
-          "percentage": 0
-        }
-      ],
-      "primary_language": {
-        "name": "JavaScript",
-        "color": "#f1e05a"
       },
       "latest_release": null
     },
@@ -2443,6 +2443,13 @@
   ],
   "releases": [
     {
+      "repo": "adityamotale/adityamotale",
+      "tag_name": "v0.4.0",
+      "title": "Release of v0.4.0",
+      "published_at": "2026-11-24T16:57:11Z",
+      "url": "https://github.com/adityamotale/adityamotale/releases/tag/v0.4.0"
+    },
+    {
       "repo": "adityamotale/shyena",
       "tag_name": "v0.0.102",
       "title": "v0.0.102",
@@ -2850,31 +2857,31 @@
         "from": "2026-11-01T00:00:00Z",
         "to": "2026-11-23T18:10:17.928Z"
       },
-      "commits": 421,
+      "commits": 648,
       "lines_of_code": {
-        "total_additions": 201232,
-        "total_deletions": 113409,
-        "net_lines": 87823
+        "total_additions": 248637,
+        "total_deletions": 148114,
+        "net_lines": 100523
       },
       "pull_requests": {
         "total": 29,
         "merged": 29,
         "closed_unmerged": 0,
         "open": 0,
-        "merge_rate_percentage": 97.4
+        "merge_rate_percentage": 100
       },
       "repositories": {
-        "total": 5,
+        "total": 4,
         "public": 4,
-        "private": 1,
-        "org": 3
+        "private": 0,
+        "org": 0
       },
       "streaks_and_consistency": {
-        "longest_streak_days": 12,
-        "current_streak_days": 12,
-        "active_days_count": 22,
-        "total_days_in_period": 23,
-        "activity_rate_percentage": 95.65,
+        "longest_streak_days": 8,
+        "current_streak_days": 8,
+        "active_days_count": 8,
+        "total_days_in_period": 8,
+        "activity_rate_percentage": 100,
         "busiest_day": {
           "date": "2026-11-19",
           "count": 53
@@ -2916,14 +2923,14 @@
   ],
   "weekly_summary": {
     "period": {
-      "from": "2026-11-15T00:00:00Z",
-      "to": "2026-11-21T23:59:59Z"
+      "from": "2026-11-17T00:00:00Z",
+      "to": "2026-11-24T23:59:59Z"
     },
-    "commits": 137,
+    "commits": 227,
     "lines_of_code": {
-      "total_additions": 65484,
-      "total_deletions": 36905,
-      "net_lines": 28579
+      "total_additions": 47405,
+      "total_deletions": 34705,
+      "net_lines": 12700
     },
     "pull_requests": {
       "total": 0,
@@ -2933,16 +2940,16 @@
       "merge_rate_percentage": 0
     },
     "repositories": {
-      "total": 3,
-      "public": 2,
+      "total": 4,
+      "public": 4,
       "private": 0,
-      "org": 2
+      "org": 0
     },
     "streaks_and_consistency": {
-      "longest_streak_days": 7,
-      "current_streak_days": 7,
-      "active_days_count": 7,
-      "total_days_in_period": 7,
+      "longest_streak_days": 8,
+      "current_streak_days": 8,
+      "active_days_count": 8,
+      "total_days_in_period": 8,
       "activity_rate_percentage": 100,
       "busiest_day": {
         "date": "2026-11-19",
@@ -2951,22 +2958,58 @@
     },
     "languages": [
       {
-        "name": "Rust",
-        "color": "#dea584",
-        "loc": 1159423,
-        "percentage": 72.6
-      },
-      {
         "name": "TypeScript",
         "color": "#3178c6",
-        "loc": 130341,
-        "percentage": 8.2
+        "loc": 18207,
+        "percentage": 38.4
       },
       {
-        "name": "Assembly",
-        "color": "#6E4C13",
-        "loc": 63958,
-        "percentage": 4
+        "name": "Rust",
+        "color": "#dea584",
+        "loc": 11491,
+        "percentage": 24.2
+      },
+      {
+        "name": "Astro",
+        "color": "#ff5a03",
+        "loc": 8702,
+        "percentage": 18.4
+      },
+      {
+        "name": "JavaScript",
+        "color": "#f1e05a",
+        "loc": 3847,
+        "percentage": 8.1
+      },
+      {
+        "name": "PowerShell",
+        "color": "#012456",
+        "loc": 2964,
+        "percentage": 6.3
+      },
+      {
+        "name": "HTML",
+        "color": "#e34c26",
+        "loc": 1364,
+        "percentage": 2.9
+      },
+      {
+        "name": "CSS",
+        "color": "#663399",
+        "loc": 652,
+        "percentage": 1.4
+      },
+      {
+        "name": "Shell",
+        "color": "#89e051",
+        "loc": 121,
+        "percentage": 0.3
+      },
+      {
+        "name": "Nix",
+        "color": "#7e7eff",
+        "loc": 56,
+        "percentage": 0.1
       }
     ]
   },
