@@ -209,18 +209,44 @@ describe("readme generator", () => {
 
     assert.ok(
       readme.includes('<table width="100%">'),
-      "README should render a full-width 2-column project grid table",
+      "README should render the full-width languages table",
     );
     assert.ok(
-      readme.includes("raw.githubusercontent.com"),
-      "README should embed banner images from raw githubusercontent",
+      !readme.includes("~ PROJECTS") && !readme.includes('id="projects"'),
+      "Projects should be a single linked card with no header or anchor",
+    );
+    assert.ok(
+      readme.includes(
+        '<a href="https://github.com/pid7-org/turbofox"><img src="./assets/top-project.svg" width="100%"',
+      ),
+      "Top project should be a single full-width linked card",
+    );
+    const topProjectCard = readFileSync(
+      path.join(rootDir, "assets", "top-project.svg"),
+      "utf-8",
+    );
+    for (const value of [
+      "TOP PROJECT",
+      "turbofox",
+      "Rust",
+      "925 contribs",
+      "data:image/png;base64,",
+      "#d7827e",
+    ]) {
+      assert.ok(
+        topProjectCard.includes(value),
+        `Top project card should include ${value}`,
+      );
+    }
+    assert.ok(
+      !topProjectCard.includes("prefers-color-scheme"),
+      "Top project card should be light-only",
     );
 
     // Section targets
     const sectionTargets = [
       'id="top"',
       'id="latest-release"',
-      'id="projects"',
       'id="writing"',
       'id="telemetry"',
       'id="languages"',
@@ -234,11 +260,11 @@ describe("readme generator", () => {
 
     // Heading format verification (~ prefix, no > and no // comments)
     assert.ok(
-      readme.includes('## <a id="projects"></a>~ PROJECTS'),
+      readme.includes('## <a id="writing"></a>~ WRITING'),
       "README headings should use ~ prefix",
     );
     assert.ok(
-      !readme.includes("> PROJECTS"),
+      !readme.includes("> WRITING"),
       "README headings should not use > symbol",
     );
     assert.ok(!readme.includes("// bio"), "README should not contain // bio");
@@ -305,9 +331,9 @@ describe("readme generator", () => {
 
     const topIdx = readme.indexOf('id="top"');
     const releaseIdx = readme.indexOf('id="latest-release"');
-    const projectsIdx = readme.indexOf('id="projects"');
-    const writingIdx = readme.indexOf('id="writing"');
     const telemetryIdx = readme.indexOf('id="telemetry"');
+    const topProjectIdx = readme.indexOf("./assets/top-project.svg");
+    const writingIdx = readme.indexOf('id="writing"');
     const languagesIdx = readme.indexOf('id="languages"');
 
     assert.ok(topIdx < releaseIdx, "Top must precede Latest Release");
@@ -315,8 +341,11 @@ describe("readme generator", () => {
       releaseIdx < telemetryIdx,
       "Latest Release must precede Telemetry",
     );
-    assert.ok(telemetryIdx < projectsIdx, "Telemetry must precede Projects");
-    assert.ok(projectsIdx < writingIdx, "Projects must precede Writing");
+    assert.ok(
+      telemetryIdx < topProjectIdx,
+      "Telemetry must precede Top Project",
+    );
+    assert.ok(topProjectIdx < writingIdx, "Top Project must precede Writing");
     assert.ok(writingIdx < languagesIdx, "Writing must precede Languages");
   });
 });

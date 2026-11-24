@@ -14,38 +14,7 @@
 
 <img src="./assets/contributions.svg" width="100%" alt="Contributions chart" />
 
-## <a id="projects"></a>~ PROJECTS
-
-<table width="100%">
-  <tr>
-    <td width="50%" valign="top">
-      <a href="https://github.com/pid7-org/turbofox"><img src="https://raw.githubusercontent.com/pid7-org/turbofox/master/assets/banner.png" width="100%" alt="turbofox" /></a>
-      <br />
-      <b><a href="https://github.com/pid7-org/turbofox">turbofox</a></b> &#183; <code>Rust</code> &#183; <sub>925 contribs</sub><br />
-      An embedded, memory-mapped key-value engine providing lock-free concurrency & explicit sync barriers
-    </td>
-    <td width="50%" valign="top">
-      <a href="https://github.com/pid7-org/ashwa"><img src="https://raw.githubusercontent.com/pid7-org/ashwa/master/assets/banner.png" width="100%" alt="ashwa" /></a>
-      <br />
-      <b><a href="https://github.com/pid7-org/ashwa">ashwa</a></b> &#183; <code>Rust</code> &#183; <sub>314 contribs</sub><br />
-      Hardware accelerated routines for single substring search
-    </td>
-  </tr>
-  <tr>
-    <td width="50%" valign="top">
-      <a href="https://github.com/adityamotale/shyena"><img src="https://raw.githubusercontent.com/adityamotale/shyena/master/assets/banner.png" width="100%" alt="shyena" /></a>
-      <br />
-      <b><a href="https://github.com/adityamotale/shyena">shyena</a></b> &#183; <code>Rust</code> &#183; <sub>129 contribs</sub><br />
-      Śyena is a Keyboard-first launcher and transient PowerShell automation runtime for Windows
-    </td>
-    <td width="50%" valign="top">
-      <a href="https://github.com/pid7-org/turbo_crc"><img src="https://raw.githubusercontent.com/pid7-org/turbo_crc/master/assets/banner.png" width="100%" alt="turbo_crc" /></a>
-      <br />
-      <b><a href="https://github.com/pid7-org/turbo_crc">turbo_crc</a></b> &#183; <code>Rust</code> &#183; <sub>39 contribs</sub><br />
-      Hardware accelerated implementation of CRC32C for computing 32-bit CRC
-    </td>
-  </tr>
-</table>
+<a href="https://github.com/pid7-org/turbofox"><img src="./assets/top-project.svg" width="100%" alt="turbofox top project" /></a>
 
 ## <a id="writing"></a>~ WRITING
 

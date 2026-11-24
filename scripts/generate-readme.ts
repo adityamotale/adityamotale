@@ -578,6 +578,52 @@ function generateReleaseSvg(
 </svg>`;
 }
 
+interface ProjectCardData {
+  name: string;
+  language: string;
+  contributions?: number;
+  description: string;
+}
+
+function generateTopProjectSvg(
+  project: ProjectCardData,
+  bannerDataUri: string,
+): string {
+  const width = 680;
+  const bannerY = 24;
+  const bannerH = 227;
+  const metaY = bannerY + bannerH + 27;
+  const descY = metaY + 22;
+  const height = descY + 14;
+  const nameText = escapeXml(project.name);
+  const metaText = escapeXml(
+    [project.language, `${project.contributions || 0} contribs`].join(" · "),
+  );
+  const descText = escapeXml(wrapSvgText(project.description, 96, 1)[0] || "");
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}" fill="none">
+  <title>${nameText} top project</title>
+  <defs>
+    <clipPath id="banner-clip">
+      <rect x="0" y="${bannerY}" width="${width}" height="${bannerH}" rx="6" />
+    </clipPath>
+  </defs>
+  <style>
+    .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    .subtle { fill: #797593; }
+    .muted { fill: #9893a5; }
+    .accent { fill: #d7827e; }
+  </style>
+  <g class="mono">
+    <text x="0" y="14" fill="#d7827e" font-size="11" font-weight="700">&gt;</text>
+    <text x="14" y="14" fill="#575279" font-size="11" font-weight="700" letter-spacing="0.08em">TOP PROJECT</text>
+    <image href="${bannerDataUri}" x="0" y="${bannerY}" width="${width}" height="${bannerH}" clip-path="url(#banner-clip)" preserveAspectRatio="xMidYMid slice" />
+    <text x="0" y="${metaY}" font-size="11"><tspan class="accent" font-weight="700">${nameText}</tspan><tspan class="muted">  &#183;  ${metaText}</tspan></text>
+    <text x="0" y="${descY}" class="subtle" font-size="11">${descText}</text>
+  </g>
+</svg>`;
+}
+
 function generateWordmarkSvg(fontDataUri: string): string {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 112" width="320" height="112" fill="none">
   <title>aditya</title>
@@ -655,7 +701,7 @@ function generateTelemetrySvg(metrics: TelemetryMetric[]): string {
 export async function generateReadme(
   rootDir: string,
   fetchImpl: typeof fetch = fetch,
-  writeReleaseAsset = true,
+  writeAssets = true,
 ): Promise<string> {
   const statsPath = path.join(rootDir, "data", "github-stats.json");
   if (!existsSync(statsPath)) {
@@ -702,7 +748,7 @@ export async function generateReadme(
       (r) => !r.is_private && (r.has_banner || BANNER_REPOS.has(r.repository)),
     )
     .sort((a, b) => (b.total_contributions || 0) - (a.total_contributions || 0))
-    .slice(0, 4)
+    .slice(0, 1)
     .map((r) => {
       const [owner, name] = r.repository.split("/");
       const description =
@@ -793,7 +839,7 @@ export async function generateReadme(
       `https://github.com/${latestRelease.repo}/releases/tag/${latestRelease.tag_name}`;
 
     const bannerDataUri = await fetchBannerDataUri(releaseBannerUrl, fetchImpl);
-    if (writeReleaseAsset) {
+    if (writeAssets) {
       writeFileSync(
         path.join(assetsDir, "latest-release.svg"),
         generateReleaseSvg(
@@ -816,33 +862,23 @@ export async function generateReadme(
 <a href="${releaseUrl}"><img src="./assets/latest-release.svg" width="100%" alt="${cardAlt}" /></a>`;
   }
 
-  const projectGridRows: string[] = [];
-  for (let i = 0; i < projects.length; i += 2) {
-    const p1 = projects[i];
-    const p2 = projects[i + 1];
-    const cell1 = `    <td width="50%" valign="top">
-      <a href="${p1.url}"><img src="${p1.bannerUrl}" width="100%" alt="${p1.name}" /></a>
-      <br />
-      <b><a href="${p1.url}">${p1.name}</a></b> &#183; <code>${p1.language}</code> &#183; <sub>${p1.contributions} contribs</sub><br />
-      ${p1.description}
-    </td>`;
-    const cell2 = p2
-      ? `    <td width="50%" valign="top">
-      <a href="${p2.url}"><img src="${p2.bannerUrl}" width="100%" alt="${p2.name}" /></a>
-      <br />
-      <b><a href="${p2.url}">${p2.name}</a></b> &#183; <code>${p2.language}</code> &#183; <sub>${p2.contributions} contribs</sub><br />
-      ${p2.description}
-    </td>`
-      : `    <td width="50%" valign="top"></td>`;
-
-    projectGridRows.push(`  <tr>\n${cell1}\n${cell2}\n  </tr>`);
+  let projectsBlock = "";
+  if (projects[0]) {
+    const project = projects[0];
+    const bannerDataUri = await fetchBannerDataUri(
+      project.bannerUrl,
+      fetchImpl,
+    );
+    if (writeAssets) {
+      writeFileSync(
+        path.join(assetsDir, "top-project.svg"),
+        generateTopProjectSvg(project, bannerDataUri),
+        "utf-8",
+      );
+    }
+    const alt = escapeXml(`${project.name} top project`);
+    projectsBlock = `<a href="${project.url}"><img src="./assets/top-project.svg" width="100%" alt="${alt}" /></a>`;
   }
-
-  const projectTable = [
-    `<table width="100%">`,
-    ...projectGridRows,
-    `</table>`,
-  ].join("\n");
 
   const writingItems = blogPosts
     .map(
@@ -868,10 +904,6 @@ export async function generateReadme(
 ${badges}
 
 <img src="./assets/header.svg" width="320" height="112" alt="aditya" />`;
-
-  const projectsBlock = `## <a id="projects"></a>~ PROJECTS
-
-${projectTable}`;
 
   const writingBlock = `## <a id="writing"></a>~ WRITING
 
@@ -988,7 +1020,9 @@ ${languageAsciiChart}
   }
 
   sections.push(telemetryBlock);
-  sections.push(projectsBlock);
+  if (projectsBlock) {
+    sections.push(projectsBlock);
+  }
   sections.push(writingBlock);
   sections.push(languagesBlock);
   sections.push(footerBlock);
