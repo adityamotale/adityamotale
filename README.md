@@ -8,6 +8,12 @@
 
 <a href="https://github.com/adityamotale/shyena/releases/tag/v0.0.102"><img src="./assets/latest-release.svg" width="100%" alt="shyena v0.0.102 release" /></a>
 
+<a id="telemetry"></a>
+
+<img src="./assets/telemetry.svg" width="100%" alt="telemetry metrics" />
+
+<img src="./assets/contributions.svg" width="100%" alt="Contributions chart" />
+
 ## <a id="projects"></a>~ PROJECTS
 
 <table width="100%">
@@ -48,43 +54,6 @@
 <p>
   <img src="./assets/icons/external-link.svg" width="12" height="12" align="absmiddle" /> <sub><a href="https://adii.fyi/blog">view all posts &rarr;</a></sub>
 </p>
-
-## <a id="telemetry"></a>~ TELEMETRY
-
-<table width="100%">
-  <tr>
-    <td width="50%">
-      <img src="./assets/icons/activity.svg" width="14" height="14" align="absmiddle" /> <b>Lines of Code</b><br />
-      <code>697,167 net</code> <sub>(+1.6M / -900.3k)</sub>
-    </td>
-    <td width="50%">
-      <img src="./assets/icons/git-pull-request.svg" width="14" height="14" align="absmiddle" /> <b>Pull Requests</b><br />
-      <code>97.4% merged</code> <sub>(228 of 234)</sub>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%">
-      <img src="./assets/icons/git-commit.svg" width="14" height="14" align="absmiddle" /> <b>Commits</b><br />
-      <code>3,515</code> <sub>(pub + org)</sub>
-    </td>
-    <td width="50%">
-      <img src="./assets/icons/zap.svg" width="14" height="14" align="absmiddle" /> <b>Activity & Streaks</b><br />
-      <code>1,037d active</code> <sub>(12d current / 112d max)</sub>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%">
-      <img src="./assets/icons/layers.svg" width="14" height="14" align="absmiddle" /> <b>Repositories</b><br />
-      <code>53 contributed</code> <sub>(18 pub &#183; 10 pri &#183; 25 org)</sub>
-    </td>
-    <td width="50%">
-      <img src="./assets/icons/globe.svg" width="14" height="14" align="absmiddle" /> <b>Scope Distribution</b><br />
-      <code>62% org &#183; 38% personal</code>
-    </td>
-  </tr>
-</table>
-
-<img src="./assets/contributions.svg" width="100%" alt="Contributions chart" />
 
 ## <a id="languages"></a>~ LANGUAGES
 

@@ -321,10 +321,10 @@ function generateLanguageAsciiChart(languages?: LanguageStat[]): string {
 function generateContributionsSvg(yearlyData: YearlyContribution[]): string {
   const currentYear = new Date().getFullYear();
   const width = 680;
-  const height = 230;
+  const height = 216;
   const padLeft = 32;
   const padRight = 36;
-  const padTop = 48;
+  const padTop = 34;
   const padBottom = 22;
   const plotW = width - padLeft - padRight;
   const plotH = height - padTop - padBottom;
@@ -428,7 +428,6 @@ function generateContributionsSvg(yearlyData: YearlyContribution[]): string {
     <text x="0" y="14" class="accent" font-size="12">&gt;</text>
     <text x="12" y="14" class="text" letter-spacing="0.06em">CONTRIBUTIONS</text>
     <line x1="120" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
-    <text x="12" y="30" class="muted" font-size="11">// yearly activity · annual velocity &amp; cumulative</text>
 
     <!-- Guidelines -->
     ${gridValues
@@ -598,6 +597,58 @@ function generateWordmarkSvg(fontDataUri: string): string {
     }
   </style>
   <text x="8" y="82">aditya</text>
+</svg>`;
+}
+
+interface TelemetryMetric {
+  icon: string;
+  label: string;
+  value: string;
+  detail: string;
+}
+
+function inlineIcon(name: string): string {
+  return SVG_ICONS[name]
+    .replace(/^<svg[^>]*>/, "")
+    .replace(/<style>[\s\S]*?<\/style>/, "")
+    .replace(/<\/svg>$/, "")
+    .trim();
+}
+
+function generateTelemetrySvg(metrics: TelemetryMetric[]): string {
+  const width = 680;
+  const firstY = 52;
+  const rowH = 48;
+  const height = firstY + (metrics.length / 2) * rowH + 12;
+  const cells = metrics
+    .map((metric, i) => {
+      const x = i % 2 === 0 ? 0 : 340;
+      const y = firstY + Math.floor(i / 2) * rowH;
+      const detail = metric.detail
+        ? `<text x="${x + 22}" y="${y + 30}" class="muted" font-size="10">(${escapeXml(metric.detail)})</text>`
+        : "";
+      return `<g>
+      <svg x="${x}" y="${y - 11}" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${inlineIcon(metric.icon)}</svg>
+      <text x="${x + 22}" y="${y}" class="subtle" font-size="10">${escapeXml(metric.label)}</text>
+      <text x="${x + 22}" y="${y + 16}" class="text" font-size="12" font-weight="600">${escapeXml(metric.value)}</text>
+      ${detail}
+    </g>`;
+    })
+    .join("\n    ");
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}" fill="none">
+  <title>telemetry metrics</title>
+  <style>
+    .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    .text { fill: #575279; }
+    .subtle { fill: #797593; }
+    .muted { fill: #9893a5; }
+  </style>
+  <g class="mono">
+    <text x="0" y="16" fill="#d7827e" font-size="11" font-weight="700">&gt;</text>
+    <text x="14" y="16" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">TELEMETRY</text>
+    ${cells}
+  </g>
 </svg>`;
 }
 
@@ -830,42 +881,58 @@ ${writingItems}
   <img src="./assets/icons/external-link.svg" width="12" height="12" align="absmiddle" /> <sub><a href="https://adii.fyi/blog">view all posts &rarr;</a></sub>
 </p>`;
 
-  const telemetryBlock = `## <a id="telemetry"></a>~ TELEMETRY
+  writeFileSync(
+    path.join(assetsDir, "telemetry.svg"),
+    generateTelemetrySvg([
+      {
+        icon: "activity",
+        label: "Lines of Code",
+        value: `${fmt.format(netLines)} net`,
+        detail: `+${formatCompact(totalAdd)} / -${formatCompact(totalDel)}`,
+      },
+      {
+        icon: "git-pull-request",
+        label: "Pull Requests",
+        value: `${prMergeRate}% merged`,
+        detail: `${stats.pull_requests.merged} of ${stats.pull_requests.total}`,
+      },
+      {
+        icon: "git-commit",
+        label: "Commits",
+        value: fmt.format(totalCommits),
+        detail: "pub + org",
+      },
+      {
+        icon: "zap",
+        label: "Activity & Streaks",
+        value: `${activeDaysFormatted}d active`,
+        detail: `${stats.streaks_and_consistency.current_streak_days}d current / ${stats.streaks_and_consistency.longest_streak_days}d max`,
+      },
+      {
+        icon: "layers",
+        label: "Repositories",
+        value: `${totalReposContributed} contributed`,
+        detail: `${publicRepos} pub · ${privateRepos} pri · ${orgRepos} org`,
+      },
+      {
+        icon: "globe",
+        label: "Scope Distribution",
+        value: `${orgPct}% org · ${personalPct}% personal`,
+        detail: "",
+      },
+    ]),
+    "utf-8",
+  );
 
-<table width="100%">
-  <tr>
-    <td width="50%">
-      <img src="./assets/icons/activity.svg" width="14" height="14" align="absmiddle" /> <b>Lines of Code</b><br />
-      <code>${fmt.format(netLines)} net</code> <sub>(+${formatCompact(totalAdd)} / -${formatCompact(totalDel)})</sub>
-    </td>
-    <td width="50%">
-      <img src="./assets/icons/git-pull-request.svg" width="14" height="14" align="absmiddle" /> <b>Pull Requests</b><br />
-      <code>${prMergeRate}% merged</code> <sub>(${stats.pull_requests.merged} of ${stats.pull_requests.total})</sub>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%">
-      <img src="./assets/icons/git-commit.svg" width="14" height="14" align="absmiddle" /> <b>Commits</b><br />
-      <code>${fmt.format(totalCommits)}</code> <sub>(pub + org)</sub>
-    </td>
-    <td width="50%">
-      <img src="./assets/icons/zap.svg" width="14" height="14" align="absmiddle" /> <b>Activity & Streaks</b><br />
-      <code>${activeDaysFormatted}d active</code> <sub>(${stats.streaks_and_consistency.current_streak_days}d current / ${stats.streaks_and_consistency.longest_streak_days}d max)</sub>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%">
-      <img src="./assets/icons/layers.svg" width="14" height="14" align="absmiddle" /> <b>Repositories</b><br />
-      <code>${totalReposContributed} contributed</code> <sub>(${publicRepos} pub &#183; ${privateRepos} pri &#183; ${orgRepos} org)</sub>
-    </td>
-    <td width="50%">
-      <img src="./assets/icons/globe.svg" width="14" height="14" align="absmiddle" /> <b>Scope Distribution</b><br />
-      <code>${orgPct}% org &#183; ${personalPct}% personal</code>
-    </td>
-  </tr>
-</table>
+  const telemetryBlock = `<a id="telemetry"></a>
 
-${yearlyData.length > 0 ? `<img src="./assets/contributions.svg" width="100%" alt="Contributions chart" />` : ""}`;
+<img src="./assets/telemetry.svg" width="100%" alt="telemetry metrics" />
+
+${
+  yearlyData.length > 0
+    ? `<img src="./assets/contributions.svg" width="100%" alt="Contributions chart" />`
+    : ""
+}`;
 
   const totalTrackedLoc = (stats.languages || []).reduce(
     (sum, l) => sum + (l.loc || 0),
@@ -920,9 +987,9 @@ ${languageAsciiChart}
     sections.push(latestReleaseBlock);
   }
 
+  sections.push(telemetryBlock);
   sections.push(projectsBlock);
   sections.push(writingBlock);
-  sections.push(telemetryBlock);
   sections.push(languagesBlock);
   sections.push(footerBlock);
 

@@ -73,7 +73,7 @@ describe("readme generator", () => {
 
     const releaseSection = readme.slice(
       readme.indexOf('id="latest-release"'),
-      readme.indexOf('id="projects"'),
+      readme.indexOf('id="telemetry"'),
     );
     const releaseUrl =
       "https://github.com/adityamotale/shyena/releases/tag/v0.0.102";
@@ -121,6 +121,45 @@ describe("readme generator", () => {
       "Release card should be borderless, light-only, and free of tag pill/CTA styling",
     );
 
+    assert.ok(
+      readme.includes(
+        '<img src="./assets/telemetry.svg" width="100%" alt="telemetry metrics" />',
+      ) &&
+        readme.includes('<img src="./assets/contributions.svg" width="100%"'),
+      "Telemetry should use the SVG card and keep the contributions chart",
+    );
+    assert.ok(
+      !readme.includes("~ TELEMETRY"),
+      "Telemetry title should live inside the SVG card",
+    );
+    const telemetryCard = readFileSync(
+      path.join(rootDir, "assets", "telemetry.svg"),
+      "utf-8",
+    );
+    for (const value of [
+      "TELEMETRY",
+      "Lines of Code",
+      "697,167 net",
+      "+1.6M / -900.3k",
+      "97.4% merged",
+      "228 of 234",
+      "3,515",
+      "1,037d active",
+      "12d current / 112d max",
+      "53 contributed",
+      "62% org · 38% personal",
+      'stroke="#d7827e"',
+    ]) {
+      assert.ok(
+        telemetryCard.includes(value),
+        `Telemetry card should include ${value}`,
+      );
+    }
+    assert.ok(
+      !telemetryCard.includes("prefers-color-scheme"),
+      "Telemetry card should be light-only",
+    );
+
     const iconsDir = path.join(rootDir, "assets", "icons");
     const requiredIcons = [
       "github.svg",
@@ -132,10 +171,6 @@ describe("readme generator", () => {
       "external-link.svg",
       "code.svg",
       "book-open.svg",
-      "activity.svg",
-      "git-pull-request.svg",
-      "git-commit.svg",
-      "zap.svg",
       "layers.svg",
     ];
 
@@ -147,6 +182,17 @@ describe("readme generator", () => {
       assert.ok(
         readme.includes(`./assets/icons/${icon}`),
         `README should reference icon ${icon}`,
+      );
+    }
+    for (const icon of [
+      "activity.svg",
+      "git-pull-request.svg",
+      "git-commit.svg",
+      "zap.svg",
+    ]) {
+      assert.ok(
+        existsSync(path.join(iconsDir, icon)),
+        `Should generate inline icon ${icon}`,
       );
     }
 
@@ -265,9 +311,12 @@ describe("readme generator", () => {
     const languagesIdx = readme.indexOf('id="languages"');
 
     assert.ok(topIdx < releaseIdx, "Top must precede Latest Release");
-    assert.ok(releaseIdx < projectsIdx, "Latest Release must precede Projects");
+    assert.ok(
+      releaseIdx < telemetryIdx,
+      "Latest Release must precede Telemetry",
+    );
+    assert.ok(telemetryIdx < projectsIdx, "Telemetry must precede Projects");
     assert.ok(projectsIdx < writingIdx, "Projects must precede Writing");
-    assert.ok(writingIdx < telemetryIdx, "Writing must precede Telemetry");
-    assert.ok(telemetryIdx < languagesIdx, "Telemetry must precede Languages");
+    assert.ok(writingIdx < languagesIdx, "Writing must precede Languages");
   });
 });
