@@ -336,7 +336,9 @@ function formatLocCompact(n: number): string {
 
 function generateLanguagesSvg(languages: LanguageStat[]): string {
   const width = 680;
-  const primary = languages[0];
+  const barY = 54;
+  const barH = 6;
+  const gap = 2;
   const totalLoc = languages.reduce((sum, l) => sum + (l.loc || 0), 0);
   const otherLoc = languages.slice(5).reduce((sum, l) => sum + (l.loc || 0), 0);
   const otherPct = totalLoc > 0 ? (otherLoc / totalLoc) * 100 : 0;
@@ -348,41 +350,44 @@ function generateLanguagesSvg(languages: LanguageStat[]): string {
   let x = 0;
   const segments = items
     .map((item, i) => {
-      const segWidth =
-        i === items.length - 1
-          ? width - x
-          : Math.round((item.pct / 100) * width);
-      const rect = `<rect x="${x}" y="88" width="${segWidth}" height="10" fill="#d7827e" fill-opacity="${opacities[i] || 0.25}" clip-path="url(#bar-clip)" />`;
-      x += segWidth;
+      const isLast = i === items.length - 1;
+      const rawWidth = isLast
+        ? width - x
+        : Math.round((item.pct / 100) * width);
+      const segWidth = isLast
+        ? Math.max(1, rawWidth)
+        : Math.max(1, rawWidth - gap);
+      const rect = `<rect x="${x}" y="${barY}" width="${segWidth}" height="${barH}" fill="#d7827e" fill-opacity="${opacities[i] || 0.25}" clip-path="url(#bar-clip)" />`;
+      x += rawWidth;
       return rect;
     })
     .join("\n    ");
-  const legend = escapeXml(
-    items.map((item) => `${item.name} ${item.pct.toFixed(1)}%`).join(" · "),
-  );
-  const primaryName = escapeXml(primary?.name || "Rust");
-  const primaryPct = primary ? primary.percentage.toFixed(1) : "72.6";
+  const legend = items
+    .map(
+      (item) =>
+        `<tspan class="subtle">${escapeXml(item.name)}</tspan> <tspan class="muted">${item.pct.toFixed(1)}%</tspan>`,
+    )
+    .join(`<tspan class="muted"> · </tspan>`);
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} 138" width="${width}" height="138" fill="none">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} 96" width="${width}" height="96" fill="none">
   <title>language distribution</title>
   <defs>
     <clipPath id="bar-clip">
-      <rect x="0" y="88" width="${width}" height="10" rx="5" />
+      <rect x="0" y="${barY}" width="${width}" height="${barH}" rx="3" />
     </clipPath>
   </defs>
   <style>
     .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
     .text { fill: #575279; }
+    .subtle { fill: #797593; }
     .muted { fill: #9893a5; }
   </style>
   <g class="mono">
     <text x="0" y="16" fill="#d7827e" font-size="11" font-weight="700">&gt;</text>
     <text x="14" y="16" class="text" font-size="11" font-weight="700" letter-spacing="0.08em">LANGUAGES</text>
-    <text x="0" y="52" fill="#d7827e" font-size="13" font-weight="700">${primaryName} ${primaryPct}%</text>
-    <text x="0" y="72" class="muted" font-size="11">${formatLocCompact(totalLoc)} loc · ${languages.length} languages tracked</text>
-    <rect x="0" y="88" width="${width}" height="10" rx="5" fill="#dfdad9" />
+    <text x="0" y="40" class="muted" font-size="11">${formatLocCompact(totalLoc)} loc · ${languages.length} languages tracked</text>
     ${segments}
-    <text x="0" y="120" class="muted" font-size="10">${legend}</text>
+    <text x="0" y="80" font-size="10">${legend}</text>
   </g>
 </svg>`;
 }
@@ -1030,7 +1035,10 @@ ${badges}`;
       );
     }
     writingBlock = [
-      `<img src="./assets/writing-header.svg" width="100%" alt="Writing" />`,
+      // NOTE: Keep writing-header.svg wrapped in <a href="/"> so GitHub renders it
+      // consistently with the linked <a><img></a> rows below; do not unwrap without
+      // verifying GitHub README layout.
+      `<a href="/">\n<img src="./assets/writing-header.svg" width="100%" alt="Writing" />\n</a>`,
       ...writingEntries.map((entry, i) => {
         const formattedDate = formatBlogDate(entry.dateStr);
         if (writeAssets) {
@@ -1111,7 +1119,10 @@ ${
     languagesBlock = `<img src="./assets/languages.svg" width="100%" alt="language distribution" />`;
   }
 
-  const footerBlock = `<a href="https://adii.fyi"><img src="./assets/footer.svg" width="100%" alt="aditya — adii.fyi" /></a>`;
+  // NOTE: Keep the <div>&nbsp;</div> spacer before footer.svg; GitHub collapses
+  // vertical spacing before the footer in the README without it. Do not remove
+  // without verifying GitHub README layout.
+  const footerBlock = `<div>&nbsp;</div>\n<a href="https://adii.fyi"><img src="./assets/footer.svg" width="100%" alt="aditya — adii.fyi" /></a>`;
 
   const sections = [headerBlock];
 
@@ -1123,10 +1134,10 @@ ${
   if (projectsBlock) {
     sections.push(projectsBlock);
   }
-  sections.push(writingBlock);
   if (languagesBlock) {
     sections.push(languagesBlock);
   }
+  sections.push(writingBlock);
   sections.push(footerBlock);
 
   return sections.join("\n\n") + "\n";
