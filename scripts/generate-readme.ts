@@ -268,10 +268,7 @@ const SVG_ICONS: Record<string, string> = {
   "file-text": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /></svg>`,
   rss: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><path d="M4 11a9 9 0 0 1 9 9" /><path d="M4 4a16 16 0 0 1 16 16" /><circle cx="5" cy="19" r="1" fill="#d7827e" /></svg>`,
   "external-link": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>`,
-  calendar: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>`,
   code: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>`,
-  briefcase: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><rect x="2" y="7" width="20" height="14" rx="2" ry="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" /></svg>`,
-  "graduation-cap": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><path d="M22 10v6M2 10l10-5 10 5-10 5z" /><path d="M6 12v5c3 3 9 3 12 0v-5" /></svg>`,
   "book-open": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></svg>`,
   activity: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>`,
   "git-pull-request": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><circle cx="18" cy="18" r="3" /><circle cx="6" cy="6" r="3" /><path d="M13 6h3a2 2 0 0 1 2 2v7" /><line x1="6" y1="9" x2="6" y2="21" /></svg>`,
@@ -674,19 +671,6 @@ export async function generateReadme(
 
   const blogPosts = getBlogPosts(rootDir, 5);
 
-  const pid7Repos = (stats.repositories_contributed_to || [])
-    .filter((r) => r.repository.startsWith("pid7-org/"))
-    .filter((r) => (r.total_contributions || 0) >= 100)
-    .sort((a, b) => (b.total_contributions || 0) - (a.total_contributions || 0))
-    .slice(0, 5)
-    .map((r) => ({
-      name: r.repository.replace(/^pid7-org\//, ""),
-      url: `https://github.com/${r.repository}`,
-    }));
-  const repoNames = pid7Repos
-    .map((r) => `<code>${r.name}</code>`)
-    .join(" &#183; ");
-
   const totalAdd = stats.lines_of_code.total_additions;
   const totalDel = stats.lines_of_code.total_deletions;
   const netLines = stats.lines_of_code.net_lines;
@@ -834,15 +818,6 @@ ${badges}
 
 <img src="./assets/header.svg" width="320" height="112" alt="aditya" />`;
 
-  const aboutBlock = `## <a id="about"></a>~ ABOUT
-
-An engineer by choice. It bugs me how slow and messy most software is, so I build things the way they should work: fast, without the bloat, and knowing what's actually going on underneath. Some weeks that's a storage engine or SIMD search, other times a Sanskrit parser, a weird tool, or a full product I wanted for myself. I don't stick to one lane; I just figure out how the engine works and ship.
-
-<img src="./assets/icons/github.svg" width="14" height="14" align="absmiddle" /> <a href="https://github.com/adityamotale">github</a> &nbsp;/&nbsp;
-<img src="./assets/icons/twitter.svg" width="14" height="14" align="absmiddle" /> <a href="https://x.com/arctic_byte">twitter</a> &nbsp;/&nbsp;
-<img src="./assets/icons/linkedin.svg" width="14" height="14" align="absmiddle" /> <a href="https://www.linkedin.com/in/aditya-motale">linkedin</a> &nbsp;/&nbsp;
-<img src="./assets/icons/file-text.svg" width="14" height="14" align="absmiddle" /> <a href="https://adii.fyi/adityamotale.pdf">resume</a>`;
-
   const projectsBlock = `## <a id="projects"></a>~ PROJECTS
 
 ${projectTable}`;
@@ -854,34 +829,6 @@ ${writingItems}
 <p>
   <img src="./assets/icons/external-link.svg" width="12" height="12" align="absmiddle" /> <sub><a href="https://adii.fyi/blog">view all posts &rarr;</a></sub>
 </p>`;
-
-  const experienceBlock = `## <a id="experience"></a>~ EXPERIENCE
-
-<p>
-  <img src="./assets/icons/briefcase.svg" width="14" height="14" align="absmiddle" /> <b>Systems Engineering &#183; pid7-org</b> <sub>(Sep 2024 &mdash; Present)</sub>
-</p>
-
-- **role:** Core Contributor &#183; Systems Architecture & Implementation
-- **repos:** ${repoNames}
-- **stack:** Core: Rust &#183; SIMD | Concurrency: Lock-Free | Storage: Memory-Mapped I/O
-- **impact:** Shipped a lock-free concurrent KV engine with memory-mapped I/O and explicit sync barriers; production SIMD paths prioritize deterministic latency and memory efficiency
-
-<p>
-  <img src="./assets/icons/briefcase.svg" width="14" height="14" align="absmiddle" /> <b>Freelance & Contract &#183; Web & Tooling</b> <sub>(Jul 2024 &mdash; Present)</sub>
-</p>
-
-- **role:** Full-Stack Developer & Tooling Engineer &#183; 3 Clients
-- **stack:** Frontend: Astro &#183; TypeScript | Backend: Microservices | Tooling: VS Code API
-- **impact:** Delivered a transactional email service and event-ticketing platform end to end; built VS Code extensions for internal developer workflows across client projects
-
-<p>
-  <img src="./assets/icons/briefcase.svg" width="14" height="14" align="absmiddle" /> <b>Internships &#183; Mobile Engineering</b> <sub>(Nov 2021 &mdash; Apr 2024 &#183; 9 mos)</sub>
-</p>
-
-- **role:** Flutter Developer &#183; 3 Organizations
-- **orgs:** kraftbase (1 mo) &#183; Rojgary (5 mos) &#183; FOLKDevelopers (3 mos)
-- **stack:** Mobile: Flutter &#183; Dart | Architecture: State Management | APIs: REST
-- **impact:** Led Flutter delivery across three organizations; built MVPs, refactored production apps, and delivered features during active release cycles`;
 
   const telemetryBlock = `## <a id="telemetry"></a>~ TELEMETRY
 
@@ -954,31 +901,6 @@ ${yearlyData.length > 0 ? `<img src="./assets/contributions.svg" width="100%" al
 ${languageAsciiChart}
 \`\`\``;
 
-  const educationBlock = `## <a id="education"></a>~ EDUCATION
-
-<table width="100%">
-  <tr>
-    <td width="50%">
-      <img src="./assets/icons/graduation-cap.svg" width="14" height="14" align="absmiddle" /> <b>Degree</b><br />
-      <code>B.Tech</code> <sub>(Computer Science &amp; Engineering)</sub>
-    </td>
-    <td width="50%">
-      <img src="./assets/icons/calendar.svg" width="14" height="14" align="absmiddle" /> <b>Period</b><br />
-      <code>2020 &ndash; 2024</code> <sub>(4 yrs)</sub>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%">
-      <img src="./assets/icons/code.svg" width="14" height="14" align="absmiddle" /> <b>Major</b><br />
-      <code>Computer Science</code> <sub>(Systems &amp; Software)</sub>
-    </td>
-    <td width="50%">
-      <img src="./assets/icons/layers.svg" width="14" height="14" align="absmiddle" /> <b>Institution</b><br />
-      <code>Marathwada Inst. of Technology</code>
-    </td>
-  </tr>
-</table>`;
-
   const footerBlock = `---
 
 <p align="center">
@@ -998,13 +920,10 @@ ${languageAsciiChart}
     sections.push(latestReleaseBlock);
   }
 
-  sections.push(aboutBlock);
   sections.push(projectsBlock);
   sections.push(writingBlock);
-  sections.push(experienceBlock);
   sections.push(telemetryBlock);
   sections.push(languagesBlock);
-  sections.push(educationBlock);
   sections.push(footerBlock);
 
   return sections.join("\n\n") + "\n";

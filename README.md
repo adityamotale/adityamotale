@@ -8,15 +8,6 @@
 
 <a href="https://github.com/adityamotale/shyena/releases/tag/v0.0.102"><img src="./assets/latest-release.svg" width="100%" alt="shyena v0.0.102 release" /></a>
 
-## <a id="about"></a>~ ABOUT
-
-An engineer by choice. It bugs me how slow and messy most software is, so I build things the way they should work: fast, without the bloat, and knowing what's actually going on underneath. Some weeks that's a storage engine or SIMD search, other times a Sanskrit parser, a weird tool, or a full product I wanted for myself. I don't stick to one lane; I just figure out how the engine works and ship.
-
-<img src="./assets/icons/github.svg" width="14" height="14" align="absmiddle" /> <a href="https://github.com/adityamotale">github</a> &nbsp;/&nbsp;
-<img src="./assets/icons/twitter.svg" width="14" height="14" align="absmiddle" /> <a href="https://x.com/arctic_byte">twitter</a> &nbsp;/&nbsp;
-<img src="./assets/icons/linkedin.svg" width="14" height="14" align="absmiddle" /> <a href="https://www.linkedin.com/in/aditya-motale">linkedin</a> &nbsp;/&nbsp;
-<img src="./assets/icons/file-text.svg" width="14" height="14" align="absmiddle" /> <a href="https://adii.fyi/adityamotale.pdf">resume</a>
-
 ## <a id="projects"></a>~ PROJECTS
 
 <table width="100%">
@@ -57,34 +48,6 @@ An engineer by choice. It bugs me how slow and messy most software is, so I buil
 <p>
   <img src="./assets/icons/external-link.svg" width="12" height="12" align="absmiddle" /> <sub><a href="https://adii.fyi/blog">view all posts &rarr;</a></sub>
 </p>
-
-## <a id="experience"></a>~ EXPERIENCE
-
-<p>
-  <img src="./assets/icons/briefcase.svg" width="14" height="14" align="absmiddle" /> <b>Systems Engineering &#183; pid7-org</b> <sub>(Sep 2024 &mdash; Present)</sub>
-</p>
-
-- **role:** Core Contributor &#183; Systems Architecture & Implementation
-- **repos:** <code>turbofox</code> &#183; <code>frozen-core</code> &#183; <code>ashwa</code> &#183; <code>website</code>
-- **stack:** Core: Rust &#183; SIMD | Concurrency: Lock-Free | Storage: Memory-Mapped I/O
-- **impact:** Shipped a lock-free concurrent KV engine with memory-mapped I/O and explicit sync barriers; production SIMD paths prioritize deterministic latency and memory efficiency
-
-<p>
-  <img src="./assets/icons/briefcase.svg" width="14" height="14" align="absmiddle" /> <b>Freelance & Contract &#183; Web & Tooling</b> <sub>(Jul 2024 &mdash; Present)</sub>
-</p>
-
-- **role:** Full-Stack Developer & Tooling Engineer &#183; 3 Clients
-- **stack:** Frontend: Astro &#183; TypeScript | Backend: Microservices | Tooling: VS Code API
-- **impact:** Delivered a transactional email service and event-ticketing platform end to end; built VS Code extensions for internal developer workflows across client projects
-
-<p>
-  <img src="./assets/icons/briefcase.svg" width="14" height="14" align="absmiddle" /> <b>Internships &#183; Mobile Engineering</b> <sub>(Nov 2021 &mdash; Apr 2024 &#183; 9 mos)</sub>
-</p>
-
-- **role:** Flutter Developer &#183; 3 Organizations
-- **orgs:** kraftbase (1 mo) &#183; Rojgary (5 mos) &#183; FOLKDevelopers (3 mos)
-- **stack:** Mobile: Flutter &#183; Dart | Architecture: State Management | APIs: REST
-- **impact:** Led Flutter delivery across three organizations; built MVPs, refactored production apps, and delivered features during active release cycles
 
 ## <a id="telemetry"></a>~ TELEMETRY
 
@@ -146,31 +109,6 @@ Python       [█                                   ]   3.6%   56.7k loc
 JavaScript   [█                                   ]   3.0%   47.6k loc
 Other        [███                                 ]   8.7%  138.4k loc
 ```
-
-## <a id="education"></a>~ EDUCATION
-
-<table width="100%">
-  <tr>
-    <td width="50%">
-      <img src="./assets/icons/graduation-cap.svg" width="14" height="14" align="absmiddle" /> <b>Degree</b><br />
-      <code>B.Tech</code> <sub>(Computer Science &amp; Engineering)</sub>
-    </td>
-    <td width="50%">
-      <img src="./assets/icons/calendar.svg" width="14" height="14" align="absmiddle" /> <b>Period</b><br />
-      <code>2020 &ndash; 2024</code> <sub>(4 yrs)</sub>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%">
-      <img src="./assets/icons/code.svg" width="14" height="14" align="absmiddle" /> <b>Major</b><br />
-      <code>Computer Science</code> <sub>(Systems &amp; Software)</sub>
-    </td>
-    <td width="50%">
-      <img src="./assets/icons/layers.svg" width="14" height="14" align="absmiddle" /> <b>Institution</b><br />
-      <code>Marathwada Inst. of Technology</code>
-    </td>
-  </tr>
-</table>
 
 ---
 

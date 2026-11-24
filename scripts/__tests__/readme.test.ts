@@ -73,7 +73,7 @@ describe("readme generator", () => {
 
     const releaseSection = readme.slice(
       readme.indexOf('id="latest-release"'),
-      readme.indexOf('id="about"'),
+      readme.indexOf('id="projects"'),
     );
     const releaseUrl =
       "https://github.com/adityamotale/shyena/releases/tag/v0.0.102";
@@ -130,10 +130,7 @@ describe("readme generator", () => {
       "file-text.svg",
       "rss.svg",
       "external-link.svg",
-      "calendar.svg",
       "code.svg",
-      "briefcase.svg",
-      "graduation-cap.svg",
       "book-open.svg",
       "activity.svg",
       "git-pull-request.svg",
@@ -177,13 +174,10 @@ describe("readme generator", () => {
     const sectionTargets = [
       'id="top"',
       'id="latest-release"',
-      'id="about"',
       'id="projects"',
       'id="writing"',
-      'id="experience"',
       'id="telemetry"',
       'id="languages"',
-      'id="education"',
     ];
     for (const target of sectionTargets) {
       assert.ok(
@@ -194,11 +188,11 @@ describe("readme generator", () => {
 
     // Heading format verification (~ prefix, no > and no // comments)
     assert.ok(
-      readme.includes('## <a id="about"></a>~ ABOUT'),
+      readme.includes('## <a id="projects"></a>~ PROJECTS'),
       "README headings should use ~ prefix",
     );
     assert.ok(
-      !readme.includes("> ABOUT"),
+      !readme.includes("> PROJECTS"),
       "README headings should not use > symbol",
     );
     assert.ok(!readme.includes("// bio"), "README should not contain // bio");
@@ -207,14 +201,11 @@ describe("readme generator", () => {
       "README should not contain // metrics",
     );
 
-    // Experience section should not have disclosure arrows (<details>/<summary>)
     assert.ok(
-      !readme.includes("<details"),
-      "Experience section should not use <details>",
-    );
-    assert.ok(
-      !readme.includes("<summary"),
-      "Experience section should not use <summary>",
+      !readme.includes("~ ABOUT") &&
+        !readme.includes("~ EXPERIENCE") &&
+        !readme.includes("~ EDUCATION"),
+      "README should not contain about, experience, or education sections",
     );
 
     // Wordmark verification
@@ -268,24 +259,15 @@ describe("readme generator", () => {
 
     const topIdx = readme.indexOf('id="top"');
     const releaseIdx = readme.indexOf('id="latest-release"');
-    const aboutIdx = readme.indexOf('id="about"');
     const projectsIdx = readme.indexOf('id="projects"');
     const writingIdx = readme.indexOf('id="writing"');
-    const experienceIdx = readme.indexOf('id="experience"');
     const telemetryIdx = readme.indexOf('id="telemetry"');
     const languagesIdx = readme.indexOf('id="languages"');
-    const educationIdx = readme.indexOf('id="education"');
 
     assert.ok(topIdx < releaseIdx, "Top must precede Latest Release");
-    assert.ok(releaseIdx < aboutIdx, "Latest Release must precede About");
-    assert.ok(aboutIdx < projectsIdx, "About must precede Projects");
+    assert.ok(releaseIdx < projectsIdx, "Latest Release must precede Projects");
     assert.ok(projectsIdx < writingIdx, "Projects must precede Writing");
-    assert.ok(writingIdx < experienceIdx, "Writing must precede Experience");
-    assert.ok(
-      experienceIdx < telemetryIdx,
-      "Experience must precede Telemetry",
-    );
+    assert.ok(writingIdx < telemetryIdx, "Writing must precede Telemetry");
     assert.ok(telemetryIdx < languagesIdx, "Telemetry must precede Languages");
-    assert.ok(languagesIdx < educationIdx, "Languages must precede Education");
   });
 });
