@@ -80,6 +80,19 @@ interface GithubStats {
     total_deletions: number;
     net_lines: number;
   };
+  categories?: {
+    organization?: {
+      commits?: number;
+      total_contributions?: number;
+    };
+    personal?: {
+      commits?: number;
+      total_contributions?: number;
+    };
+    external_oss?: {
+      total_contributions?: number;
+    };
+  };
   repositories: {
     total_owned: number;
     public: number;
@@ -267,6 +280,47 @@ const SVG_ICONS: Record<string, string> = {
   zap: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>`,
   layers: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><polygon points="12 2 2 7 12 12 22 7 12 2" /><polyline points="2 17 12 22 22 17" /><polyline points="2 12 12 17 22 12" /></svg>`,
 };
+
+function formatLocCompact(n: number): string {
+  const abs = Math.abs(n);
+  if (abs >= 1_000_000) return `${(n / 1_000_000).toFixed(2)}M`;
+  if (abs >= 1_000) return `${(n / 1_000).toFixed(1)}k`;
+  return n.toString();
+}
+
+function generateLanguageAsciiChart(languages?: LanguageStat[]): string {
+  if (!languages || languages.length === 0) return "";
+  const top = languages.slice(0, 5);
+  const otherLangs = languages.slice(5);
+  const otherLoc = otherLangs.reduce((sum, l) => sum + (l.loc || 0), 0);
+  const totalLoc = languages.reduce((sum, l) => sum + (l.loc || 0), 0);
+  const otherPct = totalLoc > 0 ? (otherLoc / totalLoc) * 100 : 0;
+
+  const items = [
+    ...top.map((l) => ({ name: l.name, pct: l.percentage, loc: l.loc || 0 })),
+  ];
+  if (otherLoc > 0 || otherPct > 0) {
+    items.push({ name: "Other", pct: otherPct, loc: otherLoc });
+  }
+
+  const barWidth = 36;
+  const lines: string[] = [];
+
+  for (const item of items) {
+    const filled = Math.max(
+      item.pct > 0 ? 1 : 0,
+      Math.round((item.pct / 100) * barWidth),
+    );
+    const empty = Math.max(0, barWidth - filled);
+    const bar = "█".repeat(filled) + " ".repeat(empty);
+    const name = item.name.padEnd(12, " ");
+    const pctStr = `${item.pct.toFixed(1).padStart(5, " ")}%`;
+    const locStr = `${formatLocCompact(item.loc)} loc`.padStart(10, " ");
+    lines.push(`${name} [${bar}] ${pctStr}  ${locStr}`);
+  }
+
+  return lines.join("\n");
+}
 
 function generateContributionsSvg(yearlyData: YearlyContribution[]): string {
   const currentYear = new Date().getFullYear();
@@ -516,11 +570,17 @@ export function generateReadme(rootDir: string): string {
 
   const prMergeRate = stats.pull_requests.merge_rate_percentage;
 
-  const topLanguages =
-    (stats.languages || [])
-      .slice(0, 3)
-      .map((l) => `${l.name} ${Math.round(l.percentage)}%`)
-      .join(" &middot; ") || "--";
+  const orgCommits =
+    stats.categories?.organization?.commits ??
+    stats.categories?.organization?.total_contributions ??
+    2218;
+  const personalCommits =
+    stats.categories?.personal?.commits ??
+    stats.categories?.personal?.total_contributions ??
+    1550;
+  const totalScope = orgCommits + personalCommits || 1;
+  const orgPct = Math.round((orgCommits / totalScope) * 100);
+  const personalPct = Math.round((personalCommits / totalScope) * 100);
 
   const rustLang = (stats.languages || []).find((l) => l.name === "Rust");
   const rustPct = rustLang ? rustLang.percentage.toFixed(0) : "68";
@@ -560,22 +620,14 @@ export function generateReadme(rootDir: string): string {
       latestRelease.url ||
       `https://github.com/${latestRelease.repo}/releases/tag/${latestRelease.tag_name}`;
 
-    latestReleaseBlock = `## <a id="latest-release"></a>\`>\` LATEST RELEASE ─── \`// ${latestRelease.repo}\`
+    latestReleaseBlock = `## <a id="latest-release"></a>> LATEST RELEASE
 
-<a href="${releaseUrl}">
-  <img src="${releaseBannerUrl}" width="100%" alt="${releaseRepoShort} release banner" />
-</a>
+<sub>// ${latestRelease.repo}</sub>
 
-<p>
-  <img src="./assets/icons/tag.svg" width="14" height="14" align="absmiddle" /> <b><a href="${releaseUrl}">${releaseRepoShort}</a></b> <code>${latestRelease.tag_name}</code> &nbsp;&bull;&nbsp;
-  <img src="./assets/icons/calendar.svg" width="14" height="14" align="absmiddle" /> <sub>${formattedReleaseDate}</sub>
-</p>
+<a href="${releaseUrl}"><img src="${releaseBannerUrl}" width="100%" alt="${releaseRepoShort} release banner" /></a>
 
-> ${releaseDesc}
-
-<p>
-  <img src="./assets/icons/external-link.svg" width="14" height="14" align="absmiddle" /> <a href="${releaseUrl}">view release &rarr;</a>
-</p>`;
+<img src="./assets/icons/tag.svg" width="14" height="14" align="absmiddle" /> <b><a href="${releaseUrl}">${releaseRepoShort}</a></b> <code>${latestRelease.tag_name}</code> &middot; <img src="./assets/icons/calendar.svg" width="14" height="14" align="absmiddle" /> <sub>${formattedReleaseDate}</sub><br />
+${releaseDesc}`;
   }
 
   const projectGridRows: string[] = [];
@@ -583,31 +635,17 @@ export function generateReadme(rootDir: string): string {
     const p1 = projects[i];
     const p2 = projects[i + 1];
     const cell1 = `    <td width="50%" valign="top">
-      <a href="${p1.url}">
-        <img src="${p1.bannerUrl}" width="100%" alt="${p1.name} banner" />
-      </a>
-      <br /><br />
-      <b><a href="${p1.url}">${p1.name}</a></b> &nbsp; <sub><code>${p1.owner}</code></sub>
+      <a href="${p1.url}"><img src="${p1.bannerUrl}" width="100%" alt="${p1.name}" /></a>
       <br />
-      <img src="./assets/icons/code.svg" width="14" height="14" align="absmiddle" /> <sub><b>${p1.language}</b> &bull; ${p1.contributions} contribs</sub>
-      <br />
-      <sub>${p1.description}</sub>
-      <br /><br />
-      <img src="./assets/icons/external-link.svg" width="12" height="12" align="absmiddle" /> <sub><a href="${p1.url}">view repository &rarr;</a></sub>
+      <b><a href="${p1.url}">${p1.name}</a></b> &middot; <code>${p1.language}</code> &middot; <sub>${p1.contributions} contribs</sub><br />
+      ${p1.description}
     </td>`;
     const cell2 = p2
       ? `    <td width="50%" valign="top">
-      <a href="${p2.url}">
-        <img src="${p2.bannerUrl}" width="100%" alt="${p2.name} banner" />
-      </a>
-      <br /><br />
-      <b><a href="${p2.url}">${p2.name}</a></b> &nbsp; <sub><code>${p2.owner}</code></sub>
+      <a href="${p2.url}"><img src="${p2.bannerUrl}" width="100%" alt="${p2.name}" /></a>
       <br />
-      <img src="./assets/icons/code.svg" width="14" height="14" align="absmiddle" /> <sub><b>${p2.language}</b> &bull; ${p2.contributions} contribs</sub>
-      <br />
-      <sub>${p2.description}</sub>
-      <br /><br />
-      <img src="./assets/icons/external-link.svg" width="12" height="12" align="absmiddle" /> <sub><a href="${p2.url}">view repository &rarr;</a></sub>
+      <b><a href="${p2.url}">${p2.name}</a></b> &middot; <code>${p2.language}</code> &middot; <sub>${p2.contributions} contribs</sub><br />
+      ${p2.description}
     </td>`
       : `    <td width="50%" valign="top"></td>`;
 
@@ -644,43 +682,38 @@ export function generateReadme(rootDir: string): string {
 ${badges}
 
 \`\`\`text
-▄▀█ █▀▄ █ ▀█▀ █▄█ ▄▀█   █▀▄▀█ █▀█ ▀█▀ ▄▀█ █   █▀▀
-█▀█ █▄▀ █  █   █  █▀█   █ ▀ █ █▄█  █  █▀█ █▄▄ ██▄
+▄▀█ █▀▄ █ ▀█▀ █▄█ ▄▀█
+█▀█ █▄▀ █  █   █  █▀█
 \`\`\`
 
-> **hello, my name is Aditya &mdash; an engineer by choice**  
-> \`// rust ${rustPct}% · ${rustLocFormatted} loc · ${commitsCompact} commits · ${activeDaysFormatted}d active\`
+<a href="#latest-release">latest release</a> &middot; <a href="#about">about</a> &middot; <a href="#projects">projects</a> &middot; <a href="#writing">writing</a> &middot; <a href="#experience">experience</a> &middot; <a href="#telemetry">telemetry</a> &middot; <a href="#languages">languages</a> &middot; <a href="#education">education</a>`;
 
-<p align="center">
-  <a href="#about">about</a> &bull;
-  <a href="#latest-release">latest release</a> &bull;
-  <a href="#projects">projects</a> &bull;
-  <a href="#writing">writing</a> &bull;
-  <a href="#experience">experience</a> &bull;
-  <a href="#telemetry">telemetry</a> &bull;
-  <a href="#education">education</a>
-</p>`;
+  const aboutBlock = `## <a id="about"></a>> ABOUT
 
-  const aboutBlock = `## <a id="about"></a>\`>\` ABOUT ─── \`// bio\`
+<sub>// bio</sub>
 
 An engineer by choice. It bugs me how slow and messy most software is, so I build things the way they should work: fast, without the bloat, and knowing what's actually going on underneath. Some weeks that's a storage engine or SIMD search, other times a Sanskrit parser, a weird tool, or a full product I wanted for myself. I don't stick to one lane; I just figure out how the engine works and ship.
 
-<p>
-  <img src="./assets/icons/github.svg" width="14" height="14" align="absmiddle" /> <a href="https://github.com/adityamotale">github</a> &nbsp;/&nbsp;
-  <img src="./assets/icons/twitter.svg" width="14" height="14" align="absmiddle" /> <a href="https://x.com/arctic_byte">twitter</a> &nbsp;/&nbsp;
-  <img src="./assets/icons/linkedin.svg" width="14" height="14" align="absmiddle" /> <a href="https://www.linkedin.com/in/aditya-motale">linkedin</a> &nbsp;/&nbsp;
-  <img src="./assets/icons/file-text.svg" width="14" height="14" align="absmiddle" /> <a href="https://adii.fyi/adityamotale.pdf">resume</a>
-</p>`;
+<img src="./assets/icons/github.svg" width="14" height="14" align="absmiddle" /> <a href="https://github.com/adityamotale">github</a> &nbsp;/&nbsp;
+<img src="./assets/icons/twitter.svg" width="14" height="14" align="absmiddle" /> <a href="https://x.com/arctic_byte">twitter</a> &nbsp;/&nbsp;
+<img src="./assets/icons/linkedin.svg" width="14" height="14" align="absmiddle" /> <a href="https://www.linkedin.com/in/aditya-motale">linkedin</a> &nbsp;/&nbsp;
+<img src="./assets/icons/file-text.svg" width="14" height="14" align="absmiddle" /> <a href="https://adii.fyi/adityamotale.pdf">resume</a>`;
 
-  const projectsBlock = `## <a id="projects"></a>\`>\` PROJECTS ─── \`// featured projects across orgs & personal\`
+  const projectsBlock = `## <a id="projects"></a>> PROJECTS
+
+<sub>// featured projects across orgs & personal</sub>
 
 ${projectTable}`;
 
-  const writingBlock = `## <a id="writing"></a>\`>\` WRITING ─── [view all](https://adii.fyi/blog) \`// recent posts\`
+  const writingBlock = `## <a id="writing"></a>> WRITING
+
+<sub>// recent posts &middot; <img src="./assets/icons/external-link.svg" width="12" height="12" align="absmiddle" /> <a href="https://adii.fyi/blog">view all</a></sub>
 
 ${writingItems}`;
 
-  const experienceBlock = `## <a id="experience"></a>\`>\` EXPERIENCE ─── \`// 2021 → mobile · 2024 → web & tooling · now → systems\`
+  const experienceBlock = `## <a id="experience"></a>> EXPERIENCE
+
+<sub>// 2021 → mobile · 2024 → web & tooling · now → systems</sub>
 
 <details open>
 <summary><img src="./assets/icons/briefcase.svg" width="14" height="14" align="absmiddle" /> <b>Systems Engineering &middot; pid7-org</b> <sub>(Sep 2024 &mdash; Present)</sub></summary>
@@ -714,7 +747,9 @@ ${writingItems}`;
 
 </details>`;
 
-  const telemetryBlock = `## <a id="telemetry"></a>\`>\` TELEMETRY ─── \`// metrics\`
+  const telemetryBlock = `## <a id="telemetry"></a>> TELEMETRY
+
+<sub>// metrics</sub>
 
 <table width="100%">
   <tr>
@@ -743,15 +778,26 @@ ${writingItems}`;
       <code>${totalReposContributed} contributed</code> <sub>(${publicRepos} pub &middot; ${privateRepos} pri &middot; ${orgRepos} org)</sub>
     </td>
     <td width="50%">
-      <img src="./assets/icons/code.svg" width="14" height="14" align="absmiddle" /> <b>Languages</b><br />
-      <code>${topLanguages}</code>
+      <img src="./assets/icons/globe.svg" width="14" height="14" align="absmiddle" /> <b>Scope Distribution</b><br />
+      <code>${orgPct}% org &middot; ${personalPct}% personal</code>
     </td>
   </tr>
 </table>
 
 ${yearlyData.length > 0 ? `<img src="./assets/contributions.svg" width="100%" alt="Contributions chart" />` : ""}`;
 
-  const educationBlock = `## <a id="education"></a>\`>\` EDUCATION ─── \`// degree & background\`
+  const languageAsciiChart = generateLanguageAsciiChart(stats.languages);
+  const languagesBlock = `## <a id="languages"></a>> LANGUAGES
+
+<sub>// distribution & loc</sub>
+
+\`\`\`text
+${languageAsciiChart}
+\`\`\``;
+
+  const educationBlock = `## <a id="education"></a>> EDUCATION
+
+<sub>// degree & background</sub>
 
 <table width="100%">
   <tr>
@@ -798,6 +844,7 @@ ${yearlyData.length > 0 ? `<img src="./assets/contributions.svg" width="100%" al
   sections.push(writingBlock);
   sections.push(experienceBlock);
   sections.push(telemetryBlock);
+  sections.push(languagesBlock);
   sections.push(educationBlock);
   sections.push(footerBlock);
 

@@ -121,12 +121,13 @@ describe("readme generator", () => {
 
     // Operational navigation links
     const navItems = [
-      'href="#about"',
       'href="#latest-release"',
+      'href="#about"',
       'href="#projects"',
       'href="#writing"',
       'href="#experience"',
       'href="#telemetry"',
+      'href="#languages"',
       'href="#education"',
     ];
     for (const nav of navItems) {
@@ -136,12 +137,13 @@ describe("readme generator", () => {
     // Section targets
     const sectionTargets = [
       'id="top"',
-      'id="about"',
       'id="latest-release"',
+      'id="about"',
       'id="projects"',
       'id="writing"',
       'id="experience"',
       'id="telemetry"',
+      'id="languages"',
       'id="education"',
     ];
     for (const target of sectionTargets) {
@@ -150,6 +152,36 @@ describe("readme generator", () => {
         `README should contain anchor ${target}`,
       );
     }
+
+    // ASCII art verification
+    assert.ok(
+      readme.includes("▄▀█ █▀▄ █ ▀█▀ █▄█ ▄▀█"),
+      "README should contain 'aditya' ASCII art line 1",
+    );
+    assert.ok(
+      readme.includes("█▀█ █▄▀ █  █   █  █▀█"),
+      "README should contain 'aditya' ASCII art line 2",
+    );
+    assert.ok(
+      !readme.includes("█▀▄▀█ █▀█ ▀█▀ ▄▀█ █   █▀▀"),
+      "README ASCII art should not contain 'motale'",
+    );
+
+    // No backticks in section titles
+    assert.ok(
+      !readme.includes("`>`"),
+      "README should not wrap > in backticks in titles",
+    );
+
+    // ASCII Language chart verification
+    assert.ok(
+      readme.includes("Rust         [██"),
+      "README should contain ASCII language distribution chart for Rust",
+    );
+    assert.ok(
+      readme.includes("TypeScript   ["),
+      "README should contain ASCII language distribution chart for TypeScript",
+    );
 
     // Social footer verification
     assert.ok(
@@ -168,6 +200,7 @@ describe("readme generator", () => {
     const writingIdx = readme.indexOf('id="writing"');
     const experienceIdx = readme.indexOf('id="experience"');
     const telemetryIdx = readme.indexOf('id="telemetry"');
+    const languagesIdx = readme.indexOf('id="languages"');
     const educationIdx = readme.indexOf('id="education"');
 
     assert.ok(topIdx < releaseIdx, "Top must precede Latest Release");
@@ -179,6 +212,7 @@ describe("readme generator", () => {
       experienceIdx < telemetryIdx,
       "Experience must precede Telemetry",
     );
-    assert.ok(telemetryIdx < educationIdx, "Telemetry must precede Education");
+    assert.ok(telemetryIdx < languagesIdx, "Telemetry must precede Languages");
+    assert.ok(languagesIdx < educationIdx, "Languages must precede Education");
   });
 });
