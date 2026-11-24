@@ -1,10 +1,4 @@
-import {
-  existsSync,
-  mkdirSync,
-  readdirSync,
-  readFileSync,
-  writeFileSync,
-} from "node:fs";
+import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 interface RepoStat {
@@ -830,14 +824,6 @@ export async function generateReadme(
   }
 
   const assetsDir = path.join(rootDir, "assets");
-  const iconsDir = path.join(assetsDir, "icons");
-  if (!existsSync(iconsDir)) {
-    mkdirSync(iconsDir, { recursive: true });
-  }
-
-  for (const [name, svg] of Object.entries(SVG_ICONS)) {
-    writeFileSync(path.join(iconsDir, `${name}.svg`), svg, "utf-8");
-  }
 
   const fontDataUri = `data:font/woff2;base64,${readFileSync(
     path.join(assetsDir, "fonts", "instrument-serif-latin-400-italic.woff2"),
@@ -1150,10 +1136,10 @@ async function main() {
   const rootDir = path.resolve(import.meta.dirname, "..");
   const readmePath = path.join(rootDir, "README.md");
 
-  console.log("🔄 Generating Markdown/HTML README.md and inline icons...");
+  console.log("🔄 Generating Markdown/HTML README.md...");
   const content = await generateReadme(rootDir);
   writeFileSync(readmePath, content, "utf-8");
-  console.log("✅ Successfully updated README.md and assets/icons/!");
+  console.log("✅ Successfully updated README.md!");
 }
 
 if (process.argv[1] === import.meta.filename) {

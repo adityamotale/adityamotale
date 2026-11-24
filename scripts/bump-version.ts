@@ -127,7 +127,7 @@ function main() {
           "node scripts/generate-resume-pdf.js",
           path.join(rootDir, "website"),
         );
-        console.log("  ✓ Generated website/public/adityamotale.pdf");
+        console.log("  ✓ Generated website/public/aditya.pdf");
       } catch (err: any) {
         console.error("❌ Failed to generate resume PDF:", err.message);
         throw err;
@@ -167,7 +167,7 @@ function main() {
   } catch (_) {}
 
   runCommand(
-    "git add data/github-stats.json README.md assets CHANGELOG.md mdparser/package.json mdparser/package-lock.json scripts/package.json scripts/package-lock.json website/package.json website/package-lock.json website/public/adityamotale.pdf",
+    "git add data/github-stats.json README.md assets CHANGELOG.md mdparser/package.json mdparser/package-lock.json scripts/package.json scripts/package-lock.json website/package.json website/package-lock.json website/public/aditya.pdf",
     rootDir,
   );
 

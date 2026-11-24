@@ -581,16 +581,13 @@ if (!fs.existsSync(publicDir)) {
   fs.mkdirSync(publicDir, { recursive: true });
 }
 
-// Generate aditya.pdf as requested
+// Generate aditya.pdf
 const outputPath = path.resolve(publicDir, 'aditya.pdf');
-const legacyPath = path.resolve(publicDir, 'adityamotale.pdf');
 
 generateResumePdf().then((pdfBytes) => {
   const newBuffer = Buffer.from(pdfBytes);
 
   fs.writeFileSync(outputPath, newBuffer);
-  // Also preserve adityamotale.pdf for test and script compatibility
-  fs.writeFileSync(legacyPath, newBuffer);
 
   console.log(`✅ Resume PDF successfully generated at: ${outputPath} (${pdfBytes.length} bytes)`);
 }).catch((err) => {

@@ -98,7 +98,7 @@ jobs:
 
       - name: Commit README and assets
         run: |
-          git add README.md assets/icons/
+          git add README.md assets/
           if git diff --staged --quiet; then
             echo "No README or asset changes to commit"
           else
