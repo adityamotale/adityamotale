@@ -2,6 +2,8 @@
 
 ![Aditya](./assets/header.svg)
 
+[![Latest Release: adityamotale/shyena](./assets/latest-release.svg)](https://github.com/adityamotale/shyena/releases/tag/v0.0.102)
+
 ![About](./assets/about.svg)
 
 ![Projects](./assets/projects-header.svg)
@@ -18,8 +20,8 @@
 
 ![Telemetry](./assets/telemetry.svg)
 
-![Last Month](./assets/monthly.svg)
-
-![Last Week](./assets/weekly.svg)
+![Contributions](./assets/contributions.svg)
 
 ![Education](./assets/education.svg)
+
+![Footer](./assets/footer.svg)
