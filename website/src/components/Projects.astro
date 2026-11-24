@@ -42,7 +42,7 @@ const projects = (stats.repositories_contributed_to || [])
 {projects.length > 0 && (
   <div
     id="tui-projects"
-    class="w-full font-mono text-[11px] sm:text-xs select-none leading-relaxed"
+    class="w-full font-mono text-[11px] sm:text-xs leading-relaxed"
   >
     <div class="w-full flex flex-col font-mono">
       {/* Section Header: > PROJECTS ─── */}
@@ -117,7 +117,7 @@ const projects = (stats.repositories_contributed_to || [])
             )}
 
             {/* Action link */}
-            <div class="pt-1 mt-auto select-none">
+            <div class="pt-1 mt-auto">
               <a
                 href={p.url}
                 target="_blank"

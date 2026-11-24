@@ -7,7 +7,7 @@ const writingList = await getRecentWriting(5);
 {writingList.length > 0 && (
   <div
     id="tui-writing"
-    class="w-full font-mono text-[11px] sm:text-xs select-none leading-relaxed"
+    class="w-full font-mono text-[11px] sm:text-xs leading-relaxed"
   >
     <div class="w-full flex flex-col font-mono">
       {/* Section Header: > WRITING ────── [view all] ── */}
@@ -45,7 +45,7 @@ const writingList = await getRecentWriting(5);
             >
               {item.title}
             </a>
-            <span class="shrink-0 text-rp-muted text-[11px] select-none font-mono">
+            <span class="shrink-0 text-rp-muted text-[11px] font-mono">
               {formatBlogDate(item.dateStr)}
             </span>
           </div>

@@ -43,7 +43,7 @@ const bannerUrl = repoName
 {latestRelease && (
   <div
     id="tui-latest-release"
-    class="w-full font-mono text-[11px] sm:text-xs select-none leading-relaxed"
+    class="w-full font-mono text-[11px] sm:text-xs leading-relaxed"
   >
     <div class="w-full flex flex-col font-mono">
       {/* Section Header: > LATEST RELEASE ─── */}
@@ -103,7 +103,7 @@ const bannerUrl = repoName
 
         {/* Release Action Link */}
         {releaseUrl && (
-          <div class="pt-0.5 select-none">
+          <div class="pt-0.5">
             <a
               href={releaseUrl}
               target="_blank"

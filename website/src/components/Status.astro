@@ -64,7 +64,7 @@ const reposPrivate = stats.repositories?.private ?? 11;
 
 <section
   id="section-status"
-  class="w-full font-mono text-[11px] sm:text-xs select-none leading-relaxed"
+  class="w-full font-mono text-[11px] sm:text-xs leading-relaxed"
 >
   <div class="w-full flex flex-col font-mono">
     {/* Section Header: > TELEMETRY ─── */}
@@ -103,7 +103,7 @@ const reposPrivate = stats.repositories?.private ?? 11;
             <path d="M13 6h3a2 2 0 0 1 2 2v7"></path>
             <line x1="6" y1="9" x2="6" y2="21"></line>
           </svg>
-          <span class="text-rp-subtle w-14 shrink-0 select-none">prs:</span>
+          <span class="text-rp-subtle w-14 shrink-0">prs:</span>
           <span class="text-rp-text font-medium">
             {prMergeRate}% merge rate
           </span>
@@ -125,7 +125,7 @@ const reposPrivate = stats.repositories?.private ?? 11;
             <line x1="2" y1="12" x2="22" y2="12"></line>
             <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
           </svg>
-          <span class="text-rp-subtle w-14 shrink-0 select-none">scope:</span>
+          <span class="text-rp-subtle w-14 shrink-0">scope:</span>
           <span class="text-rp-text font-medium">{orgPct}% org</span>
           <span class="text-rp-muted">·</span>
           <span>{personalPct}% personal</span>
@@ -147,7 +147,7 @@ const reposPrivate = stats.repositories?.private ?? 11;
           >
             <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
           </svg>
-          <span class="text-rp-subtle w-14 shrink-0 select-none">churn:</span>
+          <span class="text-rp-subtle w-14 shrink-0">churn:</span>
           <span class="text-rp-text font-medium">{addDelRatio}:1 ratio</span>
           <span class="text-rp-muted text-[11px]">
             (+{addFormatted} / -{delFormatted})
@@ -167,7 +167,7 @@ const reposPrivate = stats.repositories?.private ?? 11;
           >
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
           </svg>
-          <span class="text-rp-subtle w-14 shrink-0 select-none">streak:</span>
+          <span class="text-rp-subtle w-14 shrink-0">streak:</span>
           <span class="text-rp-text font-medium">{currentStreak}d current</span>
           <span class="text-rp-muted text-[11px]">({longestStreak}d max)</span>
         </div>
@@ -189,7 +189,7 @@ const reposPrivate = stats.repositories?.private ?? 11;
             <polyline points="16 18 22 12 16 6"></polyline>
             <polyline points="8 6 2 12 8 18"></polyline>
           </svg>
-          <span class="text-rp-subtle w-14 shrink-0 select-none">stack:</span>
+          <span class="text-rp-subtle w-14 shrink-0">stack:</span>
           <span class="text-rp-text font-medium">Rust {rustPct}%</span>
           <span class="text-rp-muted">·</span>
           <span class="truncate">
@@ -210,7 +210,7 @@ const reposPrivate = stats.repositories?.private ?? 11;
           >
             <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
           </svg>
-          <span class="text-rp-subtle w-14 shrink-0 select-none">repos:</span>
+          <span class="text-rp-subtle w-14 shrink-0">repos:</span>
           <span class="text-rp-text font-medium">
             {reposContributed} tracked
           </span>
