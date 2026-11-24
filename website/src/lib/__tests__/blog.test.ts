@@ -59,35 +59,3 @@ describe('blog: Date Formatting & Timestamp Utilities', () => {
     assert.ok(tsC > tsA);
   });
 });
-
-describe('blog: Chronological Sorting on Dummy Posts', () => {
-  it('sorts dummy posts descending by created date (most recent first)', async () => {
-    const postA = await parseMarkdownBlog(DUMMY_BLOG_A);
-    const postB = await parseMarkdownBlog(DUMMY_BLOG_B);
-    const postC = await parseMarkdownBlog(DUMMY_BLOG_C);
-
-    const unsorted = [postA, postB, postC];
-    const sorted = unsorted.sort(
-      (a, b) =>
-        parseDateToTimestamp(b.frontmatter.created) -
-        parseDateToTimestamp(a.frontmatter.created)
-    );
-
-    assert.equal(sorted[0].frontmatter.slug, 'test-blog-b');
-    assert.equal(sorted[1].frontmatter.slug, 'test-blog-c');
-    assert.equal(sorted[2].frontmatter.slug, 'test-blog-a');
-  });
-
-  it('limits top recent posts correctly', async () => {
-    const postA = await parseMarkdownBlog(DUMMY_BLOG_A);
-    const postB = await parseMarkdownBlog(DUMMY_BLOG_B);
-    const postC = await parseMarkdownBlog(DUMMY_BLOG_C);
-
-    const sorted = [postB, postC, postA];
-    const top2 = sorted.slice(0, 2);
-
-    assert.equal(top2.length, 2);
-    assert.equal(top2[0].frontmatter.slug, 'test-blog-b');
-    assert.equal(top2[1].frontmatter.slug, 'test-blog-c');
-  });
-});

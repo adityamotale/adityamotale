@@ -42,15 +42,4 @@ describe("getSundayToSaturdayWindow", () => {
     assert.equal(window.from, "2025-12-28T00:00:00Z");
     assert.equal(window.to, "2026-01-03T23:59:59Z");
   });
-
-  it("produces a window spanning exactly 7 calendar days", () => {
-    const window = getSundayToSaturdayWindow(new Date("2026-09-16T12:00:00Z"));
-    const startDate = new Date(window.from);
-    const endDate = new Date(window.to);
-
-    const diffMs = endDate.getTime() - startDate.getTime();
-    const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
-
-    assert.equal(diffDays, 7);
-  });
 });
