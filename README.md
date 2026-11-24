@@ -7,22 +7,9 @@
 █▀█ █▄▀ █  █   █  █▀█
 ```
 
-## <a id="latest-release"></a>~ LATEST RELEASE
+<a id="latest-release"></a>
 
-<a href="https://github.com/adityamotale/shyena/releases/tag/v0.0.102"><img src="https://raw.githubusercontent.com/adityamotale/shyena/master/assets/banner.png" width="100%" alt="shyena release banner" /></a>
-
-<table width="100%">
-  <tr>
-    <td width="70%">
-      <img src="./assets/icons/tag.svg" width="14" height="14" align="absmiddle" /> <b><a href="https://github.com/adityamotale/shyena/releases/tag/v0.0.102">shyena</a></b> <code>v0.0.102</code><br />
-      Śyena is a Keyboard-first launcher and transient PowerShell automation runtime for Windows
-    </td>
-    <td width="30%" align="right" valign="top">
-      <img src="./assets/icons/calendar.svg" width="14" height="14" align="absmiddle" /> <sub>Nov 20, 2026</sub><br />
-      <sub><a href="https://github.com/adityamotale/shyena/releases/tag/v0.0.102">release notes &rarr;</a></sub>
-    </td>
-  </tr>
-</table>
+<a href="https://github.com/adityamotale/shyena/releases/tag/v0.0.102"><img src="./assets/latest-release.svg" width="100%" alt="shyena v0.0.102 release" /></a>
 
 ## <a id="about"></a>~ ABOUT
 
@@ -40,13 +27,13 @@ An engineer by choice. It bugs me how slow and messy most software is, so I buil
     <td width="50%" valign="top">
       <a href="https://github.com/pid7-org/turbofox"><img src="https://raw.githubusercontent.com/pid7-org/turbofox/master/assets/banner.png" width="100%" alt="turbofox" /></a>
       <br />
-      <b><a href="https://github.com/pid7-org/turbofox">turbofox</a></b> &middot; <code>Rust</code> &middot; <sub>925 contribs</sub><br />
+      <b><a href="https://github.com/pid7-org/turbofox">turbofox</a></b> &#183; <code>Rust</code> &#183; <sub>925 contribs</sub><br />
       An embedded, memory-mapped key-value engine providing lock-free concurrency & explicit sync barriers
     </td>
     <td width="50%" valign="top">
       <a href="https://github.com/pid7-org/ashwa"><img src="https://raw.githubusercontent.com/pid7-org/ashwa/master/assets/banner.png" width="100%" alt="ashwa" /></a>
       <br />
-      <b><a href="https://github.com/pid7-org/ashwa">ashwa</a></b> &middot; <code>Rust</code> &middot; <sub>314 contribs</sub><br />
+      <b><a href="https://github.com/pid7-org/ashwa">ashwa</a></b> &#183; <code>Rust</code> &#183; <sub>314 contribs</sub><br />
       Hardware accelerated routines for single substring search
     </td>
   </tr>
@@ -54,13 +41,13 @@ An engineer by choice. It bugs me how slow and messy most software is, so I buil
     <td width="50%" valign="top">
       <a href="https://github.com/adityamotale/shyena"><img src="https://raw.githubusercontent.com/adityamotale/shyena/master/assets/banner.png" width="100%" alt="shyena" /></a>
       <br />
-      <b><a href="https://github.com/adityamotale/shyena">shyena</a></b> &middot; <code>Rust</code> &middot; <sub>129 contribs</sub><br />
+      <b><a href="https://github.com/adityamotale/shyena">shyena</a></b> &#183; <code>Rust</code> &#183; <sub>129 contribs</sub><br />
       Śyena is a Keyboard-first launcher and transient PowerShell automation runtime for Windows
     </td>
     <td width="50%" valign="top">
       <a href="https://github.com/pid7-org/turbo_crc"><img src="https://raw.githubusercontent.com/pid7-org/turbo_crc/master/assets/banner.png" width="100%" alt="turbo_crc" /></a>
       <br />
-      <b><a href="https://github.com/pid7-org/turbo_crc">turbo_crc</a></b> &middot; <code>Rust</code> &middot; <sub>39 contribs</sub><br />
+      <b><a href="https://github.com/pid7-org/turbo_crc">turbo_crc</a></b> &#183; <code>Rust</code> &#183; <sub>39 contribs</sub><br />
       Hardware accelerated implementation of CRC32C for computing 32-bit CRC
     </td>
   </tr>
@@ -77,29 +64,29 @@ An engineer by choice. It bugs me how slow and messy most software is, so I buil
 ## <a id="experience"></a>~ EXPERIENCE
 
 <p>
-  <img src="./assets/icons/briefcase.svg" width="14" height="14" align="absmiddle" /> <b>Systems Engineering &middot; pid7-org</b> <sub>(Sep 2024 &mdash; Present)</sub>
+  <img src="./assets/icons/briefcase.svg" width="14" height="14" align="absmiddle" /> <b>Systems Engineering &#183; pid7-org</b> <sub>(Sep 2024 &mdash; Present)</sub>
 </p>
 
-- **role:** Core Contributor &middot; Systems Architecture & Implementation
-- **repos:** <code>turbofox</code> &middot; <code>frozen-core</code> &middot; <code>ashwa</code> &middot; <code>website</code>
-- **stack:** Core: Rust &middot; SIMD | Concurrency: Lock-Free | Storage: Memory-Mapped I/O
+- **role:** Core Contributor &#183; Systems Architecture & Implementation
+- **repos:** <code>turbofox</code> &#183; <code>frozen-core</code> &#183; <code>ashwa</code> &#183; <code>website</code>
+- **stack:** Core: Rust &#183; SIMD | Concurrency: Lock-Free | Storage: Memory-Mapped I/O
 - **impact:** Shipped a lock-free concurrent KV engine with memory-mapped I/O and explicit sync barriers; production SIMD paths prioritize deterministic latency and memory efficiency
 
 <p>
-  <img src="./assets/icons/briefcase.svg" width="14" height="14" align="absmiddle" /> <b>Freelance & Contract &middot; Web & Tooling</b> <sub>(Jul 2024 &mdash; Present)</sub>
+  <img src="./assets/icons/briefcase.svg" width="14" height="14" align="absmiddle" /> <b>Freelance & Contract &#183; Web & Tooling</b> <sub>(Jul 2024 &mdash; Present)</sub>
 </p>
 
-- **role:** Full-Stack Developer & Tooling Engineer &middot; 3 Clients
-- **stack:** Frontend: Astro &middot; TypeScript | Backend: Microservices | Tooling: VS Code API
+- **role:** Full-Stack Developer & Tooling Engineer &#183; 3 Clients
+- **stack:** Frontend: Astro &#183; TypeScript | Backend: Microservices | Tooling: VS Code API
 - **impact:** Delivered a transactional email service and event-ticketing platform end to end; built VS Code extensions for internal developer workflows across client projects
 
 <p>
-  <img src="./assets/icons/briefcase.svg" width="14" height="14" align="absmiddle" /> <b>Internships &middot; Mobile Engineering</b> <sub>(Nov 2021 &mdash; Apr 2024 &middot; 9 mos)</sub>
+  <img src="./assets/icons/briefcase.svg" width="14" height="14" align="absmiddle" /> <b>Internships &#183; Mobile Engineering</b> <sub>(Nov 2021 &mdash; Apr 2024 &#183; 9 mos)</sub>
 </p>
 
-- **role:** Flutter Developer &middot; 3 Organizations
-- **orgs:** kraftbase (1 mo) &middot; Rojgary (5 mos) &middot; FOLKDevelopers (3 mos)
-- **stack:** Mobile: Flutter &middot; Dart | Architecture: State Management | APIs: REST
+- **role:** Flutter Developer &#183; 3 Organizations
+- **orgs:** kraftbase (1 mo) &#183; Rojgary (5 mos) &#183; FOLKDevelopers (3 mos)
+- **stack:** Mobile: Flutter &#183; Dart | Architecture: State Management | APIs: REST
 - **impact:** Led Flutter delivery across three organizations; built MVPs, refactored production apps, and delivered features during active release cycles
 
 ## <a id="telemetry"></a>~ TELEMETRY
@@ -128,11 +115,11 @@ An engineer by choice. It bugs me how slow and messy most software is, so I buil
   <tr>
     <td width="50%">
       <img src="./assets/icons/layers.svg" width="14" height="14" align="absmiddle" /> <b>Repositories</b><br />
-      <code>53 contributed</code> <sub>(18 pub &middot; 10 pri &middot; 25 org)</sub>
+      <code>53 contributed</code> <sub>(18 pub &#183; 10 pri &#183; 25 org)</sub>
     </td>
     <td width="50%">
       <img src="./assets/icons/globe.svg" width="14" height="14" align="absmiddle" /> <b>Scope Distribution</b><br />
-      <code>62% org &middot; 38% personal</code>
+      <code>62% org &#183; 38% personal</code>
     </td>
   </tr>
 </table>
@@ -191,12 +178,12 @@ Other        [███                                 ]   8.7%  138.4k loc
 ---
 
 <p align="center">
-  <a href="https://adii.fyi"><b>aditya</b></a> &nbsp;&middot;&nbsp;
-  <img src="./assets/icons/github.svg" width="13" height="13" align="absmiddle" /> <a href="https://github.com/adityamotale">github</a> &nbsp;&middot;&nbsp;
-  <img src="./assets/icons/twitter.svg" width="13" height="13" align="absmiddle" /> <a href="https://x.com/arctic_byte">twitter</a> &nbsp;&middot;&nbsp;
-  <img src="./assets/icons/linkedin.svg" width="13" height="13" align="absmiddle" /> <a href="https://www.linkedin.com/in/aditya-motale">linkedin</a> &nbsp;&middot;&nbsp;
-  <img src="./assets/icons/file-text.svg" width="13" height="13" align="absmiddle" /> <a href="https://adii.fyi/adityamotale.pdf">resume</a> &nbsp;&middot;&nbsp;
-  <img src="./assets/icons/globe.svg" width="13" height="13" align="absmiddle" /> <a href="https://adii.fyi">website</a> &nbsp;&middot;&nbsp;
-  <img src="./assets/icons/rss.svg" width="13" height="13" align="absmiddle" /> <a href="https://adii.fyi/rss.xml">rss</a> &nbsp;&middot;&nbsp;
+  <a href="https://adii.fyi"><b>aditya</b></a> &nbsp;&#183;&nbsp;
+  <img src="./assets/icons/github.svg" width="13" height="13" align="absmiddle" /> <a href="https://github.com/adityamotale">github</a> &nbsp;&#183;&nbsp;
+  <img src="./assets/icons/twitter.svg" width="13" height="13" align="absmiddle" /> <a href="https://x.com/arctic_byte">twitter</a> &nbsp;&#183;&nbsp;
+  <img src="./assets/icons/linkedin.svg" width="13" height="13" align="absmiddle" /> <a href="https://www.linkedin.com/in/aditya-motale">linkedin</a> &nbsp;&#183;&nbsp;
+  <img src="./assets/icons/file-text.svg" width="13" height="13" align="absmiddle" /> <a href="https://adii.fyi/adityamotale.pdf">resume</a> &nbsp;&#183;&nbsp;
+  <img src="./assets/icons/globe.svg" width="13" height="13" align="absmiddle" /> <a href="https://adii.fyi">website</a> &nbsp;&#183;&nbsp;
+  <img src="./assets/icons/rss.svg" width="13" height="13" align="absmiddle" /> <a href="https://adii.fyi/rss.xml">rss</a> &nbsp;&#183;&nbsp;
   <a href="#top"><code>[eof]</code></a>
 </p>

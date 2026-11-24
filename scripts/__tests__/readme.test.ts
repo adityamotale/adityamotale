@@ -1,13 +1,18 @@
 import assert from "node:assert/strict";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import test, { describe } from "node:test";
 import { generateReadme } from "../generate-readme.ts";
 
 describe("readme generator", () => {
-  test("generates complete Markdown/HTML README with operational navs, responsive grid, inline icons, and social footer", () => {
+  test("generates complete Markdown/HTML README with operational navs, responsive grid, inline icons, and social footer", async () => {
     const rootDir = path.resolve(import.meta.dirname, "../..");
-    const readme = generateReadme(rootDir);
+    const stubFetch: typeof fetch = async () =>
+      new Response(Buffer.from("banner"), {
+        status: 200,
+        headers: { "content-type": "image/png" },
+      });
+    const readme = await generateReadme(rootDir, stubFetch, false);
 
     assert.ok(
       readme.includes(
@@ -66,6 +71,56 @@ describe("readme generator", () => {
       "Should include test workflow badge link",
     );
 
+    const releaseSection = readme.slice(
+      readme.indexOf('id="latest-release"'),
+      readme.indexOf('id="about"'),
+    );
+    const releaseUrl =
+      "https://github.com/adityamotale/shyena/releases/tag/v0.0.102";
+    assert.ok(
+      releaseSection.includes(
+        `<a href="${releaseUrl}"><img src="./assets/latest-release.svg" width="100%"`,
+      ),
+      "Should link the entire release section card to the release",
+    );
+    assert.equal(
+      releaseSection.split("<img").length - 1,
+      1,
+      "Release section should contain exactly one image",
+    );
+    assert.ok(
+      !releaseSection.includes("<table") &&
+        !releaseSection.includes("~ LATEST RELEASE") &&
+        !releaseSection.includes("raw.githubusercontent.com"),
+      "Release section should be a single SVG with no heading or remote banner",
+    );
+
+    const releaseCard = readFileSync(
+      path.join(rootDir, "assets", "latest-release.svg"),
+      "utf-8",
+    );
+    for (const value of [
+      "LATEST RELEASE",
+      "shyena",
+      "v0.0.102",
+      "Nov 20, 2026",
+      "Keyboard-first launcher",
+      "data:image/png;base64,",
+      "#d7827e",
+    ]) {
+      assert.ok(
+        releaseCard.includes(value),
+        `Release card should include ${value}`,
+      );
+    }
+    assert.ok(
+      !releaseCard.includes("prefers-color-scheme") &&
+        !releaseCard.includes("#fffaf3") &&
+        !releaseCard.includes("#f2e9e1") &&
+        !releaseCard.includes("view release"),
+      "Release card should be borderless, light-only, and free of tag pill/CTA styling",
+    );
+
     const iconsDir = path.join(rootDir, "assets", "icons");
     const requiredIcons = [
       "github.svg",
@@ -75,7 +130,6 @@ describe("readme generator", () => {
       "file-text.svg",
       "rss.svg",
       "external-link.svg",
-      "tag.svg",
       "calendar.svg",
       "code.svg",
       "briefcase.svg",
