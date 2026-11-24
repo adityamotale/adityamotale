@@ -5,7 +5,7 @@ import test, { describe } from "node:test";
 import { generateReadme } from "../generate-readme.ts";
 
 describe("readme generator", () => {
-  test("generates complete README markdown matching website UI and section structure", () => {
+  test("generates complete Markdown/HTML README with operational navs, responsive grid, inline icons, and social footer", () => {
     const rootDir = path.resolve(import.meta.dirname, "../..");
     const readme = generateReadme(rootDir);
 
@@ -66,52 +66,36 @@ describe("readme generator", () => {
       "Should include test workflow badge link",
     );
 
-    const assetsDir = path.join(rootDir, "assets");
-    const requiredAssets = [
-      "header.svg",
-      "latest-release.svg",
-      "latest-release-details.svg",
-      "about.svg",
-      "projects-header.svg",
-      "project-0.svg",
-      "writing-header.svg",
-      "writing-0.svg",
-      "experience.svg",
-      "telemetry.svg",
-      "contributions.svg",
-      "education.svg",
-      "footer.svg",
-      "monthly.svg",
-      "weekly.svg",
+    const iconsDir = path.join(rootDir, "assets", "icons");
+    const requiredIcons = [
+      "github.svg",
+      "twitter.svg",
+      "linkedin.svg",
+      "globe.svg",
+      "file-text.svg",
+      "rss.svg",
+      "external-link.svg",
+      "tag.svg",
+      "calendar.svg",
+      "code.svg",
+      "briefcase.svg",
+      "graduation-cap.svg",
+      "book-open.svg",
+      "activity.svg",
+      "git-pull-request.svg",
+      "git-commit.svg",
+      "zap.svg",
+      "layers.svg",
     ];
 
-    for (const asset of requiredAssets) {
+    for (const icon of requiredIcons) {
       assert.ok(
-        existsSync(path.join(assetsDir, asset)),
-        `Should generate ${asset}`,
+        existsSync(path.join(iconsDir, icon)),
+        `Should generate icon ${icon}`,
       );
-    }
-
-    const readmeAssets = [
-      "header.svg",
-      "latest-release.svg",
-      "latest-release-details.svg",
-      "about.svg",
-      "projects-header.svg",
-      "project-0.svg",
-      "writing-header.svg",
-      "writing-0.svg",
-      "experience.svg",
-      "telemetry.svg",
-      "contributions.svg",
-      "education.svg",
-      "footer.svg",
-    ];
-
-    for (const asset of readmeAssets) {
       assert.ok(
-        readme.includes(`./assets/${asset}`),
-        `README should reference ${asset}`,
+        readme.includes(`./assets/icons/${icon}`),
+        `README should reference icon ${icon}`,
       );
     }
 
@@ -134,23 +118,59 @@ describe("readme generator", () => {
       readme.includes("raw.githubusercontent.com"),
       "README should embed banner images from raw githubusercontent",
     );
+
+    // Operational navigation links
+    const navItems = [
+      'href="#about"',
+      'href="#latest-release"',
+      'href="#projects"',
+      'href="#writing"',
+      'href="#experience"',
+      'href="#telemetry"',
+      'href="#education"',
+    ];
+    for (const nav of navItems) {
+      assert.ok(readme.includes(nav), `README should include nav link ${nav}`);
+    }
+
+    // Section targets
+    const sectionTargets = [
+      'id="top"',
+      'id="about"',
+      'id="latest-release"',
+      'id="projects"',
+      'id="writing"',
+      'id="experience"',
+      'id="telemetry"',
+      'id="education"',
+    ];
+    for (const target of sectionTargets) {
+      assert.ok(
+        readme.includes(target),
+        `README should contain anchor ${target}`,
+      );
+    }
+
+    // Social footer verification
     assert.ok(
-      readme.includes('width="100%"'),
-      "README elements should enforce width=100%",
+      readme.includes("https://adii.fyi/rss.xml"),
+      "Footer should include RSS feed link",
+    );
+    assert.ok(
+      readme.includes("[eof]"),
+      "Footer should include return-to-top [eof] button",
     );
 
-    const headerIdx = readme.indexOf("./assets/header.svg");
-    const releaseIdx = readme.indexOf("./assets/latest-release.svg");
-    const aboutIdx = readme.indexOf("./assets/about.svg");
-    const projectsIdx = readme.indexOf("./assets/projects-header.svg");
-    const writingIdx = readme.indexOf("./assets/writing-header.svg");
-    const experienceIdx = readme.indexOf("./assets/experience.svg");
-    const telemetryIdx = readme.indexOf("./assets/telemetry.svg");
-    const contribIdx = readme.indexOf("./assets/contributions.svg");
-    const educationIdx = readme.indexOf("./assets/education.svg");
-    const footerIdx = readme.indexOf("./assets/footer.svg");
+    const topIdx = readme.indexOf('id="top"');
+    const releaseIdx = readme.indexOf('id="latest-release"');
+    const aboutIdx = readme.indexOf('id="about"');
+    const projectsIdx = readme.indexOf('id="projects"');
+    const writingIdx = readme.indexOf('id="writing"');
+    const experienceIdx = readme.indexOf('id="experience"');
+    const telemetryIdx = readme.indexOf('id="telemetry"');
+    const educationIdx = readme.indexOf('id="education"');
 
-    assert.ok(headerIdx < releaseIdx, "Header must precede Latest Release");
+    assert.ok(topIdx < releaseIdx, "Top must precede Latest Release");
     assert.ok(releaseIdx < aboutIdx, "Latest Release must precede About");
     assert.ok(aboutIdx < projectsIdx, "About must precede Projects");
     assert.ok(projectsIdx < writingIdx, "Projects must precede Writing");
@@ -159,14 +179,6 @@ describe("readme generator", () => {
       experienceIdx < telemetryIdx,
       "Experience must precede Telemetry",
     );
-    assert.ok(
-      telemetryIdx < contribIdx,
-      "Telemetry must precede Contributions",
-    );
-    assert.ok(
-      contribIdx < educationIdx,
-      "Contributions must precede Education",
-    );
-    assert.ok(educationIdx < footerIdx, "Education must precede Footer");
+    assert.ok(telemetryIdx < educationIdx, "Telemetry must precede Education");
   });
 });
