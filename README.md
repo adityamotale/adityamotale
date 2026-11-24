@@ -24,4 +24,4 @@
 
 ![Education](./assets/education.svg)
 
-![Footer](./assets/footer.svg)
+[![Footer](./assets/footer.svg)](https://adii.fyi)

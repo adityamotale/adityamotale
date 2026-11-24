@@ -746,8 +746,7 @@ function generateFooterSvg(): string {
   <g class="mono" font-size="11.5">
     <line x1="0" y1="8" x2="680" y2="8" class="header-line" stroke-width="1" />
     <text x="0" y="26" class="accent" font-weight="600">aditya</text>
-    <text x="60" y="26" class="muted">[eof]</text>
-    <text x="680" y="26" text-anchor="end" class="subtle">github · x · linkedin · adii.fyi</text>
+    <text x="680" y="26" text-anchor="end" class="subtle">adii.fyi</text>
   </g>
 </svg>`;
 }
@@ -1107,7 +1106,7 @@ export function generateReadme(rootDir: string): string {
   }
 
   sections.push(`![Education](./assets/education.svg)`);
-  sections.push(`![Footer](./assets/footer.svg)`);
+  sections.push(`[![Footer](./assets/footer.svg)](https://adii.fyi)`);
 
   return sections.join("\n\n") + "\n";
 }
