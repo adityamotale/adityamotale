@@ -1,0 +1,135 @@
+---
+import stats from '../../../data/github-stats.json';
+
+const BANNER_REPOS = new Set([
+  'pid7-org/turbofox',
+  'pid7-org/ashwa',
+  'adityamotale/shyena',
+  'pid7-org/turbo_crc',
+]);
+
+const FALLBACK_DESCRIPTIONS: Record<string, string> = {
+  'pid7-org/ashwa': 'Hardware accelerated routines for single substring search',
+  'pid7-org/turbo_crc':
+    'Hardware accelerated implementation of CRC32C for computing 32-bit cyclic redundancy check (CRC)',
+};
+
+const projects = (stats.repositories_contributed_to || [])
+  .filter(
+    (r) =>
+      !r.is_private && ((r as any).has_banner || BANNER_REPOS.has(r.repository))
+  )
+  .sort((a, b) => (b.total_contributions || 0) - (a.total_contributions || 0))
+  .slice(0, 4)
+  .map((r) => {
+    const [owner, name] = r.repository.split('/');
+    const description =
+      r.description || FALLBACK_DESCRIPTIONS[r.repository] || '';
+    return {
+      repo: r.repository,
+      owner,
+      name: name || r.repository,
+      description,
+      contributions: r.total_contributions,
+      language: r.primary_language?.name,
+      languageColor: r.primary_language?.color,
+      url: `https://github.com/${r.repository}`,
+      bannerUrl: `https://raw.githubusercontent.com/${r.repository}/main/assets/banner.png`,
+    };
+  });
+---
+
+{projects.length > 0 && (
+  <div
+    id="tui-projects"
+    class="w-full font-mono text-[11px] sm:text-xs select-none leading-relaxed"
+  >
+    <div class="w-full flex flex-col font-mono">
+      {/* Section Header: > PROJECTS ─── */}
+      <div class="w-full flex items-center overflow-hidden mb-2">
+        <span class="text-[var(--color-accent)] font-semibold shrink-0">
+          &gt;&nbsp;
+        </span>
+        <span class="font-bold tracking-wider text-rp-text uppercase shrink-0">
+          PROJECTS
+        </span>
+        <span class="ml-2 flex-1 border-b border-rp-muted/20" />
+      </div>
+
+      {/* Section comment */}
+      <div class="text-[11px] text-rp-muted/70 pl-3">
+        <span>// featured projects across orgs &amp; personal</span>
+      </div>
+
+      {/* 2-Column Grid */}
+      <div class="pl-3 pt-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {projects.map((p) => (
+          <div class="flex flex-col rounded border border-rp-muted/20 bg-rp-surface/20 hover:border-rp-muted/40 transition-colors overflow-hidden p-2.5 space-y-2">
+            {/* 3:1 Banner Image Container */}
+            <div
+              class="w-full max-w-full overflow-hidden rounded border border-rp-muted/20 bg-rp-surface/40 aspect-[3/1]"
+              style="aspect-ratio: 3 / 1;"
+            >
+              <img
+                src={p.bannerUrl}
+                alt={`${p.name} project banner`}
+                loading="lazy"
+                class="w-full h-full object-cover block"
+                style="aspect-ratio: 3 / 1;"
+                onerror="if (!this.dataset.retried) { this.dataset.retried = '1'; this.src = this.src.replace('/main/', '/master/'); } else { this.parentElement.style.display = 'none'; }"
+              />
+            </div>
+
+            {/* Title & Owner Row */}
+            <div class="flex items-baseline justify-between gap-2 min-w-0 pt-0.5">
+              <a
+                href={p.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-bold text-rp-text hover:text-[var(--color-accent)] transition-colors underline decoration-dotted decoration-rp-muted/50 underline-offset-3 truncate"
+              >
+                {p.name}
+              </a>
+              <span class="text-rp-muted text-[10px] shrink-0 font-mono">
+                {p.owner}
+              </span>
+            </div>
+
+            {/* Badges / Metrics Row */}
+            <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[10px] sm:text-[11px] text-rp-muted">
+              {p.language && (
+                <span class="inline-flex items-center gap-1">
+                  <span
+                    class="w-2 h-2 rounded-full shrink-0"
+                    style={`background-color: ${p.languageColor || 'var(--color-accent)'};`}
+                  />
+                  <span>{p.language}</span>
+                </span>
+              )}
+              {p.contributions && <span>{p.contributions} contribs</span>}
+            </div>
+
+            {/* Description */}
+            {p.description && (
+              <p class="text-rp-subtle text-[11px] leading-relaxed line-clamp-2 select-text break-words">
+                {p.description}
+              </p>
+            )}
+
+            {/* Action link */}
+            <div class="pt-1 mt-auto select-none">
+              <a
+                href={p.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1 text-[11px] text-rp-subtle hover:text-[var(--color-accent)] transition-colors underline decoration-dotted decoration-rp-muted/50 underline-offset-3"
+              >
+                <span>view repository &rarr;</span>
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+)}
