@@ -457,16 +457,7 @@ export async function generateResumePdf() {
   const writingList = await getRecentWritingList(5);
 
   for (const post of writingList) {
-    const postTitleW = drawClickableText(post.title, left, y, 7.2, post.url, cText, cDot);
-    if (post.isExternal) {
-      page.drawText(' [ext ↗]', {
-        x: left + postTitleW,
-        y,
-        size: 6.5,
-        font,
-        color: cMuted
-      });
-    }
+    drawClickableText(post.title, left, y, 7.2, post.url, cText, cDot);
     const dateW = font.widthOfTextAtSize(post.dateStr, 7.2);
     page.drawText(post.dateStr, { x: right - dateW, y, size: 7.2, font, color: cMuted });
     y -= 10.5;
