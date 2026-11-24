@@ -1,11 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 24" width="680" height="24" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 20" width="680" height="20" fill="none">
   <title>WRITING</title>
   <style>
     .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
     .text { fill: #575279; }
   </style>
   <g class="mono">
-    <text x="0" y="16" fill="#d7827e" font-size="11" font-weight="700">&gt;</text>
-    <text x="14" y="16" class="text" font-size="11" font-weight="700" letter-spacing="0.08em">WRITING</text>
+    <text x="0" y="14" fill="#d7827e" font-size="11" font-weight="700">&gt;</text>
+    <text x="14" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.08em">WRITING</text>
   </g>
 </svg>

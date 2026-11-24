@@ -704,15 +704,15 @@ function generateTopProjectSvg(
 function generateWritingHeaderSvg(): string {
   const width = 680;
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} 24" width="${width}" height="24" fill="none">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} 20" width="${width}" height="20" fill="none">
   <title>WRITING</title>
   <style>
     .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
     .text { fill: #575279; }
   </style>
   <g class="mono">
-    <text x="0" y="16" fill="#d7827e" font-size="11" font-weight="700">&gt;</text>
-    <text x="14" y="16" class="text" font-size="11" font-weight="700" letter-spacing="0.08em">WRITING</text>
+    <text x="0" y="14" fill="#d7827e" font-size="11" font-weight="700">&gt;</text>
+    <text x="14" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.08em">WRITING</text>
   </g>
 </svg>`;
 }
@@ -722,17 +722,17 @@ function generateWritingSvg(title: string, date: string): string {
   const titleText = escapeXml(wrapSvgText(title, 88, 1)[0] || "");
   const dateText = escapeXml(date);
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} 24" width="${width}" height="24" fill="none">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} 20" width="${width}" height="20" fill="none">
   <title>${titleText}</title>
   <style>
     .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
     .muted { fill: #9893a5; }
   </style>
   <g class="mono">
-    <text x="0" y="16" fill="#d7827e" font-size="12" font-weight="600">${titleText}</text>
+    <text x="0" y="14" fill="#d7827e" font-size="11">${titleText}</text>
     ${
       dateText
-        ? `<text x="${width}" y="16" text-anchor="end" class="muted" font-size="11">${dateText}</text>`
+        ? `<text x="${width}" y="14" text-anchor="end" class="muted" font-size="11">${dateText}</text>`
         : ""
     }
   </g>
