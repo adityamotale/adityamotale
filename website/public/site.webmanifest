@@ -1,21 +1,21 @@
 {
   "name": "aditya",
-  "short_name": "adii",
+  "short_name": "aditya",
   "icons": [
     {
-      "src": "/web-app-manifest-192x192.png?v=1.0.0",
+      "src": "/web-app-manifest-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/web-app-manifest-512x512.png?v=1.0.0",
+      "src": "/web-app-manifest-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#232136",
-  "background_color": "#232136",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
   "display": "standalone"
 }
