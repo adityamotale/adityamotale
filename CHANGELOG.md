@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.4.0] - 2026-11-24
+
+- redesign home page layout featuring sticky telemetry header HUD, soliton wave animation, and dedicated latest release cards
+- add blog archive page with route migration to `/blog` and build-time integration of writing posts
+- implement yearly contribution time-series plotting and dynamic GitHub metrics synchronization
+- modularize stats collector pipeline with tiered repository categorization and weighted language calculation
+- overhaul GitHub profile README and SVG assets with light-theme minimal cards, linked writing sections, and unified full-width footer
+- update resume PDF design with typography adjustments, light-theme styling, and synchronized experience copy
+- restore user text selection across blog index, post metadata, callout headers, and telemetry blocks
+- refresh site favicons, app icons, and streamline CI activity workflows
+
 ## [0.3.1] - 2026-09-18
 
 - update github activity and coding metrics
