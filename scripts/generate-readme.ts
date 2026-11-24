@@ -17,6 +17,11 @@ interface RepoStat {
   is_private?: boolean;
   is_fork?: boolean;
   description?: string;
+  has_banner?: boolean;
+  primary_language?: {
+    name: string;
+    color?: string;
+  };
 }
 
 interface LanguageStat {
@@ -267,6 +272,25 @@ function escapeXml(str: string): string {
     .replace(/'/g, "&apos;");
 }
 
+function wrapDescription(desc: string, maxLen = 42): [string, string?] {
+  if (!desc) return [""];
+  if (desc.length <= maxLen) return [desc];
+  const words = desc.split(" ");
+  let line1 = "";
+  let line2 = "";
+  for (const word of words) {
+    if ((line1 + (line1 ? " " : "") + word).length <= maxLen && !line2) {
+      line1 += (line1 ? " " : "") + word;
+    } else {
+      line2 += (line2 ? " " : "") + word;
+    }
+  }
+  if (line2.length > maxLen) {
+    line2 = `${line2.slice(0, maxLen - 3)}...`;
+  }
+  return [line1, line2 || undefined];
+}
+
 const SVG_STYLE = `
   .mono {
     font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
@@ -319,17 +343,8 @@ function generateHeaderSvg(
 </svg>`;
 }
 
-function generateLatestReleaseSvg(
-  repoName: string,
-  tagName: string,
-  formattedDate: string,
-  description: string,
-): string {
-  const repoShort = repoName.split("/")[1] || repoName;
-  const descSafe = escapeXml(
-    description.length > 95 ? `${description.slice(0, 92)}...` : description,
-  );
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 86" width="100%" height="86" fill="none">
+function generateLatestReleaseHeaderSvg(repoName: string): string {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 36" width="100%" height="36" fill="none">
   <style>
     ${SVG_STYLE}
   </style>
@@ -338,14 +353,33 @@ function generateLatestReleaseSvg(
     <text x="12" y="14" class="text" font-weight="700" letter-spacing="0.06em">LATEST RELEASE</text>
     <line x1="125" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
     <text x="12" y="30" class="muted" font-size="11">// ${escapeXml(repoName)}</text>
+  </g>
+</svg>`;
+}
 
-    <text x="12" y="52">
-      <tspan class="text" font-weight="600">${escapeXml(repoShort)}</tspan>
+function generateLatestReleaseDetailsSvg(
+  repoShort: string,
+  tagName: string,
+  formattedDate: string,
+  description: string,
+): string {
+  const descSafe = escapeXml(
+    description.length > 95 ? `${description.slice(0, 92)}...` : description,
+  );
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 62" width="100%" height="62" fill="none">
+  <style>
+    ${SVG_STYLE}
+  </style>
+  <g class="mono" font-size="11.5">
+    <text x="0" y="16">
+      <tspan class="text" font-weight="700" font-size="12">${escapeXml(repoShort)}</tspan>
       <tspan class="muted"> [ </tspan><tspan class="gold" font-weight="600">${escapeXml(tagName)}</tspan><tspan class="muted"> ]</tspan>
     </text>
-    <text x="680" y="52" text-anchor="end" class="muted">${escapeXml(formattedDate)}</text>
+    <text x="680" y="16" text-anchor="end" class="muted">${escapeXml(formattedDate)}</text>
 
-    <text x="12" y="72" class="subtle">${descSafe}</text>
+    <text x="0" y="36" class="subtle">${descSafe}</text>
+
+    <text x="0" y="54" class="accent" font-weight="600">view release →</text>
   </g>
 </svg>`;
 }
@@ -378,21 +412,43 @@ function generateProjectsHeaderSvg(): string {
     <text x="0" y="14" class="accent" font-size="12">&gt;</text>
     <text x="12" y="14" class="text" font-weight="700" letter-spacing="0.06em">PROJECTS</text>
     <line x1="85" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
-    <text x="12" y="30" class="muted" font-size="11">// selected work</text>
+    <text x="12" y="30" class="muted" font-size="11">// featured projects across orgs &amp; personal</text>
   </g>
 </svg>`;
 }
 
-function generateProjectRowSvg(name: string, description: string): string {
-  const namePad = name.padEnd(14, " ");
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 20" width="100%" height="20" fill="none">
+function generateProjectCardSvg(project: {
+  name: string;
+  owner: string;
+  description: string;
+  contributions?: number;
+  language?: string;
+  languageColor?: string;
+}): string {
+  const [descLine1, descLine2] = wrapDescription(project.description, 42);
+  const lang = escapeXml(project.language || "Rust");
+  const langColor = project.languageColor || "#dea584";
+  const contribs = project.contributions
+    ? `${project.contributions} contribs`
+    : "";
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 95" width="100%" height="95" fill="none">
   <style>
     ${SVG_STYLE}
   </style>
   <g class="mono" font-size="11.5">
-    <text x="0" y="14">
-      <tspan class="text" font-weight="600">${escapeXml(namePad)}</tspan> <tspan class="muted">—</tspan> <tspan class="subtle">${escapeXml(description)}</tspan>
+    <text x="0" y="16">
+      <tspan class="text" font-weight="700" font-size="12">${escapeXml(project.name)}</tspan>
+      <tspan class="muted" font-size="10.5">  ${escapeXml(project.owner)}</tspan>
     </text>
+
+    <circle cx="4" cy="31" r="3" fill="${langColor}" />
+    <text x="12" y="34" class="muted" font-size="10.5">${lang}${contribs ? ` · ${contribs}` : ""}</text>
+
+    <text x="0" y="52" class="subtle" font-size="10.5">${escapeXml(descLine1)}</text>
+    ${descLine2 ? `<text x="0" y="68" class="subtle" font-size="10.5">${escapeXml(descLine2)}</text>` : ""}
+
+    <text x="0" y="${descLine2 ? 86 : 70}" class="accent" font-size="10.5" font-weight="600">view repository →</text>
   </g>
 </svg>`;
 }
@@ -764,21 +820,42 @@ export function generateReadme(rootDir: string): string {
 
   const stats: GithubStats = JSON.parse(readFileSync(statsPath, "utf-8"));
 
+  const BANNER_REPOS = new Set([
+    "pid7-org/turbofox",
+    "pid7-org/ashwa",
+    "adityamotale/shyena",
+    "pid7-org/turbo_crc",
+  ]);
+
+  const FALLBACK_DESCRIPTIONS: Record<string, string> = {
+    "pid7-org/ashwa":
+      "Hardware accelerated routines for single substring search",
+    "pid7-org/turbo_crc":
+      "Hardware accelerated implementation of CRC32C for computing 32-bit CRC",
+  };
+
   const projects = (stats.repositories_contributed_to || [])
     .filter(
-      (r) =>
-        !r.is_private &&
-        !r.is_fork &&
-        !r.repository.endsWith("/website") &&
-        Boolean(r.description),
+      (r) => !r.is_private && (r.has_banner || BANNER_REPOS.has(r.repository)),
     )
     .sort((a, b) => (b.total_contributions || 0) - (a.total_contributions || 0))
-    .slice(0, 5)
-    .map((r) => ({
-      name: r.repository.split("/")[1] || r.repository,
-      url: `https://github.com/${r.repository}`,
-      description: r.description || "",
-    }));
+    .slice(0, 4)
+    .map((r) => {
+      const [owner, name] = r.repository.split("/");
+      const description =
+        r.description || FALLBACK_DESCRIPTIONS[r.repository] || "";
+      return {
+        repo: r.repository,
+        owner,
+        name: name || r.repository,
+        description,
+        contributions: r.total_contributions,
+        language: r.primary_language?.name || "Rust",
+        languageColor: r.primary_language?.color || "#dea584",
+        url: `https://github.com/${r.repository}`,
+        bannerUrl: `https://raw.githubusercontent.com/${r.repository}/master/assets/banner.png`,
+      };
+    });
 
   const blogPosts = getBlogPosts(rootDir, 5);
 
@@ -849,6 +926,7 @@ export function generateReadme(rootDir: string): string {
   );
 
   const latestRelease = stats.releases?.[0];
+  let latestReleaseBlock = "";
   if (latestRelease) {
     const repoInfo = stats.repositories_contributed_to?.find(
       (r) => r.repository === latestRelease.repo,
@@ -858,16 +936,38 @@ export function generateReadme(rootDir: string): string {
       latestRelease.title ||
       "Latest repository release";
     const formattedReleaseDate = formatReleaseDate(latestRelease.published_at);
+    const releaseRepoShort =
+      latestRelease.repo.split("/")[1] || latestRelease.repo;
+    const releaseBannerUrl = `https://raw.githubusercontent.com/${latestRelease.repo}/master/assets/banner.png`;
+    const releaseUrl =
+      latestRelease.url ||
+      `https://github.com/${latestRelease.repo}/releases/tag/${latestRelease.tag_name}`;
+
     writeFileSync(
       path.join(assetsDir, "latest-release.svg"),
-      generateLatestReleaseSvg(
-        latestRelease.repo,
+      generateLatestReleaseHeaderSvg(latestRelease.repo),
+      "utf-8",
+    );
+    writeFileSync(
+      path.join(assetsDir, "latest-release-details.svg"),
+      generateLatestReleaseDetailsSvg(
+        releaseRepoShort,
         latestRelease.tag_name,
         formattedReleaseDate,
         releaseDesc,
       ),
       "utf-8",
     );
+
+    latestReleaseBlock = [
+      `<img src="./assets/latest-release.svg" width="100%" alt="Latest Release" />`,
+      `<a href="${releaseUrl}">`,
+      `  <img src="${releaseBannerUrl}" width="100%" alt="${releaseRepoShort} release banner" />`,
+      `</a>`,
+      `<a href="${releaseUrl}">`,
+      `  <img src="./assets/latest-release-details.svg" width="100%" alt="${releaseRepoShort} release details" />`,
+      `</a>`,
+    ].join("\n\n");
   }
 
   writeFileSync(path.join(assetsDir, "about.svg"), generateAboutSvg(), "utf-8");
@@ -890,10 +990,38 @@ export function generateReadme(rootDir: string): string {
   projects.forEach((p, i) => {
     writeFileSync(
       path.join(assetsDir, `project-${i}.svg`),
-      generateProjectRowSvg(p.name, p.description),
+      generateProjectCardSvg(p),
       "utf-8",
     );
   });
+
+  const projectGridRows: string[] = [];
+  for (let i = 0; i < projects.length; i += 2) {
+    const p1 = projects[i];
+    const p2 = projects[i + 1];
+    const cell1 = `    <td width="50%" valign="top">
+      <a href="${p1.url}">
+        <img src="${p1.bannerUrl}" width="100%" alt="${p1.name} banner" /><br />
+        <img src="./assets/project-${i}.svg" width="100%" alt="${p1.name} details" />
+      </a>
+    </td>`;
+    const cell2 = p2
+      ? `    <td width="50%" valign="top">
+      <a href="${p2.url}">
+        <img src="${p2.bannerUrl}" width="100%" alt="${p2.name} banner" /><br />
+        <img src="./assets/project-${i + 1}.svg" width="100%" alt="${p2.name} details" />
+      </a>
+    </td>`
+      : `    <td width="50%" valign="top"></td>`;
+
+    projectGridRows.push(`  <tr>\n${cell1}\n${cell2}\n  </tr>`);
+  }
+
+  const projectTable = [
+    `<table width="100%">`,
+    ...projectGridRows,
+    `</table>`,
+  ].join("\n");
 
   writeFileSync(
     path.join(assetsDir, "writing-header.svg"),
@@ -907,6 +1035,14 @@ export function generateReadme(rootDir: string): string {
       "utf-8",
     );
   });
+
+  const writingItems = [
+    `<a href="https://adii.fyi/blog"><img src="./assets/writing-header.svg" width="100%" alt="Writing" /></a>`,
+    ...blogPosts.map(
+      (post, i) =>
+        `<a href="https://adii.fyi/blogs/${post.slug}"><img src="./assets/writing-${i}.svg" width="100%" alt="${post.title}" /></a>`,
+    ),
+  ].join("\n\n");
 
   const telemetrySvg = generateTelemetrySvg(
     "Telemetry",
@@ -1061,52 +1197,47 @@ export function generateReadme(rootDir: string): string {
     `[![Release Action](https://img.shields.io/github/actions/workflow/status/adityamotale/adityamotale/release.yaml?style=flat-square&label=release%20workflow&logo=githubactions&logoColor=faf4ed&labelColor=575279&color=907aa9)](https://github.com/adityamotale/adityamotale/actions/workflows/release.yaml)`,
   ].join(" ");
 
-  const projectItems = [
-    `![Projects](./assets/projects-header.svg)`,
-    ...projects.map(
-      (p, i) => `[![${p.name}](./assets/project-${i}.svg)](${p.url})`,
-    ),
-  ].join("\n");
+  const sections = [badges];
 
-  const writingItems =
-    blogPosts.length > 0
-      ? [
-          `![Writing](./assets/writing-header.svg)`,
-          ...blogPosts.map(
-            (post, i) =>
-              `[![${post.title}](./assets/writing-${i}.svg)](https://adii.fyi/blogs/${post.slug})`,
-          ),
-        ].join("\n")
-      : `![Writing](./assets/writing-header.svg)`;
+  sections.push(`<img src="./assets/header.svg" width="100%" alt="Aditya" />`);
 
-  const sections = [badges, `![Aditya](./assets/header.svg)`];
-
-  if (latestRelease) {
-    const releaseUrl =
-      latestRelease.url ||
-      `https://github.com/${latestRelease.repo}/releases/tag/${latestRelease.tag_name}`;
-    sections.push(
-      `[![Latest Release: ${latestRelease.repo}](./assets/latest-release.svg)](${releaseUrl})`,
-    );
+  if (latestReleaseBlock) {
+    sections.push(latestReleaseBlock);
   }
 
-  sections.push(`![About](./assets/about.svg)`);
-  sections.push(projectItems);
+  sections.push(`<img src="./assets/about.svg" width="100%" alt="About" />`);
+  sections.push(
+    `<img src="./assets/projects-header.svg" width="100%" alt="Projects" />\n\n${projectTable}`,
+  );
   sections.push(writingItems);
-  sections.push(`![Experience](./assets/experience.svg)`);
-  sections.push(`![Telemetry](./assets/telemetry.svg)`);
+  sections.push(
+    `<img src="./assets/experience.svg" width="100%" alt="Experience" />`,
+  );
+  sections.push(
+    `<img src="./assets/telemetry.svg" width="100%" alt="Telemetry" />`,
+  );
 
   if (yearlyData.length > 0) {
-    sections.push(`![Contributions](./assets/contributions.svg)`);
+    sections.push(
+      `<img src="./assets/contributions.svg" width="100%" alt="Contributions" />`,
+    );
   } else if (hasMonthly) {
-    sections.push(`![Last Month](./assets/monthly.svg)`);
+    sections.push(
+      `<img src="./assets/monthly.svg" width="100%" alt="Last Month" />`,
+    );
     if (hasWeekly) {
-      sections.push(`![Last Week](./assets/weekly.svg)`);
+      sections.push(
+        `<img src="./assets/weekly.svg" width="100%" alt="Last Week" />`,
+      );
     }
   }
 
-  sections.push(`![Education](./assets/education.svg)`);
-  sections.push(`[![Footer](./assets/footer.svg)](https://adii.fyi)`);
+  sections.push(
+    `<img src="./assets/education.svg" width="100%" alt="Education" />`,
+  );
+  sections.push(
+    `<a href="https://adii.fyi"><img src="./assets/footer.svg" width="100%" alt="Footer" /></a>`,
+  );
 
   return sections.join("\n\n") + "\n";
 }

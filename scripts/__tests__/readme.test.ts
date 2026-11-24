@@ -70,6 +70,7 @@ describe("readme generator", () => {
     const requiredAssets = [
       "header.svg",
       "latest-release.svg",
+      "latest-release-details.svg",
       "about.svg",
       "projects-header.svg",
       "project-0.svg",
@@ -94,6 +95,7 @@ describe("readme generator", () => {
     const readmeAssets = [
       "header.svg",
       "latest-release.svg",
+      "latest-release-details.svg",
       "about.svg",
       "projects-header.svg",
       "project-0.svg",
@@ -122,6 +124,19 @@ describe("readme generator", () => {
         "https://adii.fyi/blogs/theres-more-to-performance-than-big-o",
       ),
       "README should link to blog post",
+    );
+
+    assert.ok(
+      readme.includes('<table width="100%">'),
+      "README should render a full-width 2-column project grid table",
+    );
+    assert.ok(
+      readme.includes("raw.githubusercontent.com"),
+      "README should embed banner images from raw githubusercontent",
+    );
+    assert.ok(
+      readme.includes('width="100%"'),
+      "README elements should enforce width=100%",
     );
 
     const headerIdx = readme.indexOf("./assets/header.svg");
