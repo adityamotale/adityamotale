@@ -26,12 +26,12 @@ describe("readme generator", () => {
     );
     assert.ok(
       readme.includes(
-        "https://img.shields.io/badge/resume-adityamotale.pdf-d7827e?style=flat-square&logo=googledocs&logoColor=d7827e&labelColor=faf4ed",
+        "https://img.shields.io/badge/resume-aditya.pdf-d7827e?style=flat-square&logo=googledocs&logoColor=d7827e&labelColor=faf4ed",
       ),
       "Should include resume Shields badge",
     );
     assert.ok(
-      readme.includes("https://adii.fyi/adityamotale.pdf"),
+      readme.includes("https://adii.fyi/aditya.pdf"),
       "Should include resume link",
     );
     assert.ok(
@@ -277,27 +277,9 @@ describe("readme generator", () => {
       "README should not contain about, experience, or education sections",
     );
 
-    // Wordmark verification
     assert.ok(
-      readme.includes(
-        '<img src="./assets/header.svg" width="320" height="112" alt="aditya" />',
-      ),
-      "README should use the SVG wordmark",
-    );
-    assert.ok(
-      !readme.includes("▄▀█") && !readme.includes("█▀█"),
-      "README should not contain ASCII block-art wordmark",
-    );
-    const wordmark = readFileSync(
-      path.join(rootDir, "assets", "header.svg"),
-      "utf-8",
-    );
-    assert.ok(
-      wordmark.includes("aditya") &&
-        wordmark.includes("data:font/woff2;base64,") &&
-        wordmark.includes("#d7827e") &&
-        wordmark.includes("Instrument Serif"),
-      "Wordmark SVG should embed the italic serif font in the rose accent",
+      !readme.includes("./assets/header.svg"),
+      "README should not contain the top wordmark SVG",
     );
 
     // No backticks in section titles

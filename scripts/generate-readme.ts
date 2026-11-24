@@ -640,28 +640,6 @@ function generateTopProjectSvg(
 </svg>`;
 }
 
-function generateWordmarkSvg(fontDataUri: string): string {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 112" width="320" height="112" fill="none">
-  <title>aditya</title>
-  <style>
-    @font-face {
-      font-family: 'Instrument Serif';
-      font-style: italic;
-      font-weight: 400;
-      src: url("${fontDataUri}") format('woff2');
-    }
-    text {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-style: italic;
-      font-weight: 400;
-      font-size: 98px;
-      fill: #d7827e;
-    }
-  </style>
-  <text x="8" y="82">aditya</text>
-</svg>`;
-}
-
 function generateFooterNameSvg(fontDataUri: string): string {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 40" width="110" height="40" fill="none">
   <title>aditya</title>
@@ -773,11 +751,6 @@ export async function generateReadme(
   const fontDataUri = `data:font/woff2;base64,${readFileSync(
     path.join(assetsDir, "fonts", "instrument-serif-latin-400-italic.woff2"),
   ).toString("base64")}`;
-  writeFileSync(
-    path.join(assetsDir, "header.svg"),
-    generateWordmarkSvg(fontDataUri),
-    "utf-8",
-  );
   writeFileSync(
     path.join(assetsDir, "footer-name.svg"),
     generateFooterNameSvg(fontDataUri),
@@ -948,7 +921,7 @@ export async function generateReadme(
 
   const badges = [
     `[![Website](https://img.shields.io/badge/website-adii.fyi-d7827e?style=flat-square&logo=googlechrome&logoColor=d7827e&labelColor=faf4ed)](https://adii.fyi)`,
-    `[![Resume](https://img.shields.io/badge/resume-adityamotale.pdf-d7827e?style=flat-square&logo=googledocs&logoColor=d7827e&labelColor=faf4ed)](https://adii.fyi/adityamotale.pdf)`,
+    `[![Resume](https://img.shields.io/badge/resume-aditya.pdf-d7827e?style=flat-square&logo=googledocs&logoColor=d7827e&labelColor=faf4ed)](https://adii.fyi/aditya.pdf)`,
     `[![Release](https://img.shields.io/github/v/release/adityamotale/adityamotale?style=flat-square&label=release&logo=github&logoColor=d7827e&labelColor=faf4ed&color=d7827e)](https://github.com/adityamotale/adityamotale/releases)`,
     `[![GitHub](https://img.shields.io/badge/github-adityamotale-d7827e?style=flat-square&logo=github&logoColor=d7827e&labelColor=faf4ed)](https://github.com/adityamotale)`,
     `[![Twitter](https://img.shields.io/badge/twitter-@arctic__byte-d7827e?style=flat-square&logo=x&logoColor=d7827e&labelColor=faf4ed)](https://x.com/arctic_byte)`,
@@ -960,9 +933,7 @@ export async function generateReadme(
 
   const headerBlock = `<a id="top"></a>
 
-${badges}
-
-<img src="./assets/header.svg" width="320" height="112" alt="aditya" />`;
+${badges}`;
 
   const writingBlock = `## <a id="writing"></a>~ WRITING
 
