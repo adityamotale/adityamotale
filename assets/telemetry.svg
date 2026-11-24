@@ -39,7 +39,7 @@
 
     <!-- Row 1: loc & prs -->
     <text x="14" y="58">
-      <tspan class="subtle">loc</tspan><tspan class="muted">     : </tspan><tspan class="text" font-weight="600">821,948</tspan> <tspan class="muted text-xs">(+1.7M / -926.3k)</tspan>
+      <tspan class="subtle">loc</tspan><tspan class="muted">     : </tspan><tspan class="text" font-weight="600">697,167</tspan> <tspan class="muted text-xs">(+1.6M / -900.3k)</tspan>
     </text>
     <text x="340" y="58">
       <tspan class="subtle">prs</tspan><tspan class="muted">    : [</tspan><tspan class="foam">███████████████</tspan><tspan class="bar-empty">░</tspan><tspan class="muted">] </tspan><tspan class="text" font-weight="600">97.4%</tspan>
@@ -47,26 +47,26 @@
 
     <!-- Row 2: commits & active -->
     <text x="14" y="78">
-      <tspan class="subtle">commits</tspan><tspan class="muted"> : </tspan><tspan class="text" font-weight="600">3,773</tspan> <tspan class="muted text-xs">(pub + org)</tspan>
+      <tspan class="subtle">commits</tspan><tspan class="muted"> : </tspan><tspan class="text" font-weight="600">3,515</tspan> <tspan class="muted text-xs">(pub + org)</tspan>
     </text>
     <text x="340" y="78">
-      <tspan class="subtle">active</tspan><tspan class="muted"> : [</tspan><tspan class="gold">███████</tspan><tspan class="bar-empty">░░░░░░░░░</tspan><tspan class="muted">] </tspan><tspan class="text" font-weight="600">48.1%</tspan>
+      <tspan class="subtle">active</tspan><tspan class="muted"> : [</tspan><tspan class="gold">███████</tspan><tspan class="bar-empty">░░░░░░░░░</tspan><tspan class="muted">] </tspan><tspan class="text" font-weight="600">48.2%</tspan>
     </text>
 
     <!-- Row 3: repos & streak -->
     <text x="14" y="98">
-      <tspan class="subtle">repos</tspan><tspan class="muted">   : </tspan><tspan class="text" font-weight="600">53</tspan> <tspan class="muted text-xs">(17 pub · 11 pri · 25 org)</tspan>
+      <tspan class="subtle">repos</tspan><tspan class="muted">   : </tspan><tspan class="text" font-weight="600">53</tspan> <tspan class="muted text-xs">(18 pub · 10 pri · 25 org)</tspan>
     </text>
     <text x="340" y="98">
-      <tspan class="subtle">streak</tspan><tspan class="muted"> : </tspan><tspan class="text" font-weight="600">11d</tspan> <tspan class="muted text-xs">current (112d max)</tspan>
+      <tspan class="subtle">streak</tspan><tspan class="muted"> : </tspan><tspan class="text" font-weight="600">12d</tspan> <tspan class="muted text-xs">current (112d max)</tspan>
     </text>
 
     <!-- Row 4: stack & churn -->
     <text x="14" y="118">
-      <tspan class="subtle">stack</tspan><tspan class="muted">   : </tspan><tspan class="text" font-weight="600">Rust 68% · TypeScript 8% · C 7%</tspan>
+      <tspan class="subtle">stack</tspan><tspan class="muted">   : </tspan><tspan class="text" font-weight="600">Rust 73% · TypeScript 8% · Assembly 4%</tspan>
     </text>
     <text x="340" y="118">
-      <tspan class="subtle">churn</tspan><tspan class="muted">  : </tspan><tspan class="text" font-weight="600">65.4%</tspan> <tspan class="muted text-xs">net retention</tspan>
+      <tspan class="subtle">churn</tspan><tspan class="muted">  : </tspan><tspan class="text" font-weight="600">64.0%</tspan> <tspan class="muted text-xs">net retention</tspan>
     </text>
   </g>
 </svg>
