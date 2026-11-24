@@ -1,10 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" width="100%" height="420" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 440" width="100%" height="440" fill="none">
   <style>
     
   .mono {
     font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   }
   .accent { fill: #d7827e; font-weight: 600; }
+  .accent-stroke { stroke: #d7827e; }
+  .accent-fill { fill: #d7827e; }
   .text { fill: #575279; font-weight: 500; }
   .subtle { fill: #797593; font-weight: 400; }
   .muted { fill: #9893a5; font-weight: 400; }
@@ -17,6 +19,8 @@
 
   @media (prefers-color-scheme: dark) {
     .accent { fill: #ea9a97; }
+    .accent-stroke { stroke: #ea9a97; }
+    .accent-fill { fill: #ea9a97; }
     .text { fill: #e0def4; }
     .subtle { fill: #908caa; }
     .muted { fill: #6e6a86; }
@@ -31,66 +35,67 @@
   </style>
   <g class="mono" font-size="11.5">
     <text x="0" y="14" class="accent" font-size="12">&gt;</text>
-    <text x="12" y="14" class="text" font-size="11" font-weight="700" letter-spacing="0.06em">EXPERIENCE</text>
+    <text x="12" y="14" class="text" font-weight="700" letter-spacing="0.06em">EXPERIENCE</text>
     <line x1="102" y1="10" x2="680" y2="10" class="header-line" stroke-width="1" />
+    <text x="12" y="30" class="muted" font-size="11">// 2021 → mobile · 2024 → web &amp; tooling · now → systems</text>
 
-    <text x="0" y="38" class="text" font-weight="600">[ Systems Engineering · pid7-org ]</text>
-    <text x="680" y="38" text-anchor="end" class="muted">Sep 2024 — Present</text>
-    <text x="0" y="56">
+    <text x="0" y="56" class="text" font-weight="600">[ Systems Engineering · pid7-org ]</text>
+    <text x="680" y="56" text-anchor="end" class="muted">Sep 2024 — Present</text>
+    <text x="0" y="74">
       <tspan class="subtle">  role:</tspan>   <tspan class="text" font-weight="600">Core Contributor · Systems Architecture &amp; Implementation</tspan>
     </text>
-    <text x="0" y="74">
+    <text x="0" y="92">
       <tspan class="subtle">  repos:</tspan>  <tspan class="text" font-weight="600">turbofox · frozen-core · ashwa · website</tspan>
     </text>
-    <text x="0" y="92">
+    <text x="0" y="110">
       <tspan class="subtle">  stack:</tspan>  <tspan class="text">Core: Rust · SIMD | Concurrency: Lock-Free | Storage: Memory-Mapped I/O</tspan>
     </text>
-    <text x="0" y="110">
+    <text x="0" y="128">
       <tspan class="subtle">  impact:</tspan> <tspan class="text">Shipped a lock-free concurrent KV engine with memory-mapped</tspan>
     </text>
-    <text x="0" y="128">
+    <text x="0" y="146">
       <tspan class="text">          I/O and explicit sync barriers; production SIMD paths prioritize</tspan>
     </text>
-    <text x="0" y="146">
+    <text x="0" y="164">
       <tspan class="text">          deterministic latency and memory efficiency</tspan>
     </text>
 
-    <text x="0" y="174" class="text" font-weight="600">[ Freelance &amp; Contract · Web &amp; Tooling ]</text>
-    <text x="680" y="174" text-anchor="end" class="muted">Jul 2024 — Present</text>
-    <text x="0" y="192">
+    <text x="0" y="194" class="text" font-weight="600">[ Freelance &amp; Contract · Web &amp; Tooling ]</text>
+    <text x="680" y="194" text-anchor="end" class="muted">Jul 2024 — Present</text>
+    <text x="0" y="212">
       <tspan class="subtle">  role:</tspan>   <tspan class="text" font-weight="600">Full-Stack Developer &amp; Tooling Engineer · 3 Clients</tspan>
     </text>
-    <text x="0" y="210">
+    <text x="0" y="230">
       <tspan class="subtle">  stack:</tspan>  <tspan class="text">Frontend: Astro · TypeScript | Backend: Microservices | Tooling: VS Code API</tspan>
     </text>
-    <text x="0" y="228">
+    <text x="0" y="248">
       <tspan class="subtle">  impact:</tspan> <tspan class="text">Delivered a transactional email service and event-ticketing</tspan>
     </text>
-    <text x="0" y="246">
+    <text x="0" y="266">
       <tspan class="text">          platform end to end; built VS Code extensions for internal</tspan>
     </text>
-    <text x="0" y="264">
+    <text x="0" y="284">
       <tspan class="text">          developer workflows across client projects</tspan>
     </text>
 
-    <text x="0" y="292" class="text" font-weight="600">[ Internships · Mobile Engineering ]</text>
-    <text x="680" y="292" text-anchor="end" class="muted">Nov 2021 — Apr 2024 · 9 mos</text>
-    <text x="0" y="310">
+    <text x="0" y="314" class="text" font-weight="600">[ Internships · Mobile Engineering ]</text>
+    <text x="680" y="314" text-anchor="end" class="muted">Nov 2021 — Apr 2024 · 9 mos</text>
+    <text x="0" y="332">
       <tspan class="subtle">  role:</tspan>   <tspan class="text" font-weight="600">Flutter Developer · 3 Organizations</tspan>
     </text>
-    <text x="0" y="328">
+    <text x="0" y="350">
       <tspan class="subtle">  orgs:</tspan>   <tspan class="text">kraftbase (1 mo) · Rojgary (5 mos) · FOLKDevelopers (3 mos)</tspan>
     </text>
-    <text x="0" y="346">
+    <text x="0" y="368">
       <tspan class="subtle">  stack:</tspan>  <tspan class="text">Mobile: Flutter · Dart | Architecture: State Management | APIs: REST</tspan>
     </text>
-    <text x="0" y="364">
+    <text x="0" y="386">
       <tspan class="subtle">  impact:</tspan> <tspan class="text">Led Flutter delivery across three organizations; built MVPs,</tspan>
     </text>
-    <text x="0" y="382">
+    <text x="0" y="404">
       <tspan class="text">          refactored production apps, and delivered features during</tspan>
     </text>
-    <text x="0" y="400">
+    <text x="0" y="422">
       <tspan class="text">          active release cycles</tspan>
     </text>
   </g>

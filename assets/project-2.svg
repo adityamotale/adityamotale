@@ -5,6 +5,8 @@
     font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   }
   .accent { fill: #d7827e; font-weight: 600; }
+  .accent-stroke { stroke: #d7827e; }
+  .accent-fill { fill: #d7827e; }
   .text { fill: #575279; font-weight: 500; }
   .subtle { fill: #797593; font-weight: 400; }
   .muted { fill: #9893a5; font-weight: 400; }
@@ -17,6 +19,8 @@
 
   @media (prefers-color-scheme: dark) {
     .accent { fill: #ea9a97; }
+    .accent-stroke { stroke: #ea9a97; }
+    .accent-fill { fill: #ea9a97; }
     .text { fill: #e0def4; }
     .subtle { fill: #908caa; }
     .muted { fill: #6e6a86; }
