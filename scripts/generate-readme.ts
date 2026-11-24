@@ -582,6 +582,28 @@ function generateReleaseSvg(
 </svg>`;
 }
 
+function generateWordmarkSvg(fontDataUri: string): string {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 112" width="320" height="112" fill="none">
+  <title>aditya</title>
+  <style>
+    @font-face {
+      font-family: 'Instrument Serif';
+      font-style: italic;
+      font-weight: 400;
+      src: url("${fontDataUri}") format('woff2');
+    }
+    text {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 98px;
+      fill: #d7827e;
+    }
+  </style>
+  <text x="8" y="82">aditya</text>
+</svg>`;
+}
+
 export async function generateReadme(
   rootDir: string,
   fetchImpl: typeof fetch = fetch,
@@ -601,6 +623,15 @@ export async function generateReadme(
   for (const [name, svg] of Object.entries(SVG_ICONS)) {
     writeFileSync(path.join(iconsDir, `${name}.svg`), svg, "utf-8");
   }
+
+  const fontDataUri = `data:font/woff2;base64,${readFileSync(
+    path.join(assetsDir, "fonts", "instrument-serif-latin-400-italic.woff2"),
+  ).toString("base64")}`;
+  writeFileSync(
+    path.join(assetsDir, "header.svg"),
+    generateWordmarkSvg(fontDataUri),
+    "utf-8",
+  );
 
   const stats: GithubStats = JSON.parse(readFileSync(statsPath, "utf-8"));
 
@@ -801,10 +832,7 @@ export async function generateReadme(
 
 ${badges}
 
-\`\`\`text
-▄▀█ █▀▄ █ ▀█▀ █▄█ ▄▀█
-█▀█ █▄▀ █  █   █  █▀█
-\`\`\``;
+<img src="./assets/header.svg" width="320" height="112" alt="aditya" />`;
 
   const aboutBlock = `## <a id="about"></a>~ ABOUT
 

@@ -217,18 +217,27 @@ describe("readme generator", () => {
       "Experience section should not use <summary>",
     );
 
-    // ASCII art verification
+    // Wordmark verification
     assert.ok(
-      readme.includes("▄▀█ █▀▄ █ ▀█▀ █▄█ ▄▀█"),
-      "README should contain 'aditya' ASCII art line 1",
+      readme.includes(
+        '<img src="./assets/header.svg" width="320" height="112" alt="aditya" />',
+      ),
+      "README should use the SVG wordmark",
     );
     assert.ok(
-      readme.includes("█▀█ █▄▀ █  █   █  █▀█"),
-      "README should contain 'aditya' ASCII art line 2",
+      !readme.includes("▄▀█") && !readme.includes("█▀█"),
+      "README should not contain ASCII block-art wordmark",
+    );
+    const wordmark = readFileSync(
+      path.join(rootDir, "assets", "header.svg"),
+      "utf-8",
     );
     assert.ok(
-      !readme.includes("█▀▄▀█ █▀█ ▀█▀ ▄▀█ █   █▀▀"),
-      "README ASCII art should not contain 'motale'",
+      wordmark.includes("aditya") &&
+        wordmark.includes("data:font/woff2;base64,") &&
+        wordmark.includes("#d7827e") &&
+        wordmark.includes("Instrument Serif"),
+      "Wordmark SVG should embed the italic serif font in the rose accent",
     );
 
     // No backticks in section titles
