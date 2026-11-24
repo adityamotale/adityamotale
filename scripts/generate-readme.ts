@@ -268,7 +268,6 @@ const SVG_ICONS: Record<string, string> = {
   "file-text": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /></svg>`,
   rss: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><path d="M4 11a9 9 0 0 1 9 9" /><path d="M4 4a16 16 0 0 1 16 16" /><circle cx="5" cy="19" r="1" fill="#d7827e" /></svg>`,
   "external-link": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>`,
-  code: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>`,
   "book-open": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></svg>`,
   activity: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>`,
   "git-pull-request": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#d7827e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><style>@media (prefers-color-scheme: dark) { * { stroke: #ea9a97 !important; } }</style><circle cx="18" cy="18" r="3" /><circle cx="6" cy="6" r="3" /><path d="M13 6h3a2 2 0 0 1 2 2v7" /><line x1="6" y1="9" x2="6" y2="21" /></svg>`,
@@ -284,38 +283,57 @@ function formatLocCompact(n: number): string {
   return n.toString();
 }
 
-function generateLanguageAsciiChart(languages?: LanguageStat[]): string {
-  if (!languages || languages.length === 0) return "";
-  const top = languages.slice(0, 5);
-  const otherLangs = languages.slice(5);
-  const otherLoc = otherLangs.reduce((sum, l) => sum + (l.loc || 0), 0);
+function generateLanguagesSvg(languages: LanguageStat[]): string {
+  const width = 680;
+  const primary = languages[0];
   const totalLoc = languages.reduce((sum, l) => sum + (l.loc || 0), 0);
+  const otherLoc = languages.slice(5).reduce((sum, l) => sum + (l.loc || 0), 0);
   const otherPct = totalLoc > 0 ? (otherLoc / totalLoc) * 100 : 0;
-
   const items = [
-    ...top.map((l) => ({ name: l.name, pct: l.percentage, loc: l.loc || 0 })),
-  ];
-  if (otherLoc > 0 || otherPct > 0) {
-    items.push({ name: "Other", pct: otherPct, loc: otherLoc });
-  }
+    ...languages.slice(0, 5).map((l) => ({ name: l.name, pct: l.percentage })),
+    { name: "Other", pct: otherPct },
+  ].filter((item) => item.pct > 0);
+  const opacities = [1, 0.8, 0.65, 0.5, 0.38, 0.25];
+  let x = 0;
+  const segments = items
+    .map((item, i) => {
+      const segWidth =
+        i === items.length - 1
+          ? width - x
+          : Math.round((item.pct / 100) * width);
+      const rect = `<rect x="${x}" y="88" width="${segWidth}" height="10" fill="#d7827e" fill-opacity="${opacities[i] || 0.25}" clip-path="url(#bar-clip)" />`;
+      x += segWidth;
+      return rect;
+    })
+    .join("\n    ");
+  const legend = escapeXml(
+    items.map((item) => `${item.name} ${item.pct.toFixed(1)}%`).join(" · "),
+  );
+  const primaryName = escapeXml(primary?.name || "Rust");
+  const primaryPct = primary ? primary.percentage.toFixed(1) : "72.6";
 
-  const barWidth = 36;
-  const lines: string[] = [];
-
-  for (const item of items) {
-    const filled = Math.max(
-      item.pct > 0 ? 1 : 0,
-      Math.round((item.pct / 100) * barWidth),
-    );
-    const empty = Math.max(0, barWidth - filled);
-    const bar = "█".repeat(filled) + " ".repeat(empty);
-    const name = item.name.padEnd(12, " ");
-    const pctStr = `${item.pct.toFixed(1).padStart(5, " ")}%`;
-    const locStr = `${formatLocCompact(item.loc)} loc`.padStart(10, " ");
-    lines.push(`${name} [${bar}] ${pctStr}  ${locStr}`);
-  }
-
-  return lines.join("\n");
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} 138" width="${width}" height="138" fill="none">
+  <title>language distribution</title>
+  <defs>
+    <clipPath id="bar-clip">
+      <rect x="0" y="88" width="${width}" height="10" rx="5" />
+    </clipPath>
+  </defs>
+  <style>
+    .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    .text { fill: #575279; }
+    .muted { fill: #9893a5; }
+  </style>
+  <g class="mono">
+    <text x="0" y="16" fill="#d7827e" font-size="11" font-weight="700">&gt;</text>
+    <text x="14" y="16" class="text" font-size="11" font-weight="700" letter-spacing="0.08em">LANGUAGES</text>
+    <text x="0" y="52" fill="#d7827e" font-size="13" font-weight="700">${primaryName} ${primaryPct}%</text>
+    <text x="0" y="72" class="muted" font-size="11">${formatLocCompact(totalLoc)} loc · ${languages.length} languages tracked</text>
+    <rect x="0" y="88" width="${width}" height="10" rx="5" fill="#dfdad9" />
+    ${segments}
+    <text x="0" y="120" class="muted" font-size="10">${legend}</text>
+  </g>
+</svg>`;
 }
 
 function generateContributionsSvg(yearlyData: YearlyContribution[]): string {
@@ -800,9 +818,6 @@ export async function generateReadme(
   const orgPct = Math.round((orgCommits / totalScope) * 100);
   const personalPct = Math.round((personalCommits / totalScope) * 100);
 
-  const rustLang = (stats.languages || []).find((l) => l.name === "Rust");
-  const rustPct = rustLang ? rustLang.percentage.toFixed(0) : "68";
-  const rustLocFormatted = rustLang ? formatCompact(rustLang.loc || 0) : "1.2M";
   const commitsCompact =
     totalCommits >= 1000
       ? formatCompact(totalCommits)
@@ -966,39 +981,18 @@ ${
     : ""
 }`;
 
-  const totalTrackedLoc = (stats.languages || []).reduce(
-    (sum, l) => sum + (l.loc || 0),
-    0,
-  );
-  const totalTrackedLangs = stats.languages?.length || 0;
-  const primaryLang = stats.languages?.[0];
-  const primaryLangName = primaryLang?.name || "Rust";
-  const primaryLangPct = primaryLang
-    ? primaryLang.percentage.toFixed(1)
-    : "72.6";
-  const primaryLangLoc = primaryLang
-    ? formatLocCompact(primaryLang.loc || 0)
-    : "1.16M";
-
-  const languageAsciiChart = generateLanguageAsciiChart(stats.languages);
-  const languagesBlock = `## <a id="languages"></a>~ LANGUAGES
-
-<table width="100%">
-  <tr>
-    <td width="50%">
-      <img src="./assets/icons/code.svg" width="14" height="14" align="absmiddle" /> <b>Primary Language</b><br />
-      <code>${primaryLangName} ${primaryLangPct}%</code> <sub>(${primaryLangLoc} loc)</sub>
-    </td>
-    <td width="50%">
-      <img src="./assets/icons/layers.svg" width="14" height="14" align="absmiddle" /> <b>Codebase Volume</b><br />
-      <code>${formatLocCompact(totalTrackedLoc)} loc</code> <sub>(${totalTrackedLangs} languages tracked)</sub>
-    </td>
-  </tr>
-</table>
-
-\`\`\`text
-${languageAsciiChart}
-\`\`\``;
+  const allLanguages = stats.languages || [];
+  let languagesBlock = "";
+  if (allLanguages.length > 0) {
+    if (writeAssets) {
+      writeFileSync(
+        path.join(assetsDir, "languages.svg"),
+        generateLanguagesSvg(allLanguages),
+        "utf-8",
+      );
+    }
+    languagesBlock = `<img src="./assets/languages.svg" width="100%" alt="language distribution" />`;
+  }
 
   const footerBlock = `---
 
@@ -1024,7 +1018,9 @@ ${languageAsciiChart}
     sections.push(projectsBlock);
   }
   sections.push(writingBlock);
-  sections.push(languagesBlock);
+  if (languagesBlock) {
+    sections.push(languagesBlock);
+  }
   sections.push(footerBlock);
 
   return sections.join("\n\n") + "\n";

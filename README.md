@@ -24,29 +24,7 @@
   <img src="./assets/icons/external-link.svg" width="12" height="12" align="absmiddle" /> <sub><a href="https://adii.fyi/blog">view all posts &rarr;</a></sub>
 </p>
 
-## <a id="languages"></a>~ LANGUAGES
-
-<table width="100%">
-  <tr>
-    <td width="50%">
-      <img src="./assets/icons/code.svg" width="14" height="14" align="absmiddle" /> <b>Primary Language</b><br />
-      <code>Rust 72.6%</code> <sub>(1.16M loc)</sub>
-    </td>
-    <td width="50%">
-      <img src="./assets/icons/layers.svg" width="14" height="14" align="absmiddle" /> <b>Codebase Volume</b><br />
-      <code>1.60M loc</code> <sub>(29 languages tracked)</sub>
-    </td>
-  </tr>
-</table>
-
-```text
-Rust         [██████████████████████████          ]  72.6%   1.16M loc
-TypeScript   [███                                 ]   8.2%  130.3k loc
-Assembly     [█                                   ]   4.0%   64.0k loc
-Python       [█                                   ]   3.6%   56.7k loc
-JavaScript   [█                                   ]   3.0%   47.6k loc
-Other        [███                                 ]   8.7%  138.4k loc
-```
+<img src="./assets/languages.svg" width="100%" alt="language distribution" />
 
 ---
 

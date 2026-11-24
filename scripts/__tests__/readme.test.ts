@@ -169,9 +169,7 @@ describe("readme generator", () => {
       "file-text.svg",
       "rss.svg",
       "external-link.svg",
-      "code.svg",
       "book-open.svg",
-      "layers.svg",
     ];
 
     for (const icon of requiredIcons) {
@@ -185,6 +183,7 @@ describe("readme generator", () => {
       );
     }
     for (const icon of [
+      "layers.svg",
       "activity.svg",
       "git-pull-request.svg",
       "git-commit.svg",
@@ -208,8 +207,8 @@ describe("readme generator", () => {
     );
 
     assert.ok(
-      readme.includes('<table width="100%">'),
-      "README should render the full-width languages table",
+      !readme.includes("<table"),
+      "README should not use HTML tables for its sections",
     );
     assert.ok(
       !readme.includes("~ PROJECTS") && !readme.includes('id="projects"'),
@@ -249,7 +248,6 @@ describe("readme generator", () => {
       'id="latest-release"',
       'id="writing"',
       'id="telemetry"',
-      'id="languages"',
     ];
     for (const target of sectionTargets) {
       assert.ok(
@@ -309,14 +307,40 @@ describe("readme generator", () => {
       "README should not wrap > in backticks in titles",
     );
 
-    // ASCII Language chart verification
+    // Languages SVG verification
     assert.ok(
-      readme.includes("Rust         [██"),
-      "README should contain ASCII language distribution chart for Rust",
+      readme.includes(
+        '<img src="./assets/languages.svg" width="100%" alt="language distribution" />',
+      ) &&
+        !readme.includes("~ LANGUAGES") &&
+        !readme.includes('id="languages"'),
+      "Languages should be a single full-width SVG with no heading or anchor",
+    );
+    const languagesCard = readFileSync(
+      path.join(rootDir, "assets", "languages.svg"),
+      "utf-8",
+    );
+    for (const value of [
+      "LANGUAGES",
+      "Rust 72.6%",
+      "1.60M loc",
+      "29 languages tracked",
+      "TypeScript 8.2%",
+      "Other 8.7%",
+      "#d7827e",
+    ]) {
+      assert.ok(
+        languagesCard.includes(value),
+        `Languages card should include ${value}`,
+      );
+    }
+    assert.ok(
+      !languagesCard.includes("prefers-color-scheme"),
+      "Languages card should be light-only",
     );
     assert.ok(
-      readme.includes("TypeScript   ["),
-      "README should contain ASCII language distribution chart for TypeScript",
+      !readme.includes("Rust         [██"),
+      "README should not contain the ASCII language chart",
     );
 
     // Social footer verification
@@ -334,7 +358,7 @@ describe("readme generator", () => {
     const telemetryIdx = readme.indexOf('id="telemetry"');
     const topProjectIdx = readme.indexOf("./assets/top-project.svg");
     const writingIdx = readme.indexOf('id="writing"');
-    const languagesIdx = readme.indexOf('id="languages"');
+    const languagesIdx = readme.indexOf("./assets/languages.svg");
 
     assert.ok(topIdx < releaseIdx, "Top must precede Latest Release");
     assert.ok(
