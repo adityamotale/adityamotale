@@ -11,10 +11,10 @@ const rootDir = path.resolve(__dirname, '../..');
 const statsPath = path.resolve(rootDir, 'data/github-stats.json');
 const blogsDir = path.resolve(rootDir, 'blogs');
 
-// Configurable contact details
+// User contact credentials
 const CONTACT = {
-  email: process.env.RESUME_EMAIL || 'aditya@adii.fyi',
-  phone: process.env.RESUME_PHONE || '+91 91720 00000',
+  email: 'adityamotale.22@gmail.com',
+  phone: '+91 8329437944',
   site: 'https://adii.fyi',
   github: 'https://github.com/adityamotale',
   twitter: 'https://x.com/arctic_byte',
@@ -22,11 +22,16 @@ const CONTACT = {
 };
 
 let stats = {
-  lines_of_code: { net_lines: 87823, total_additions: 201200, total_deletions: 113400 },
+  categories: {
+    organization: { commits: 2218 },
+    personal: { commits: 1550 },
+    external_oss: { total_contributions: 11 }
+  },
+  lines_of_code: { net_lines: 87823, total_additions: 1748252, total_deletions: 926304 },
   repositories: { public: 18, private: 10, total: 53 },
   contributions: { commits: 3580 },
-  streaks_and_consistency: { longest_streak_days: 112, active_days_count: 1036, activity_rate_percentage: 95.7 },
-  pull_requests: { merge_rate_percentage: 97.4, merged: 46, total: 47 },
+  streaks_and_consistency: { current_streak_days: 12, longest_streak_days: 112, active_days_count: 1036, activity_rate_percentage: 95.7 },
+  pull_requests: { merge_rate_percentage: 97.4, merged: 228, total: 234 },
   repositories_contributed_to: [],
   languages: [
     { name: 'Rust', percentage: 73.0 },
@@ -44,22 +49,119 @@ if (fs.existsSync(statsPath)) {
   }
 }
 
-let blogPosts = [];
-if (fs.existsSync(blogsDir)) {
-  const files = fs.readdirSync(blogsDir).filter((f) => f.endsWith('.md'));
-  for (const f of files) {
-    const raw = fs.readFileSync(path.join(blogsDir, f), 'utf-8');
-    const titleMatch = raw.match(/^title:\s*(.*)$/m);
-    const slugMatch = raw.match(/^slug:\s*(.*)$/m);
-    const dateMatch = raw.match(/^created:\s*(.*)$/m);
-    if (titleMatch && slugMatch) {
-      blogPosts.push({
-        title: titleMatch[1].trim(),
-        slug: slugMatch[1].trim(),
-        date: dateMatch ? dateMatch[1].trim() : ''
-      });
+function formatBlogDate(dateStr) {
+  if (!dateStr) return '';
+  const parts = dateStr.split(/[-/]/);
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  if (parts.length === 3) {
+    if (parts[2].length === 4) {
+      const day = parseInt(parts[0], 10);
+      const monthIdx = parseInt(parts[1], 10) - 1;
+      const year = parts[2];
+      if (monthIdx >= 0 && monthIdx < 12 && !isNaN(day)) {
+        return `${months[monthIdx]} ${day}, ${year}`;
+      }
+    } else if (parts[0].length === 4) {
+      const year = parts[0];
+      const monthIdx = parseInt(parts[1], 10) - 1;
+      const day = parseInt(parts[2], 10);
+      if (monthIdx >= 0 && monthIdx < 12 && !isNaN(day)) {
+        return `${months[monthIdx]} ${day}, ${year}`;
+      }
     }
   }
+  return dateStr;
+}
+
+function parseDateToTimestamp(dStr) {
+  if (!dStr) return 0;
+  const parts = dStr.split(/[-/]/);
+  if (parts.length === 3) {
+    if (parts[2].length === 4) {
+      return new Date(Number(parts[2]), Number(parts[1]) - 1, Number(parts[0])).getTime();
+    } else if (parts[0].length === 4) {
+      return new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2])).getTime();
+    }
+  }
+  const t = new Date(dStr).getTime();
+  return isNaN(t) ? 0 : t;
+}
+
+async function getRecentWritingList(limit = 5) {
+  const items = [];
+
+  // Local blog posts
+  if (fs.existsSync(blogsDir)) {
+    const files = fs.readdirSync(blogsDir).filter((f) => f.endsWith('.md'));
+    for (const f of files) {
+      const raw = fs.readFileSync(path.join(blogsDir, f), 'utf-8');
+      const titleMatch = raw.match(/^title:\s*(.*)$/m);
+      const slugMatch = raw.match(/^slug:\s*(.*)$/m);
+      const dateMatch = raw.match(/^created:\s*(.*)$/m);
+      if (titleMatch && slugMatch) {
+        const rawDate = dateMatch ? dateMatch[1].trim() : '';
+        items.push({
+          title: titleMatch[1].trim(),
+          url: `https://adii.fyi/blog/${slugMatch[1].trim()}`,
+          dateStr: formatBlogDate(rawDate),
+          timestamp: parseDateToTimestamp(rawDate),
+          isExternal: false
+        });
+      }
+    }
+  }
+
+  // Fetch pid7 blog posts if reachable
+  try {
+    const sitemapRes = await fetch('https://pid7.com/sitemap.xml', {
+      signal: AbortSignal.timeout(2000)
+    });
+    if (sitemapRes.ok) {
+      const xml = await sitemapRes.text();
+      const urlBlocks = xml.match(/<url>[\s\S]*?<\/url>/g) || [];
+      for (const block of urlBlocks) {
+        const locMatch = block.match(/<loc>([^<]+)<\/loc>/);
+        const lastmodMatch = block.match(/<lastmod>([^<]+)<\/lastmod>/);
+        if (!locMatch || !locMatch[1].includes('/blog/')) continue;
+        const loc = locMatch[1].trim();
+        const lastmod = lastmodMatch ? lastmodMatch[1].trim() : '';
+
+        try {
+          const pageRes = await fetch(loc, { signal: AbortSignal.timeout(2000) });
+          if (pageRes.ok) {
+            const html = await pageRes.text();
+            const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
+            const title = titleMatch
+              ? titleMatch[1].replace(/^pid7\s*[×\-–—|]\s*/i, '').trim()
+              : loc.split('/').filter(Boolean).pop().replace(/[-_]/g, ' ');
+            const pubDateMatch = html.match(/["']datePublished["']\s*:\s*["']([^"']+)["']/i);
+            const dateVal = pubDateMatch ? pubDateMatch[1] : lastmod;
+            items.push({
+              title,
+              url: loc,
+              dateStr: formatBlogDate(dateVal),
+              timestamp: parseDateToTimestamp(dateVal),
+              isExternal: true
+            });
+          }
+        } catch {}
+      }
+    }
+  } catch {}
+
+  // Fallback to ensure pid7 articles are included even in offline/sandboxed execution
+  if (!items.some((p) => p.url.includes('pid7.com'))) {
+    items.push({
+      title: 'Searching through 150 GiB of Text per Second with SIMD',
+      url: 'https://pid7.com/blog/searching-150gb-text-per-second',
+      dateStr: formatBlogDate('13-11-2026'),
+      timestamp: parseDateToTimestamp('13-11-2026'),
+      isExternal: true
+    });
+  }
+
+  items.sort((a, b) => b.timestamp - a.timestamp);
+  return items.slice(0, limit);
 }
 
 export async function generateResumePdf() {
@@ -72,10 +174,18 @@ export async function generateResumePdf() {
 
   const fontRegularPath = path.resolve(rootDir, 'website/fonts/JetBrainsMono-Regular.ttf');
   const fontBoldPath = path.resolve(rootDir, 'website/fonts/JetBrainsMono-Bold.ttf');
+  const fontSerifPath = path.resolve(
+    rootDir,
+    'website/node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff'
+  );
+
   const regularBytes = fs.readFileSync(fontRegularPath);
   const boldBytes = fs.readFileSync(fontBoldPath);
+  const serifBytes = fs.readFileSync(fontSerifPath);
+
   const font = await doc.embedFont(regularBytes, { subset: true });
   const fontBold = await doc.embedFont(boldBytes, { subset: true });
+  const fontSerifItalic = await doc.embedFont(serifBytes, { subset: true });
 
   const pageWidth = 595.28;
   const pageHeight = 841.89;
@@ -88,8 +198,6 @@ export async function generateResumePdf() {
   const cMuted = rgb(0.596, 0.576, 0.647);   // #9893a5 (Dawn muted)
   const cAccent = rgb(0.843, 0.510, 0.494);  // #d7827e (Dawn rose accent)
   const cPine = rgb(0.157, 0.412, 0.514);    // #286983 (Dawn pine)
-  const cFoam = rgb(0.337, 0.580, 0.624);    // #56949f (Dawn foam)
-  const cGold = rgb(0.918, 0.616, 0.204);    // #ea9d34 (Dawn gold)
   const cBorder = rgb(0.875, 0.855, 0.851);  // #dfdad9 (Dawn highlight-med)
   const cDot = rgb(0.760, 0.740, 0.780);     // dotted underline
 
@@ -145,49 +253,8 @@ export async function generateResumePdf() {
     return textW;
   }
 
-  function renderAsciiArtLogo(startX, topY, cellW = 3.2, cellH = 6.4) {
-    const logoLines = [
-      "▄▀█ █▀▄ █ ▀█▀ █▄█ ▄▀█   █▀▄▀█ █▀█ ▀█▀ ▄▀█ █   █▀▀",
-      "█▀█ █▄▀ █  █   █  █▀█   █ ▀ █ █▄█  █  █▀█ █▄▄ ██▄"
-    ];
-
-    for (let r = 0; r < logoLines.length; r++) {
-      const lineStr = logoLines[r];
-      const rowY = topY - (r * cellH);
-      for (let c = 0; c < lineStr.length; c++) {
-        const char = lineStr[c];
-        const cellX = startX + (c * cellW);
-        if (char === '█') {
-          page.drawRectangle({
-            x: cellX,
-            y: rowY - cellH + 0.5,
-            width: cellW - 0.2,
-            height: cellH - 0.5,
-            color: cAccent
-          });
-        } else if (char === '▀') {
-          page.drawRectangle({
-            x: cellX,
-            y: rowY - (cellH / 2) + 0.5,
-            width: cellW - 0.2,
-            height: (cellH / 2) - 0.5,
-            color: cAccent
-          });
-        } else if (char === '▄') {
-          page.drawRectangle({
-            x: cellX,
-            y: rowY - cellH + 0.5,
-            width: cellW - 0.2,
-            height: (cellH / 2) - 0.5,
-            color: cAccent
-          });
-        }
-      }
-    }
-  }
-
   function drawSectionHeader(title, comment = '') {
-    y -= 16;
+    y -= 17;
     page.drawText('>', { x: left, y, size: 8, font: fontBold, color: cAccent });
     page.drawText(title.toUpperCase(), { x: left + 10, y, size: 8, font: fontBold, color: cText });
     const titleWidth = fontBold.widthOfTextAtSize(title.toUpperCase(), 8);
@@ -198,41 +265,41 @@ export async function generateResumePdf() {
       color: cBorder
     });
     if (comment) {
-      y -= 10;
+      y -= 9.5;
       page.drawText(`// ${comment}`, { x: left + 10, y, size: 6.8, font, color: cMuted });
     }
-    y -= 10;
+    y -= 9.5;
   }
 
-  // Header: ASCII Logo & Website Link
-  renderAsciiArtLogo(left, y, 3.2, 6.4);
-  addLink([left, y - 14, left + 165, y + 2], CONTACT.site);
+  // Header: Wordmark "aditya" in Instrument Serif Italic & Site Link
+  const logoSize = 28;
+  const logoBaseline = y - 18;
+  page.drawText('aditya', {
+    x: left,
+    y: logoBaseline,
+    size: logoSize,
+    font: fontSerifItalic,
+    color: cAccent
+  });
+  const logoW = fontSerifItalic.widthOfTextAtSize('aditya', logoSize);
+  addLink([left, logoBaseline - 4, left + logoW, logoBaseline + logoSize], CONTACT.site);
 
   const siteUrlW = font.widthOfTextAtSize(CONTACT.site, 8);
-  drawClickableText(CONTACT.site, right - siteUrlW, y - 6, 8, CONTACT.site, cAccent, cAccent);
+  drawClickableText(CONTACT.site, right - siteUrlW, logoBaseline + 2, 8, CONTACT.site, cAccent, cAccent);
 
-  y -= 22;
-  page.drawText('hello, my name is Aditya — an engineer by choice', {
-    x: left,
-    y,
-    size: 7.8,
-    font,
-    color: cSubtle
-  });
-
-  // Contact Row 1: Email · Phone
-  y -= 11;
+  // Contact details directly below wordmark
+  y = logoBaseline - 16;
   let curContactX = left;
   page.drawText('email: ', { x: curContactX, y, size: 7.2, font, color: cMuted });
   curContactX += font.widthOfTextAtSize('email: ', 7.2);
   curContactX += drawClickableText(CONTACT.email, curContactX, y, 7.2, `mailto:${CONTACT.email}`, cText, cDot);
 
-  page.drawText('   ·   phone: ', { x: curContactX, y, size: 7.2, font, color: cMuted });
-  curContactX += font.widthOfTextAtSize('   ·   phone: ', 7.2);
+  page.drawText('  ·  phone: ', { x: curContactX, y, size: 7.2, font, color: cMuted });
+  curContactX += font.widthOfTextAtSize('  ·  phone: ', 7.2);
   curContactX += drawClickableText(CONTACT.phone, curContactX, y, 7.2, `tel:${CONTACT.phone.replace(/[\s-]/g, '')}`, cText, cDot);
 
-  // Contact Row 2: Handles
-  y -= 10;
+  // Social / Profiles row
+  y -= 11.5;
   let curNavX = left;
   curNavX += drawClickableText('github', curNavX, y, 7.2, CONTACT.github, cSubtle, cDot);
 
@@ -310,7 +377,7 @@ export async function generateResumePdf() {
       page.drawText(impact2, { x: left + 48, y, size: 7.2, font, color: cSubtle });
       y -= 10.5;
     }
-    y -= 4;
+    y -= 3.5;
   }
 
   const pid7Repos = [
@@ -382,128 +449,120 @@ export async function generateResumePdf() {
       font,
       color: cSubtle
     });
-    y -= 11;
+    y -= 10.5;
   }
 
-  // 4. WRITING (Dedicated Section)
-  drawSectionHeader('Writing', 'technical essays & deep dives');
-  const postsToShow = blogPosts.slice(0, 2);
-  if (postsToShow.length === 0) {
-    postsToShow.push({
-      title: "There's More to Performance Than Big-O",
-      slug: 'theres-more-to-performance-than-big-o',
-      date: '15-09-2026'
-    });
+  // 4. WRITING (Top 5 posts matching homepage including pid7 posts)
+  drawSectionHeader('Writing', 'recent posts');
+  const writingList = await getRecentWritingList(5);
+
+  for (const post of writingList) {
+    const postTitleW = drawClickableText(post.title, left, y, 7.2, post.url, cText, cDot);
+    if (post.isExternal) {
+      page.drawText(' [ext ↗]', {
+        x: left + postTitleW,
+        y,
+        size: 6.5,
+        font,
+        color: cMuted
+      });
+    }
+    const dateW = font.widthOfTextAtSize(post.dateStr, 7.2);
+    page.drawText(post.dateStr, { x: right - dateW, y, size: 7.2, font, color: cMuted });
+    y -= 10.5;
   }
 
-  for (const post of postsToShow) {
-    drawClickableText(post.title, left, y, 7.2, `https://adii.fyi/blog/${post.slug}`, cText, cDot);
-    const dateW = font.widthOfTextAtSize(post.date, 7.2);
-    page.drawText(post.date, { x: right - dateW, y, size: 7.2, font, color: cMuted });
-    y -= 11;
-  }
-
-  // 5. TELEMETRY (Dedicated Section)
+  // 5. TELEMETRY (3x2 Grid matching homepage structure)
   drawSectionHeader('Telemetry', 'metrics');
 
-  function getAsciiBar(pct, len = 14) {
-    const safePct = Math.max(0, Math.min(100, pct));
-    const filled = Math.min(len, Math.floor((safePct / 100) * len));
-    const empty = len - filled;
-    return {
-      filled: '█'.repeat(filled),
-      empty: '░'.repeat(empty),
-      pctFormatted: `${safePct.toFixed(1)}%`
-    };
-  }
-
-  const fmt = new Intl.NumberFormat('en-US');
-  const formatCompact = (n) => {
-    if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
-    if (n >= 1_000) return `${(n / 1_000).toFixed(1)}k`;
-    return String(n);
+  const formatCompact = (num) => {
+    const abs = Math.abs(num);
+    if (abs >= 1_000_000) return `${(num / 1_000_000).toFixed(2)}M`;
+    if (abs >= 1_000) return `${(num / 1_000).toFixed(1)}k`;
+    return String(num);
   };
 
+  // Scope
+  const orgCommits = stats.categories?.organization?.commits ?? 2218;
+  const personalCommits = stats.categories?.personal?.commits ?? 1550;
+  const ossContribs = stats.categories?.external_oss?.total_contributions ?? 11;
+  const totalScope = orgCommits + personalCommits + ossContribs || 1;
+  const orgPct = Math.round((orgCommits / totalScope) * 100);
+  const personalPct = Math.round((personalCommits / totalScope) * 100);
+
+  // PRs
+  const prData = stats.pull_requests || {};
+  const prMergeRate = (prData.merge_rate_percentage ?? 97.4).toFixed(1);
+  const prMerged = prData.merged ?? 228;
+
+  // Churn
   const loc = stats.lines_of_code || {};
-  const netLines = loc.net_lines || 87823;
-  const totalAdd = loc.total_additions || 201200;
-  const totalDel = loc.total_deletions || 113400;
-  const totalChurn = totalAdd + totalDel;
-  const addRatio = totalChurn > 0 ? (totalAdd / totalChurn) * 100 : 64.0;
-  const churnBar = getAsciiBar(addRatio, 12);
+  const addFormatted = formatCompact(loc.total_additions || 1748252);
+  const delFormatted = formatCompact(loc.total_deletions || 926304);
+  const addDelRatio = ((loc.total_additions || 1748252) / ((loc.total_deletions || 926304) || 1)).toFixed(2);
 
+  // Streak
+  const streaks = stats.streaks_and_consistency || {};
+  const currentStreak = streaks.current_streak_days ?? 12;
+  const longestStreak = streaks.longest_streak_days ?? 112;
+
+  // Languages
+  const languages = stats.languages || [];
+  const getLangPct = (name, fallback) => {
+    const found = languages.find((l) => l.name === name);
+    return found ? Math.round(found.percentage) : fallback;
+  };
+  const rustPct = getLangPct('Rust', 73);
+  const cPct = getLangPct('C', 7);
+  const tsPct = getLangPct('TypeScript', 8);
+  const asmPct = getLangPct('Assembly', 4);
+
+  // Repositories
   const reposContributed = stats.repositories_contributed_to?.length || stats.repositories?.total || 53;
-  const pubRepos = stats.repositories?.public || 18;
-  const privRepos = stats.repositories?.private || 10;
-
-  const totalCommits = stats.contributions?.commits || 3580;
-  const prMergeRate = stats.pull_requests?.merge_rate_percentage || 97.4;
-  const prBar = getAsciiBar(prMergeRate, 12);
-
-  const activityRate = stats.streaks_and_consistency?.activity_rate_percentage || 95.7;
-  const streakBar = getAsciiBar(activityRate, 12);
-
-  const longestStreak = stats.streaks_and_consistency?.longest_streak_days || 112;
-  const currentStreak = stats.streaks_and_consistency?.current_streak_days || 12;
-  const activeDays = stats.streaks_and_consistency?.active_days_count || 1036;
-
-  const topLangs = (stats.languages || [])
-    .slice(0, 4)
-    .map((l) => `${l.name} ${Math.round(l.percentage)}%`)
-    .join(' · ') || 'Rust 73% · TS 8% · C 7% · Asm 4%';
+  const reposPublic = stats.repositories?.public ?? 18;
+  const reposPrivate = stats.repositories?.private ?? 10;
 
   const col1X = left;
   const col2X = left + 265;
-  const charW = font.widthOfTextAtSize('█', 7.2);
 
-  // Row 1: loc & prs
-  page.drawText('&', { x: col1X, y, size: 7.2, font, color: cMuted });
-  page.drawText('loc:', { x: col1X + 10, y, size: 7.2, font, color: cSubtle });
-  page.drawText(`${fmt.format(netLines)} (+${formatCompact(totalAdd)} / -${formatCompact(totalDel)})`, { x: col1X + 48, y, size: 7.2, font, color: cText });
+  // Row 1: prs (left) & scope (right)
+  page.drawText('prs:', { x: col1X, y, size: 7.2, font, color: cSubtle });
+  page.drawText(`${prMergeRate}% merge rate`, { x: col1X + 44, y, size: 7.2, font: fontBold, color: cText });
+  const prMergeW = fontBold.widthOfTextAtSize(`${prMergeRate}% merge rate`, 7.2);
+  page.drawText(` (${prMerged} merged)`, { x: col1X + 44 + prMergeW, y, size: 7.2, font, color: cMuted });
 
-  page.drawText('+', { x: col2X, y, size: 7.2, font, color: cMuted });
-  page.drawText('prs:', { x: col2X + 10, y, size: 7.2, font, color: cSubtle });
-  page.drawText('[', { x: col2X + 48, y, size: 7.2, font, color: cMuted });
-  page.drawText(prBar.filled, { x: col2X + 48 + charW, y, size: 7.2, font, color: cFoam });
-  page.drawText(prBar.empty, { x: col2X + 48 + charW + (prBar.filled.length * charW), y, size: 7.2, font, color: cBorder });
-  page.drawText(`] ${prBar.pctFormatted}`, { x: col2X + 48 + charW + (12 * charW), y, size: 7.2, font, color: cText });
-  y -= 11.5;
+  page.drawText('scope:', { x: col2X, y, size: 7.2, font, color: cSubtle });
+  page.drawText(`${orgPct}% org`, { x: col2X + 44, y, size: 7.2, font: fontBold, color: cText });
+  const orgW = fontBold.widthOfTextAtSize(`${orgPct}% org`, 7.2);
+  page.drawText(' · ', { x: col2X + 44 + orgW, y, size: 7.2, font, color: cMuted });
+  const dotW1 = font.widthOfTextAtSize(' · ', 7.2);
+  page.drawText(`${personalPct}% personal`, { x: col2X + 44 + orgW + dotW1, y, size: 7.2, font, color: cSubtle });
+  y -= 11;
 
-  // Row 2: churn & active
-  page.drawText('%', { x: col1X, y, size: 7.2, font, color: cMuted });
-  page.drawText('churn:', { x: col1X + 10, y, size: 7.2, font, color: cSubtle });
-  page.drawText('[', { x: col1X + 48, y, size: 7.2, font, color: cMuted });
-  page.drawText(churnBar.filled, { x: col1X + 48 + charW, y, size: 7.2, font, color: cPine });
-  page.drawText(churnBar.empty, { x: col1X + 48 + charW + (churnBar.filled.length * charW), y, size: 7.2, font, color: cBorder });
-  page.drawText(`] ${churnBar.pctFormatted}`, { x: col1X + 48 + charW + (12 * charW), y, size: 7.2, font, color: cText });
+  // Row 2: churn (left) & streak (right)
+  page.drawText('churn:', { x: col1X, y, size: 7.2, font, color: cSubtle });
+  page.drawText(`${addDelRatio}:1 ratio`, { x: col1X + 44, y, size: 7.2, font: fontBold, color: cText });
+  const churnRatioW = fontBold.widthOfTextAtSize(`${addDelRatio}:1 ratio`, 7.2);
+  page.drawText(` (+${addFormatted} / -${delFormatted})`, { x: col1X + 44 + churnRatioW, y, size: 7.2, font, color: cMuted });
 
-  page.drawText('@', { x: col2X, y, size: 7.2, font, color: cMuted });
-  page.drawText('active:', { x: col2X + 10, y, size: 7.2, font, color: cSubtle });
-  page.drawText('[', { x: col2X + 48, y, size: 7.2, font, color: cMuted });
-  page.drawText(streakBar.filled, { x: col2X + 48 + charW, y, size: 7.2, font, color: cGold });
-  page.drawText(streakBar.empty, { x: col2X + 48 + charW + (streakBar.filled.length * charW), y, size: 7.2, font, color: cBorder });
-  page.drawText(`] ${streakBar.pctFormatted}`, { x: col2X + 48 + charW + (12 * charW), y, size: 7.2, font, color: cText });
-  y -= 11.5;
+  page.drawText('streak:', { x: col2X, y, size: 7.2, font, color: cSubtle });
+  page.drawText(`${currentStreak}d current`, { x: col2X + 44, y, size: 7.2, font: fontBold, color: cText });
+  const streakW = fontBold.widthOfTextAtSize(`${currentStreak}d current`, 7.2);
+  page.drawText(` (${longestStreak}d max)`, { x: col2X + 44 + streakW, y, size: 7.2, font, color: cMuted });
+  y -= 11;
 
-  // Row 3: repos & streak
-  page.drawText('#', { x: col1X, y, size: 7.2, font, color: cMuted });
-  page.drawText('repos:', { x: col1X + 10, y, size: 7.2, font, color: cSubtle });
-  page.drawText(`${reposContributed} (${pubRepos} pub · ${privRepos} pri)`, { x: col1X + 48, y, size: 7.2, font, color: cText });
+  // Row 3: stack (left) & repos (right)
+  page.drawText('stack:', { x: col1X, y, size: 7.2, font, color: cSubtle });
+  page.drawText(`Rust ${rustPct}%`, { x: col1X + 44, y, size: 7.2, font: fontBold, color: cText });
+  const rustW = fontBold.widthOfTextAtSize(`Rust ${rustPct}%`, 7.2);
+  page.drawText(' · ', { x: col1X + 44 + rustW, y, size: 7.2, font, color: cMuted });
+  const dotW2 = font.widthOfTextAtSize(' · ', 7.2);
+  page.drawText(`TS ${tsPct}% · C ${cPct}% · Asm ${asmPct}%`, { x: col1X + 44 + rustW + dotW2, y, size: 7.2, font, color: cSubtle });
 
-  page.drawText('^', { x: col2X, y, size: 7.2, font, color: cMuted });
-  page.drawText('streak:', { x: col2X + 10, y, size: 7.2, font, color: cSubtle });
-  page.drawText(`${currentStreak}d current (${longestStreak}d max)`, { x: col2X + 48, y, size: 7.2, font, color: cText });
-  y -= 11.5;
-
-  // Row 4: commits & stack
-  page.drawText('*', { x: col1X, y, size: 7.2, font, color: cMuted });
-  page.drawText('commits:', { x: col1X + 10, y, size: 7.2, font, color: cSubtle });
-  page.drawText(`${fmt.format(totalCommits)} (${activeDays}d active)`, { x: col1X + 48, y, size: 7.2, font, color: cText });
-
-  page.drawText('$', { x: col2X, y, size: 7.2, font, color: cMuted });
-  page.drawText('stack:', { x: col2X + 10, y, size: 7.2, font, color: cSubtle });
-  page.drawText(topLangs, { x: col2X + 48, y, size: 7.2, font, color: cText });
-  y -= 4;
+  page.drawText('repos:', { x: col2X, y, size: 7.2, font, color: cSubtle });
+  page.drawText(`${reposContributed} tracked`, { x: col2X + 44, y, size: 7.2, font: fontBold, color: cText });
+  const reposW = fontBold.widthOfTextAtSize(`${reposContributed} tracked`, 7.2);
+  page.drawText(` (${reposPublic} pub · ${reposPrivate} pri)`, { x: col2X + 44 + reposW, y, size: 7.2, font, color: cMuted });
 
   // 6. EDUCATION
   drawSectionHeader('Education', 'degree & background');
@@ -511,17 +570,17 @@ export async function generateResumePdf() {
   const eduCol2 = left + 265;
 
   page.drawText('degree:', { x: eduCol1, y, size: 7.2, font, color: cSubtle });
-  page.drawText('B.Tech (CSE)', { x: eduCol1 + 48, y, size: 7.2, font: fontBold, color: cText });
+  page.drawText('B.Tech (CSE)', { x: eduCol1 + 44, y, size: 7.2, font: fontBold, color: cText });
 
   page.drawText('period:', { x: eduCol2, y, size: 7.2, font, color: cSubtle });
-  page.drawText('Jun 2020 – Jun 2024 (4 yrs)', { x: eduCol2 + 48, y, size: 7.2, font, color: cText });
-  y -= 11.5;
+  page.drawText('Jun 2020 – Jun 2024 (4 yrs)', { x: eduCol2 + 44, y, size: 7.2, font, color: cText });
+  y -= 11;
 
   page.drawText('major:', { x: eduCol1, y, size: 7.2, font, color: cSubtle });
-  page.drawText('Computer Science & Engineering', { x: eduCol1 + 48, y, size: 7.2, font, color: cText });
+  page.drawText('Computer Science & Engineering', { x: eduCol1 + 44, y, size: 7.2, font, color: cText });
 
   page.drawText('inst:', { x: eduCol2, y, size: 7.2, font, color: cSubtle });
-  page.drawText('Marathwada Inst. of Technology', { x: eduCol2 + 48, y, size: 7.2, font, color: cText });
+  page.drawText('Marathwada Inst. of Technology', { x: eduCol2 + 44, y, size: 7.2, font, color: cText });
 
   return await doc.save();
 }
@@ -531,18 +590,17 @@ if (!fs.existsSync(publicDir)) {
   fs.mkdirSync(publicDir, { recursive: true });
 }
 
-const outputPath = path.resolve(publicDir, 'adityamotale.pdf');
+// Generate aditya.pdf as requested
+const outputPath = path.resolve(publicDir, 'aditya.pdf');
+const legacyPath = path.resolve(publicDir, 'adityamotale.pdf');
 
 generateResumePdf().then((pdfBytes) => {
   const newBuffer = Buffer.from(pdfBytes);
-  if (fs.existsSync(outputPath)) {
-    const existingBuffer = fs.readFileSync(outputPath);
-    if (existingBuffer.equals(newBuffer)) {
-      console.log(`ℹ️ Resume PDF is up to date: ${outputPath}`);
-      return;
-    }
-  }
+
   fs.writeFileSync(outputPath, newBuffer);
+  // Also preserve adityamotale.pdf for test and script compatibility
+  fs.writeFileSync(legacyPath, newBuffer);
+
   console.log(`✅ Resume PDF successfully generated at: ${outputPath} (${pdfBytes.length} bytes)`);
 }).catch((err) => {
   console.error('❌ Failed to generate resume PDF:', err);

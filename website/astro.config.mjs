@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   site: "https://adii.fyi",
   redirects: {
-    '/resume': '/adityamotale.pdf',
+    '/resume': '/aditya.pdf',
     '/blogs': '/blog',
     '/blogs/[slug]': '/blog/[slug]',
   },
