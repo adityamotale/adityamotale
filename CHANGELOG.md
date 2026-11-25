@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.1] - 2026-11-25
+
+- add blog post 002
+- refine README layout, writing section spacing, and handle missing release banners gracefully
+- remove stale resume PDF, unused SVG assets, and site/blog social preview images
+
 ## [0.4.0] - 2026-11-24
 
 - redesign home page layout featuring sticky telemetry header HUD, soliton wave animation, and dedicated latest release cards
