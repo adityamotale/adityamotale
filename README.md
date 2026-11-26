@@ -19,8 +19,9 @@
 <a href="/">
 <img src="./assets/writing-header.svg" width="100%" alt="Writing" />
 </a>
-<a href="https://adii.fyi/blog/theres-more-to-performance-than-big-o"><img src="./assets/writing-0.svg" width="100%" alt="There&apos;s More to Performance Than Big-O" /></a>
-<a href="https://pid7.com/blog/searching-150gb-text-per-second"><img src="./assets/writing-1.svg" width="100%" alt="Searching through 150 GiB of Text per Second with SIMD" /></a>
+<a href="https://adii.fyi/blog/i-built-a-bridge-to-use-neon-in-antigravity"><img src="./assets/writing-0.svg" width="100%" alt="I Built a Bridge So I Could Use Gemini 4 Neon in Antigravity" /></a>
+<a href="https://adii.fyi/blog/theres-more-to-performance-than-big-o"><img src="./assets/writing-1.svg" width="100%" alt="There&apos;s More to Performance Than Big-O" /></a>
+<a href="https://pid7.com/blog/searching-150gb-text-per-second"><img src="./assets/writing-2.svg" width="100%" alt="Searching through 150 GiB of Text per Second with SIMD" /></a>
 
 <div>&nbsp;</div>
 <a href="https://adii.fyi"><img src="./assets/footer.svg" width="100%" alt="aditya — adii.fyi" /></a>
