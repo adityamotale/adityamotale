@@ -14,13 +14,13 @@
   <g class="mono">
     <text x="0" y="16" fill="#d7827e" font-size="11" font-weight="700">&gt;</text>
     <text x="14" y="16" class="text" font-size="11" font-weight="700" letter-spacing="0.08em">LANGUAGES</text>
-    <text x="0" y="40" class="muted" font-size="11">1.86M loc · 29 languages tracked</text>
-    <rect x="0" y="54" width="440" height="6" fill="#d7827e" fill-opacity="1" clip-path="url(#bar-clip)" />
-    <rect x="442" y="54" width="93" height="6" fill="#d7827e" fill-opacity="0.8" clip-path="url(#bar-clip)" />
-    <rect x="537" y="54" width="24" height="6" fill="#d7827e" fill-opacity="0.65" clip-path="url(#bar-clip)" />
-    <rect x="563" y="54" width="21" height="6" fill="#d7827e" fill-opacity="0.5" clip-path="url(#bar-clip)" />
-    <rect x="586" y="54" width="19" height="6" fill="#d7827e" fill-opacity="0.38" clip-path="url(#bar-clip)" />
-    <rect x="607" y="54" width="73" height="6" fill="#d7827e" fill-opacity="0.25" clip-path="url(#bar-clip)" />
-    <text x="0" y="80" font-size="10"><tspan class="subtle">Rust</tspan> <tspan class="muted">65.0%</tspan><tspan class="muted"> · </tspan><tspan class="subtle">TypeScript</tspan> <tspan class="muted">13.9%</tspan><tspan class="muted"> · </tspan><tspan class="subtle">JavaScript</tspan> <tspan class="muted">3.8%</tspan><tspan class="muted"> · </tspan><tspan class="subtle">Assembly</tspan> <tspan class="muted">3.4%</tspan><tspan class="muted"> · </tspan><tspan class="subtle">Astro</tspan> <tspan class="muted">3.1%</tspan><tspan class="muted"> · </tspan><tspan class="subtle">Other</tspan> <tspan class="muted">10.7%</tspan></text>
+    <text x="0" y="40" class="muted" font-size="11">1.89M loc · 29 languages tracked</text>
+    <rect x="0" y="54" width="433" height="6" fill="#d7827e" fill-opacity="1" clip-path="url(#bar-clip)" />
+    <rect x="435" y="54" width="98" height="6" fill="#d7827e" fill-opacity="0.8" clip-path="url(#bar-clip)" />
+    <rect x="535" y="54" width="25" height="6" fill="#d7827e" fill-opacity="0.65" clip-path="url(#bar-clip)" />
+    <rect x="562" y="54" width="21" height="6" fill="#d7827e" fill-opacity="0.5" clip-path="url(#bar-clip)" />
+    <rect x="585" y="54" width="21" height="6" fill="#d7827e" fill-opacity="0.38" clip-path="url(#bar-clip)" />
+    <rect x="608" y="54" width="72" height="6" fill="#d7827e" fill-opacity="0.25" clip-path="url(#bar-clip)" />
+    <text x="0" y="80" font-size="10"><tspan class="subtle">Rust</tspan> <tspan class="muted">63.9%</tspan><tspan class="muted"> · </tspan><tspan class="subtle">TypeScript</tspan> <tspan class="muted">14.7%</tspan><tspan class="muted"> · </tspan><tspan class="subtle">JavaScript</tspan> <tspan class="muted">4.0%</tspan><tspan class="muted"> · </tspan><tspan class="subtle">Assembly</tspan> <tspan class="muted">3.4%</tspan><tspan class="muted"> · </tspan><tspan class="subtle">Astro</tspan> <tspan class="muted">3.4%</tspan><tspan class="muted"> · </tspan><tspan class="subtle">Other</tspan> <tspan class="muted">10.6%</tspan></text>
   </g>
 </svg>
